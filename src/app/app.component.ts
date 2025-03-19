@@ -1,36 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderUserComponent } from './components/header-user/header-user.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent],
+  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  isUserRegistered: string | null = null;
+  isLoggedIn: boolean = false;
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.actualizarEstadoUsuario();
-    
-    window.addEventListener("storage", () => {
-      this.actualizarEstadoUsuario();
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
     });
-  }
-
-  private actualizarEstadoUsuario() {
-    const userType = localStorage.getItem('userType');
-    this.isUserRegistered = userType || null;
-  }
-
-  // Método para cerrar sesión
-  logout() {
-    localStorage.removeItem('userData');
-    this.isUserRegistered = "invitado";
-    window.dispatchEvent(new Event("storage"));
   }
 }

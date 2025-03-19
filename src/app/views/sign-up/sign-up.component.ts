@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractContro
 import { ApiService } from '../../services/api-service.service';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,6 +18,7 @@ export class SignUpComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private apiService = inject(ApiService);
+  private authService = inject(AuthService);
   showPassword = false;
   signUpForm: FormGroup = this.fb.group(
     {
@@ -46,7 +48,7 @@ export class SignUpComponent {
     return password === confirmPassword ? null : { passwordsDoNotMatch: true };
   }
 
- /* registrarUsuario(): void {
+  registrarUsuario(): void {
     if (this.signUpForm.invalid) {
       this.signUpForm.markAllAsTouched();
       return;
@@ -60,14 +62,15 @@ export class SignUpComponent {
     this.apiService.registerUser(usuario).subscribe({
       next: (response) => {
         console.log('Usuario registrado:', response);
-        this.router.navigate(['/login']);
+        this.authService.login(response);
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Error al registrar usuario:', error);
         alert(`Error en el registro: ${error.error?.message || 'Verifica los datos e intenta de nuevo'}`);
       },
     });
-  }*/
+  }
 
   getControl(controlName: string) {
     return this.signUpForm.get(controlName);

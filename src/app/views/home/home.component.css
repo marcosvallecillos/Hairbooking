@@ -1,5 +1,4 @@
 .snap-container {
-    height: 100vh;
     overflow-y: scroll; 
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
@@ -8,10 +7,17 @@
     position: relative;
 }
 
+/* Asegura que en Chrome y otros navegadores basados en WebKit la barra no aparezca */
 .snap-container::-webkit-scrollbar {
-    display: none; /* Para Chrome, Safari y Opera */
+    width: 0px;
+    height: 0px;
+    display: none;
 }
 
+/* Para ocultar en navegadores que aún la muestren */
+.snap-container {
+    overflow-y: hidden;
+}
 
 .snap-section {
     height: 100vh;

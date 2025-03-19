@@ -15,11 +15,11 @@ interface Usuario {
   providedIn: 'root'
 })
 export class ApiService {
-  //private apiUrl = 'http://localhost:3000/api'; // Ajusta según tu backend
+private apiUrl = 'http://localhost:3000/api'; // Ajusta según tu backend
 
   constructor(private http: HttpClient) { }
 
-  /*registerUser(usuario: Usuario): Observable<Usuario> {
+  registerUser(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/usuarios`, usuario);
-  }*/
+  }
 } 

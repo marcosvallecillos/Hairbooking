@@ -1,7 +1,9 @@
-@if (isUserRegistered === "usuario") {
+<div class="header">
+
+@if (isLoggedIn) {
     <app-header-user></app-header-user>
-    } @else {
+} @else {
     <app-header></app-header>
-    } 
-    
+}
+</div>
 <router-outlet />

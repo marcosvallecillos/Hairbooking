@@ -1,0 +1,334 @@
+.overlay {
+    width: 100%;
+    height: 250px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+    url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
+    background-size: cover;
+    background-position: center;
+    mask-image: linear-gradient(black 85%, transparent);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
+
+}
+.reserve-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    font-family: 'Oswald', sans-serif;
+    color: #333;
+}
+
+/* Sección de Servicios Mejorada */
+.services-section {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.services-grid {
+    width: 100%;
+  
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.service-card {
+    background-color: #fff;
+    border: 1px solid #000000;
+    border-radius: 12px;
+    padding: 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.service-card:hover {
+   
+    transform: translateY(-7px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.service-card.selected {
+    
+    border-color: #c5a47e;
+    background-color:gray;
+}
+
+.service-card h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #222;
+}
+
+.service-card .price {
+    color: #c5a47e;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 0.6rem;
+}
+
+/* Calendario Mejorado */
+.calendar-section {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 2rem;
+    color: white;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+}
+
+.calendar-header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: white;
+    text-transform: capitalize;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    padding: 1rem;
+}
+
+.weekday {
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: #888;
+    font-weight: 500;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #02410c; 
+    color: white;
+}
+
+.calendar-day.empty {
+    background-color: transparent;
+    cursor: default;
+}
+
+.calendar-day.disabled {
+    background-color: #6b6b6b; 
+    color: white;
+    cursor: not-allowed;
+}
+
+.calendar-day.selected {
+    transform: scale(1);
+    border: 2px solid white;
+}
+
+.calendar-day:hover:not(.empty):not(.disabled) {
+    
+    transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.calendar-day.today {
+    border: 2px solid white;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+    .calendar-section {
+        padding: 1rem;
+    }
+
+    .calendar-grid {
+        gap: 5px;
+    }
+
+    .calendar-day {
+        font-size: 0.9rem;
+    }
+
+    .weekday {
+        font-size: 0.8rem;
+    }
+}
+
+/* Botón de Reserva Mejorado */
+.reserve-button {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 2rem;
+    background-color: #c5a47e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reserve-button:hover:not(:disabled) {
+    background-color: #b08d68;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reserve-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsive Mejorado */
+@media (max-width: 768px) {
+    .reserve-container {
+        padding: 1.5rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-section {
+        padding: 1.5rem;
+    }
+
+    .calendar-grid {
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .calendar-day {
+        font-size: 0.9rem;
+    }
+
+    .weekday {
+        font-size: 0.8rem;
+        padding: 5px;
+    }
+}
+
+.time-slots-section {
+    
+    border: 1px solid black;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.time-slots-section h3 {
+    gap: 0.8rem;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.time-slots-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.time-slot {
+    color: white;
+    margin: 0.5rem;
+    width: 45%;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    background-color: #02410c;
+    transition: all 0.3s ease;
+}
+
+.time-slot.available {
+    background-color: #00c020;
+    color: white;
+}
+
+.time-slot.unavailable {
+    background-color: #ff3b30;
+    color: white;
+    cursor: not-allowed;
+}
+
+.time-slot.selected {
+    transform: scale(1.02   );
+    border: 1px solid white;}
+
+.time-slot.available:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .time-slots-section {
+        padding: 1.5rem;
+    }
+
+    .time-slot {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+.alert {
+    background-color: white;
+    border: none;
+    width: 100vw;
+    margin-top: -30px;
+    height: 50vh;
+    border-radius: 10px;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .alert i {
+    color: #850804;
+  }
+
+.alert button {
+    background: #ff9800; /* Color llamativo */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.3s ease-in-out;
+}
+
+.alert button:hover {
+    background: #523100;
+}

@@ -1,0 +1,24 @@
+<main><div class="container">
+  <h2 class="gallery-title">Nuestros Mejores Trabajos</h2>
+  <p class="gallery-description">Descubre nuestra colección de los mejores estilos y cortes realizados por nuestros expertos barberos</p>
+  
+  <div class="gallery-grid">
+    @for (haircut of [
+      { title: 'Degradado Moderno', description: 'Fade medio con textura superior', imageUrl: '../../../../images/degradado.jpg' },
+      { title: 'Corte Clásico', description: 'Estilo elegante y tradicional', imageUrl: '../../../../images/afeitado.jpg' },
+      { title: 'Barba Definida', description: 'Perfilado y arreglo completo', imageUrl: '../../../../images/arreglo_barba.jpg' },
+      
+    ]; track haircut.title) {
+      <div class="gallery-item">
+        <div class="image-container">
+          <img [src]="haircut.imageUrl" [alt]="haircut.description">
+          <div class="overlay">
+            <h3>{{haircut.title}}</h3>
+            <p>{{haircut.description}}</p>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+</main>

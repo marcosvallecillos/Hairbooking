@@ -1,0 +1,203 @@
+
+.overlay {
+    width: 100%;
+    height: 250px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+    url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
+    background-size: cover;
+    background-position: center;
+    mask-image: linear-gradient(black 85%, transparent);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
+
+}
+
+.price-list-container {
+    position: relative;
+    min-height: 100vh;
+    padding: 80px 20px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.header-section {
+    text-align: center;
+    margin-bottom: 80px;
+    position: relative;
+}
+
+.header-section h1 {
+    margin-top: 10%;
+    font-size: 3.5rem;
+    color: #1a1a1a;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+@media(max-width: 991px){
+   
+}
+.decorative-line {
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #c5a47e, transparent);
+    margin: 0 auto;
+}
+
+.price-categories {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 2fr));
+    gap: 30px;
+    padding: 20px;
+}
+
+.price-category {
+
+    background-color: #fce2c6;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(197, 164, 126, 0.1);
+}
+
+.price-category:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(197, 164, 126, 0.2);
+}
+
+.price-category h2 {
+    color: #1a1a1a;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #c5a47e;
+    position: relative;
+}
+
+.price-category h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background-color: #1a1a1a;
+}
+
+.price-items {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: rgba(249, 249, 249, 0.5);
+}
+
+.service {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.price {
+    font-size: 1.3rem;
+    color: #c5a47e;
+    font-weight: 700;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background-color: rgba(197, 164, 126, 0.1);
+    transition: all 0.3s ease;
+}
+
+.price-item:hover {
+    background: linear-gradient(90deg, #fff, rgba(197, 164, 126, 0.1));
+    transform: translateX(10px);
+}
+
+.price-item:hover .service {
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.price-item:hover .price {
+    background-color: #c5a47e;
+    color: white;
+}
+
+@media (max-width: 1280px) {
+    .overlay {
+        height: 250px;
+    }
+    
+    .price-categories {
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .overlay {
+        height: 200px;
+    }
+
+    .header-section h1 {
+        font-size: 2.5rem;
+        margin-top: 150px;
+    }
+
+    .price-categories {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .price-category {
+        padding: 25px;
+    }
+
+    .price-category h2 {
+        font-size: 1.8rem;
+    }
+
+    .price-item {
+        padding: 12px 15px;
+    }
+
+    .service {
+        font-size: 1.1rem;
+    }
+
+    .price {
+        font-size: 1.2rem;
+    }
+}
+
+/* Animaciones mejoradas */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.price-category {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.price-category:nth-child(1) { animation-delay: 0.2s; }
+.price-category:nth-child(2) { animation-delay: 0.4s; }
+.price-category:nth-child(3) { animation-delay: 0.6s; }
+.price-category:nth-child(4) { animation-delay: 0.8s; }

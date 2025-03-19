@@ -1,0 +1,97 @@
+<app-header></app-header>
+<div class="overlay"></div>
+
+<!-- Verifica si el usuario está autenticado -->
+@if (isAuthenticated) {
+    <div class="reserve-container">
+        <!-- Sección de Servicios -->
+        <div class="services-section">
+            <h2>Servicios Disponibles</h2>
+            <div class="services-grid">
+                @for (service of services; track service.name) {
+                    <div class="service-card"
+                        [class.selected]="selectedService === service.name"
+                        (click)="selectedService = service.name">
+                        <h3>{{service.name}}</h3>
+                        <p class="price">{{service.price}}</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Calendario -->
+        <div class="calendar-section">
+            <div class="calendar-header">
+                <button (click)="previousMonth()">&lt;</button>
+                <h2>{{ currentDate | date:'MMMM yyyy' }}</h2>
+                <button (click)="nextMonth()">&gt;</button>
+            </div>
+
+            <div class="calendar-grid">
+                <!-- Días de la semana -->
+                @for (day of ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']; track day) {
+                    <div class="weekday">{{day}}</div>
+                }
+
+                <!-- Días del mes -->
+                @for (date of getDaysInMonth(currentDate.getMonth(), currentDate.getFullYear()); track $index) {
+                    @if (date === null) {
+                        <div class="calendar-day empty"></div>
+                    } @else {
+                        <div class="calendar-day"
+                            [class.selected]="selectedDate && date && selectedDate.getTime() === date.getTime()"
+                            [class.disabled]="!isAvailable(date)"
+                            (click)="isAvailable(date) && selectDate(date)">
+                            {{ date.getDate() }}
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Horas Disponibles -->
+        @if (selectedDate && selectedService) {
+            <div class="time-slots-section">
+                <h3>Horarios Disponibles para el {{ selectedDate | date:'EEEE d MMMM  YYYY' }}</h3>
+                <div class="time-slots-grid">
+                    @for (time of availableHours; track time) {
+                        <button class="time-slot"
+                                [class.selected]="selectedTime === time"
+                                (click)="selectedTime = time">
+                            {{ time }}
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Botón de Reserva -->
+        <button class="reserve-button" 
+                [disabled]="!selectedDate || !selectedService || !selectedTime"
+                (click)="onReserve()">
+            Reservar Cita
+        </button>
+    </div>
+
+    <app-modal
+        [show]="showModal"
+        [servicio]="selectedService"
+        [fecha]="selectedDate ? (selectedDate | date:'d MMMM yyyy') : ''"
+        [hora]="selectedTime"
+        (confirm)="onConfirmReserve()"
+        (cancel)="onCancelReserve()">
+    </app-modal>
+} @else {
+    <!-- Mensaje para usuarios no registrados -->
+ 
+    <div class="alert alert-warning text-center p-4 shadow-sm">
+        <i class="bi bi-exclamation-circle-fill fs-4 " ></i>
+        <h2 class="titulo mt-3">Debes estar registrado para reservar una cita.</h2>
+        <button class="alert-login mt-3"(click)="openLoginModal()"  >Iniciar Sesión</button>
+    </div>
+}
+<app-modal-login
+    [show]="showLoginModal"
+    (close)="showLoginModal = false">
+</app-modal-login>
+<app-footer></app-footer>

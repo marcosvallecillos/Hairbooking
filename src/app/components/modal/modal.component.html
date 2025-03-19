@@ -1,0 +1,23 @@
+@if (show) {
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <h2>Confirmar Reserva</h2>
+            <div class="modal-body">
+                <p>¿Estás seguro que deseas reservar?</p>
+                <div class="reservation-details">
+                    <p><strong>Servicio:</strong> {{servicio}}</p>
+                    <p><strong>Fecha:</strong> {{fecha}}</p>
+                    <p><strong>Hora:</strong> {{hora}}</p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" (click)="onCancel()">Cancelar</button>
+                <button class="btn-confirm" (click)="onConfirm()">Confirmar</button>
+             
+            </div>
+          
+        </div>
+    </div>
+   
+} 
+

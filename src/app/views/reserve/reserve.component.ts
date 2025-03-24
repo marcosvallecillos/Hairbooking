@@ -74,7 +74,7 @@ export class ReserveComponent {
            date.getFullYear() === today.getFullYear();
   }
   constructor(private authService: AuthService, private router: Router) {}
-  isAuthenticated = false;
+  isAuthenticated = true;
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
 }

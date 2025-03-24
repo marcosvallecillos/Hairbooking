@@ -1,27 +1,32 @@
 <div class="snap-container">
     <!-- Primera sección: Hero -->
-    <section class="snap-section hero-section" id="section1">
+    <section >
         <app-carrousel></app-carrousel>
     </section>
 
     <!-- Segunda sección: Jumbotron -->
-    <section class="snap-section" id="section2">
+    <section >
         <app-jumbotron></app-jumbotron>
     </section>
 
     <!-- Tercera sección: Servicios -->
-    <section class="snap-section" id="section3">
+    <section >
         <app-services></app-services>
     </section>
 
     <!-- Cuarta sección: Galería -->
-    <section class="snap-section" id="section4">
+    <section >
         <app-gallery></app-gallery>
     </section>
 
     
     <app-footer></app-footer>
-    <!-- Navegación por puntos -->
+    <!-- 
+    ejemplo de seccion
+      <section  class="snap-section" id="section4">
+        <app-gallery></app-gallery>
+    </section>
+
     <nav class="scroll-navigation">
         <a (click)="scrollToSection(0)" class="scroll-dot" [class.active]="isCurrentSection('section1')" >
             <span class="section-indicator">Inicio</span>
@@ -38,7 +43,7 @@
         <a (click)="scrollToSection(4)" class="scroll-dot" [class.active]="isCurrentSection('section5')">
             <span class="section-indicator">Contacto</span>
         </a>
-    </nav>
+    </nav> Navegación por puntos -->
 </div>
 
 

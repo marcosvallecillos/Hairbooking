@@ -22,6 +22,23 @@
     transition: opacity 1.5s ease-in-out;
 }
 
-.carousel-indicators {
-    display: none;
+
+.carousel-control-prev,
+.carousel-control-next {
+    background: none;
+    border: none;
+    font-size: 4rem; /* Aumentar tamaño de las flechas */
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    transform: scale(1.2); /* Efecto de aumento al pasar el ratón */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    font-size: inherit; /* Mantiene el tamaño de la flecha */
 }

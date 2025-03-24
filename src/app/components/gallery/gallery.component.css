@@ -6,9 +6,8 @@ main{
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-  justify-content: center;
-    background-color: #ffffff;
-}
+    justify-content: center;
+    background-color: aliceblue;}
 .gallery-title {
   text-align: center;
   color: #000000;

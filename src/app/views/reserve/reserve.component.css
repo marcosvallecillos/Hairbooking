@@ -25,7 +25,6 @@
 
 .services-grid {
     width: 100%;
-  
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
@@ -304,7 +303,7 @@
     border: none;
     width: 100vw;
     margin-top: -30px;
-    height: 50vh;
+    height: 70vh;
     border-radius: 10px;
     font-size: 1rem;
     display: flex;

@@ -37,6 +37,7 @@ export class ReserveComponent {
     '12:00', '12:30', '13:00', '13:30', '16:00', '16:30',
     '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'
   ];
+  
   showLoginModal: boolean = false;
   getDaysInMonth(month: number, year: number): (Date | null)[] {
     const firstDay = new Date(year, month, 1);
@@ -73,6 +74,7 @@ export class ReserveComponent {
            date.getMonth() === today.getMonth() &&
            date.getFullYear() === today.getFullYear();
   }
+ 
   constructor(private authService: AuthService, private router: Router) {}
   isAuthenticated = true;
   ngOnInit() {
@@ -80,7 +82,7 @@ export class ReserveComponent {
 }
 
 redirectToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
 }
   isAvailable(date: Date): boolean {
     if (!date) return false;
@@ -112,7 +114,7 @@ redirectToLogin() {
 
   onConfirmReserve() {
     this.showModal = false;
-    // Lógica de reserva aquí
+    this.router.navigate(['/show-profile']);
   }
 
   onCancelReserve() {

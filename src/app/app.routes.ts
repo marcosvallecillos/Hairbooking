@@ -6,6 +6,7 @@ import { ReserveComponent } from './views/reserve/reserve.component';
 import { ModalLoginComponent } from './components/modal-login/modal-login.component';
 import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { HeaderUserComponent } from './components/header-user/header-user.component';
+import { ContactoComponent } from './views/contacto/contacto.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
     { path: 'login', component: ModalLoginComponent },
     { path: 'sign-up', component: SignUpComponent },
     { path: 'header-user', component: HeaderUserComponent },
+    { path: 'contacto', component: ContactoComponent },
 
 ];
 

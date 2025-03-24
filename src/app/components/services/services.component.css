@@ -1,13 +1,14 @@
 
 .services-section {
     padding: 5rem 0;
-    background-color: hsl(66, 100%, 92%);
-    min-height: 100vh;
+    background-image: url(../../../../public/images/servicios.jpg);
     display: flex;
     align-items: center;
+    background-size: cover;
 }
 
 .container {
+    height: 100vh;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
@@ -19,8 +20,10 @@
 }
 
 .section-header h2 {
+    
+   margin-top: 10%;
     font-size: 2.5rem;
-    color: #1a1a1a;
+    color: #ffffff;
     font-weight: 700;
     margin-bottom: 1rem;
     font-family: 'Oswald', sans-serif;

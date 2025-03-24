@@ -43,7 +43,6 @@
     }
 }
 .hero-content {
-    
     position: relative;
     z-index: 1;
     text-align: center;
@@ -59,12 +58,21 @@
 
 /* Sección Sobre Nosotros */
 .about-section {
-    margin: 10%;
+    width: auto;
+    height:1000px;
     padding: 5rem 0;
     background-color: white;
     text-align: center;
 }
-
+.about-section img{
+    margin-top: -10%;
+    width: 50%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    border-radius: 50%;
+    border: 3px solid #c5a47e;
+    transition: transform 0.3s ease;
+}
 h2 {
     font-size: 2.2rem;
     font-weight: 700;
@@ -91,7 +99,7 @@ p {
 .values-section {
     margin-top: -220px;
     padding: 4rem 0;
-    background-color: beige;
+    background-color: #c5a47e;
     text-align: center;
 }
 @media (max-width: 991px) {
@@ -103,7 +111,7 @@ p {
 .value-card {
     padding: 2rem;
     margin-bottom: 2rem;
-    background: beige;
+    background: #fedcb4;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
@@ -130,40 +138,55 @@ p {
     color: #666;
 }
 
-/* Sección Equipo */
 .team-section {
+    height: auto;
     padding: 4rem 0;
-    background-color: #fff;
-    text-align: center;
+    background-color: #ffffff;
 }
 
 .team-member {
-    margin-bottom: 3rem;
+    height: 420px;
+    text-align: center;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
 }
 
 .team-member img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 1.5rem;
-    border-radius: 50%;
-    border: 3px solid #c5a47e;
+    max-width: 140px;
+    border: 4px solid #1d0202;
     transition: transform 0.3s ease;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .team-member img:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .team-member h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #1a1a1a;
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 1rem;
 }
 
 .team-member p {
     font-size: 1rem;
     color: #666;
+}
+
+/* Estilos para la sección de Jesús */
+.team-section .row.mt-5 {
+    background: #f2f2f2;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive */
@@ -184,4 +207,30 @@ p {
         width: 150px;
         height: 150px;
     }
+}
+
+
+.hidden-content {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-toggle {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-toggle:hover {
+    background: #0056b3;
 }

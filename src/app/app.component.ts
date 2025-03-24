@@ -13,7 +13,7 @@ import { AuthService } from './services/auth.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean = true;
 
   constructor(private authService: AuthService) {}
 

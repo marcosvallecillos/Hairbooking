@@ -6,8 +6,11 @@
     width: 100%;
     z-index: 1000; 
     box-shadow: none; /* Quitamos la sombra por defecto */
+    margin-top: 20px;
 }
-
+.home{
+    margin-left: 50px;
+}
 .rounded-pill {
     width: 100px;
     /* Ajustar tamaño según sea necesario */

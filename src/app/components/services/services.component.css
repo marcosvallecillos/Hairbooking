@@ -3,6 +3,7 @@
     padding: 5rem 0;
     background-image: url(../../../../public/images/servicios.jpg);
     display: flex;
+    height: auto;
     align-items: center;
     background-size: cover;
 }

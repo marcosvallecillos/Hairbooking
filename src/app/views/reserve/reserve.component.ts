@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router,RouterLink } from '@angular/router';
-import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { AuthService } from '../../services/auth.service';
@@ -10,7 +9,7 @@ import { ModalLoginComponent } from '../../components/modal-login/modal-login.co
 @Component({
   selector: 'app-reserve',
   standalone: true,
-  imports: [CommonModule, FormsModule , ModalLoginComponent,HeaderComponent, FooterComponent, ModalComponent,RouterLink],
+  imports: [CommonModule, FormsModule , ModalLoginComponent, FooterComponent, ModalComponent,RouterLink],
   templateUrl: './reserve.component.html',
   styleUrl: './reserve.component.css'
 })
@@ -20,6 +19,7 @@ export class ReserveComponent {
   selectedService: string = '';
   selectedTime: string = '';
   showModal: boolean = false;
+
 
   services = [
     { name: 'Servicio a Domicilio', price: '50 €' },
@@ -77,7 +77,7 @@ export class ReserveComponent {
  
   constructor(private authService: AuthService, private router: Router) {}
 
-  isAuthenticated = false;
+  isAuthenticated = true;
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();

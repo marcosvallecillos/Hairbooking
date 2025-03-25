@@ -1,41 +1,44 @@
-@if (show) {
-    <div class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-button" (click)="onClose()">×</button>
-            <h2>Iniciar Sesión</h2>
-            
-            <div class="form-group">
-                <input type="email" 
-                       [(ngModel)]="email" 
-                       placeholder="Email"
-                       class="form-input">
-            </div>
-            
-            <div class="form-group position-relative mb-4">
-                <span 
-                  class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
-                  (click)="togglePasswordVisibility()" 
-                  style="cursor: pointer;" 
-                  role="button"
-                >
-                  <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
-                </span>
-                
-                <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password"
-                       [(ngModel)]="password" 
-                       placeholder="Contraseña"
-                       class="form-input">
-                     
-            </div>
+<div *ngIf="show" class="modal-overlay">
+    <div class="modal-content">
+        <button class="close-button" (click)="onClose()">×</button>
+        <h2>Iniciar Sesión</h2>
 
-            <button class="login-button" (click)="onLogin()">
-                Iniciar Sesión
-            </button>
+        <div class="form-group">
+            <input type="email" 
+                   [(ngModel)]="email" 
+                   placeholder="Email"
+                   class="form-input">
+        </div>
 
-            <div class="register-section">
-                <p>¿No tienes una cuenta? <a href=""(click)="goToRegister()">Registrate</a></p> 
-                
-            </div>
+        <div class="form-group position-relative mb-4">
+            <span 
+                class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
+                (click)="togglePasswordVisibility()" 
+                style="cursor: pointer;" 
+                role="button">
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </span>
+
+            <input [type]="showPassword ? 'text' : 'password'" 
+                   class="form-control" 
+                   id="password"
+                   [(ngModel)]="password" 
+                   placeholder="Contraseña">
+        </div>
+
+        <button class="login-button" (click)="onLogin()">
+            Iniciar Sesión
+        </button>
+
+        <div class="register-section">
+            <p>¿No tienes una cuenta? 
+                <a (click)="openRegisterModal()">Regístrate</a>
+            </p>
         </div>
     </div>
-}
+</div>
+
+<app-modal-register
+    [show]="showRegisterModal"
+    (close)="showRegisterModal = false">
+</app-modal-register>

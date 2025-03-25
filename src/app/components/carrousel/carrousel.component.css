@@ -2,7 +2,9 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
-   
+    filter: brightness(70%); 
+    
+    transition: filter 0.3s ease;
 }
 
 .carousel .carousel-inner,
@@ -15,7 +17,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    margin-top: 0; /* Aseguramos que la imagen comience desde arriba */
+    margin-top: 0;
 }
 
 .carousel-fade .carousel-item {
@@ -23,22 +25,31 @@
 }
 
 
-.carousel-control-prev,
-.carousel-control-next {
-    background: none;
-    border: none;
-    font-size: 4rem; /* Aumentar tamaño de las flechas */
+.arrow-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10; 
+}
+
+.arrow {
     color: white;
-    cursor: pointer;
-    transition: transform 0.3s;
+    padding: 15px;  /* Aumenté el padding para mayor tamaño */
+    transition: background-color 0.3s ease;
+    display: inline-flex;  /* Para centrar el ícono dentro del botón */
+    align-items: center;
+    justify-content: center;
 }
 
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-    transform: scale(1.2); /* Efecto de aumento al pasar el ratón */
+.arrow:hover {
+    transform: scale(1.2);
+    color: rgb(255, 255, 255);
+}
+.arrow:active{
+   border:none
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    font-size: inherit; /* Mantiene el tamaño de la flecha */
+.bi-arrow-down {
+    font-size: 2rem;  /* Ajusté el tamaño de la flecha */
 }

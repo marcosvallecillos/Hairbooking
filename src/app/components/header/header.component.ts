@@ -4,6 +4,7 @@ import { RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { AboutUsComponent } from '../../views/about-us/about-us.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
+import { ModalRegisterComponent } from '../modal-register/modal-register.component';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,8 @@ import { ModalLoginComponent } from '../modal-login/modal-login.component';
     CommonModule,
     RouterLink,
     RouterLinkActive,
-    ModalLoginComponent
+    ModalLoginComponent,
+    ModalRegisterComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
@@ -47,8 +49,21 @@ export class HeaderComponent {
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
+  showRegisterModal: boolean = false;
 
   openLoginModal() {
     this.showLoginModal = true;
+  }
+
+  closeLoginModal() {
+    this.showLoginModal = false;
+  }
+
+  openRegisterModal() {
+    this.showRegisterModal = true;
+  }
+
+  closeRegisterModal() {
+    this.showRegisterModal = false;
   }
 }

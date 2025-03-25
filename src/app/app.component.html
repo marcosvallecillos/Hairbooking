@@ -3,7 +3,9 @@
 @if (isLoggedIn) {
     <app-header-user></app-header-user>
 } @else {
-    <app-header></app-header>
+    @if (mostrarHeader) {
+        <app-header></app-header>
+      }
 }
 </div>
 <router-outlet />

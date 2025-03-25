@@ -21,6 +21,7 @@ export class ModalLoginComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
   loginForm: FormGroup;
+  
  isMenuOpen: boolean = false;
   showRegisterModal: boolean = false;
 

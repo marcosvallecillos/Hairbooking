@@ -1,4 +1,5 @@
-<div *ngIf="show" class="modal-overlay">
+@if(show){
+<div class="modal-overlay">
     <div class="modal-content">
         <button class="close-button" (click)="onClose()">×</button>
         <h2>Iniciar Sesión</h2>
@@ -37,8 +38,8 @@
         </div>
     </div>
 </div>
-
-<app-modal-register
+}
+<!--<app-modal-register
     [show]="showRegisterModal"
     (close)="showRegisterModal = false">
-</app-modal-register>
+</app-modal-register>-->

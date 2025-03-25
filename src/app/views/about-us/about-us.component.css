@@ -57,22 +57,17 @@
 }
 
 /* Sección Sobre Nosotros */
-.about-section {
-    width: auto;
-    height:1000px;
-    padding: 5rem 0;
-    background-color: white;
-    text-align: center;
-}
-.about-section img{
+.about-section img {
     margin-top: -10%;
     width: 50%;
     object-fit: cover;
-    margin-bottom: 1.5rem;
+    margin-top:1rem;
+    margin-bottom: 3.5rem; 
     border-radius: 50%;
     border: 3px solid #c5a47e;
-    transition: transform 0.3s ease;
+    transition:all .5s ease-in-out;
 }
+
 h2 {
     font-size: 2.2rem;
     font-weight: 700;
@@ -95,49 +90,112 @@ p {
     color: #333;
 }
 
-/* Sección de Valores */
 .values-section {
-    margin-top: -220px;
-    padding: 4rem 0;
+    padding: 6rem 0;
     background-color: #c5a47e;
     text-align: center;
 }
-@media (max-width: 991px) {
-    .values-section {
-        margin-top: -130px;
-    }
+
+.values-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    color: #333;
 }
 
 .value-card {
-    padding: 2rem;
-    margin-bottom: 2rem;
-    background: #fedcb4;
+    background-color: #ffe4c4;
     border-radius: 10px;
+    padding: 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .value-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .value-card i {
     font-size: 3rem;
-    color: #c5a47e;
-    margin-bottom: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
 }
 
 .value-card h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1a1a1a;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #333;
 }
 
 .value-card p {
     font-size: 1rem;
-    color: #666;
+    color: #555;
 }
 
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .values-section h2 {
+        font-size: 2rem;
+    }
+
+    .value-card {
+        padding: 1.5rem;
+    }
+
+    .value-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .value-card p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .values-section {
+        padding: 3rem 1rem;
+    }
+
+    .values-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .value-card {
+        padding: 1.2rem;
+    }
+
+    .value-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .value-card p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .values-section {
+        padding: 2rem 1rem;
+    }
+
+    .values-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .value-card {
+        padding: 1rem;
+    }
+
+    .value-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .value-card p {
+        font-size: 0.8rem;
+    }
+}
 .team-section {
     height: auto;
     padding: 4rem 0;

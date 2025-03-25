@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { LanguageService } from '../../services/language.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list-price',
-  imports: [ FooterComponent],
+  imports: [FooterComponent, RouterLink],
   templateUrl: './list-price.component.html',
   styleUrl: './list-price.component.css'
 })

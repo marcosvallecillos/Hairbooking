@@ -1,24 +1,21 @@
-import { NgClass } from '@angular/common';
+import { NgClass, CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Form, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ModalLoginComponent } from '../modal-login/modal-login.component';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-register',
-  imports: [NgClass,FormsModule,ReactiveFormsModule,ModalLoginComponent],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './modal-register.component.html',
   styleUrl: './modal-register.component.css'
 })
 export class ModalRegisterComponent {
-  
   @Input() show: boolean = false;
   @Output() close = new EventEmitter<void>();
-  errorMessage:string = '';
+  errorMessage: string = '';
   signUpForm: FormGroup;
   showPassword = false;
-isMenuOpen: boolean = false;
-  showLoginModal: boolean = false;
-
+  isMenuOpen: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.signUpForm = this.fb.group({
@@ -30,6 +27,7 @@ isMenuOpen: boolean = false;
       confirmPassword: ['']
     }, { validators: this.passwordMatchValidator });
   }
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
     document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
@@ -40,14 +38,9 @@ isMenuOpen: boolean = false;
     document.body.style.overflow = '';
   }
 
-  openLoginModal() {
-    this.showLoginModal = true;
-  }
-  
   getControl(controlName: string) {
     return this.signUpForm.get(controlName);
   }
-
 
   onClose() {
     this.close.emit();
@@ -67,10 +60,5 @@ isMenuOpen: boolean = false;
       console.log('Usuario registrado:', this.signUpForm.value);
       this.closeMenu();
     }
-  }
-
-  
-  openRLoginModal() {
-    this.showLoginModal = true;
   }
 }

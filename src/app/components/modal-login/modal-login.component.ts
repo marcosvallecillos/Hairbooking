@@ -8,7 +8,7 @@ import { ModalRegisterComponent } from '../modal-register/modal-register.compone
 @Component({
   selector: 'app-modal-login',
   standalone: true,
-  imports: [CommonModule, FormsModule,ModalRegisterComponent],
+  imports: [CommonModule, FormsModule, ModalRegisterComponent],
   templateUrl: './modal-login.component.html',
   styleUrl: './modal-login.component.css'
 })
@@ -22,9 +22,8 @@ export class ModalLoginComponent {
   isLoading: boolean = false;
   loginForm: FormGroup;
   
- isMenuOpen: boolean = false;
+  isMenuOpen: boolean = false;
   showRegisterModal: boolean = false;
-
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -35,6 +34,7 @@ export class ModalLoginComponent {
     this.isMenuOpen = false;
     document.body.style.overflow = '';
   }
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -47,7 +47,6 @@ export class ModalLoginComponent {
     });
   }
 
-  
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
@@ -85,5 +84,11 @@ export class ModalLoginComponent {
 
   openRegisterModal() {
     this.showRegisterModal = true;
+    this.show = false;
+  }
+
+  onRegisterModalClose() {
+    this.showRegisterModal = false;
+    this.show = true;
   }
 }

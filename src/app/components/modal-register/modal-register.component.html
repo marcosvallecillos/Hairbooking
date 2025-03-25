@@ -2,7 +2,7 @@
     <div class="modal-overlay">
       <div class="modal-content">
         <button class="close-button" (click)="onClose()">×</button>
-        <h2>Crear Usuario</h2>
+        <h2>Registro</h2>
   
         <form [formGroup]="signUpForm" (ngSubmit)="registrarUsuario()">
           <!-- Nombre -->
@@ -61,20 +61,8 @@
             />
           </div>
   
-          <button type="submit" class="signup-button" [disabled]="signUpForm.invalid">Registrarse</button>
+          <button type="submit" class="register-button" [disabled]="signUpForm.invalid">Registrarse</button>
         </form>
-  
-        <div class="login-section">
-          <p>¿Ya tienes una cuenta?</p>
-          <button class="login-link" (click)="openLoginModal()">Iniciar Sesión</button>
-        </div>
       </div>
     </div>
-    
   }
-  
-
-<app-modal-login
-[show]="showLoginModal"
-(close)="showLoginModal = false">
-</app-modal-login>

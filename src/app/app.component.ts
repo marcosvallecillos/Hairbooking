@@ -19,7 +19,7 @@ export class AppComponent {
     this.isUser = !this.isUser;
   }
 
-  isLoggedIn: boolean = true;
+  isLoggedIn: boolean = false;
   mostrarHeader: boolean = true;
 
   constructor(private authService: AuthService, private router: Router) {}

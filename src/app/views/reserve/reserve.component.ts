@@ -78,7 +78,7 @@ export class ReserveComponent {
  
   constructor(private authService: AuthService, private router: Router) {}
 
-  isAuthenticated = true;
+  isAuthenticated = false;
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();

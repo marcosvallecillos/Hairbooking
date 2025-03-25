@@ -33,13 +33,16 @@
 
         <div class="register-section">
             <p>¿No tienes una cuenta? 
-                <a (click)="openRegisterModal()">Regístrate</a>
+                <button class="register-link" (click)="openRegisterModal()">Regístrate</button>
             </p>
         </div>
     </div>
 </div>
 }
-<!--<app-modal-register
+
+@if(showRegisterModal){
+<app-modal-register
     [show]="showRegisterModal"
-    (close)="showRegisterModal = false">
-</app-modal-register>-->
+    (close)="onRegisterModalClose()">
+</app-modal-register>
+}

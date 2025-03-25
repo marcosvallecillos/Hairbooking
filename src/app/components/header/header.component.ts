@@ -1,6 +1,6 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
+import { RouterLink, RouterLinkActive, ActivatedRoute, Router } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { AboutUsComponent } from '../../views/about-us/about-us.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
@@ -19,12 +19,22 @@ import { ModalRegisterComponent } from '../modal-register/modal-register.compone
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent {mostrarHeader: boolean = true;
+
+
+  
+
   isSpanish: boolean = true;
   isMenuOpen: boolean = false;
   showLoginModal: boolean = false;
 
-  constructor(private languageService: LanguageService, private route: ActivatedRoute) {
+  ngOnInit() {
+
+    this.router.events.subscribe(() => {
+      this.mostrarHeader = this.router.url !== '/index'; 
+    });
+  }
+  constructor(private languageService: LanguageService, private route: ActivatedRoute,private router: Router) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
     );

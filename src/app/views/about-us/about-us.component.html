@@ -11,14 +11,12 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 fade-in">
-
-
-                    <p> {{ getText('Jesus Rodriguez se inicia en el mundo de la peluquería con 15 años...',
+                    <p>{{ getText('Jesus Rodriguez se inicia en el mundo de la peluquería con 15 años...',
                          'Carlos Conde entered the world of hairdressing at the age of 15...') }}</p>
                     <p>{{ getText('Con una vocación innata y una visión emprendedora, ha estado siempre ligado al mundo de las barberías. En 2010 decidió expandir su modelo de negocio a través de franquicias, consolidando así su marca.', 
                         'With an innate calling and entrepreneurial vision, he has always been involved in the barbering world. In 2010, he decided to expand his business model through franchising, thus consolidating his brand.') }}</p>
-                    <p>{{ getText('Basado en la profesionalidad y el éxito, su método busca ofrecer servicios adaptados a todo tipo de hombres, combinando la esencia del estilo clásico con propuestas innovadoras y modernas.', 'Based on professionalism and success, their method seeks to offer services tailored to all types of men,
-                         combining the essence of classic style with innovative and modern proposals.') }}</p>
+                    <p>{{ getText('Basado en la profesionalidad y el éxito, su método busca ofrecer servicios adaptados a todo tipo de hombres, combinando la esencia del estilo clásico con propuestas innovadoras y modernas.', 
+                        'Based on professionalism and success, their method seeks to offer services tailored to all types of men, combining the essence of classic style with innovative and modern proposals.') }}</p>
                     <p>{{ getText('Con más de 17 años de experiencia en el sector, sus salones están diseñados para garantizar un servicio de alta calidad, eficiente y accesible, cumpliendo con las expectativas de los clientes más exigentes.', 
                         'With over 17 years of experience in the sector, its salons are designed to guarantee high-quality, efficient, and accessible service, meeting the expectations of the most demanding customers.') }}</p>
                 </div>
@@ -29,112 +27,63 @@
         </div>
     </section>
 
-    
-
     <!-- Sección Valores -->
     <section class="values-section">
         <div class="container-fluid">
-            <h2 class="text-center mb-5"> {{getText('Nuestros Valores','Our Values')}}</h2>
+            <h2 class="text-center mb-5">{{getText('Nuestros Valores','Our Values')}}</h2>
             <div class="row">
                 <div class="col-md-4">
                     <div class="value-card">
                         <i class="fas fa-cut"></i>
-                        <h3>{{getText('Excelencia','
-                            Excellence')}} </h3>
-                        <p>{{getText('Compromiso con la calidad en cada corte y servicio que ofrecemos.','Commitment to quality in every cut and service we offer.')}} </p>
+                        <h3>{{getText('Excelencia','Excellence')}}</h3>
+                        <p>{{getText('Compromiso con la calidad en cada corte y servicio que ofrecemos.',
+                            'Commitment to quality in every cut and service we offer.')}}</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="value-card">
                         <i class="fas fa-heart"></i>
-                        <h3>{{getText('Pasión','
-                            Passion')}} </h3>
-                        <p>{{getText('Amor por nuestro oficio y dedicación a la satisfacción del cliente.','Love for our craft and dedication to customer satisfaction')}} </p>
+                        <h3>{{getText('Pasión','Passion')}}</h3>
+                        <p>{{getText('Amor por nuestro oficio y dedicación a la satisfacción del cliente.',
+                            'Love for our craft and dedication to customer satisfaction')}}</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="value-card">
                         <i class="fas fa-star"></i>
-                        <h3>{{getText('Innovación','Innovation')}} </h3>
-                        <p>{{getText('Constante actualización en técnicas y tendencias del sector.','Constantly updating techniques and trends in the sector.')}}</p>
+                        <h3>{{getText('Innovación','Innovation')}}</h3>
+                        <p>{{getText('Constante actualización en técnicas y tendencias del sector.',
+                            'Constantly updating techniques and trends in the sector.')}}</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Sección Equipo -->
     <section class="team-section">
         <div class="container">
-            <h2 class="text-center mt-5">{{getText('Nuestro Equipo','Our Team')}}</h2>
+            <h2 class="text-center mt-5">{{ getText('Nuestro Equipo','Our Team') }}</h2>
             <div class="row justify-content-center">
-
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="team-member">
-                        <img src="../../../../images/barber1.jpg" class="img-fluid rounded-circle" alt="Barber 1">
-                        <h3>Jesus</h3>
-                        <p>Master Barber</p>
-                        <button class="btn-toggle" onclick="toggleContent()">{{getText('Ver más','See more')}} </button>
-                        <div id="extraContent" class="hidden-content">
-                            <p>
-                                Este es el contenido adicional que se mostrará cuando hagas clic en el botón. Puedes incluir cualquier información relevante aquí.
-                            </p>
+                @for (miembro of equipo; track miembro; let i = $index) {
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="team-member">
+                            <img [src]="miembro.imagen" class="img-fluid rounded-circle" [alt]="miembro.nombre">
+                            <h3>{{ miembro.nombre }}</h3>
+                            <p>{{ miembro.rol }}</p>
+                            <div class="text-content" [class.expanded]="miembrosExpandido[i]">
+                                <p>{{ miembro.descripcion }}</p>
+                            </div>
+                            <button class="btn-toggle" (click)="toggleContent(i)">
+                                {{ miembrosExpandido[i] ? getText('Ver menos', 'See less') : getText('Ver más', 'See more') }}
+                            </button>
                         </div>
                     </div>
-                </div>
-    
-                <!-- Miembro del equipo: Miguel -->
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="team-member">
-                        <img src="../../../../images/barber2.jpg" class="img-fluid rounded-circle" alt="Barber 3">
-                        <h3>Miguel</h3>
-                        <p>Color Specialist</p>
-                        <button class="btn-toggle" onclick="toggleContent()">{{getText('Ver más','See more')}} </button>
-                        <div id="extraContent" class="hidden-content">
-                            <p>
-                                Este es el contenido adicional que se mostrará cuando hagas clic en el botón. Puedes incluir cualquier información relevante aquí.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="team-member">
-                        <img src="../../../../images/barber2.jpg" class="img-fluid rounded-circle" alt="Barber 3">
-                        <h3>Carlos</h3>
-                        <p>Color Specialist</p>
-                        <button class="btn-toggle" onclick="toggleContent()">{{getText('Ver más','See more')}} </button>
-                        <div id="extraContent" class="hidden-content">
-                            <p>
-                                Este es el contenido adicional que se mostrará cuando hagas clic en el botón. Puedes incluir cualquier información relevante aquí.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
-    
-            <!-- Descripción de Jesús -->
-            <!--   <div class="row mt-5">
-                <div class="col-lg-10 mx-auto text-center">
-                    <h3>Jesús</h3>
-                    <p>
-                        Jesús descubre su pasión por la peluquería a los 15 años, dando sus primeros pasos en un oficio que pronto 
-                        se convertiría en su vocación. En 1997, abre su primera peluquería, iniciando así un camino lleno de esfuerzo 
-                        y dedicación.
-                    </p>
-                    <p>
-                        Peluquero de nacimiento y emprendedor por naturaleza, siempre ha estado ligado al mundo de la belleza y el 
-                        cuidado personal. En 2010, decide dar un paso más y comienza a desarrollar un modelo de negocio basado en la 
-                        excelencia y la profesionalidad.
-                    </p>
-                    <p>
-                        Su filosofía se centra en ofrecer un servicio adaptado a cada cliente, combinando la elegancia de los estilos 
-                        clásicos con las tendencias más vanguardistas. Con años de experiencia en el sector, sus salones están diseñados 
-                        para brindar un servicio de alta calidad, eficiente y accesible, garantizando siempre la satisfacción de quienes 
-                        buscan una imagen impecable.
-                    </p>
-                </div>
-            </div>-->
         </div>
     </section>
-    
+ 
 </div>
+
 <app-footer></app-footer>

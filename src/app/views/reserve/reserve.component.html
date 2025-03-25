@@ -2,7 +2,7 @@
 <div class="overlay"></div>
 
 <!-- Verifica si el usuario está autenticado -->
- <!--@if (isAuthenticated) {   -->
+@if (isAuthenticated) {   
     <div class="reserve-container">
         <!-- Sección de Servicios -->
         <div class="services-section">
@@ -81,7 +81,7 @@
         (confirm)="onConfirmReserve()"
         (cancel)="onCancelReserve()">
     </app-modal>
-      <!--  }  @else { --> 
+     }  @else {  
      Mensaje para usuarios no registrados 
  
     <div class="alert alert-warning text-center p-4 shadow-sm">
@@ -89,7 +89,7 @@
         <h2 class="titulo mt-3">Debes estar registrado para reservar una cita.</h2>
         <button class="alert-login mt-3"(click)="openLoginModal()"  >Iniciar Sesión</button>
     </div>
- <!--} --> 
+}
  
 <app-modal-login
     [show]="showLoginModal"

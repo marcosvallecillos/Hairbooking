@@ -22,14 +22,15 @@ export class ReserveComponent {
   showModal: boolean = false;
 
   services = [
-    { name: 'Servicio a Domicilio', price: '50 €' },
-    { name: 'Corte Degradado', price: '12 €' },
     { name: 'Mascarilla Puntos Negros', price: '10 €' },
-    { name: 'Corte Degradado + Barba', price: '15 €' },
-    { name: 'Corte + Mechas', price: '50 €' },
-    { name: 'Corte Fuera Horario', price: '30 €' },
     { name: 'Arreglo Barba', price: '10 €' },
-    { name: 'Corte + Cejas', price: '13 €' }
+    { name: 'Corte Degradado', price: '12 €' },
+    { name: 'Corte Degradado + Barba', price: '15 €' },
+    { name: 'Corte + Cejas', price: '13 €' },
+    { name: 'Corte Fuera Horario', price: '30 €' },
+    { name: 'Corte + Mechas', price: '50 €' },
+    { name: 'Servicio a Domicilio', price: '50 €' },
+
   ];
 
   availableHours = [

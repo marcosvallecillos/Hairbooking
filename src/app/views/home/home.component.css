@@ -9,7 +9,7 @@
 
 
 .snap-container::-webkit-scrollbar {
-    display: none; /* Para Chrome, Safari y Opera */
+    display: none; 
 }
 
 .snap-section {

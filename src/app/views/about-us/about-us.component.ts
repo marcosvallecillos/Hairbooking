@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from "../../components/header/header.component";
 import { FooterComponent } from '../../components/footer/footer.component';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute } from '@angular/router';
@@ -8,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-about-us',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, FooterComponent],
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.css'
 })

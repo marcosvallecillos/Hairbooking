@@ -1,0 +1,80 @@
+@if (show) {
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <button class="close-button" (click)="onClose()">×</button>
+        <h2>Crear Usuario</h2>
+  
+        <form [formGroup]="signUpForm" (ngSubmit)="registrarUsuario()">
+          <!-- Nombre -->
+          <div class="form-group">
+            <input type="text" formControlName="nombre" placeholder="Nombre" class="form-input" />
+          </div>
+  
+          <!-- Apellidos -->
+          <div class="form-group">
+            <input type="text" formControlName="apellidos" placeholder="Apellidos" class="form-input" />
+          </div>
+  
+          <!-- Email -->
+          <div class="form-group">
+            <input type="email" formControlName="email" placeholder="Email" class="form-input" />
+          </div>
+  
+          <!-- Teléfono -->
+          <div class="form-group">
+            <input type="tel" formControlName="telefono" placeholder="Teléfono" class="form-input" />
+          </div>
+  
+          <!-- Contraseña -->
+          <div class="form-group position-relative">
+            <span
+              class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
+              (click)="togglePasswordVisibility()"
+              style="cursor: pointer;"
+              role="button"
+            >
+              <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </span>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Contraseña"
+              class="form-input"
+            />
+          </div>
+  
+          <!-- Confirmar Contraseña -->
+          <div class="form-group position-relative">
+            <span
+              class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
+              (click)="togglePasswordVisibility()"
+              style="cursor: pointer;"
+              role="button"
+            >
+              <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </span>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              placeholder="Confirmar Contraseña"
+              class="form-input"
+            />
+          </div>
+  
+          <button type="submit" class="signup-button" [disabled]="signUpForm.invalid">Registrarse</button>
+        </form>
+  
+        <div class="login-section">
+          <p>¿Ya tienes una cuenta?</p>
+          <button class="login-link" (click)="openLoginModal()">Iniciar Sesión</button>
+        </div>
+      </div>
+    </div>
+    
+  }
+  
+
+<app-modal-login
+[show]="showLoginModal"
+(close)="showLoginModal = false">
+</app-modal-login>

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Codystar:300&display=swap");
+
 .header {
     height: 130px;
     position: absolute; 
@@ -6,6 +8,10 @@
     width: 100%;
     z-index: 1000; 
     box-shadow: none; /* Quitamos la sombra por defecto */
+    margin-top: 20px;
+}
+.home{
+    margin-left: 50px;
 }
 
 .rounded-pill {
@@ -26,38 +32,32 @@
 }
 
 h1 {
-    height: 100%;
-    font-family: 'Pacifico', cursive;
+    
+    margin-left:10px;
     font-size: 3rem;
-    color: #8b0000;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 3s steps(30, end) forwards, blink 0.7s infinite;
-}
-
-h1 {
-    font-family: 'Pacifico', cursive;
-    font-size: 3rem; /* Tamaño base */
-    color: #8b0000;
     text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typing 3s steps(30, end) forwards, blink 0.7s infinite;
-}
+    font-weight: bold;
+    -webkit-animation: glow 2s ease-in-out infinite alternate;
+    -moz-animation: glow 2s ease-in-out infinite alternate;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  @-webkit-keyframes glow {
+    from {
+      color: #ffffff;
+      text-shadow: 0 0 10px black, 0 0 20px black, 0 0 30px black, 0 0 40px black, 0 0 50px black, 0 0 60px black, 0 0 70px black, 0 0 90px black;
+    }
+    to {
+      color: gray;
+      text-shadow: 0 0 20px black, 0 0 30px black, 0 0 40px black, 0 0 50px black, 0 0 60px black, 0 0 70px black, 0 0 80px black, 0 1 90px black;
+    }
+  }
 
-
-@keyframes typing {
-    from { width: 0; }
-    to { width: 25%; } 
-}
-
-@keyframes blink {
-    50% { border-color: transparent; }
-}
 
 /* 📱 Ajustes Responsivos */
 @media (max-width: 991px) { 
-    h1 {
+    h1 { 
+            margin-right:80px;
         font-size: 3rem;
         text-align: left;
         animation: none; 
@@ -138,12 +138,12 @@ h1 {
       
     }
 
-    /* ✅ Cuando el menú está activo, se desliza desde la derecha */
+   
     .navbar-collapse.show {
         right: 0;
     }
 
-    /* 🔹 Estilos para los links dentro del menú */
+  
     .navbar-nav {
         display: flex;
         flex-direction: column;
@@ -278,4 +278,8 @@ h1 {
 .navbar.scrolled {
     background-color: rgb(12, 12, 12);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.back-index{
+    width: 30px;
+   height: 30px;
 }

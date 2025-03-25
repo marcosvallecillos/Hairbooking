@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ModalRegisterComponent } from '../modal-register/modal-register.component';
 
 @Component({
   selector: 'app-modal-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,ModalRegisterComponent],
   templateUrl: './modal-login.component.html',
   styleUrl: './modal-login.component.css'
 })
@@ -20,7 +21,20 @@ export class ModalLoginComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
   loginForm: FormGroup;
+  
+ isMenuOpen: boolean = false;
+  showRegisterModal: boolean = false;
 
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
+    document.body.style.overflow = '';
+  }
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -47,8 +61,6 @@ export class ModalLoginComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Aquí deberías implementar la llamada a tu API de autenticación
-    // Por ahora, simularemos un login exitoso
     setTimeout(() => {
       if (this.email === 'test@example.com' && this.password === 'password') {
         localStorage.setItem('token', 'token-simulado');
@@ -69,5 +81,9 @@ export class ModalLoginComponent {
   onClose() {
     this.close.emit();
     this.errorMessage = '';
+  }
+
+  openRegisterModal() {
+    this.showRegisterModal = true;
   }
 }

@@ -1,20 +1,16 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../components/header/header.component';
 import { CarrouselComponent } from '../../components/carrousel/carrousel.component';
 import { JumbotronComponent } from '../../components/jumbotron/jumbotron.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ServicesComponent } from '../../components/services/services.component';
 import { GalleryComponent } from '../../components/gallery/gallery.component';
-import { HeaderUserComponent } from '../../components/header-user/header-user.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    HeaderComponent, 
-    HeaderUserComponent,
     CarrouselComponent,
     JumbotronComponent,
     FooterComponent,

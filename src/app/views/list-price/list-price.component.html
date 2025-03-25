@@ -1,5 +1,5 @@
-<div class="overlay"></div>
-<div class="container">
+ <div class="overlay"></div>
+<!--<div class="container">
 
     <div class="header-section text-center py-4">
         <h1>LISTA DE PRECIOS</h1>
@@ -89,5 +89,152 @@
 
     </div>
 </div>
+-->
+    <div class="container-fluid">
+        <div class="title">
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="info-precios">
+                    <h1>{{getText('Servicios y tratamientos','Services and treatments')}} </h1>
+                    <div class="line"></div>
+                    <p >
+                       {{getText('En nuestros establecimientos encontrarás todo lo que necesitas para tu cuidado personal: cortes
+                       de cabello, peinados, tratamientos capilares, afeitado, coloración y más.',
+                       'In our establishments you will find everything you need for your personal care: haircuts, hairstyles,
+                       hair treatments, shaving, coloring and more.')}} 
+                        <br>
+                        <br>
+                        {{getText(' Además, contamos con una exclusiva selección de productos para el cuidado del cabello y la piel,
+                        como champús, acondicionadores, mascarillas, sérums, cremas hidratantes y lociones, diseñados
+                        para brindarte la mejor experiencia de bienestar.',
 
+                        'In addition, we have an exclusive selection of products for hair and skin care, such as shampoos, 
+                        conditioners, masks, serums, moisturizers and lotions, designed to provide you with the best wellness experience.')}}
+                    </p>
+                </div>
+                <div class="buttons-container mt-4">
+                    <button class="btn btn-primary me-3" routerLink="/reserve">
+                        {{getText('Reservar', 'Reserve')}}
+                    </button>
+                    <button class="btn btn-secondary" routerLink="/products">
+                        {{getText('Ver Productos', 'View Products')}}
+                    </button>
+                </div>
+                     
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 ">
+                <div class="card-img  text-white">
+                    <br>
+            
+                        <h1 class="title-card">{{getText('Lista de precios','Price List')}} </h1>
+
+                    <br>
+                    <div class="decorative-line"></div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="card-img">
+                                <div class="info">
+                                    <h2 class="section-title">{{getText('CORTES DE PELO','Haircuts')}} </h2>
+                                    <ul class="section-list">
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Corte Clásico','Clasic Court')}} </span>
+                                            <span class="price">15€</span>
+                                        </div>
+                                        <br>
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Corte + Lavado','Court + Wash')}} </span>
+                                            <span class="price">18€</span>
+                                        </div>
+                                        <br>
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Corte + Arreglo de Barba','Beard Court + Trim')}} </span>
+                                            <span class="price">25€</span>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="card-img">
+                                <div class="info">
+                                    <h2 class="section-title">{{getText(' SERVICIOS DE BARBA','BEARD SERVICES')}}</h2>
+                                    <ul class="section-list">
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Arreglo de Barba','Beard Grooming')}} </span>
+                                            <span class="price">12€</span>
+                                        </div>
+                                        <br>
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Afeitado Tradicional','Traditional Shaving')}} </span>
+                                            <span class="price">18€</span>
+                                        </div>
+                                        <br>
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Perfilado de Barba','Beard Shaping')}} </span>
+                                            <span class="price">10€</span>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="card-img">
+                                <div class="info">
+                                    <h2 class="section-title">{{getText('COLORACIÓN','COLORATION')}} </h2>
+                                    <ul class="section-list">
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Tinte Completo','Full dye')}} </span>
+                                            <span class="price">25€</span>
+                                        </div>
+                                        <br>
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Mechas','Highlights')}} </span>
+                                            <span class="price">30€</span>
+                                        </div>
+                                        <br>
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Decoloración','Discoloration')}} </span>
+                                            <span class="price">35€</span>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="card-img">
+                                <div class="info">
+                                    <h2 class="section-title">{{getText('Tratamiento','TREATMENTS')}} </h2>
+                                    <ul class="section-list">
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Tratamiento Hidratante','Hydrating treatment')}} </span>
+                                            <span class="price">20€</span>
+                                        </div>
+                                        <br>
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Masaje Capilar','Hair Massage')}} </span>
+                                            <span class="price">15€</span>
+                                        </div>
+                                        <br>
+                                        <div class="price-item d-flex justify-content-between">
+                                            <span class="service">{{getText('Mesoterapia Capilar','Hair Mesotherapy')}} </span>
+                                            <span class="price">70€</span>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
 <app-footer></app-footer>

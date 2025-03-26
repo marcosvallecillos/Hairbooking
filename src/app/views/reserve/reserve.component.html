@@ -1,21 +1,38 @@
-
 <div class="overlay"></div>
 
 <!-- Verifica si el usuario está autenticado -->
-@if (isAuthenticated) {   
+@if (isUser) {
     <div class="reserve-container">
         <!-- Sección de Servicios -->
         <div class="services-section">
             <h2>Servicios Disponibles</h2>
             <div class="services-grid">
-                @for (service of services; track service.name) {
+                @for ( service of services; track service.name) {
                     <div class="service-card"
                         [class.selected]="selectedService === service.name"
                         (click)="selectedService = service.name">
-                        <h3>{{service.name}}</h3>
-                        <p class="price">{{service.price}}</p>
+                        <h3>{{ service.name }}</h3>
+                        <p class="price">{{ service.price }}</p>
                     </div>
                 }
+            </div>
+        </div>
+
+        <div class="barber-container">
+            <!-- Sección de Peluqueros -->
+            <div class="barber-section">
+                <h2>Peluqueros Disponibles</h2>
+                <div class="barber-grid">
+                    @for ( barber of babers; track barber.name) {
+                        <div class="barber-card"
+                            [class.selected]="selectedBarber === barber.name"
+                            (click)="selectedBarber = barber.name">
+                            <img [src]="barber.imagen" class="img-fluid rounded-circle" [alt]="barber.name">
+                            <h3>{{ barber.name }}</h3>
+                            <p>{{barber.descripcion}} </p>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
 
@@ -29,12 +46,12 @@
 
             <div class="calendar-grid">
                 <!-- Días de la semana -->
-                @for (day of ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']; track day) {
-                    <div class="weekday">{{day}}</div>
+                @for ( day of ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']; track day) {
+                    <div class="weekday">{{ day }}</div>
                 }
 
                 <!-- Días del mes -->
-                @for (date of getDaysInMonth(currentDate.getMonth(), currentDate.getFullYear()); track $index) {
+                @for ( date of getDaysInMonth(currentDate.getMonth(), currentDate.getFullYear()); track $index) {
                     @if (date === null) {
                         <div class="calendar-day empty"></div>
                     } @else {
@@ -52,9 +69,9 @@
         <!-- Horas Disponibles -->
         @if (selectedDate && selectedService) {
             <div class="time-slots-section">
-                <h3>Horarios Disponibles para el {{ selectedDate | date:'EEEE d MMMM  YYYY' }}</h3>
+                <h3>Horarios Disponibles para el {{ selectedDate | date:'EEEE d MMMM yyyy' }}</h3>
                 <div class="time-slots-grid">
-                    @for (time of availableHours; track time) {
+                    @for ( time of availableHours; track time) {
                         <button class="time-slot"
                                 [class.selected]="selectedTime === time"
                                 (click)="selectedTime = time">
@@ -67,7 +84,7 @@
 
         <!-- Botón de Reserva -->
         <button class="reserve-button" 
-                [disabled]="!selectedDate || !selectedService || !selectedTime"
+                [disabled]="!selectedDate || !selectedService || !selectedTime  || !selectedBarber"
                 (click)="onReserve()">
             Reservar Cita
         </button>
@@ -81,18 +98,18 @@
         (confirm)="onConfirmReserve()"
         (cancel)="onCancelReserve()">
     </app-modal>
-     }  @else {  
-     Mensaje para usuarios no registrados 
- 
+} @else {
+    <!-- Mensaje para usuarios no registrados -->
     <div class="alert alert-warning text-center p-4 shadow-sm">
-        <i class="bi bi-exclamation-circle-fill fs-4 " ></i>
+        <i class="bi bi-exclamation-circle-fill fs-4"></i>
         <h2 class="titulo mt-3">Debes estar registrado para reservar una cita.</h2>
-        <button class="alert-login mt-3"(click)="openLoginModal()"  >Iniciar Sesión</button>
+        <button class="alert-login mt-3" (click)="openLoginModal()">Iniciar Sesión</button>
     </div>
 }
- 
+
 <app-modal-login
     [show]="showLoginModal"
     (close)="showLoginModal = false">
 </app-modal-login>
+
 <app-footer></app-footer>

@@ -13,14 +13,14 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
 
-  isUser: boolean = true; 
+  isUser: boolean = false; 
 
   toggleUser() {
     this.isUser = !this.isUser;
   }
 
   isLoggedIn: boolean = false;
-  mostrarHeader: boolean = true;
+  mostrarHeader: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 

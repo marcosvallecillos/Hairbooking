@@ -1,16 +1,16 @@
 <div class="overlay"></div>
 <div class="container-fluid">
-
     <section class="about-section">
         <div class="container">
             <div class="row">
-                <div class="col-12 text-center mb-5 fade-in">
+                <div class="col-12 text-center mb-5 ">
                     <h2>{{getText('SOBRE','ABOUT')}} <br>Jesus Rodriguez</h2>
                     <div class="decorative-line"></div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 fade-in">
+                <div class="col-lg-6 col-md-6 col-sm-12 info-barber ">
+                   
                     <p>{{ getText('Jesus Rodriguez se inicia en el mundo de la peluquería con 15 años...',
                          'Carlos Conde entered the world of hairdressing at the age of 15...') }}</p>
                     <p>{{ getText('Con una vocación innata y una visión emprendedora, ha estado siempre ligado al mundo de las barberías. En 2010 decidió expandir su modelo de negocio a través de franquicias, consolidando así su marca.', 
@@ -69,10 +69,10 @@
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="team-member">
                             <img [src]="miembro.imagen" class="img-fluid rounded-circle" [alt]="miembro.nombre">
-                            <h3>{{ miembro.nombre }}</h3>
-                            <p>{{ miembro.rol }}</p>
+                            <h3> {{ miembro.nombre }}</h3>
+                            <p>{{ getText(miembro.rol || 'Rol no disponible', miembro.rol_en || 'Role not available') }}</p>
                             <div class="text-content" [class.expanded]="miembrosExpandido[i]">
-                                <p>{{ miembro.descripcion }}</p>
+                                <p>{{ getText(miembro.descripcion || 'Descripción no disponible', miembro.descripcion_en || 'Description not available') }}</p>
                             </div>
                             <button class="btn-toggle" (click)="toggleContent(i)">
                                 {{ miembrosExpandido[i] ? getText('Ver menos', 'See less') : getText('Ver más', 'See more') }}

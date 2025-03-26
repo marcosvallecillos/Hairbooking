@@ -18,19 +18,22 @@
 }
 
 /* Sección de Servicios Mejorada */
-.services-section {
+.services-section,
+.barber-section {
     margin-bottom: 3rem;
     text-align: center;
 }
 
-.services-grid {
+.services-grid,
+.barber-grid {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
 }
 
-.service-card {
+.service-card,
+.barber-card {
     background-color: #fff;
     border: 1px solid #000000;
     border-radius: 12px;
@@ -41,19 +44,21 @@
     text-align: center;
 }
 
-.service-card:hover {
+.service-card:hover,
+.barber-card:hover {
    
     transform: translateY(-7px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
 }
 
-.service-card.selected {
-    
+.service-card.selected ,
+.barber-card.selected {
     border-color: #c5a47e;
     background-color:gray;
 }
 
-.service-card h3 {
+.service-card h3,
+.barber-card h3 {
     margin: 0;
     font-size: 1.3rem;
     color: #222;
@@ -65,7 +70,13 @@
     font-size: 1.1rem;
     margin-top: 0.6rem;
 }
-
+.barber-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
 /* Calendario Mejorado */
 .calendar-section {
     background-color: #1a1a1a;

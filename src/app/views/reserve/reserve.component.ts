@@ -17,6 +17,7 @@ export class ReserveComponent {
   currentDate = new Date();
   selectedDate: Date | null = null;
   selectedService: string = '';
+  selectedBarber: string = '';
   selectedTime: string = '';
   showModal: boolean = false;
 
@@ -38,7 +39,12 @@ export class ReserveComponent {
     '12:00', '12:30', '13:00', '13:30', '16:00', '16:30',
     '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'
   ];
-  
+  babers = [
+    {name: 'Jesus',imagen: '../../../../images/barber1.jpg', descripcion: 'Peluquero Principal'},
+    { name: 'Miguel',imagen: '../../../../images/colorista.jpg',descripcion: 'Colorista'},
+    { name: 'Leo',imagen: '../../../../images/barber2.jpg',descripcion: 'Ayudante'}
+
+  ]
   showLoginModal: boolean = false;
   getDaysInMonth(month: number, year: number): (Date | null)[] {
     const firstDay = new Date(year, month, 1);
@@ -68,7 +74,6 @@ export class ReserveComponent {
       this.updateAvailableHours();
     }
   }
-
   isToday(date: Date): boolean {
     const today = new Date();
     return date.getDate() === today.getDate() &&
@@ -77,8 +82,8 @@ export class ReserveComponent {
   }
  
   constructor(private authService: AuthService, private router: Router) {}
-
-  isAuthenticated = false;
+  isUser = true;
+  isAuthenticated = true;
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
@@ -125,7 +130,7 @@ redirectToLogin() {
   }
 
   onReserve() {
-    if (this.selectedDate && this.selectedService && this.selectedTime) {
+    if (this.selectedDate && this.selectedService && this.selectedBarber && this.selectedTime ) {
       this.showModal = true;
     }
   }

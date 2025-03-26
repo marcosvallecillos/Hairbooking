@@ -39,6 +39,7 @@
 }
 
 .services-grid {
+   
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
@@ -47,6 +48,9 @@
 
 .service-card {
     position: relative;
+    width: 100%;
+    height: auto;
+    flex-wrap: wrap;
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
@@ -126,7 +130,7 @@
     color: white;
 }
 
-/* Responsive */
+/* Responsive (Iphone Xr) */
 @media (max-width: 768px) {
     .services-section {
         padding: 3rem 0;
@@ -137,12 +141,12 @@
     }
 
     .services-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ajusta a columnas más pequeñas */
         gap: 1.5rem;
     }
 
     .service-image {
-        height: 250px;
+        height: 100%;
     }
 
     .service-content {
@@ -151,5 +155,42 @@
 
     .service-content h3 {
         font-size: 1.2rem;
+    }
+
+    .service-content p {
+        font-size: 1rem;
+    }
+
+    .service-btn {
+        font-size: 0.8rem;
+        padding: 0.6rem 1.5rem;
+    }
+    
+    /* Responsive para pantalla mas pequeña(Iphone SE) */
+    @media (max-width: 576px) {
+        .services-grid {
+            margin-top: -30px;
+            margin-left: 30px;
+            object-fit:cover ;
+            width: 80%;
+            grid-template-columns: 1fr; /* Una sola columna en pantallas muy pequeñas */
+        }
+    
+        .service-image {
+            height: 120px; 
+        }
+    
+        .service-content h3 {
+            font-size: 0.9rem;
+        }
+    
+        .service-content p {
+            font-size: 0.8rem;
+        }
+    
+        .service-btn {
+            font-size: 0.7rem;
+            padding: 0.4rem 0.8rem;
+        }
     }
 }

@@ -19,7 +19,7 @@
 
 .overlay {
     width: 100%;
-    height: 250px;
+    height: 200px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
     url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
     background-size: cover;

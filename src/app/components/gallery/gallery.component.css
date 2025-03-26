@@ -7,7 +7,7 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: aliceblue;}
+    background-color: rgb(254, 245, 208);}
 .gallery-title {
   text-align: center;
   color: #000000;

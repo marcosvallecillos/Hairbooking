@@ -8,6 +8,8 @@ import { HeaderUserComponent } from './components/header-user/header-user.compon
 import { ContactoComponent } from './views/contacto/contacto.component';
 import { IndexComponent } from './views/index/index.component';
 import { ModalRegisterComponent } from './components/modal-register/modal-register.component';
+import { ShowProfileComponent } from './components/show-profile/show-profile.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -20,6 +22,8 @@ export const routes: Routes = [
     { path: 'register', component: ModalRegisterComponent },
     { path: 'header-user', component: HeaderUserComponent },
     { path: 'contacto', component: ContactoComponent },
+    { path: 'showProfile', component: ShowProfileComponent },
+    { path: 'editProfile', component: EditProfileComponent },
 
 ];
 

@@ -1,13 +1,14 @@
 @if (show) {
     <div class="modal-overlay">
         <div class="modal-content">
-            <h2>Confirmar Reserva</h2>
+            <h2>{{getText('Confirmar Reserva','Confirm Reserve')}} </h2>
             <div class="modal-body">
-                <p>¿Estás seguro que deseas reservar?</p>
+                <p>{{getText('¿Estás seguro que deseas reservar?','Are you sure you want to reserve?')}} </p>
                 <div class="reservation-details">
-                    <p><strong>Servicio:</strong> {{servicio}}</p>
-                    <p><strong>Fecha:</strong> {{fecha}}</p>
-                    <p><strong>Hora:</strong> {{hora}}</p>
+                    <p><strong>{{getText('Peluquero:','Barber:')}} </strong> {{peluquero }}</p>
+                    <p><strong>{{getText('Servicio:','Service:')}} </strong> {{servicio}}</p>
+                    <p><strong>{{getText('Fecha:','Date:')}} </strong> {{fecha}}</p>
+                    <p><strong>{{getText('Hora:','Hour')}} </strong> {{hora}}</p>
                 </div>
             </div>
             <div class="modal-actions">

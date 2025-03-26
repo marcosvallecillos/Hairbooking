@@ -1,22 +1,29 @@
-/* General */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     margin: 0;
-    background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(128, 128, 128));
-    font-family: Arial, sans-serif;
-    animation: changeBg 3s infinite alternate;
-    color: rgb(0, 0, 0);
+    height: 100vh;
+    animation: cambiarColor 10s infinite alternate; /* Duración de 15 segundos, alternando */
 }
-@keyframes changeBg {
-    0% { background-color: rgb(0, 0, 0); }
-    50% { background-color: rgb(128, 128, 128) }
-    100% { background-color: rgb(255, 255, 255); }
-  }
-  
-  
+
+@keyframes cambiarColor {
+    0% {
+        background-color: #3e2723; /* Marrón oscuro */
+    }
+    20% {
+        background-color: #4e342e; /* Marrón chocolate */
+    }
+    40% {
+        background-color: #5d4037; /* Marrón tierra */
+    }
+    60% {
+        background-color: #6d4c41; /* Marrón cálido */
+    }
+    80% {
+        background-color: #795548; /* Marrón suave */
+    }
+    100% {
+        background-color: #3e2723; /* Marrón oscuro */
+    }
+}
 .container {
     text-align: center;
     width: 100%;

@@ -7,7 +7,8 @@ import { Usuario } from '../models/user.interface';
 })
 export class ApiService {
 private apiUrl = 'http://localhost:8000/api';
-
+private isUserSubject = new BehaviorSubject<boolean>(true); // Estado inicial como `true`
+  isUser$ = this.isUserSubject.asObservable();
   constructor(private http: HttpClient) { }
 
   registerUser(usuario: Usuario): Observable<Usuario> {
@@ -15,5 +16,9 @@ private apiUrl = 'http://localhost:8000/api';
   }
   loginUser(email: string, password: string): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/login`, { email, password });
+  }
+
+  setIsUser(value: boolean) {
+    this.isUserSubject.next(value);
   }
 } 

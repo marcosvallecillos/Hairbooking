@@ -1,0 +1,186 @@
+
+.overlay {
+    width: 100%;
+    height: 200px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+    url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
+    background-size: cover;
+    background-position: center;
+    mask-image: linear-gradient(black 85%, transparent);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
+
+}
+.edit-profile-container {
+    max-width: 800px;
+    margin: 0 auto; /* Centra horizontalmente */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    box-sizing: border-box; /* Incluye el padding en el cálculo del tamaño */
+}
+
+.edit-profile-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px; /* Ajusta el ancho máximo del contenido */
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-control:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.btn {
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    min-width: 150px;
+}
+
+.btn-success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #45a049;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+    .edit-profile-container {
+        margin: 1rem;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .btn {
+        width: 80%;
+        margin-bottom: 0.5rem;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+    }
+}
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.alert {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.form-control.ng-invalid.ng-touched {
+    border-color: #dc3545;
+}
+
+.form-control.ng-valid.ng-touched {
+    border-color: #28a745;
+}
+
+.readonly-field {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    color: #495057;
+    border: 1px solid #ced4da;
+}
+
+.readonly-field:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.animated-button {
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+  }
+  
+  .animated-button:hover {
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5);
+    transform: translateY(-2px);
+  }
+  
+  .animated-button:active {
+    transform: scale(0.95);
+  }
+  .no-profile {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  

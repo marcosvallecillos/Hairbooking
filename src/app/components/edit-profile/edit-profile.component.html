@@ -1,0 +1,83 @@
+<div class="overlay"></div><div class="edit-profile-container">
+    @if (userData) {
+    <div class="edit-profile-card">
+        <h2>Editar Perfil</h2>
+        <form #editForm="ngForm">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" 
+                       class="form-control" 
+                       id="nombre" 
+                       name="nombre"
+                       [(ngModel)]="userData.nombre"
+                       [class.is-invalid]="errors['nombre']">
+                @if (errors['nombre']) {
+                    <div class="alert alert-danger">{{ errors['nombre'] }}</div>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellidos</label>
+                <input type="text" 
+                       class="form-control" 
+                       id="apellido" 
+                       name="apellido"
+                       [(ngModel)]="userData.apellidos"
+                       [class.is-invalid]="errors['apellidos']">
+                @if (errors['apellidos']) {
+                    <div class="alert alert-danger">{{ errors['apellidos'] }}</div>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <input type="email" 
+                       class="form-control" 
+                       id="email" 
+                       name="email"
+                       [(ngModel)]="userData.email"
+                       [class.is-invalid]="errors['email']">
+                @if (errors['email']) {
+                    <div class="alert alert-danger">{{ errors['email'] }}</div>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" 
+                       class="form-control" 
+                       id="telefono" 
+                       name="telefono"
+                       [(ngModel)]="userData.telefono"
+                       [class.is-invalid]="errors['telefono']">
+                @if (errors['telefono']) {
+                    <div class="alert alert-danger">{{ errors['telefono'] }}</div>
+                }
+            </div>
+
+            <div class="profile-actions">
+                <button type="button" 
+                        class="btn btn-success animated-button"
+                        (click)="guardarCambios()"
+                        [disabled]="loading">
+                    @if (loading) {
+                        <span class="spinner-border spinner-border-sm me-2"></span>
+                    }
+                    <i class="bi bi-check-circle me-2"></i>Guardar cambios
+                </button>
+                <button type="button" 
+                        class="btn btn-secondary animated-button"
+                        (click)="cancelar()"
+                        [disabled]="loading">
+                    <i class="bi bi-x-circle me-2"></i>Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+    } @else {
+    <div class="no-profile">
+        <p>No se encontraron datos del usuario</p>
+        <button class="btn btn-primary" routerLink="/signIn">Iniciar Sesión</button>
+    </div>
+    }
+</div>

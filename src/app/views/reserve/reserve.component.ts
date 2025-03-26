@@ -6,6 +6,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { AuthService } from '../../services/auth.service';
 import { ModalLoginComponent } from '../../components/modal-login/modal-login.component';
+import { LanguageService } from '../../services/language.service';
 @Component({
   selector: 'app-reserve',
   standalone: true,
@@ -20,17 +21,20 @@ export class ReserveComponent {
   selectedBarber: string = '';
   selectedTime: string = '';
   showModal: boolean = false;
-
+  selectedPeluquero: string = '';
 
   services = [
-    { name: 'Mascarilla Puntos Negros', price: '10 €' },
-    { name: 'Arreglo Barba', price: '10 €' },
-    { name: 'Corte Degradado', price: '12 €' },
-    { name: 'Corte Degradado + Barba', price: '15 €' },
-    { name: 'Corte + Cejas', price: '13 €' },
-    { name: 'Corte Fuera Horario', price: '30 €' },
-    { name: 'Corte + Mechas', price: '50 €' },
-    { name: 'Servicio a Domicilio', price: '50 €' },
+    //es
+    { nombre: 'Mascarilla Puntos Negros', precio: '10 €', name: 'Blackhead Mask', price: '10 €' },
+    { nombre: 'Arreglo Barba', precio: '10 €' , name: 'Beard arrangement', price: '10 €'  },
+    { nombre: 'Corte Degradado', precio: '12 €' , name: 'Fade Cut', price: '12 €' },
+    { nombre: 'Corte Degradado + Barba', precio: '15 €' , name: 'Fade Cut + Beard', price: '15 €' },
+    { nombre: 'Corte + Cejas', precio: '13 €' , name: 'Cut + Eyebrows', price: '13 €'  },
+    { nombre: 'Corte Fuera Horario', precio: '30 €' , name: 'Cut After Hours', price: '30 €' },
+    { nombre: 'Corte + Mechas', precio: '50 €' ,  name: 'Cut + Highlights', price: '50 €'},
+    { nombre: 'Servicio a Domicilio', precio: '50 €' , name: 'Home Delivery', price: '50 €' },
+
+    //en
 
   ];
 
@@ -40,11 +44,19 @@ export class ReserveComponent {
     '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'
   ];
   babers = [
-    {name: 'Jesus',imagen: '../../../../images/barber1.jpg', descripcion: 'Peluquero Principal'},
-    { name: 'Miguel',imagen: '../../../../images/colorista.jpg',descripcion: 'Colorista'},
-    { name: 'Leo',imagen: '../../../../images/barber2.jpg',descripcion: 'Ayudante'}
+    {name: 'Jesus',imagen: '../../../../images/barber1.jpg', descripcion: 'Peluquero Principal', description: 'Master Barber'},
+    { name: 'Miguel',imagen: '../../../../images/colorista.jpg',descripcion: 'Colorista' ,description:'Color Specialist'},
+    { name: 'Leo',imagen: '../../../../images/barber2.jpg',descripcion: 'Ayudante' , description: 'Assistant'}
 
   ]
+ isSpanish: boolean = true;
+
+
+
+  getText(es: string, en: string): string {
+    return this.isSpanish ? es : en;
+  }
+
   showLoginModal: boolean = false;
   getDaysInMonth(month: number, year: number): (Date | null)[] {
     const firstDay = new Date(year, month, 1);
@@ -81,10 +93,14 @@ export class ReserveComponent {
            date.getFullYear() === today.getFullYear();
   }
  
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private languageService: LanguageService) {
+    this.languageService.isSpanish$.subscribe(
+      isSpanish => this.isSpanish = isSpanish
+    );
+  }
   isUser = true;
   isAuthenticated = true;
-
+   
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
 }
@@ -130,9 +146,18 @@ redirectToLogin() {
   }
 
   onReserve() {
-    if (this.selectedDate && this.selectedService && this.selectedBarber && this.selectedTime ) {
-      this.showModal = true;
+    if (this.selectedDate && this.selectedService && this.selectedBarber && this.selectedTime) {
+        console.log('Datos de la reserva:', {
+          peluquero: this.selectedBarber,
+          servicio: this.selectedService,
+            fecha: this.selectedDate,
+            hora: this.selectedTime,
+        });
+        this.showModal = true;
     }
+}
+  onSelectBarber(barber: string) {
+    this.selectedBarber = barber;
   }
 
   updateAvailableHours() {

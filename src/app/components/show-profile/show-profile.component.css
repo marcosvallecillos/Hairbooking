@@ -1,0 +1,126 @@
+.overlay {
+  width: 100%;
+  height: 200px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+  url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
+  background-size: cover;
+  background-position: center;
+  mask-image: linear-gradient(black 85%, transparent);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
+
+}
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  .profile-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #4CAF50;
+  }
+  
+  .profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .profile-image i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #e9ecef;
+    color: #6c757d;
+  }
+  
+  .profile-info {
+    margin: 30px 0;
+  }
+  
+  .info-group {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+  }
+  
+  .info-group label {
+    display: block;
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  
+  .info-group p {
+    margin: 0;
+    color: #333;
+    font-size: 1.1em;
+  }
+  
+  .profile-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .animated-button {
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .animated-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .no-profile {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .profile-card {
+      padding: 20px;
+    }
+  
+    .profile-actions {
+      flex-direction: column;
+    }
+  
+    .animated-button {
+      width: 100%;
+    }
+  }

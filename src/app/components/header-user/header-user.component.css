@@ -1,25 +1,23 @@
+
 .header {
     height: 130px;
-    position: fixed; 
-    top: 0;
+    position: absolute;
+    top: 2%;
     left: 0;
     width: 100%;
-    z-index: 1000; 
-   
-    margin-top: 0;
+    z-index: 1000;
+    margin-top: 20px;
 }
-.home{
+
+.home {
     margin-left: 50px;
 }
+
 .rounded-pill {
     width: 100px;
-    /* Ajustar tamaño según sea necesario */
     height: 100px;
-    /* Ajustar tamaño según sea necesario */
     border-radius: 50%;
-    /* Cambiado a 50% para un logo más redondo */
     object-fit: cover;
-    /* Mantiene la relación de aspecto del logo */
 }
 
 .navbar {
@@ -28,144 +26,36 @@
     transition: all 0.3s ease;
 }
 
-h1 {
-    height: 100%;
-    font-family: 'Pacifico', cursive;
-    font-size: 3rem;
-    color: #8b0000;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 3s steps(30, end) forwards, blink 0.7s infinite;
-}
-
-h1 {
-    font-family: 'Pacifico', cursive;
-    font-size: 3rem; /* Tamaño base */
-    color: #8b0000;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typing 3s steps(30, end) forwards, blink 0.7s infinite;
-}
-
-
-@keyframes typing {
-    from { width: 0; }
-    to { width: 25%; } 
-}
-
-@keyframes blink {
-    50% { border-color: transparent; }
-}
-
-/* 📱 Ajustes Responsivos */
-@media (max-width: 991px) { 
-    h1 {
-        font-size: 3rem;
-        text-align: left;
-        animation: none; 
-    }
-}
-
-@media (max-width: 768px) { 
-    h1 {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 576px) { 
-    h1 {
-        font-size: 3rem; 
-    }
-}
-.nav-link {
-    font-weight: 500;
-
-    transition: color 0.3s;
-}
-
-.navbar-nav .nav-link {
-    color: white;
-    font-weight: 500;
-    transition: color 0.3s ease-in-out;
-    padding: 8px 15px;
-}
-
-.navbar-nav .nav-link:hover {
-    color: #ffc107;
-}
-
-/* Estilos para el botón de Iniciar Sesión */
-.navbar-nav .login-btn {
-    cursor: pointer;
-    background-color: transparent;
-    border: 2px solid white;
-    color: white;
-    padding: 6px 15px;
-    border-radius: 20px;
-    transition: all 0.3s ease-in-out;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.navbar-nav .login-btn:hover {
-    background-color: #ffc107;
-    border-color: #ffc107;
-    color: black;
-}
-
-.navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.75)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-}
-
-.dropdown-item:hover {
-    background-color: rgb(192, 190, 190);
-}
-@media (max-width: 991px) { 
+/* Ajustes responsivos */
+@media (max-width: 991px) {
     .navbar-collapse {
-        background-color: rgba(0, 0, 0, 0.9);
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 10px;
+        position: fixed;
+        border: none;
+        top: 0;
+        right: 100%;
+        width: 280px;
+        height: 100vh;
+        background-color: #1a1a1a;
+        padding: 2rem;
+        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+        transition: right 0.4s ease-in-out;
+        z-index: 1001;
+        overflow-y: auto;   
     }
-
     .navbar-collapse.show {
-        display: block;
+        right: 0;
     }
 
     .navbar-nav {
-        margin: 0;
-        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     .navbar-nav .nav-item {
-        margin: 10px 0;
+        padding: 10px 0;
+        text-align: left;
     }
-
-    hr {
-        border-color: rgba(255, 255, 255, 0.1);
-        margin: 10px 0;
-    }
-
-    .close-menu {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        font-size: 1.8rem;
-        color: white;
-        cursor: pointer;
-        transition: color 0.3s;
-    }
-
-    .close-menu:hover {
-        color: red;
-    }
-
 
     .menu-overlay {
         position: fixed;
@@ -186,56 +76,66 @@ h1 {
     }
 }
 
+/* Estilo para enlaces */
+.nav-link {
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 500;   
+}
 
-    .navbar-nav .nav-link {
-        font-size: 1.2rem;
-        color: white;
-        padding: 0.5rem 0;
-    }
+.nav-link:hover {
+    color: #ffc107;
+}
+.navbar-nav .nav-link:focus {
 
-    .navbar-toggler {
-        position: absolute;
-        right: 1rem;
-        z-index: 1002;
-        border: none;
-    }
+    color: #ffbf00;
+    font-weight: bold;
+}
 
-    .navbar-toggler:focus {
-        box-shadow: none;
-    }
+/* Botón de iniciar sesión */
+.navbar-nav .login-btn {
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-    /* Estilo para el botón de cerrar */
-    .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='white' viewBox='0 0 30 30'><path stroke='white' stroke-width='2' d='M6 6L24 24M6 24L24 6'/></svg>");
-    }
+.navbar-nav .login-btn:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: black;
+}
 
-  
-    
-    /* Cuando se abra el menu hamburguesa el fondo esta mas oscuro */
-    .navbar::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.3s ease-in-out;
-        z-index: 1000;
-    }
+/* Toggler del menú */
+.navbar-toggler {
+    position: absolute;
+    right: 1rem;
+    z-index: 1002;
+    border: none;
+}
 
-    .navbar.menu-open::before {
-        opacity: 1;
-        visibility: visible;
-    }
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='white' viewBox='0 0 30 30'><path stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+    border: none;
+}
+.navbar-toggler-icon:active,
+.navbar-toggler-icon:focus{
+    border: transparent;
+}
 
 
+/* Selector de idioma */
 .language-selector .btn-link {
     color: white;
     text-decoration: none;
-    padding: 8px 15px;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
 }
 
 .language-selector .btn-link:hover {
@@ -243,24 +143,73 @@ h1 {
 }
 
 .language-selector .dropdown-menu {
-    background-color: rgba(0, 0, 0, 0.9);
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
+    min-width: 5rem;
+    background-color: #0c0c0c;
 }
 
 .language-selector .dropdown-item {
     color: white;
-    padding: 8px 15px;
+    text-align: center;
+    padding: 0.5rem 1rem;
+}
+.navbar::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+    z-index: 1000;
 }
 
+.navbar.menu-open::before {
+    opacity: 1;
+    visibility: visible;
+}
 .language-selector .dropdown-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffc107;
+    background-color: #ffc107;
+    color: black;
 }
 
-/* Cuando se hace scroll, el navbar se vuelve sólido */
-.navbar.scrolled {
-    background-color: rgba(0, 0, 0, 0.9);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+/* Menú desplegable del usuario */
+.user-dropdown {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+    min-width: 200px;
+    padding: 0.5rem 0;
+}
+
+.user-dropdown .dropdown-item {
+    color: white;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.user-dropdown .dropdown-item:hover {
+    background-color: #ffc107;
+    color: black;
+}
+
+.user-icon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.user-icon:hover {
+    color: #ffc107;
+}hr {
+    color: #ffc107;
 }

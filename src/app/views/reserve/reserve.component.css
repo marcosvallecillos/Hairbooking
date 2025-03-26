@@ -1,6 +1,6 @@
 .overlay {
     width: 100%;
-    height: 250px;
+    height: 200px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
     url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
     background-size: cover;
@@ -18,43 +18,71 @@
 }
 
 /* Sección de Servicios Mejorada */
+
 .services-section,
 .barber-section {
-    margin-bottom: 3rem;
-    text-align: center;
-}
-
-.services-grid,
-.barber-grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.service-card,
-.barber-card {
-    background-color: #fff;
-    border: 1px solid #000000;
+    background: #fff;
+    padding: 20px;
     border-radius: 12px;
-    padding: 1.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+    
+}
+.barber-grid{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.service-card {
+    background: #fdfdfd;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+    height: 150px;
+    border: 1px solid gray;
+    text-align: center;
+}
+.barber-card {
+    background: #fdfdfd;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
 .service-card:hover,
 .barber-card:hover {
    
     transform: translateY(-7px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
 }
+.services-section h2,
+.barber-section h2 {
+    text-align: center;
+    color: #000000;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
 
 .service-card.selected ,
 .barber-card.selected {
-    border-color: #c5a47e;
-    background-color:gray;
+    border-color: #000000;
+    background-color:rgb(196, 196, 196);
 }
 
 .service-card h3,
@@ -72,10 +100,61 @@
 }
 .barber-card img {
     width: 100px;
-    height: 100px;
+    height: 150px;
     object-fit: cover;
     border-radius: 50%;
     margin-bottom: 1rem;
+}
+@media (max-width: 992px) {
+    .services-grid,
+    .barber-grid {
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .services-grid,
+    .barber-grid{
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+    
+    }
+
+    .service-card h3,
+    .barber-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .service-card .price,
+    .barber-card p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .services-grid{
+        
+            grid-template-columns: repeat(3, 1fr);
+        
+    
+    }
+    .barber-grid {
+        grid-template-columns: repeat(1, minmax(200px, 1fr));
+    }
+
+    .service-card,
+    .barber-card {
+        padding: 0.8rem;
+    }
+
+    .service-card h3,
+    .barber-card h3 {
+        font-size: 1rem;
+    }
+
+    .service-card .price,
+    .barber-card p {
+        font-size: 0.8rem;
+    }
 }
 /* Calendario Mejorado */
 .calendar-section {
@@ -236,14 +315,24 @@
 }
 
 .time-slots-section {
-    
     border: 1px solid black;
     background-color: #1a1a1a;
     border-radius: 12px;
     padding: 2rem;
     margin-top: 2rem;
 }
+@media (max-width: 576px) {
+    .time-slots-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+        gap: 0.5rem; /* Espaciado entre los botones */
+      margin-left: 40px;
+    }
 
+    .time-slot {
+        width: 100%; 
+    }
+}
 .time-slots-section h3 {
     gap: 0.8rem;
     color: white;

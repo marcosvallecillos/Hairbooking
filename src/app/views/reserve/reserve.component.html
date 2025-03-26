@@ -2,39 +2,39 @@
 
 <!-- Verifica si el usuario está autenticado -->
 @if (isUser) {
+  
     <div class="reserve-container">
-        <!-- Sección de Servicios -->
-        <div class="services-section">
-            <h2>Servicios Disponibles</h2>
-            <div class="services-grid">
-                @for ( service of services; track service.name) {
-                    <div class="service-card"
-                        [class.selected]="selectedService === service.name"
-                        (click)="selectedService = service.name">
-                        <h3>{{ service.name }}</h3>
-                        <p class="price">{{ service.price }}</p>
+                <div class="services-section">
+                    <h2>{{getText('Servicios Disponibles',' Available Services')}} </h2>
+                    <div class="services-grid">
+                        @for ( service of services; track service.nombre    ) {
+                            <div class="service-card"
+                                [class.selected]="selectedService === service.nombre"
+                                (click)="selectedService = service.nombre">
+                                <h3>{{getText(service.nombre , service.name )}} </h3>
+                                <p class="price">{{ service.price }}</p>
+                            </div>
+                        }
                     </div>
-                }
-            </div>
-        </div>
-
+                </div>
+           <br>
         <div class="barber-container">
             <!-- Sección de Peluqueros -->
             <div class="barber-section">
-                <h2>Peluqueros Disponibles</h2>
+                <h2>{{getText('Peluqueros Disponibles','Available Barbers ')}} </h2>
                 <div class="barber-grid">
                     @for ( barber of babers; track barber.name) {
                         <div class="barber-card"
-                            [class.selected]="selectedBarber === barber.name"
-                            (click)="selectedBarber = barber.name">
-                            <img [src]="barber.imagen" class="img-fluid rounded-circle" [alt]="barber.name">
-                            <h3>{{ barber.name }}</h3>
-                            <p>{{barber.descripcion}} </p>
-                        </div>
+                        [class.selected]="selectedBarber === barber.name"
+                        (click)="onSelectBarber(barber.name)">
+                        <img [src]="barber.imagen" class="img-fluid rounded-circle" [alt]="barber.name">
+                        <h3>{{ barber.name }}</h3>
+                        <p>{{getText(barber.descripcion,barber.description)}} </p>
+                    </div>
                     }
-                </div>
-            </div>
-        </div>
+                       </div>
+                  </div>
+             </div>
 
         <!-- Calendario -->
         <div class="calendar-section">
@@ -46,7 +46,7 @@
 
             <div class="calendar-grid">
                 <!-- Días de la semana -->
-                @for ( day of ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']; track day) {
+                @for ( day of [ getText('Lu', 'Mo'), getText('Ma', 'Tu') , getText('Mi','We'), getText('Ju','Th') , getText('Vi','Fr'), 'Sa', getText('Do','Su')]; track day) {
                     <div class="weekday">{{ day }}</div>
                 }
 
@@ -67,9 +67,11 @@
         </div>
 
         <!-- Horas Disponibles -->
-        @if (selectedDate && selectedService) {
+        @if (selectedDate && selectedService  && selectedBarber) {
             <div class="time-slots-section">
-                <h3>Horarios Disponibles para el {{ selectedDate | date:'EEEE d MMMM yyyy' }}</h3>
+                <h3>{{getText('Horarios Disponibles para el ','Available Schedules for')}} {{ selectedDate | date:'EEEE d MMMM yyyy' }}</h3>
+                
+
                 <div class="time-slots-grid">
                     @for ( time of availableHours; track time) {
                         <button class="time-slot"
@@ -86,7 +88,7 @@
         <button class="reserve-button" 
                 [disabled]="!selectedDate || !selectedService || !selectedTime  || !selectedBarber"
                 (click)="onReserve()">
-            Reservar Cita
+        {{getText(' Reservar Cita','Reserve Quote')}}
         </button>
     </div>
 
@@ -95,7 +97,8 @@
         [servicio]="selectedService"
         [fecha]="selectedDate ? (selectedDate | date:'d MMMM yyyy') : ''"
         [hora]="selectedTime"
-        (confirm)="onConfirmReserve()"
+        [peluquero]="selectedBarber"
+         (confirm)="onConfirmReserve()"
         (cancel)="onCancelReserve()">
     </app-modal>
 } @else {

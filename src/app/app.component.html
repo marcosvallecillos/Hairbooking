@@ -1,7 +1,8 @@
 <div class="header">
     @if (isUser) {
+      @if (mostrarHeader) {
       <app-header-user></app-header-user>
-    } @else {
+    } } @else {
       @if (mostrarHeader) {
         <app-header></app-header>
       }

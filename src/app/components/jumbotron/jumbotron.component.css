@@ -1,5 +1,6 @@
-.container {
+.container-fluid {
     width: 100vw;
+    height: 100vh;
     margin: 5rem auto;
     padding: 0;
     overflow: hidden;
@@ -9,9 +10,16 @@
 .row {
     height: 100vh;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     margin: 0;
+    height: auto; 
     
+}
+.image-container {
+    flex: 1;
+    max-width: 50%; 
+    height: auto;
 }
 
  img {
@@ -32,12 +40,15 @@
 
 
 .text-container {
+    flex: 1;
+    width: 100%;
+    max-width: 50%; 
     padding: 4rem;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    text-align: left;
 }
-
 .text-content {
     max-width: 540px;
     margin: 0 auto;
@@ -101,26 +112,19 @@ p strong {
 }
 
 @media (max-width: 992px) {
-    .text-container {
-        padding: 2rem;
-    }
-
-    h2 {
-        font-size: 2.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        margin: 0;
-    }
-
     .row {
-        flex-direction: column;
+        flex-direction: column; /* Apila la imagen y el texto en pantallas medianas */
     }
 
     .image-container {
-        height: 50vh;
+        max-width: 100%; /* La imagen ocupa todo el ancho */
+        height: auto;
+    }
+
+    .text-container {
+        max-width: 100%; /* El texto ocupa todo el ancho */
+        padding: 2rem;
+        text-align: center; /* Centra el texto */
     }
 
     h2 {
@@ -129,5 +133,24 @@ p strong {
 
     p {
         font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .text-container {
+        padding: 2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    p {
+        
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
     }
 }

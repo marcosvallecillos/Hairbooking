@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ModalRegisterComponent } from '../modal-register/modal-register.component';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-modal-login',
@@ -21,10 +22,13 @@ export class ModalLoginComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
   loginForm: FormGroup;
-  
+  isRegister: boolean = false; // Controla si se muestra la pestaña de registro
+  name: string = '';
   isMenuOpen: boolean = false;
   showRegisterModal: boolean = false;
-
+  toggleTab(isRegister: boolean) {
+    this.isRegister = isRegister; // Cambia entre las pestañas de inicio de sesión y registro
+  }
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
     document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
@@ -34,8 +38,13 @@ export class ModalLoginComponent {
     this.isMenuOpen = false;
     document.body.style.overflow = '';
   }
-
+ isSpanish: boolean = true;
+  
+    getText(es: string, en: string): string {
+      return this.isSpanish ? es : en;
+    }
   constructor(
+    private languageService: LanguageService,
     private router: Router,
     private authService: AuthService,
     private fb: FormBuilder,
@@ -45,6 +54,9 @@ export class ModalLoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
+    this.languageService.isSpanish$.subscribe(
+      isSpanish => this.isSpanish = isSpanish
+    );
   }
 
   togglePasswordVisibility() {
@@ -56,6 +68,7 @@ export class ModalLoginComponent {
       this.errorMessage = 'Por favor, completa todos los campos';
       return;
     }
+    console.log('datos enviados:', { email: this.email, contraseña:  this.password })
 
     this.isLoading = true;
     this.errorMessage = '';
@@ -85,6 +98,7 @@ export class ModalLoginComponent {
   openRegisterModal() {
     this.showRegisterModal = true;
     this.show = false;
+    
   }
 
   onRegisterModalClose() {

@@ -18,8 +18,8 @@ export class AboutUsComponent  {
   equipo = [
     {
       nombre: 'Jesus',
-      rol: 'Barbero principal',
-      rol_en: 'Master Barber',
+      rol: 'Barbero ',
+      rol_en: 'Master',
       imagen: '../../../../images/barber1.jpg',
       descripcion: 'Jesús, el Barbero Principal, es un experto en estilo y precisión. Cada corte refleja su talento y pasión por la barbería. Sus clientes confían en él para lucir siempre impecables.',
       descripcion_en: 'Jesús, the Master Barber, is an expert in style and precision. Each cut reflects his talent and passion for barbering. His clients trust him to always look impeccable.'
@@ -71,8 +71,7 @@ export class AboutUsComponent  {
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
-
-  // Función para alternar la visibilidad del contenido
+  
   toggleContentVisibility() {
     this.isContentVisible = !this.isContentVisible;
   }

@@ -1,6 +1,8 @@
 import { NgClass, CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LanguageService } from '../../services/language.service';
+import { ModalLoginComponent } from '../modal-login/modal-login.component';
 
 @Component({
   selector: 'app-modal-register',
@@ -17,7 +19,8 @@ export class ModalRegisterComponent {
   showPassword = false;
   isMenuOpen: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  showLoginModal: boolean = false;
+  constructor(private fb: FormBuilder,  private languageService: LanguageService,) {
     this.signUpForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       apellidos: ['', [Validators.required, Validators.minLength(2)]],
@@ -28,6 +31,9 @@ export class ModalRegisterComponent {
     }, { validators: this.passwordMatchValidator });
   }
 
+  openLoginModal() {
+    this.showLoginModal = true;
+  }
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
     document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
@@ -60,5 +66,15 @@ export class ModalRegisterComponent {
       console.log('Usuario registrado:', this.signUpForm.value);
       this.closeMenu();
     }
+  }
+  isSpanish: boolean = true;
+  
+  getText(es: string, en: string): string {
+    return this.isSpanish ? es : en;
+  }
+
+  
+  closeLoginModal() {
+    this.showLoginModal = false;
   }
 }

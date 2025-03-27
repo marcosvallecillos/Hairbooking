@@ -4,19 +4,19 @@
 @if (isUser) {
   
     <div class="reserve-container">
-                <div class="services-section">
-                    <h2>{{getText('Servicios Disponibles',' Available Services')}} </h2>
-                    <div class="services-grid">
-                        @for ( service of services; track service.nombre    ) {
-                            <div class="service-card"
-                                [class.selected]="selectedService === service.nombre"
-                                (click)="selectedService = service.nombre">
-                                <h3>{{getText(service.nombre , service.name )}} </h3>
-                                <p class="price">{{ service.price }}</p>
-                            </div>
-                        }
+        <div class="services-section">
+            <h2>{{ getText('Servicios Disponibles', 'Available Services') }}</h2>
+            <div class="services-grid">
+                @for (service of services; track service.nombre) {
+                    <div class="service-card"
+                        [class.selected]="selectedService === service.nombre"
+                        (click)="selectedService = service.nombre">
+                        <h3>{{ getText(service.nombre, service.name) }}</h3>
+                        <p class="price">{{ service.price }}</p>
                     </div>
-                </div>
+                }
+            </div>
+        </div>
            <br>
         <div class="barber-container">
             <!-- Sección de Peluqueros -->
@@ -67,7 +67,7 @@
         </div>
 
         <!-- Horas Disponibles -->
-        @if (selectedDate && selectedService  && selectedBarber) {
+        @if (selectedDate && selectedService && selectedBarber) {
             <div class="time-slots-section">
                 <h3>{{getText('Horarios Disponibles para el ','Available Schedules for')}} {{ selectedDate | date:'EEEE d MMMM yyyy' }}</h3>
                 
@@ -77,7 +77,7 @@
                         <button class="time-slot"
                                 [class.selected]="selectedTime === time"
                                 (click)="selectedTime = time">
-                            {{ time }}
+                           {{ time }}
                         </button>
                     }
                 </div>
@@ -98,7 +98,7 @@
         [fecha]="selectedDate ? (selectedDate | date:'d MMMM yyyy') : ''"
         [hora]="selectedTime"
         [peluquero]="selectedBarber"
-         (confirm)="onConfirmReserve()"
+        (confirm)="onConfirmReserve()"
         (cancel)="onCancelReserve()">
     </app-modal>
 } @else {
@@ -114,5 +114,4 @@
     [show]="showLoginModal"
     (close)="showLoginModal = false">
 </app-modal-login>
-
 <app-footer></app-footer>

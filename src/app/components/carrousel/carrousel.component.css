@@ -27,6 +27,7 @@
 
 .arrow-container {
     position: absolute;
+    
     bottom: 30px; 
     left: 50%; 
     transform: translateX(-50%);
@@ -38,9 +39,7 @@
 
 
 .arrow {
-    font-size: 50px;
-    font-weight: bold; 
-    color: #fff; 
+    color: #000000; 
     text-decoration: none;
     display: inline-block;
     animation: arrow-bounce 1.5s infinite ease-in-out; 
@@ -49,7 +48,8 @@
 
 .arrow:hover {
     transform: translateY(-5px); 
-    color: #c5a47e; 
+    color: #7e7e7e; 
+    
 }
 .arrow:active{
     border: none;
@@ -60,7 +60,7 @@
     position: absolute;
     width: 60px;
     height: 60px;
-    background: rgb(233, 137, 137);
+    background: rgb(255, 255, 255);
     border-radius: 50%;
     z-index: -1; 
     animation: pulse 2s infinite ease-in-out;

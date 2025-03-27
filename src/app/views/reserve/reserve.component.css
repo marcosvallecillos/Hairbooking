@@ -31,11 +31,10 @@
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
-    
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
 }
+
 .barber-grid{
     display: grid;
     grid-template-columns: repeat(3, minmax(200px, 1fr));
@@ -51,7 +50,8 @@
     text-align: center;
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
-    height: 150px;
+    width: 70%;
+    height: 120px;
     border: 1px solid gray;
     text-align: center;
 }
@@ -106,16 +106,27 @@
     margin-bottom: 1rem;
 }
 @media (max-width: 992px) {
-    .services-grid,
+    .services-grid{
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+
+    }
     .barber-grid {
         grid-template-columns: repeat(3, minmax(200px, 1fr));
     }
+    
+
+
 }
 
 @media (max-width: 768px) {
-    .services-grid,
+    
+    .services-grid {
+        width: auto;
+        grid-template-columns: repeat(3, 1fr); 
+    }
+
     .barber-grid{
-        grid-template-columns: repeat(3, minmax(200px, 1fr));
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
     
     }
 
@@ -128,32 +139,70 @@
     .barber-card p {
         font-size: 0.9rem;
     }
+    
 }
 
 @media (max-width: 576px) {
-    .services-grid{
-        
-            grid-template-columns: repeat(3, 1fr);
-        
-    
+   
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem; 
+        justify-content: center; 
+    }
+
+    .service-card {
+        width: 100%; 
+        text-align: center;
+        padding: 1rem;
+        box-sizing: border-box; 
     }
     .barber-grid {
-        grid-template-columns: repeat(1, minmax(200px, 1fr));
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 1rem; 
+        justify-content: center; 
     }
-
-    .service-card,
-    .barber-card {
+    .service-card{
         padding: 0.8rem;
     }
+    .barber-card {
+        width: 100%; 
+        text-align: center;
+        padding: 1rem;
+        box-sizing: border-box; 
+    }
+    .barber-card img {
+        width: 80px; 
+        height: 120px;
+        object-fit: cover;
+        margin: 0 auto; 
+    }
 
-    .service-card h3,
-    .barber-card h3 {
+
+    .service-card h3{
+        margin-top: 20px;
         font-size: 1rem;
+    }
+    .barber-card h3 {
+        font-size: 1rem; 
+        margin-top: 0.5rem;
     }
 
     .service-card .price,
     .barber-card p {
-        font-size: 0.8rem;
+        font-size: 0.9rem; 
+        margin-top: 0.3rem;
+    }
+    .time-slots-grid {
+        display: grid;
+        width: 120%;
+        grid-template-columns: repeat(3, 1fr);  
+    }
+
+    .time-slot{
+      width: 100%;
     }
 }
 /* Calendario Mejorado */
@@ -291,9 +340,6 @@
         padding: 1.5rem;
     }
 
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
 
     .calendar-section {
         padding: 1.5rem;
@@ -321,18 +367,7 @@
     padding: 2rem;
     margin-top: 2rem;
 }
-@media (max-width: 576px) {
-    .time-slots-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
-        gap: 0.5rem; /* Espaciado entre los botones */
-      margin-left: 40px;
-    }
 
-    .time-slot {
-        width: 100%; 
-    }
-}
 .time-slots-section h3 {
     gap: 0.8rem;
     color: white;

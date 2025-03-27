@@ -46,26 +46,15 @@ export class HeaderUserComponent {
   isUser: boolean = true; 
 
   signout() {
-    // Elimina los datos del usuario del almacenamiento local
+   
     localStorage.removeItem('userType');
     localStorage.removeItem('userData');
     this.isUser = false; 
     this.isAuthenticated = false; 
-        window.location.reload(); 
+    this.router.navigate(['/home-barber']);  
   
 }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    const navbar = document.querySelector('.navbar-collapse');
-    const toggler = document.querySelector('.navbar-toggler');
-
-    // Cierra el menú si el clic ocurre fuera del navbar y del botón toggler
-    if (this.isMenuOpen && navbar && !navbar.contains(target) && !toggler?.contains(target)) {
-      this.isMenuOpen = false;
-    }
-  }@HostListener('document:keydown.escape', ['$event'])
+ @HostListener('document:keydown.escape', ['$event'])
   onEscapePress(event: KeyboardEvent) {
     if (this.isMenuOpen) {
       this.isMenuOpen = false;

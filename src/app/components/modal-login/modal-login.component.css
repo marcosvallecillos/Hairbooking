@@ -44,9 +44,14 @@
 }
 
 h2 {
+    cursor: pointer;
     color: white;
+    font-size: 1rem;
     text-align: center;
     margin-bottom: 2rem;
+}
+h2:hover{
+    transform: scale(1.1);
 }
 
 .form-group {
@@ -129,4 +134,9 @@ h2 {
         width: 95%;
         padding: 1.5rem;
     }
+}
+
+hr{
+        margin-top:-20px;
+        color: white;
 }

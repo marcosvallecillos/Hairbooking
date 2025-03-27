@@ -28,7 +28,7 @@ export class ReserveComponent {
     { nombre: 'Mascarilla Puntos Negros', precio: '10 €', name: 'Blackhead Mask', price: '10 €' },
     { nombre: 'Arreglo Barba', precio: '10 €' , name: 'Beard arrangement', price: '10 €'  },
     { nombre: 'Corte Degradado', precio: '12 €' , name: 'Fade Cut', price: '12 €' },
-    { nombre: 'Corte Degradado + Barba', precio: '15 €' , name: 'Fade Cut + Beard', price: '15 €' },
+    { nombre: ' Degradado + Barba', precio: '15 €' , name: 'Fade Cut + Beard', price: '15 €' },
     { nombre: 'Corte + Cejas', precio: '13 €' , name: 'Cut + Eyebrows', price: '13 €'  },
     { nombre: 'Corte Fuera Horario', precio: '30 €' , name: 'Cut After Hours', price: '30 €' },
     { nombre: 'Corte + Mechas', precio: '50 €' ,  name: 'Cut + Highlights', price: '50 €'},
@@ -106,7 +106,7 @@ export class ReserveComponent {
 }
 
 redirectToLogin() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/show-profile']);
 }
   isAvailable(date: Date): boolean {
     if (!date) return false;
@@ -138,11 +138,13 @@ redirectToLogin() {
 
   onConfirmReserve() {
     this.showModal = false;
-    this.router.navigate(['/show-profile']);
+    this.router.navigate(['/showProfile']);
   }
 
   onCancelReserve() {
     this.showModal = false;
+    window.location.reload();
+
   }
 
   onReserve() {

@@ -1,41 +1,69 @@
 <body>
-    <div class="container text-center py-5">
-        <!-- Título Principal -->
-        <h1 class="mb-5 display-4 text-break">Bienvenido a HairBooking</h1>
-        <h3 class="mb-4">
-        </h3>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-11 col-md-11 col-sm11">
+            <h1>{{getText('Bienvenido a HairBooking','Welcome HairBooking')}} </h1>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1">
+            <div class="dropdown language-selector">
+                <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    {{ isSpanish ? 'ES' : 'EN' }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-start">
+                    <li>
+                        <button class="dropdown-item" (click)="toggleLanguage('es')">
+                            ES
+                        </button>
 
-        <!-- Tarjetas -->
-        <div class="cards row justify-content-center">
-            <!-- Tarjeta 1 - Barbería -->
-            <div class="card card-barberia col-lg-5 col-md-6 col-sm-12 mb-4">
-                <img src="https://img.freepik.com/fotos-premium/salon-belleza-moderno-diseno-oscuro-interior-barberia-lujo-ia-generativa-dentro-barberia-vacia-espejos-sillas-cuero-lugares-trabajo-limpios-lujosa-moderna-sala-peluqueria_788189-10316.jpg" 
-                     alt="Barbería" class="barberia-img img-fluid rounded">
-                <div class="card-content p-3">
-                    <h2 class="card-title">Barbería</h2>
-                    <p class="card-text">Explora nuestra plataforma para reservar servicios de peluquería y barbería.</p>
-                    <div class="card-actions d-flex justify-content-between align-items-center">
-                        <button class="info-btn btn btn-primary" onclick="location.href='/home-barber'">Más información</button>
-                        <div class="icon-buttons d-flex gap-2">
-                            <button class="icon-btn btn btn-outline-secondary"><i class="fas fa-share-alt"></i></button>
-                            <button class="icon-btn btn btn-outline-secondary"><i class="fas fa-bookmark"></i></button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" (click)="toggleLanguage('en')">
+                            EN
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+<br>
+        <div class="cards">
+            <!-- Tarjeta Barbería -->
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="card">
+                        <img src="https://img.freepik.com/fotos-premium/salon-belleza-moderno-diseno-oscuro-interior-barberia-lujo-ia-generativa-dentro-barberia-vacia-espejos-sillas-cuero-lugares-trabajo-limpios-lujosa-moderna-sala-peluqueria_788189-10316.jpg"
+                            alt="Barbería">
+                        <div class="card-content">
+                            <h2 class="card-title">{{getText('Barbería','Barber')}} </h2>
+                            <p class="card-text">{{getText('Explora nuestra plataforma para reservar servicios de peluquería y
+                                barbería.','Explora nuestra plataforma para reservar servicios de peluquería y
+                                barbería.')}} </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button class="info-btn" onclick="location.href='/home-barber'">{{getText('Más información','More information')}} </button>
+                                <div class="icon-buttons">
+                                    <button class="icon-btn"><i class="fas fa-share-alt"></i></button>
+                                    <button class="icon-btn"><i class="fas fa-bookmark"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Tarjeta 2 - Cosméticos -->
-            <div class="card card-cosmeticos col-lg-5 col-md-6 col-sm-12 mb-4">
-                <img src="https://img.freepik.com/foto-gratis/primer-plano-productos-cuidado-personal-hombre_23-2149313033.jpg?t=st=1742891478~exp=1742895078~hmac=db555885a3dc0637e9bbe5e7cbc499bb3d14fdaf324af85e7e734f1a938a7308&w=1380" 
-                     alt="Cosméticos" class="cosmeticos-img img-fluid rounded">
-                <div class="card-content p-3">
-                    <h2 class="card-title">Cosméticos</h2>
-                    <p class="card-text">Descubre más sobre nuestros servicios y promociones exclusivas.</p>
-                    <div class="card-actions d-flex justify-content-between align-items-center">
-                        <button class="info-btn btn btn-primary" onclick="location.href='/home-products'">Más información</button>
-                        <div class="icon-buttons d-flex gap-2">
-                            <button class="icon-btn btn btn-outline-secondary"><i class="fas fa-share-alt"></i></button>
-                            <button class="icon-btn btn btn-outline-secondary"><i class="fas fa-bookmark"></i></button>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <!-- Tarjeta Cosméticos -->
+                    <div class="card">
+                        <img src="https://img.freepik.com/foto-gratis/primer-plano-productos-cuidado-personal-hombre_23-2149313033.jpg?t=st=1742891478~exp=1742895078~hmac=db555885a3dc0637e9bbe5e7cbc499bb3d14fdaf324af85e7e734f1a938a7308&w=1380"
+                            alt="Cosméticos">
+                        <div class="card-content">
+                            <h2 class="card-title">{{getText('Cosméticos','Cosmetics')}} </h2>
+                            <p class="card-text">{{getText('Descubre más sobre nuestros servicios y promociones exclusivas.','Learn more about our services and exclusive promotions.')}} </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button class="info-btn" onclick="location.href='/home-products'">{{getText('Más información','More information')}}</button>
+                                <div class="icon-buttons">
+                                    <button class="icon-btn"><i class="fas fa-share-alt"></i></button>
+                                    <button class="icon-btn"><i class="fas fa-bookmark"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

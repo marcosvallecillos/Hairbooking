@@ -1,42 +1,100 @@
 @if(show) {
-    <div class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-button" (click)="onClose()">×</button>
-            <div class="row">
-                <div class="col-lg-6">
-                    <h2>{{ getText('Iniciar Sesión', 'Sign In') }}</h2>
-                </div>
-                <div class="col-lg-6">
-                    <h2 (click)="openRegisterModal()">{{ getText('Registrarse', 'Sign Up') }}</h2>
-                </div>
+  <div class="modal-overlay">
+    <div class="modal-content">
+        <button class="close-button" (click)="onClose()">×</button>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <h2 [class.active]="!isRegister" (click)="toggleTab(false)">
+                    {{ getText('Iniciar Sesión', 'Sign In') }}
+                </h2>
+                <hr class="bar-login" [class.active]="!isRegister">
             </div>
-            <hr>
-            <div class="form-group">
-                <input type="email" [(ngModel)]="email" placeholder="Email" class="form-input">
-            </div>
-            <div class="form-group position-relative mb-4">
-                <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
-                      (click)="togglePasswordVisibility()" style="cursor: pointer;" role="button">
-                    <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
-                </span>
-                <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password"
-                       [(ngModel)]="password" placeholder="Contraseña">
-            </div>
-            <button class="login-button" (click)="onLogin()">
-                {{ getText('Iniciar Sesión', 'Sign In') }}
-            </button>
-            <div class="register-section">
-                <p>¿No tienes una cuenta?
-                    <button class="register-link" (click)="openRegisterModal()">{{ getText('Regístrate', 'Sign Up') }}</button>
-                </p>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <h2 [class.active]="isRegister" (click)="toggleTab(true)">
+                    {{ getText('Registrarse', 'Sign Up') }}
+                </h2>
+                <hr class="bar-register" [class.active]="isRegister">
             </div>
         </div>
+            @if(isRegister) {
+                <form [formGroup]="loginForm" (ngSubmit)="registrarUsuario()">
+                    <!-- Nombre -->
+                    <div class="form-group">
+                      <input type="text" formControlName="nombre" placeholder="Name" class="form-input" />
+                    </div>
+              
+                    <!-- Apellidos -->
+                    <div class="form-group">
+                      <input type="text" formControlName="apellidos" placeholder="Surname" class="form-input" />
+                    </div>
+              
+                    <!-- Email -->
+                    <div class="form-group">
+                      <input type="email" formControlName="email" placeholder="Email Address" class="form-input" />
+                    </div>
+              
+                    <!-- Teléfono -->
+                    <div class="form-group">
+                      <input type="tel" formControlName="telefono" placeholder="Phone" class="form-input" />
+                    </div>
+              
+                    <!-- Contraseña -->
+                    <div class="form-group position-relative">
+                      <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
+                        (click)="togglePasswordVisibility()" style="cursor: pointer;" role="button">
+                        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                      </span>
+                      <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password"
+                        class="form-input" />
+                    </div>
+              
+                    <!-- Confirmar Contraseña -->
+                    <div class="form-group position-relative">
+                      <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
+                        (click)="togglePasswordVisibility()" style="cursor: pointer;" role="button">
+                        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                      </span>
+                      <input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword"
+                        placeholder="Confirm Password" class="form-input" />
+                    </div>
+              
+                    <button type="submit" class="register-button" [disabled]="loginForm.invalid">Registrarse</button>
+                  </form>
+            } @else {
+                <div class="form-container">
+                    <div class="form-group">
+                        <input type="email" [(ngModel)]="email" placeholder="Email Address" class="form-input">
+                    </div>
+                    <div class="form-group position-relative">
+                        <input [type]="showPassword ? 'text' : 'password'" 
+                               class="form-input" 
+                               [(ngModel)]="password" 
+                               placeholder="Password">
+                               <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
+                               (click)="togglePasswordVisibility()" style="cursor: pointer;" role="button">
+                               <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                             </span>
+                    </div>
+                    <div class="form-options">
+                            <input type="checkbox" id="customcb1" name="" />
+                            <label class="inner" for="customcb1"></label>
+                            <label class="outer" for="customcb1">{{ getText('Recuérdame', 'Remember Me') }}</label>
+                      
+                    </div>
+                    <br>
+                    <button class="login-button" (click)="onLogin()">
+                        {{ getText('Iniciar Sesión', 'Sign In') }}
+                    </button>
+                    <div class="register-section">
+                        <p>{{ getText("¿No tienes una cuenta?", "Don't have an account?") }}
+                            <button class="register-link" (click)="toggleTab(true)">
+                                {{ getText('Regístrate', 'Sign Up') }}
+                            </button>
+                        </p>
+                    </div>
+                </div>
+               
+            }"
+        </div>
     </div>
-    }
-    
-    @if(showRegisterModal) {
-    <app-modal-register
-        [show]="showRegisterModal"
-        (close)="onRegisterModalClose()">
-    </app-modal-register>
     }

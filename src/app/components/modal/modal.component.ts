@@ -10,23 +10,41 @@ import { LanguageService } from '../../services/language.service';
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
+ 
   @Input() show: boolean = false;
   @Input() fecha: string | null = '';
   @Input() hora: string = '';
   @Input() servicio: string = '';
+  @Input() service: string = '';
   @Input() peluquero: string = '';
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
+  showAlert: boolean = false; 
+  showAlertCancel: boolean = false;
   onConfirm() {
-   alert("Cita enviada: " + this.fecha + ", " + this.hora + ", " + this.peluquero + ", " +  this.servicio);
+    this.show = false;
+    this.showAlert = true;
+    setTimeout(() => {
+      this.showAlert = false; 
+      this.confirm.emit(); 
+    }, 1000);
 
-    this.show = false;  
+    
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
   }
-
   onCancel() {
-   alert("Cita cancelada" );  
-    this.cancel.emit();
+    this.showAlertCancel = true;
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+   setTimeout(() => {
+    this.showAlert = false; 
+    this.cancel.emit(); 
+  }, 1000);
+  
   }
 
    isSpanish: boolean = true;

@@ -5,16 +5,6 @@
     font-family: 'Playfair Display', serif;
 }
 
-/* Hero Section con borde irregular */
-.hero-image {
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 
 .overlay {
@@ -28,9 +18,24 @@
     clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
 
 }
-.team-section {
-    padding: 50px 0;
+
+.about-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 0;
 }
+
+.about-section .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; 
+}
+
+
 
 .team-member {
     height: auto;
@@ -61,6 +66,8 @@
     border-radius: 5px;
 }
 .info-barber{
+    text-align: center;
+    margin-bottom: 2rem;
     transition: ease-in .4s;
 }
 .team-member .btn-toggle {
@@ -152,21 +159,23 @@
     margin-bottom: 0;
     text-transform: uppercase;
 }
-
+.about-section{
+   align-items: center;
+}
 /* Sección Sobre Nosotros */
 .about-section img {
-    margin-top: -10%;
+    margin: 0 auto;
     width: 50%;
     object-fit: cover;
-    margin-top:1rem;
-    margin-bottom: 3.5rem; 
+    margin-top: 1rem;
+    margin-bottom: 3.5rem;
     border-radius: 50%;
     border: 3px solid #c5a47e;
-    transition:all .5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 h2 {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 2rem;
@@ -188,6 +197,7 @@ p {
 }
 
 .values-section {
+    
     padding: 6rem 0;
     background-color: #c5a47e;
     text-align: center;
@@ -204,6 +214,7 @@ p {
     background-color: #ffe4c4;
     border-radius: 10px;
     padding: 2rem;
+    margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -293,13 +304,13 @@ p {
         font-size: 0.8rem;
     }
 }
+
 .team-section {
     height: auto;
     padding: 4rem 0;
     background-color: #ffffff;
 }
 
-/* Estilos para la sección de Jesús */
 .team-section .row.mt-5 {
     background: #f2f2f2;
     padding: 2rem;
@@ -315,10 +326,6 @@ p {
     
     h2 {
         font-size: 2rem;
-    }
-    
-    .values-section, .team-section {
-        padding: 3rem 0;
     }
     
     .team-member img {

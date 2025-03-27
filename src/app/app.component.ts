@@ -28,7 +28,9 @@ export class AppComponent {
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
-
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
     this.router.events.subscribe(() => {
       this.mostrarHeader = this.router.url !== '/index'; 
     });

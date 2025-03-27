@@ -18,6 +18,7 @@ export class ReserveComponent {
   currentDate = new Date();
   selectedDate: Date | null = null;
   selectedService: string = '';
+  selectedServicio: string = '';
   selectedBarber: string = '';
   selectedTime: string = '';
   showModal: boolean = false;
@@ -138,7 +139,16 @@ redirectToLogin() {
 
   onConfirmReserve() {
     this.showModal = false;
-    this.router.navigate(['/showProfile']);
+    if (this.selectedDate && this.selectedService || this.selectedServicio && this.selectedBarber && this.selectedTime) {
+      console.log('Datos de la reserva:', {
+        peluquero: this.selectedBarber,
+        servicio: this.selectedService,
+        service: this.services.find(service => service.nombre === this.selectedServicio)?.name || '',
+        fecha: this.selectedDate,
+        hora: this.selectedTime,
+      });
+    this.router.navigate(['/showProfile']); 
+    }
   }
 
   onCancelReserve() {
@@ -148,16 +158,9 @@ redirectToLogin() {
   }
 
   onReserve() {
-    if (this.selectedDate && this.selectedService && this.selectedBarber && this.selectedTime) {
-        console.log('Datos de la reserva:', {
-          peluquero: this.selectedBarber,
-          servicio: this.selectedService,
-            fecha: this.selectedDate,
-            hora: this.selectedTime,
-        });
+   
         this.showModal = true;
     }
-}
   onSelectBarber(barber: string) {
     this.selectedBarber = barber;
   }

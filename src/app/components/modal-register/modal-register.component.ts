@@ -18,7 +18,7 @@ export class ModalRegisterComponent {
   signUpForm: FormGroup;
   showPassword = false;
   isMenuOpen: boolean = false;
-
+  @Output() openLogin = new EventEmitter<void>(); // Evento para abrir el modal de login
   showLoginModal: boolean = false;
   constructor(private fb: FormBuilder,  private languageService: LanguageService,) {
     this.signUpForm = this.fb.group({
@@ -30,7 +30,15 @@ export class ModalRegisterComponent {
       confirmPassword: ['']
     }, { validators: this.passwordMatchValidator });
   }
-
+  onRegister() {
+    if (this.signUpForm.valid) {
+      console.log('Registro exitoso:', this.signUpForm.value);
+      this.close.emit(); // Cierra el modal de registro
+      this.openLogin.emit(); // Abre el modal de inicio de sesión
+    } else {
+      console.log('Formulario inválido');
+    }
+  }
   openLoginModal() {
     this.showLoginModal = true;
   }

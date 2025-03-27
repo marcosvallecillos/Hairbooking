@@ -11,6 +11,50 @@
     z-index: 1000;
 }
 
+.row {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center; 
+    margin-bottom: 1rem;
+}
+
+.col-lg-6, .col-md-6, .col-sm-6 {
+    flex: 1; 
+    text-align: center;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+hr.bar-login, hr.bar-register {
+  margin: 0 auto;
+    margin-top: -20px;
+    width: 100%;
+    border-radius: 15px;
+    height: 4px;
+    background-color: #000000;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.bar-login.active, .bar-register.active {
+    background-color: #ffffff; 
+    width: 100%; 
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: row; 
+    }
+
+    .col-lg-6, .col-md-6, .col-sm-6 {
+        font-size: 0.9rem;
+    }
+}
+span{
+    color: rgb(0, 0, 25);
+}
 .modal-content {
     background-color: #1a1a1a;
     padding: 2rem;
@@ -53,11 +97,49 @@ h2 {
 h2:hover{
     transform: scale(1.1);
 }
-
+h2.active{
+  font-weight: bold;
+  transform: scale(1.2);
+}
+.form-options {
+    width: 17px;
+    height: 17px;
+    margin: 2px 0 2px 0;
+    background: #ddd;
+    border-radius: 100%;
+    position: relative;
+  }
+  .form-options label.inner {
+    display: block;
+    width: 12.75px;
+    height: 12.75px;
+    border-radius: 100px;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
+    cursor: pointer;
+    position: absolute;
+    top: 2.125px;
+    left: 2.125px;
+    z-index: 1;
+    background: #eee;
+  }
+  .form-options label.outer {
+    color: white;
+    margin-left: 25px;
+  }
+  .form-options [type=checkbox] {
+    
+    display: none
+  }
+  .form-options input[type=checkbox]:checked+label.inner {
+    background: rgb(0, 0, 0)
+  }
 .form-group {
     margin-bottom: 1.5rem;
 }
-
 .form-input {
     width: 100%;
     padding: 12px;
@@ -70,28 +152,33 @@ h2:hover{
 
 .form-input:focus {
     outline: none;
-    border-color: #00c020;
+    border-color: #ffffff;
 }
 
 .login-button {
-    width: 100%;
+    width: 50%;
     padding: 12px;
-    background-color: #00c020;
+    align-items: center;
+    background-color: #031b93;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 20px;
     font-size: 1rem;
     cursor: pointer;
+    
+    margin: 0 auto;
+    display: block;
     transition: all 0.3s ease;
 }
 
 .login-button:hover {
-    background-color: #00a018;
+    background-color: #163cfd;
 }
 
 .register-section {
     margin-top: 2rem;
     text-align: center;
+    
 }
 
 .register-section p {
@@ -100,17 +187,21 @@ h2:hover{
 }
 
 .register-button {
-    background: none;
-    border: 2px solid #00c020;
-    color: #00c020;
-    padding: 8px 20px;
-    border-radius: 6px;
+    width: 50%;
+    padding: 12px;
+    background-color: #031b93;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    margin: 0 auto;
+    display: block;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .register-button:hover {
-    background-color: #00c020;
+    background-color: #163cfd;  
     color: white;
 }
 
@@ -134,9 +225,4 @@ h2:hover{
         width: 95%;
         padding: 1.5rem;
     }
-}
-
-hr{
-        margin-top:-20px;
-        color: white;
 }

@@ -63,7 +63,12 @@
     font-weight: 500;
     transition: color 0.3s ease-in-out;
 }
-
+.carrito{
+    list-style: none;
+    border: none;
+    background-color: transparent;;
+    
+}
 .navbar-nav .nav-link:hover {
     color: #ffc107;
 }

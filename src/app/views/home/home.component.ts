@@ -5,6 +5,7 @@ import { JumbotronComponent } from '../../components/jumbotron/jumbotron.compone
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ServicesComponent } from '../../components/services/services.component';
 import { GalleryComponent } from '../../components/gallery/gallery.component';
+import { CosmeticosComponent } from '../../components/cosmeticos/cosmeticos.component';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ import { GalleryComponent } from '../../components/gallery/gallery.component';
     JumbotronComponent,
     FooterComponent,
     ServicesComponent,
-    GalleryComponent
+    CosmeticosComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

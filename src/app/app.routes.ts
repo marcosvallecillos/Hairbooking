@@ -10,6 +10,8 @@ import { IndexComponent } from './views/index/index.component';
 import { ModalRegisterComponent } from './components/modal-register/modal-register.component';
 import { ShowProfileComponent } from './components/show-profile/show-profile.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { ProductsComponent } from './views/products/products.component';
+import { CosmeticosComponent } from './components/cosmeticos/cosmeticos.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -24,7 +26,8 @@ export const routes: Routes = [
     { path: 'contacto', component: ContactoComponent },
     { path: 'showProfile', component: ShowProfileComponent },
     { path: 'editProfile', component: EditProfileComponent },
-
+    { path: 'products', component: ProductsComponent },
+    { path: 'cosmetics', component: CosmeticosComponent },
 ];
 
     

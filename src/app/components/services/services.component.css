@@ -32,11 +32,14 @@
 }
 
 .decorative-line {
-    width: 80px;
-    height: 2px;
-    background-color: #c5a47e;
-    margin: 0 auto;
-}
+    
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #524940, transparent);
+    margin: 10px auto;
+    
+
+}  
 
 .services-grid {
    

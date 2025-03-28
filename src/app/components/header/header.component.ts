@@ -5,6 +5,7 @@ import { LanguageService } from '../../services/language.service';
 import { AboutUsComponent } from '../../views/about-us/about-us.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { ModalRegisterComponent } from '../modal-register/modal-register.component';
+import { ProductsComponent } from '../../views/products/products.component';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,8 @@ import { ModalRegisterComponent } from '../modal-register/modal-register.compone
     RouterLink,
     RouterLinkActive,
     ModalLoginComponent,
-    ModalRegisterComponent
+    ModalRegisterComponent,
+    ProductsComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'

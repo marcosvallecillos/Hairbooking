@@ -98,7 +98,7 @@ export class ReserveComponent {
       isSpanish => this.isSpanish = isSpanish
     );
   }
-  isUser = false;
+  isUser = true;
   isAuthenticated = true;
    
   ngOnInit() {

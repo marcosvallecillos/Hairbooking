@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router,RouterLink } from '@angular/router';
@@ -18,12 +18,13 @@ export class ReserveComponent {
   currentDate = new Date();
   selectedDate: Date | null = null;
   selectedService: string = '';
-  selectedServicio: string = '';
   selectedBarber: string = '';
   selectedTime: string = '';
   showModal: boolean = false;
+  showAlert:boolean = false;
   selectedPeluquero: string = '';
-
+  @Output() close = new EventEmitter<void>();
+  errorMessage: string = '';
   services = [
     //es
     { nombre: 'Mascarilla Puntos Negros', precio: '10 €', name: 'Blackhead Mask', price: '10 €' },
@@ -52,8 +53,6 @@ export class ReserveComponent {
   ]
  isSpanish: boolean = true;
 
-
-
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
@@ -68,7 +67,7 @@ export class ReserveComponent {
     let firstDayOfWeek = firstDay.getDay();
     if (firstDayOfWeek === 0) firstDayOfWeek = 7;
 
-    // Añadir días vacíos al inicio
+    // Dias vacios
     for (let i = 1; i < firstDayOfWeek; i++) {
         days.push(null);
     }
@@ -99,7 +98,7 @@ export class ReserveComponent {
       isSpanish => this.isSpanish = isSpanish
     );
   }
-  isUser = true;
+  isUser = false;
   isAuthenticated = true;
    
   ngOnInit() {
@@ -139,11 +138,10 @@ redirectToLogin() {
 
   onConfirmReserve() {
     this.showModal = false;
-    if (this.selectedDate && this.selectedService || this.selectedServicio && this.selectedBarber && this.selectedTime) {
+    if (this.selectedDate && this.selectedService  && this.selectedBarber && this.selectedTime) {
       console.log('Datos de la reserva:', {
         peluquero: this.selectedBarber,
         servicio: this.selectedService,
-        service: this.services.find(service => service.nombre === this.selectedServicio)?.name || '',
         fecha: this.selectedDate,
         hora: this.selectedTime,
       });
@@ -171,4 +169,12 @@ redirectToLogin() {
   openLoginModal() {
     this.showLoginModal = true;
   }
-}
+  onClose() {
+    this.close.emit();
+    console.log('le estas dando');
+  }
+  clearSelectedDate() {
+    this.selectedDate = null; // Asigna null en lugar de una cadena vacía
+    console.log('Fecha deseleccionada');
+  }
+  }

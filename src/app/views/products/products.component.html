@@ -2,38 +2,55 @@
 
 <div class="products-container">
     <main class="products-main">
-      
+
         <aside class="products-sidebar">
             <button class="filter-button">STOCK</button>
             <div class="filter-section">
                 <h3 class="filter-title">{{getText('Lista de Productos','Products List')}} </h3>
                 <div class="filter-options">
                     <div></div>
-                    <div> 
-                        <ul>
-                             <h3> {{getText('Maquinas','Machines')}}</h3>
-                             <li>
-                             <a href="#" (click)="setFilter('clipper')">{{ getText('Clipper', 'Clipper') }}</a>
-                            </li>
-                            <li>
-                                <a href="#" (click)="setFilter('trimmer')">{{ getText('Trimmer', 'Trimmer') }}</a>
-                            </li>
-                            <li>
-                                <a href="#" (click)="setFilter('')">{{ getText('Todos', 'All') }}</a>
-                            </li>
-                    </ul>
-                </div>
                     <div>
-                         <ul> 
-                            <h3>{{getText('Productos','Products')}}</h3>
-                                <li>
-                                    
-                                </li>
-                         </ul> </div>
-                    <div>{{getText('Mobiliario','Furniture')}} </div>
-                    <div>{{getText('Tijeras','Scissors')}} </div>
-                    <div>{{getText('Capas','Layers')}} </div>
-                    <div>{{getText('Accesorios','Accesories')}} </div>
+                        <ul>
+                            <h3> {{getText('Maquinas','Machines')}}</h3>
+                            <li>
+                                <a href="#">{{ getText('Clipper', 'Clipper') }}</a>
+                            </li>
+                            <li>
+                                <a href="#">{{ getText('Trimmer', 'Trimmer') }}</a>
+                            </li>
+                            <li>
+                                <a href="#">{{ getText('Todos', 'All') }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul>
+                            <a href="#">
+                                <h3> {{getText('Cosmeticos','Cosmetics')}}</h3>
+                            </a>
+
+                        </ul>
+                    </div>
+                    <div>
+                        <ul>
+                            <h3>{{getText('Mobiliario','Furniture')}}</h3>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul>
+                            <h3>{{getText('Tijeras','Scissors')}} </h3>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul>
+                            <h3>{{getText('Capas','Layers')}}</h3>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul>
+                            <h3>{{getText('Accesorios','Accesories')}}</h3>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </aside>
@@ -43,27 +60,74 @@
             <div class="sort-section">
                 <button class="sort-button">ORDENAR POR</button>
             </div>
+
             <div class="products-grid">
-                    @for (product of products.maquinas.clippers; track product.id) {
-                        <div class="product-card">
-                            <img [src]="product.image" [alt]="product.name" class="product-image">
-                            <h3 class="product-name">{{ product.name }}</h3>
-                            <p class="product-price">{{ product.price}}</p>
-                            <button class="add-to-cart" (click)="addToCart(product)">
-                                {{ getText('Añadir al Carrito', 'Add to Cart') }}
-                            </button>
-                        </div>
-                    }     
-                    @for (product of products.maquinas.trimmer; track product.id) {
-                        <div class="product-card">
-                            <img [src]="product.image" [alt]="product.name" class="product-image">
-                            <h3 class="product-name">{{ product.name }}</h3>
-                            <p class="product-price">{{ product.price}}</p>
-                            <button class="add-to-cart" (click)="addToCart(product)">
-                                {{ getText('Añadir al Carrito', 'Add to Cart') }}
-                            </button>
-                        </div>
-                    }     
+                @for (product of products.maquinas.clippers; track product.id) {
+
+                <div class="product-card">
+                    <img [src]="product.image" [alt]="product.name" class="product-image">
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <p class="product-price">{{ product.price }}</p>
+                    <button class="add-to-cart" (click)="addToCart(product)">
+                        <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
+                    </button>
+
+                    <button class="favorite-button" (click)="favorite(product)">
+                        @if(product.isFavorite){
+                         <!--   <div class="alert alert-info">
+                                <div class="alert-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                                    </svg>
+                                </div>
+                                <div class="alert-content">
+                                    <p class="alert-title">Información</p>
+                                    <p class="alert-description">{{ getText('Este articulo se ha añadido de favoritos.',
+                                        'Please select a barber.') }}
+                                    </p>
+                                </div>
+                                <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>
+                            </div>-->
+                        <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Añadir a favoritos">
+                        }@else{
+                        <!-- <div class="alert alert-info">
+                            <div class="alert-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                                </svg>
+                            </div>
+                            <div class="alert-content">
+                                <p class="alert-title">Información</p>
+                                <p class="alert-description">{{ getText('Este articulo se ha eliminado de favoritos.',
+                                    'Please select a barber.') }}
+                                </p>
+                            </div>
+                            <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>
+                        </div>-->
+                        <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
+                        }
+                    </button>
+                </div>
+                }
+
+                @for (product of products.cosmeticos; track product.id) {
+                <div class="product-card">
+                    <img [src]="product.image" [alt]="product.name" class="product-image">
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <p class="product-price">{{ product.price }}</p>
+                    <button class="add-to-cart" (click)="addToCart(product)">
+                        <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
+                    </button>
+                    <button class="favorite-button" (click)="favorite(product)">
+                        <img [src]="product.isFavorite ? '../../../../images/favorito_pulse.png' : '../../../../images/favorito.png'"
+                            class="fav-icon" alt="Añadir a favoritos">
+                    </button>
+                </div>
+                }
             </div>
         </section>
     </main>

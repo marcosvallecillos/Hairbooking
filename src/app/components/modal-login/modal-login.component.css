@@ -135,7 +135,7 @@ h2.active{
     display: none
   }
   .form-options input[type=checkbox]:checked+label.inner {
-    background: rgb(0, 0, 0)
+    background: rgb(13, 255, 0)
   }
 .form-group {
     margin-bottom: 1.5rem;

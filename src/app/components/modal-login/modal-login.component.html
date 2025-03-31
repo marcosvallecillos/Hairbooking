@@ -3,14 +3,14 @@
     <div class="modal-content">
         <button class="close-button" (click)="onClose()">×</button>
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <h2 [class.active]="!isRegister" (click)="toggleTab(false)">
+            <div class="col-lg-6 col-md-6 col-sm-6" (click)="toggleTab(false)">
+                <h2 [class.active]="!isRegister" >
                     {{ getText('Iniciar Sesión', 'Sign In') }}
                 </h2>
                 <hr class="bar-login" [class.active]="!isRegister">
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <h2 [class.active]="isRegister" (click)="toggleTab(true)">
+            <div class="col-lg-6 col-md-6 col-sm-6" (click)="toggleTab(true)">
+                <h2 [class.active]="isRegister" >
                     {{ getText('Registrarse', 'Sign Up') }}
                 </h2>
                 <hr class="bar-register" [class.active]="isRegister">
@@ -58,7 +58,7 @@
                         placeholder="Confirm Password" class="form-input" />
                     </div>
               
-                    <button type="submit" class="register-button" [disabled]="loginForm.invalid">Registrarse</button>
+                    <button type="submit" class="register-button" [disabled]="loginForm.invalid">  {{ getText('Registrarse', 'Sign Up') }}</button>
                   </form>
             } @else {
                 <div class="form-container">

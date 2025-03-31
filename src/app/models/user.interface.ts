@@ -11,6 +11,7 @@ export interface Usuario {
   export interface Product {
     id: number;
     name: string;
-    price: string;
+    price: number;
     image: string;
+    cantidad:number;
   }

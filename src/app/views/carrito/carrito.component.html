@@ -1,0 +1,58 @@
+<div class="overlay"></div>
+<div class="carrito-container mt-5 mb-5">
+    <!-- @if(productos not empty){ -->
+    <div class="row">
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <table class="carrito-tabla">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="carrito-body">
+                    @for (product of productos; track product.id) {
+                        <tr>
+                            <td class="producto" data-label="Producto">
+                                <img [src]="product.image" [alt]="product.name" class="product-image">
+                                <h3 class="product-name">{{ product.name }}</h3>
+                            </td>
+                            <td class="price" data-label="Precio">
+                                <p class="product-price">{{ product.price }} €</p>
+                            </td>
+                            <td class="cantidad" data-label="Cantidad">
+                                <input type="number" min="1" value= "{{ product.cantidad }}">
+                            </td>
+                            <td class="subtotal" data-label="Subtotal">
+                                <p> {{ product.price * product.cantidad }} €</p>
+                            </td>
+                            <td data-label="Eliminar">
+                                <button class="eliminar" (click)="eliminarproduct(product)">
+                                    <img src="../../../../images/papelera.png" alt="">
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 mt-5">
+            
+         
+            <div class="resumen-carrito">
+              
+                <h2>Totales del carrito</h2>
+                <p>Total: <span id="total" step="0.01"> {{this.subtotal}} </span> €</p>
+                <button id="finalizar-compra">Finalizar compra</button>
+         
+        </div>
+        </div>
+    </div>
+    <!-- } --> <!-- @else{ } -->
+</div>
+
+<app-footer></app-footer>

@@ -12,7 +12,11 @@
 .home {
     margin-left: 50px;
 }
-
+.carrito{
+    list-style: none;
+    border: none;
+    background-color: transparent;;
+    }
 .rounded-pill {
     width: 100px;
     height: 100px;

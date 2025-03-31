@@ -20,8 +20,8 @@
     background: linear-gradient(90deg, transparent, #6C4F3D, transparent);
     margin: 10px auto;
   }
-
   .cosmetics-grid {
+    height: auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
@@ -29,7 +29,7 @@
     margin-top: 2rem;
   }
 
-  @media(max-width: 767px) {
+  @media(max-width: 576px) {
     .cosmetics-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;

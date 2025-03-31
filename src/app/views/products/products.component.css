@@ -71,6 +71,7 @@
 
 .sort-section {
     margin-bottom: 1.5rem;
+    text-align: right; 
 }
 
 .sort-button {
@@ -83,6 +84,7 @@
     font-size: 1rem;
     transition: background-color 0.3s ease;
 }
+
 
 .sort-button:hover {
     background-color: #0056b3;
@@ -112,14 +114,54 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-ul a{
+ul h3{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
     text-decoration: none;
     text-align: left;
     font-size: 1.1rem;
     color: black;
-    font-weight: bold;
 }
-li{
+.add-carrito,
+.fav-icon {
+    width: 24px; 
+    height: 24px;
+    margin: 0 5px; 
+    display: inline-block; 
+    vertical-align: middle; 
+    cursor: pointer; 
+    transition: transform 0.2s ease; 
+}
+.product-name{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.1rem;
+    color: black;
+}
+.add-carrito:hover,
+.fav-icon:hover {
+    transform: scale(1.2); 
+}
+
+button.add-to-cart, button.favorite-button{
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.add-to-cart:hover {
+    background-color: rgba(0, 0, 0, 0.1); 
+    border-radius: 50%;
+}
+ul a{
+    text-decoration: none;
+}
+li a{
+    color: black;
+    text-decoration: none;
     margin-left: 30px;
 }
 .product-image {

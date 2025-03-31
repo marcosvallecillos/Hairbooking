@@ -7,3 +7,10 @@ export interface Usuario {
     telefono: string;
     citas_reservadas: [];
   }
+
+  export interface Product {
+    id: number;
+    name: string;
+    price: string;
+    image: string;
+  }

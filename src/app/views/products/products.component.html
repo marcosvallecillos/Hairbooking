@@ -1,18 +1,70 @@
 <div class="overlay"></div>
 
 <div class="products-container">
-    <h2 class="products-title">{{ getText('Nuestros Productos', 'Our Products') }}</h2>
-    <div class="products-grid">
-        @for (product of products; track product.id) {
-            <div class="product-card">
-                <img [src]="product.image" [alt]="product.name" class="product-image">
-                <h3 class="product-name">{{ product.name }}</h3>
-                <p class="product-description">{{ product.description }}</p>
-                <p class="product-price">{{ product.price}}</p>
-                <button class="add-to-cart" (click)="addToCart(product)">
-                    {{ getText('Añadir al Carrito', 'Add to Cart') }}
-                </button>
+    <main class="products-main">
+      
+        <aside class="products-sidebar">
+            <button class="filter-button">STOCK</button>
+            <div class="filter-section">
+                <h3 class="filter-title">{{getText('Lista de Productos','Products List')}} </h3>
+                <div class="filter-options">
+                    <div></div>
+                    <div> 
+                        <ul>
+                             <h3> {{getText('Maquinas','Machines')}}</h3>
+                             <li>
+                             <a href="#" (click)="setFilter('clipper')">{{ getText('Clipper', 'Clipper') }}</a>
+                            </li>
+                            <li>
+                                <a href="#" (click)="setFilter('trimmer')">{{ getText('Trimmer', 'Trimmer') }}</a>
+                            </li>
+                            <li>
+                                <a href="#" (click)="setFilter('')">{{ getText('Todos', 'All') }}</a>
+                            </li>
+                    </ul>
+                </div>
+                    <div>
+                         <ul> 
+                            <h3>{{getText('Productos','Products')}}</h3>
+                                <li>
+                                    
+                                </li>
+                         </ul> </div>
+                    <div>{{getText('Mobiliario','Furniture')}} </div>
+                    <div>{{getText('Tijeras','Scissors')}} </div>
+                    <div>{{getText('Capas','Layers')}} </div>
+                    <div>{{getText('Accesorios','Accesories')}} </div>
+                </div>
             </div>
-        }
-    </div>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="products-content">
+            <div class="sort-section">
+                <button class="sort-button">ORDENAR POR</button>
+            </div>
+            <div class="products-grid">
+                    @for (product of products.maquinas.clippers; track product.id) {
+                        <div class="product-card">
+                            <img [src]="product.image" [alt]="product.name" class="product-image">
+                            <h3 class="product-name">{{ product.name }}</h3>
+                            <p class="product-price">{{ product.price}}</p>
+                            <button class="add-to-cart" (click)="addToCart(product)">
+                                {{ getText('Añadir al Carrito', 'Add to Cart') }}
+                            </button>
+                        </div>
+                    }     
+                    @for (product of products.maquinas.trimmer; track product.id) {
+                        <div class="product-card">
+                            <img [src]="product.image" [alt]="product.name" class="product-image">
+                            <h3 class="product-name">{{ product.name }}</h3>
+                            <p class="product-price">{{ product.price}}</p>
+                            <button class="add-to-cart" (click)="addToCart(product)">
+                                {{ getText('Añadir al Carrito', 'Add to Cart') }}
+                            </button>
+                        </div>
+                    }     
+            </div>
+        </section>
+    </main>
 </div>

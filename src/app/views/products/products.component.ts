@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
+import { Product } from '../../models/user.interface';
 
 @Component({
   selector: 'app-products',
@@ -8,35 +9,57 @@ import { LanguageService } from '../../services/language.service';
   styleUrl: './products.component.css'
 })
 export class ProductsComponent {
-  products = [
-    {
-      id: 1,
-      name: 'Champú para Barba',
-      description: 'Un champú especial para mantener tu barba limpia y suave.',
-      price: "15.99 €",
-      image: '../../../../images/champo_barba.png'
-    },
-    {
-      id: 2,
-      name: 'Cera para Cabello',
-      description: 'Cera de alta calidad para un peinado perfecto.',
-      price:" 12.99 €",
-      image: '../../../../images/cera.png'
-    },
-    {
-      id: 3,
-      name: 'Aceite para Barba',
-      description: 'Aceite nutritivo para una barba saludable.',
-      price: "18.99€",
-      image: '../../../../images/aceite.png'
+  products = {
+    maquinas: {
+      clippers: [
+        {
+          id: 1,
+          name: 'CLIPPER SPACE X VERSACE ',
+          price: "109,99 €",
+          image: '../../../../images/clipper/clipper_space.jpg'
+        },
+        {
+          id: 2,
+          name: 'CLIPPER WAHL VAPOR 5 STAR CORDLESS ',
+          price: " 159,99 €",
+          image: '../../../../images/clipper/clipper_wahl.jpg'
+        },
+        {
+          id: 3,
+          name: 'Aceite para Barba',
+          price: "18.99€",
+          image: '../../../../images/aceite.png'
+        }
+      ],
+      trimmer: [
+        {    id: 1,
+            name: 'Trimmer Skeleton ',
+            price: "129,99 €",
+            image: '../../../../images/clipper/clipper_space.jpg'
+      },
+      
+    ]
     }
-  ];
+  };
 
   addToCart(product: any) {
     console.log('Producto añadido al carrito:', product);
-    
+
+  }
+  currentFilter: string = '';
+
+  getFilteredProducts() {
+    if (!this.currentFilter) {
+      return this.products.maquinas; 
+    }
+    return this.products.maquinas.clippers.filter(product =>
+      product.name.toLowerCase().includes(this.currentFilter.toLowerCase())
+    );
   }
 
+  setFilter(filter: string) {
+    this.currentFilter = filter;
+  }
   isSpanish: boolean = true;
 
   constructor(private languageService: LanguageService) {

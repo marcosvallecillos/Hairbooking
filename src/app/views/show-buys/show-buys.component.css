@@ -1,0 +1,161 @@
+.overlay {
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1)),
+                url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg") center/cover no-repeat;
+    -webkit-mask-image: linear-gradient(black 80%, transparent);
+    mask-image: linear-gradient(black 80%, transparent);
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 85%, 80% 80%, 70% 90%, 60% 80%, 50% 85%, 40% 75%, 30% 80%, 20% 70%, 10% 80%, 0 70%);
+}
+
+.productos-container {
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #1a1a1a;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 2rem 1rem;
+}
+
+.products-btn {
+    background: #ff5722;
+    color: #ffffff;
+    padding: 0.875rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    margin-right: 15%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.products-btn:hover {
+    background: #e64a19;
+    transform: translateY(-2px);
+}
+
+.productos-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.image-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit:contain;
+    transition: transform 0.3s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.card-content h3 {
+    font-size: 1.25rem;
+    color: #2c2c2c;
+    margin: 0.5rem 0;
+    font-weight: 600;
+}
+
+.card-content p {
+    font-size: 1rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert-warning {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    max-width: 500px;
+    margin: 4rem auto;
+    text-align: center;
+}
+
+.alert-warning i {
+    font-size: 2.5rem;
+    color: #c62828;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.alert-warning h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert-btn {
+    background: #ff9800;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.alert-btn:hover {
+    background: #ef6c00;
+    transform: translateY(-2px);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .productos-container {
+        margin: 30px 15px;
+        padding: 1.5rem;
+    }
+    
+    .products-btn {
+        width: 43%;
+        margin: 0 0 1rem;
+    }
+    
+    .button-container {
+        justify-content: center;
+        padding: 0;
+    }
+}

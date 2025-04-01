@@ -464,7 +464,7 @@
         font-size: 0.9rem;
     }
 }
-.alert {
+.alert-warning {
     background-color: white;
     border: none;
     width: 100vw;
@@ -478,11 +478,11 @@
     justify-content: center;
   }
   
-  .alert i {
+  .alert-warning i {
     color: #850804;
   }
 
-.alert button {
+.alert-warning button {
     background: #ff9800; /* Color llamativo */
     color: white;
     border: none;
@@ -494,7 +494,7 @@
     transition: background 0.3s ease-in-out;
 }
 
-.alert button:hover {
+.alert-warning button:hover {
     background: #523100;
 }
 

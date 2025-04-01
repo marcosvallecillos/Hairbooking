@@ -7,12 +7,14 @@ import { ModalLoginComponent } from './components/modal-login/modal-login.compon
 import { HeaderUserComponent } from './components/header-user/header-user.component';
 import { ContactoComponent } from './views/contacto/contacto.component';
 import { IndexComponent } from './views/index/index.component';
-import { ModalRegisterComponent } from './components/modal-register/modal-register.component';
 import { ShowProfileComponent } from './components/show-profile/show-profile.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { ProductsComponent } from './views/products/products.component';
 import { CosmeticosComponent } from './components/cosmeticos/cosmeticos.component';
 import { CarritoComponent } from './views/carrito/carrito.component';
+import { ModalCompraComponent } from './components/modal-compra/modal-compra.component';
+import { ShowReserveComponent } from './views/show-reserve/show-reserve.component';
+import { ShowBuysComponent } from './views/show-buys/show-buys.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -22,7 +24,6 @@ export const routes: Routes = [
     { path: 'list-price', component: ListPriceComponent },
     { path: 'reserve', component: ReserveComponent },
     { path: 'login', component: ModalLoginComponent },
-    { path: 'register', component: ModalRegisterComponent },
     { path: 'header-user', component: HeaderUserComponent },
     { path: 'contacto', component: ContactoComponent },
     { path: 'showProfile', component: ShowProfileComponent },
@@ -30,6 +31,9 @@ export const routes: Routes = [
     { path: 'products', component: ProductsComponent },
     { path: 'cosmetics', component: CosmeticosComponent },
     { path: 'carrito', component: CarritoComponent },
+    { path: 'confirm-compra', component: ModalCompraComponent },
+    { path: 'show-reserve', component: ShowReserveComponent },
+    { path: 'show-buys', component: ShowBuysComponent },
 ];
 
     

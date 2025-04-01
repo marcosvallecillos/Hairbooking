@@ -1,0 +1,46 @@
+@if (show) {
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <h2>{{ getText('Confirmar Compra', 'Confirm Buy') }}</h2>
+            <div class="modal-body">
+                <p>{{ getText('¿Estás seguro que deseas comprar?', 'Are you sure you want to buy?') }}</p>
+                <div class="reservation-details">
+                    <p><strong>{{ getText('Producto:', 'Product:') }}</strong> {{ producto }}</p>
+    
+                    <p><strong>{{ getText('Precio:', 'Price:') }}</strong> {{ precio }}</p>
+                    
+                    <p><strong>{{ getText('Total:', 'Total:') }}</strong> {{ total }}</p>
+                </div>
+            </div>
+            <div class="alert alert-info">
+                <div class="alert-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                  </svg>
+                </div>
+                <div class="alert-content">
+                  <p class="alert-title">Información</p>
+                  <p class="alert-description">{{ getText('Se debera pagar en el local.', 'Payment must be made on the premises..') }}</p>
+                </div>
+                <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" (click)="onCancel()">{{ getText('Cancelar', 'Cancel') }}</button>
+                <button class="btn-confirm" (click)="onConfirm()">{{ getText('Pagar', 'Pay') }}</button>
+            </div>
+        </div>
+    </div>
+    }
+    
+    @if (showAlert) {
+    <div class="alert-overlay">
+        <div class="alert-box">
+            <p>{{ getText('¡Compra con éxito!', 'Successful purchase!') }}</p>
+        </div>
+    </div>
+    } @else if (showAlertCancel) {
+    <div class="alert-overlay">
+        <div class="alert-box-cancel">
+            <p>{{ getText('Compra cancelada!', 'Canceled Purchase!') }}</p>
+        </div>
+    </div>
+    }

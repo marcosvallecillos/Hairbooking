@@ -4,7 +4,6 @@ import { RouterLink, RouterLinkActive, ActivatedRoute, Router } from '@angular/r
 import { LanguageService } from '../../services/language.service';
 import { AboutUsComponent } from '../../views/about-us/about-us.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
-import { ModalRegisterComponent } from '../modal-register/modal-register.component';
 import { ProductsComponent } from '../../views/products/products.component';
 
 @Component({
@@ -15,7 +14,6 @@ import { ProductsComponent } from '../../views/products/products.component';
     RouterLink,
     RouterLinkActive,
     ModalLoginComponent,
-    ModalRegisterComponent,
     ProductsComponent
   ],
   templateUrl: './header.component.html',

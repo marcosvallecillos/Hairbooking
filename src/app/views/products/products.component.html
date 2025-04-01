@@ -57,10 +57,9 @@
 
         <!-- Main Content -->
         <section class="products-content">
-            <div class="sort-section">
-                <button class="sort-button">ORDENAR POR</button>
-            </div>
-
+            <div class="button-container">
+            <button class="compras-btn" routerLink="/show-buys">  <img src="../../../../images/ojo.png" width="30px" height="30px" alt="" style="margin-right:10px">Mostrar Compras</button>
+        </div>
             <div class="products-grid">
                 @for (product of products.maquinas.clippers; track product.id) {
 
@@ -68,8 +67,13 @@
                     <img [src]="product.image" [alt]="product.name" class="product-image">
                     <h3 class="product-name">{{ product.name }}</h3>
                     <p class="product-price">{{ product.price }}</p>
-                    <button class="add-to-cart" (click)="addToCart(product)">
+                    <button class="add-to-cart" (click)="productInCart(product)">
+                        @if(!product.insidecart){
                         <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
+                        }@else{
+                            <img src="../../../../images/inside_cart.png" class="inside-carrito"  alt="Añadir al carrito">
+
+                        }
                     </button>
 
                     <button class="favorite-button" (click)="favorite(product)">
@@ -92,22 +96,6 @@
                             </div>-->
                         <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Añadir a favoritos">
                         }@else{
-                        <!-- <div class="alert alert-info">
-                            <div class="alert-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-                                </svg>
-                            </div>
-                            <div class="alert-content">
-                                <p class="alert-title">Información</p>
-                                <p class="alert-description">{{ getText('Este articulo se ha eliminado de favoritos.',
-                                    'Please select a barber.') }}
-                                </p>
-                            </div>
-                            <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>
-                        </div>-->
                         <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
                         }
                     </button>
@@ -119,8 +107,13 @@
                     <img [src]="product.image" [alt]="product.name" class="product-image">
                     <h3 class="product-name">{{ product.name }}</h3>
                     <p class="product-price">{{ product.price }}</p>
-                    <button class="add-to-cart" (click)="addToCart(product)">
+                    <button class="add-to-cart" (click)="productInCart(product)">
+                    @if(!product.insidecart){
                         <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
+                        }@else{
+                            <img src="../../../../images/inside_cart.png" class="inside-carrito"  alt="Añadir al carrito">
+
+                        }
                     </button>
                     <button class="favorite-button" (click)="favorite(product)">
                         <img [src]="product.isFavorite ? '../../../../images/favorito_pulse.png' : '../../../../images/favorito.png'"

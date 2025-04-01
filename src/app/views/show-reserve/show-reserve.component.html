@@ -1,0 +1,41 @@
+<div class="overlay"></div>
+
+@if (isUser) {
+@if(reserves.length > 0){
+  
+  <h2 class="mt-5">Reservas</h2>
+<div class="reserves-container">
+  <div class="header">
+    <button class="reserve-btn" routerLink="/reserve"> <img src="../../../../images/cita.png" width="30px" height="30px" alt="" style="margin-right:10px"> Reservar Cita</button>
+  </div>
+  <div class="reserves-list">
+    @for (reserve of reserves; track reserve.id) {
+    <div class="card">
+      <div class="card-content">
+        <h3>{{ reserve.nombre }} {{ reserve.apellidos }}</h3>
+        <p><i class="bi bi-scissors"></i> <strong> Servicio:</strong> {{ reserve.servicio }}</p>
+        <p><i class="bi bi-person"></i> <strong> Peluquero:</strong> {{ reserve.peluquero }}</p>
+        <p><i class="bi bi-calendar"></i> <strong> Fecha:</strong> {{ reserve.dia }}</p>
+        <p><i class="bi bi-clock"></i> <strong> Hora:</strong> {{ reserve.hora }}</p>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+} @else {
+<div class="alert-warning">
+  <i class="bi bi-exclamation-circle-fill"></i>
+  <h2>{{ getText('No hay ninguna reserva.', 'Any reserve.') }}</h2>
+  <button class="alert-btn" routerLink="/reserve">{{ getText('Crear Reserva', 'Create Reserve') }}</button>
+</div>
+}
+} @else {
+<div class="alert-warning">
+  <i class="bi bi-exclamation-circle-fill"></i>
+  <h2>{{ getText('Debes estar registrado para reservar una cita.', 'You must be registered to book an appointment.') }}
+  </h2>
+  <button class="alert-btn" (click)="openLoginModal()">{{ getText('Iniciar Sesión', 'Login') }}</button>
+</div>
+}
+
+<app-modal-login [show]="showLoginModal" (close)="showLoginModal = false"></app-modal-login>

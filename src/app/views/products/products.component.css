@@ -195,3 +195,47 @@ li a{
         width: 100%;
     }
 }
+.inside-carrito{
+    width: 40px;
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 2rem 1rem;
+}
+
+.compras-btn {
+    background: #ff5722;
+    color: white;
+    padding: 14px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+    border: none;
+}
+
+.compras-btn:hover {
+    background: #d84315;
+}
+
+
+@media (max-width: 768px) {
+    .productos-container {
+        margin: 30px 15px;
+        padding: 1.5rem;
+    }
+    
+    .compras-btn {
+        width: 43%;
+        margin: 0 0 1rem;
+    }
+    
+    .button-container {
+        justify-content: center;
+        padding: 0;
+    }
+    }

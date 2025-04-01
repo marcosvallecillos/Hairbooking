@@ -17,7 +17,7 @@ import { LanguageService } from '../../services/language.service';
 export class ReserveComponent {
   currentDate = new Date();
   selectedDate: Date | null = null;
-  selectedService: string = '';
+  selectedService: string = ''  ;
   selectedBarber: string = '';
   selectedTime: string = '';
   showModal: boolean = false;
@@ -35,8 +35,6 @@ export class ReserveComponent {
     { nombre: 'Corte Fuera Horario', precio: '30 €' , name: 'Cut After Hours', price: '30 €' },
     { nombre: 'Corte + Mechas', precio: '50 €' ,  name: 'Cut + Highlights', price: '50 €'},
     { nombre: 'Servicio a Domicilio', precio: '50 €' , name: 'Home Delivery', price: '50 €' },
-
-    //en
 
   ];
 
@@ -80,12 +78,6 @@ export class ReserveComponent {
     return days;
   }
 
-  selectDate(date: Date) {
-    if (this.isAvailable(date)) {
-      this.selectedDate = new Date(date);
-      this.updateAvailableHours();
-    }
-  }
   isToday(date: Date): boolean {
     const today = new Date();
     return date.getDate() === today.getDate() &&
@@ -145,7 +137,7 @@ redirectToLogin() {
         fecha: this.selectedDate,
         hora: this.selectedTime,
       });
-    this.router.navigate(['/showProfile']); 
+    this.router.navigate(['/show-reserve']); 
     }
   }
 
@@ -156,16 +148,33 @@ redirectToLogin() {
   }
 
   onReserve() {
-   
         this.showModal = true;
     }
-  onSelectBarber(barber: string) {
-    this.selectedBarber = barber;
-  }
 
-  updateAvailableHours() {
-    // Implementa la lógica para actualizar las horas disponibles basándote en la fecha seleccionada
-  }
+
+    selectService(service: string) {
+      this.selectedService = this.selectedService === service ? '' : service;
+    }
+    
+    selectBarber(barber: string) {
+      this.selectedBarber = this.selectedBarber === barber ? '' : barber;
+    }
+    selectTime(time: string) {
+      this.selectedTime = this.selectedTime === time ? '' : time;
+    }
+    selectDate(date: Date) {
+      if (this.selectedDate && this.selectedDate.getTime() === date.getTime()) {
+        this.clearSelectedDate(); 
+      } else {
+        this.selectedDate = date; 
+      }
+    }
+    
+    clearSelectedDate() {
+      this.selectedDate = null;
+      console.log('Fecha deseleccionada');
+    }
+
   openLoginModal() {
     this.showLoginModal = true;
   }
@@ -173,8 +182,6 @@ redirectToLogin() {
     this.close.emit();
     console.log('le estas dando');
   }
-  clearSelectedDate() {
-    this.selectedDate = null; // Asigna null en lugar de una cadena vacía
-    console.log('Fecha deseleccionada');
-  }
+
+  
   }

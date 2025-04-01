@@ -1,0 +1,122 @@
+.overlay {
+    width: 100%;
+    height: 200px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+    url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
+    background-size: cover;
+    background-position: center;
+    mask-image: linear-gradient(black 85%, transparent);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
+
+}
+
+.reserves-container {
+    max-width: 1200px;
+    width: 95%  ;
+    margin: 50px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+ h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #222;
+    font-weight: bold;
+}
+
+.reserve-btn {
+    background: #ff5722;
+    color: white;
+    padding: 14px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+    border: none;
+}
+
+.reserve-btn:hover {
+    background: #d84315;
+}
+
+.reserves-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    text-align: left;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.card-content h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card-content p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.alert-warning {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.alert-warning i {
+    font-size: 40px;
+    color: #850804;
+}
+
+.alert-warning h2 {
+    font-size: 22px;
+    color: #222;
+    margin-top: 15px;
+}
+
+.alert-btn {
+    background: #ff9800;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.alert-btn:hover {
+    background: #cc7700;
+}

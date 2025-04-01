@@ -15,7 +15,7 @@
                 @for (service of services; track service.nombre) {
                     <div class="service-card"
                         [class.selected]="selectedService === service.nombre"
-                        (click)="selectedService = service.nombre">
+                        (click)="selectService(service.nombre)">
                         <h3>{{ getText(service.nombre, service.name) }}</h3>
                         <p class="price">{{ service.price }}</p>
                     </div>
@@ -38,7 +38,7 @@
                     @for (barber of babers; track barber.name) {
                         <div class="barber-card"
                             [class.selected]="selectedBarber === barber.name"
-                            (click)="onSelectBarber(barber.name)">
+                            (click)="selectBarber(barber.name)">
                             <img [src]="barber.imagen" class="img-fluid rounded-circle" [alt]="barber.name">
                             <h3>{{ barber.name }}</h3>
                             <p>{{ getText(barber.descripcion, barber.description) }}</p>
@@ -65,17 +65,19 @@
 
                 <!-- Días del mes -->
                 @for (date of getDaysInMonth(currentDate.getMonth(), currentDate.getFullYear()); track $index) {
-                    @if (date === null) {
-                        <div class="calendar-day empty"></div>
-                    } @else {
-                        <div class="calendar-day"
-                            [class.selected]="selectedDate && date && selectedDate.getTime() === date.getTime()"
-                            [class.disabled]="!isAvailable(date)"
-                            (click)="isAvailable(date) && selectDate(date)">
-                            {{ date.getDate() }}
-                        </div>
-                    }
-                }
+                  @if (date === null) {
+                      <div class="calendar-day empty"></div>
+                  } @else {
+                      <div class="calendar-day"
+                          [class.selected]="selectedDate && selectedDate.getTime() === date.getTime()"
+                          [class.disabled]="!isAvailable(date)"
+                          (click)="isAvailable(date) && selectDate(date)"
+                      >
+                          {{ date.getDate() }}
+                      </div>
+                  }
+              }
+              
              
             </div>
         </div>
@@ -88,7 +90,7 @@
                     @for (time of availableHours; track time) {
                         <button class="time-slot"
                             [class.selected]="selectedTime === time"
-                            (click)="selectedTime = time">
+                            (click)="selectTime(time)">
                             {{ time }}
                         </button>
                     }
@@ -104,11 +106,10 @@
                       </svg>
                     </div>
                     <div class="alert-content">
-                      <p class="alert-title">Información</p>
+                      <p class="alert-title">{{getText('Información','Information')}}</p>
                       <p class="alert-description">{{ getText('Por favor selecciona un día y un peluquero.', 'Please select a day and a barber.') }}</p>
                     </div>
-                    <span class="closeButton" (click)="onClose()">×</span>
-                  </div>
+                    <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>                  </div>
 
             } @else if (selectedService && selectedDate && !selectedBarber) {
                 <div class="alert alert-info">
@@ -118,7 +119,7 @@
                       </svg>
                     </div>
                     <div class="alert-content">
-                      <p class="alert-title">Información</p>
+                      <p class="alert-title">{{getText('Información','Information')}}</p>
                       <p class="alert-description"> {{ getText('Por favor selecciona un peluquero.', 'Please select a barber.') }}</p>
                     </div>
            <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -132,7 +133,7 @@
                       </svg>
                     </div>
                     <div class="alert-content">
-                      <p class="alert-title">Información</p>
+                      <p class="alert-title">{{getText('Información','Information')}}</p>
                       <p class="alert-description">{{ getText('Por favor selecciona un día.', 'Please select a day.') }}
                     </p>
                     </div>
@@ -149,7 +150,7 @@
                       </svg>
                     </div>
                     <div class="alert-content">
-                      <p class="alert-title">Información</p>
+                      <p class="alert-title">{{getText('Información','Information')}}</p>
                       <p class="alert-description"> {{ getText('Por favor selecciona un servicio y un dia.', 'Please select a service and a day.') }}</p>
                     </div>
            <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -163,7 +164,7 @@
                       </svg>
                     </div>
                     <div class="alert-content">
-                      <p class="alert-title">Información</p>
+                      <p class="alert-title">{{getText('Información','Information')}}</p>
                       <p class="alert-description">{{ getText('Por favor selecciona un día.', 'Please select a day.') }}
                     </p>
                     </div>
@@ -178,7 +179,7 @@
                       </svg>
                     </div>
                     <div class="alert-content">
-                      <p class="alert-title">Información</p>
+                      <p class="alert-title">{{getText('Información','Information')}}</p>
                       <p class="alert-description">{{ getText('Por favor selecciona un servicio.', 'Please select a service.') }}
                     </p>
                     </div>
@@ -195,7 +196,7 @@
                       </svg>
                     </div>
                     <div class="alert-content">
-                      <p class="alert-title">Información</p>
+                      <p class="alert-title">{{getText('Información','Information')}}</p>
                       <p class="alert-description"> {{ getText('Por favor selecciona un servicio y un peluquero .', 'Please select a service and a barber.') }}</p>
                     </div>
            <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -210,7 +211,7 @@
                       </svg>
                     </div>
                     <div class="alert-content">
-                      <p class="alert-title">Información</p>
+                      <p class="alert-title">{{getText('Información','Information')}} </p>
                       <p class="alert-description">{{ getText('Por favor selecciona un peluquero.', 'Please select a barber.') }}
                     </p>
                     </div>
@@ -226,7 +227,7 @@
                       </svg>
                     </div>
                     <div class="alert-content">
-                      <p class="alert-title">Información</p>
+                      <p class="alert-title">{{getText('Información','Information')}}</p>
                       <p class="alert-description">{{ getText('Por favor selecciona un service.', 'Please select a service.') }}
                     </p>
                     </div>
@@ -255,7 +256,7 @@
     </div>
 } @else {
     <!-- Mensaje para usuarios no registrados -->
-    <div class="alert alert-warning text-center p-4 shadow-sm">
+    <div class=" alert-warning text-center p-4 shadow-sm">
         <i class="bi bi-exclamation-circle-fill fs-4"></i>
         <h2 class="titulo mt-3">{{ getText('Debes estar registrado para reservar una cita.', 'You must be registered to book an appointment.') }}</h2>
         <button class="alert-login mt-3" (click)="openLoginModal()">{{ getText('Iniciar Sesión', 'Login') }}</button>

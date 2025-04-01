@@ -69,6 +69,12 @@
     background-color: transparent;;
     
 }
+.carrito:focus{
+    background-color: #ffbf00;
+    border: #ffbf00;
+    width: auto ;
+    border-radius: 30px;
+}
 .navbar-nav .nav-link:hover {
     color: #ffc107;
 }

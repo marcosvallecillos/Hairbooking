@@ -15,3 +15,13 @@ export interface Usuario {
     image: string;
     cantidad:number;
   }
+
+  export interface Reserva{
+    id: number;
+    nombre: string;
+    apellidos: string;
+    servicio:string;
+    peluquero:string;
+    dia: string;
+    hora:string;
+  }

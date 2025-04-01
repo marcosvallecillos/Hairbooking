@@ -41,7 +41,7 @@
                     <!-- Contraseña -->
                     <div class="form-group position-relative">
                       <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
-                        (click)="togglePasswordVisibility()" style="cursor: pointer;" role="button">
+                        (click)="togglePasswordVisibility()" style="cursor: pointer; color:white" role="button">
                         <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                       </span>
                       <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password"
@@ -51,7 +51,7 @@
                     <!-- Confirmar Contraseña -->
                     <div class="form-group position-relative">
                       <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
-                        (click)="togglePasswordVisibility()" style="cursor: pointer;" role="button">
+                        (click)="togglePasswordVisibility()" style="cursor: pointer; color:white" role="button">
                         <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                       </span>
                       <input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword"
@@ -71,7 +71,7 @@
                                [(ngModel)]="password" 
                                placeholder="Password">
                                <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
-                               (click)="togglePasswordVisibility()" style="cursor: pointer;" role="button">
+                               (click)="togglePasswordVisibility()" style="cursor: pointer; color:white" role="button">
                                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                              </span>
                     </div>

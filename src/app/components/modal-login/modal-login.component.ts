@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { ModalRegisterComponent } from '../modal-register/modal-register.component';
 import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-modal-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalRegisterComponent, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './modal-login.component.html',
   styleUrl: './modal-login.component.css'
 })

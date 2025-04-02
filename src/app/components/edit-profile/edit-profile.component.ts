@@ -3,10 +3,13 @@ import { Usuario } from '../../models/user.interface';
 import { ApiService } from '../../services/api-service.service';
 import { Router } from '@angular/router';
 import { FormsModule, NgModel } from '@angular/forms';
+import { FooterComponent } from '../footer/footer.component';
+import { ModalLoginComponent } from '../modal-login/modal-login.component';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-edit-profile',
-  imports: [FormsModule],
+  imports: [FormsModule,FooterComponent,ModalLoginComponent],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.css'
 })
@@ -15,12 +18,28 @@ export class EditProfileComponent {
   userData: Usuario | null = null;
   errors: { [key: string]: string } = {};
   loading = false;
+  isSpanish: boolean = true;
 
-  constructor(
-    private router: Router,
-    private apiService: ApiService
-  ) {}
+  constructor(private languageService: LanguageService,private router:Router, private apiService:ApiService) {
+    this.languageService.isSpanish$.subscribe(
+      isSpanish => this.isSpanish = isSpanish
+    );
+  }
 
+  toggleLanguage(language: 'es' | 'en') {
+    this.languageService.setLanguage(language);
+    localStorage.setItem('language', language);
+  }
+
+  getText(es: string, en: string): string {
+    return this.isSpanish ? es : en;
+  }
+  showLoginModal: boolean = false;
+  showModal: boolean = false;
+
+  openLoginModal() {
+    this.showLoginModal = true;
+  }
  validarFormulario(): boolean {
     if (!this.userData) return false;
     

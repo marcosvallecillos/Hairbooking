@@ -1,0 +1,23 @@
+@if (show) {
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <h2>{{ getText('Anular Reserva', 'Cancel Reserve') }}</h2>
+            <div class="modal-body">
+                <h5>{{ getText('¿Estás seguro que deseas anular esta reserva?', 'Are you sure you want to cancel this reservation?') }}</h5>
+                <div class="reservation-details">
+                    <p><strong>{{ getText('Peluquero:', 'Barber:') }}</strong> {{ peluquero }}</p>
+    
+                    <p><strong>{{ getText('Servicio:', 'Service:') }}</strong> {{ servicio }}</p>
+    
+                    <p><strong>{{ getText('Fecha:', 'Date:') }}</strong> {{ fecha }}</p>
+                    <p><strong>{{ getText('Hora:', 'Hour:') }}</strong> {{ hora }}</p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" (click)="onCancel()">{{ getText('Cancelar', 'Cancel') }}</button>
+                <button class="btn-confirm" (click)="onConfirm()">{{ getText('Anular', 'Annular') }}</button>
+            </div>
+        </div>
+    </div>
+    }
+    

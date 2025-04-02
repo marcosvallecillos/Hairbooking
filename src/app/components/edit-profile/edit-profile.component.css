@@ -10,6 +10,19 @@
     clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
 
 }
+body{
+    background-color: #ccc;
+}
+h2 {
+    font-size: 32px;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    position: relative;
+}
 .edit-profile-container {
     max-width: 800px;
     margin: 0 auto; /* Centra horizontalmente */
@@ -176,11 +189,48 @@ label {
   .animated-button:active {
     transform: scale(0.95);
   }
-  .no-profile {
-    text-align: center;
-    padding: 30px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
   
+
+  
+.alert-info {
+    background: #ffffff;
+    padding: 4rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 600px;
+    margin: 5rem auto;
+    text-align: center;
+}
+
+.alert-info i {
+    font-size: 3rem;
+    color: #0055ff; 
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.alert-info h2 {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    color: #1f2a44;
+}
+
+.alert-btn {
+    background: linear-gradient(135deg, #1900f7, #527bff); /* Rojo sofisticado */
+    color: #ffffff;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.2);
+}
+
+.alert-btn:hover {
+    background: linear-gradient(135deg, #1d1376, #2c4597);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(63, 47, 211, 0.3);
+}

@@ -13,7 +13,7 @@ export class ModalCompraComponent {
   @Input() producto: string | null = '';
   @Input() precio: string = '';
   @Input() cantidad: string = '';
-  @Input() total: number = 0;
+  @Input() total: string = '';
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();

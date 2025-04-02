@@ -14,6 +14,8 @@ export interface Usuario {
     price: number;
     image: string;
     cantidad:number;
+    isFavorite: boolean;
+    
   }
 
   export interface Reserva{

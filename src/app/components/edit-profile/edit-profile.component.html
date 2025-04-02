@@ -1,4 +1,6 @@
-<div class="overlay"></div><div class="edit-profile-container">
+
+<body>
+    <div class="overlay"></div><div class="edit-profile-container">
     @if (userData) {
     <div class="edit-profile-card">
         <h2>Editar Perfil</h2>
@@ -75,9 +77,15 @@
         </form>
     </div>
     } @else {
-    <div class="no-profile">
-        <p>No se encontraron datos del usuario</p>
-        <button class="btn btn-primary" routerLink="/signIn">Iniciar Sesión</button>
-    </div>
-    }
+        <div class="alert-info">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            <h2>{{ getText('No se encontraron datos del usuario.', 'You must be registered to book an appointment.') }}</h2>
+            <button class="alert-btn" (click)="openLoginModal()">{{ getText('Iniciar Sesión', 'Login') }}</button>
+          </div>
+        }
+    
 </div>
+
+</body>
+<app-modal-login [show]="showLoginModal" (close)="showLoginModal = false"></app-modal-login>
+<app-footer></app-footer>

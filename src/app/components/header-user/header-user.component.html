@@ -41,7 +41,7 @@
                             {{ getText('Productos', 'Products') }}
                         </a>
                     </li>
-<hr>
+
                     <li class="nav-item">
                         <a class="nav-link ms-3" routerLink="/about-us" routerLinkActive="active">
                             {{ getText('Sobre Nosotros', 'About Us') }}
@@ -69,7 +69,7 @@
                         </li>
                     </ul>
                 </div>
-                <hr>  
+                <hr>    
                 <li class="nav-item" style="    list-style: none;" routerLink="/carrito">
                     <button class="carrito"> <img src="../../../../images/bolsa.png" style="width: 30px; height: 30px;" alt=""></button>
                 </li> 
@@ -82,6 +82,7 @@
                         <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="profileDropdown">
                           <li><a class="dropdown-item" routerLink="/showProfile">{{getText('Ver Perfil','Show Profile')}}</a></li>
                           <li><a class="dropdown-item" routerLink="/editProfile">{{getText('Editar Perfil', 'Edit Profile')}}</a></li>
+                          <li><a class="dropdown-item" routerLink="/show-buys">{{getText('Compras Realizadas', 'Purchases Made')}}</a></li>
                           <li><hr class="dropdown-divider"></li>
                           <li><a class="dropdown-item" (click)="signout()">{{getText('Cerrar sesión','Sign Out')}}</a></li>
                         </ul>

@@ -41,8 +41,8 @@
 
 /* Título del modal */
 .modal-content h2 {
-    color: #1a1a1a; 
-    
+    color: #1a1a1a; /* Negro más suave */
+    margin: 0 0 2rem;
     font-size: 1.75rem; 
     font-weight: bold; 
     text-align: center;
@@ -55,7 +55,7 @@
 }
 
 .modal-body p {
-    color: #4a4a4a; 
+    color: #4a4a4a; /* Gris más oscuro y profesional */
     margin: 0.75rem 0;
     text-align: center;
     font-size: 1.1rem;
@@ -112,7 +112,7 @@
 .btn-cancel:hover, .btn-confirm:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    filter: brightness(1.1); 
+    filter: brightness(1.1); /* Aumenta el brillo */
 }
 
 @media (max-width: 768px) {

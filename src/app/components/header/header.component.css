@@ -69,7 +69,7 @@
     background-color: transparent;;
     
 }
-.carrito:focus{
+.carrito.active{
     background-color: #ffbf00;
     border: #ffbf00;
     width: auto ;

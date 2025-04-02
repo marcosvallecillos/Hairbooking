@@ -19,22 +19,23 @@ export class CarritoComponent {
       name: 'CLIPPER SPACE X VERSACE',
       price: 109.99,
       image: '../../../../images/clipper/clipper_space.jpg',
-      cantidad: 2
+      cantidad: 2,
+      isFavorite: false,
     },
     {
       id: 2,
       name: 'CLIPPER GOLD EDITION',
       price: 129.99,
       image: '../../../../images/clipper/clipper_wahl.jpg',
-      cantidad: 1
+      cantidad: 1,
+      isFavorite: false,
+
     }
   ];
 
-  ngOnInit() {
-    this.productos = this.productos || [];
-  }
   
   subtotal: number = 0;
+  total: number = 0;
   isSpanish: boolean = true;
 
   constructor(private languageService: LanguageService, private router: Router) {
@@ -42,8 +43,8 @@ export class CarritoComponent {
       isSpanish => this.isSpanish = isSpanish
     );
     this.productos.forEach(product => {
-      this.subtotal += product.price * product.cantidad;
-      this.subtotal = parseFloat(this.subtotal.toFixed(2));
+      this.total += product.price * product.cantidad;
+      
     });
     this.calcularTotal();
 
@@ -56,26 +57,39 @@ export class CarritoComponent {
     this.calcularTotal();
   }
 
+actualizarCantidad(product: Product, input: EventTarget | null): void {
+  const inputElement = input as HTMLInputElement;
+  const nuevaCantidad = parseInt(inputElement.value);
+
+  if (!isNaN(nuevaCantidad) && nuevaCantidad >= 1) {
+    product.cantidad = Math.min(nuevaCantidad, 5);
+    inputElement.value = product.cantidad.toString();
+  }
+  this.calcularTotal();
+}
+
+validarCantidad(product: Product, input: EventTarget | null): void {
+  const inputElement = input as HTMLInputElement;
+  const nuevaCantidad = parseInt(inputElement.value);
+
+  if (isNaN(nuevaCantidad) || nuevaCantidad < 1) {
+    product.cantidad = 1;
+    inputElement.value = '1';
+  } else {
+    product.cantidad = Math.min(nuevaCantidad, 5);
+    inputElement.value = product.cantidad.toString();
+  }
   
-  actualizarCantidad(product: Product, input: HTMLInputElement) {
-    // Convertimos el valor a número y manejamos casos inválidos
-    const cantidad = parseInt(input.value) || 1; // Si falla la conversión, usa 1 como fallback
-    if (isNaN(cantidad) || cantidad < 1) {
-        product.cantidad = 1; // Valor mínimo por defecto
-    } else {
-        product.cantidad = cantidad;
-    }
-    this.calcularTotal();
+  this.calcularTotal();
 }
 
 calcularTotal() {
-    this.subtotal = this.productos.reduce((acc, product) => {
-        // Aseguramos que cada valor sea un número válido
+    this.total = this.productos.reduce((acc, product) => {
         const precio = product.price || 0;
         const cantidad = product.cantidad || 0;
         return acc + (precio * cantidad);
     }, 0);
-    this.subtotal = parseFloat(this.subtotal.toFixed(2));
+   
 }
   showModal: boolean = false;
   selectedName: string = '';
@@ -89,9 +103,9 @@ calcularTotal() {
       nombre: this.productos.map(producto => producto.name),
       precio: this.productos.map(producto => producto.price),
       cantidad: this.productos.map(producto => producto.cantidad),
-      total: this.subtotal
+      total: this.total
     });
-    this.router.navigate(['/showProfile']);
+    this.router.navigate(['/show-buys']);
   }
   onReserve() {
     this.showModal = true;
@@ -110,5 +124,6 @@ calcularTotal() {
     return this.productos
       .map(producto => producto.price * producto.cantidad)
       .join('€ , ') + '€';
+    
   }
 }

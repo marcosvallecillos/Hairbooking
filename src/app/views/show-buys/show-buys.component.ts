@@ -3,31 +3,43 @@ import { Product } from '../../models/user.interface';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
+import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-show-buys',
-  imports: [RouterLink],
+  imports: [RouterLink,FooterComponent],
   templateUrl: './show-buys.component.html',
   styleUrl: './show-buys.component.css'
 })
 export class ShowBuysComponent {
-    productos = [
+    productos:Product[] = [
       {
         id: 1,
         name: 'CLIPPER SPACE X VERSACE ',
-        price: '109,99€' ,
+        price: 109.99 ,
+        cantidad:1,
         image: '../../../../images/clipper/clipper_space.jpg',
-      }, {
-        id: 1,
-        name: 'CLIPPER SPACE X VERSACE ',
-        price: '109,99€' ,
-        image: '../../../../images/clipper/clipper_space.jpg',
-      }, {
-        id: 1,
-        name: 'CLIPPER SPACE X VERSACE ',
-        price: '109,99€' ,
-        image: '../../../../images/clipper/clipper_space.jpg',
-      }
+        isFavorite: false,
+
+      }, 
+      {
+        id: 2,
+        name: 'CLIPPER WAHL VAPOR 5 STAR CORDLESS ',
+        price: 159.99 ,
+        cantidad:1,
+        image: '../../../../images/clipper/clipper_wahl.jpg', 
+        isFavorite: false,
+
+      },
+      {
+        id: 3,
+        name: 'Trimmer Skeleton ',
+        price: 129.99 ,
+        cantidad:1,
+        image: '../../../../images/trimmer/trimmer_skeleton.jpg',
+        isFavorite: false,
+
+      } 
     ]
  
     isUser = true;

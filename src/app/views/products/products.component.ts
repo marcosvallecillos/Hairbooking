@@ -27,26 +27,29 @@ export class ProductsComponent {
           price: " 159,99 €",
           image: '../../../../images/clipper/clipper_wahl.jpg',
           isFavorite: false,
+          insidecart: false,
         },
+ 
         {
-          id: 3,
+          id: 1,
           name: 'Trimmer Skeleton ',
           price: "129,99 €",
           image: '../../../../images/trimmer/trimmer_skeleton.jpg',
           isFavorite: false,
         },
         {
-          id: 4,
+          id: 2,
           name: 'Shaver Wad ',
           price: "59,99 €",
           image: '../../../../images/shaver/shaver.jpg',
           isFavorite: false,
+          insidecart: false,
         },
       ]
     },
     cosmeticos: [
       {
-        id: 1,
+        id: 5,
         name: 'Difusor de Agua',
         price: '9,99€',
         image: '../../../../images/cosmeticos/difusor.png',
@@ -54,25 +57,28 @@ export class ProductsComponent {
         insidecart: false,
       },
       {
-        id: 2,
+        id:6,
         name: 'Cera de Pelo',
         price: '2,99€',
         image: '../../../../images/cosmeticos/cera.png',
         isFavorite: false,
+        insidecart: false,
       },
       {
-        id: 3,
+        id: 7,
         name: 'Champú para barba',
         price: '2,99€',
         image: '../../../../images/cosmeticos/champu_barba.png',
         isFavorite: false,
+        insidecart: false,
       },
       {
-        id: 4,
+        id:8,
         name: 'Aceite para Barba',
         price: "18.99€",
         image: '../../../../images/aceite.png',
         isFavorite: false,
+        insidecart: false,
       }
     ],
   };
@@ -93,26 +99,42 @@ export class ProductsComponent {
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
-
+  fav: Product[] = [];
+  messageFavorite:string | null = null;
+  messageNoFavorite:string | null = null;
   favorite(product: any): void {
+    const isFavorites = this.fav.find(item => item.id === product.id);
     product.isFavorite = !product.isFavorite;
-    if (product.isFavorite) {
-      console.log('Producto añadido a favoritos:', product);
+    if (isFavorites) {
+      this.messageFavorite = `${product.name} ` + this.getText('ha sido eliminado de favoritos','has been removed from favorites');
     } else {
-      console.log('Producto eliminado de favoritos:', product);
+      product.isFavorite = true;
+      this.fav.push(product);
+      this.messageNoFavorite = `${product.name} ` + this.getText('ha sido añadido a favoritos','has been added to the favorites');
     }
+    setTimeout(() => {
+      this.messageFavorite = null
+      this.messageNoFavorite = null
+    }, 2000);
   }
-  cart: Product[] = [];
 
+  cart: Product[] = [];
+  message: string | null = null;
+  messageTrue:string | null = null;
   productInCart(product: any) {
-    product.insidecart = !product.insidecart;
     const productInCart = this.cart.find(item => item.id === product.id);
+  
     if (productInCart) {
-      alert(`${product.name} ya está en el carrito.`);
+      this.messageTrue = `${product.name} ` + this.getText('ya está en el carrito.','it´s already in the cart') ; 
     } else {
+      product.insidecart = true;
       this.cart.push(product);
-      console.log('Producto añadido al carrito:', product);
-      alert(`${product.name} ha sido añadido al carrito.`);
+      this.message = `${product.name}` + this.getText('ha sido añadido al carrito.','has been added to the cart.'); 
     }
+  
+    setTimeout(() => {
+      this.messageTrue = null
+      this.message = null;
+    }, 2000);
   }
 }

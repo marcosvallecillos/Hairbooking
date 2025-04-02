@@ -28,11 +28,16 @@
                                 <p>{{ product.price }} €</p>
                             </td>
                             <td class="cantidad" data-label="Cantidad">
-                                <input type="number" min="1" [value]="product?.cantidad" (input)="actualizarCantidad(product, $any($event.target).valueAsNumber)">
-                            </td>   
-                            <td class="subtotal" data-label="Subtotal">
-                                <p>{{ product.price * product.cantidad }} €</p>
+                                <input 
+                                    type="number" 
+                                    min="1"
+                                    [value]="product.cantidad"
+                                    (input)="actualizarCantidad(product, $event.target)"
+                                    (blur)="validarCantidad(product, $event.target)">
                             </td>
+                            <td class="subtotal" data-label="Subtotal">
+                                <p>{{ (product.price* product.cantidad ).toFixed(2) }} €</p>
+                              </td>
                             <td data-label="Eliminar">
                                 <button class="eliminar" (click)="eliminarproduct(product)">
                                     <img src="../../../../images/papelera.png" alt="">
@@ -49,8 +54,8 @@
          
             <div class="resumen-carrito">
               
-                <h2>Total del carrito</h2>
-                <p>Total: <span id="total"> {{this.subtotal}} </span> €</p>
+                <h2>{{getText('Precio Final','Final Price')}} </h2>
+                <p>Total: <span id="total"> {{this.total.toFixed(2)}} </span> €</p>
                 <button id="finalizar-compra"   (click)="onReserve()">Finalizar compra</button>
          
         </div>
@@ -82,7 +87,7 @@
 [show]="showModal"
 [producto]="nombresProductos()"
 [precio]= "precioProductos()"
-[total] = this.subtotal
+[total] = "this.total.toFixed(2)"
 (confirm)="onConfirmReserve()"
 (cancel)="onCancelReserve()">
 </app-modal-compra>

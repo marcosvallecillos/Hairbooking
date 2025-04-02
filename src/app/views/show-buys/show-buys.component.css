@@ -1,161 +1,310 @@
 .overlay {
     width: 100%;
-    height: 250px;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1)),
-                url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg") center/cover no-repeat;
-    -webkit-mask-image: linear-gradient(black 80%, transparent);
-    mask-image: linear-gradient(black 80%, transparent);
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 85%, 80% 80%, 70% 90%, 60% 80%, 50% 85%, 40% 75%, 30% 80%, 20% 70%, 10% 80%, 0 70%);
-}
+    height: 200px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+    url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
+    background-size: cover;
+    background-position: center;
+    mask-image: linear-gradient(black 85%, transparent);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
 
+}
+body{
+    background-color: #ddd;
+}
+/* Contenedor de productos */
 .productos-container {
-    max-width: 1240px;
-    margin: 60px auto;
-    padding: 2rem;
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    max-width: 1280px; 
+    margin: 80px auto;
+    padding: 3rem;
+    background: white   ; 
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08); /* Sombra más suave */
+    position: relative;
+    overflow: hidden;
 }
 
+/* Títulos */
 h2 {
     text-align: center;
-    font-size: 2rem;
-    color: #1a1a1a;
+    font-size: 2.5rem;
+    color: black; /* Azul oscuro elegante */
     font-weight: 700;
-    margin-bottom: 2rem;
+    margin-bottom:1.5rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase; /* Mayúsculas para sofisticación */
 }
-
+.decorative-line {
+    width: 200px;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, #643400, transparent);
+    margin: 0 auto;
+}
+/* Contenedor de botón */
 .button-container {
     display: flex;
     justify-content: flex-end;
-    padding: 0 2rem 1rem;
+    padding: 0 2.5rem 1.5rem;
 }
 
+/* Botón de productos */
 .products-btn {
-    background: #ff5722;
+    background: linear-gradient(135deg, #643400, #973b02);
     color: #ffffff;
-    padding: 0.875rem 1.5rem;
+    padding: 1rem 2rem;
     font-size: 1.125rem;
     font-weight: 600;
     border: none;
-    border-radius: 10px;
-    margin-right: 15%;
+    border-radius: 50px; 
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+    box-shadow: 0 6px 15px rgba(42, 64, 102, 0.2);
 }
 
 .products-btn:hover {
-    background: #e64a19;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg,  #442401, #5e2401);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(42, 64, 102, 0.3);
 }
 
+/* Lista de productos */
 .productos-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 0 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    padding: 0 2rem;
 }
 
+/* Tarjeta *//* Tarjeta */
 .card {
     background: #ffffff;
-    border-radius: 15px;
-    padding: 1.5rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    border-radius: 24px; 
+    padding: 2.25rem; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.395); 
+    transition: all 0.4s ease; 
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.03); 
+}
+
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #643400, #973b02);
+    transition: height 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-12px); 
+    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.12); 
+}
+
+.card:hover::before {
+    height: 10px; 
 }
 
 .image-container {
     width: 100%;
-    height: 180px;
+    height: 240px; 
     overflow: hidden;
-    border-radius: 10px;
-    margin-bottom: 1rem;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05); 
+}
+
+/* Imagen */
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease; 
+}
+
+.card:hover img {
+    transform: scale(1.12); 
+    }
+
+
+.card-content h3 {
+    font-size: 1.6rem; 
+    color: #1f2a44; 
+    margin: 0.75rem 0;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    line-height: 1.3;
+    text-transform: capitalize; 
+}
+
+/* Párrafos */
+.card-content p {
+    font-size: 1.1rem;
+    color: #5a6377; 
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+}
+
+
+.card-content p i {
+    color: #2a4066; 
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-content p i {
+    transform: scale(1.15);
+}
+
+
+.card-content p strong {
+    font-weight: 500;
+    color: #1f2a44;
+}
+
+/* Media query para responsividad */
+@media (max-width: 768px) {
+    .card {
+        padding: 1.75rem;
+        border-radius: 20px;
+    }
+
+    .image-container {
+        height: 200px;
+    }
+
+    .card-content h3 {
+        font-size: 1.4rem;
+    }
+
+    .card-content p {
+        font-size: 1rem;
+    }
+}
+@media(max-width:425px){
+    .card{
+        width: 80%;
+    }
+}
+@media(max-width:355px){
+    .card{
+        width: 70%;
+        margin:0;
+    }
+}
+.image-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 16px;
+    margin-bottom: 1.25rem;
 }
 
 img {
     width: 100%;
     height: 100%;
-    object-fit:contain;
-    transition: transform 0.3s ease;
+    object-fit: contain; 
+    transition: transform 0.4s ease;
 }
 
 .card:hover img {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
+/* Contenido de la tarjeta */
 .card-content h3 {
-    font-size: 1.25rem;
-    color: #2c2c2c;
-    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    color: #1f2a44;
+    margin: 0.75rem 0;
     font-weight: 600;
+    letter-spacing: 0.8px;
+    line-height: 1.3;
 }
 
 .card-content p {
-    font-size: 1rem;
-    color: #666;
+    font-size: 1.1rem;
+    color: #5a6377; /* Gris azulado elegante */
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    line-height: 1.6;
 }
 
+/* Alerta de advertencia */
 .alert-warning {
     background: #ffffff;
-    padding: 3rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    max-width: 500px;
-    margin: 4rem auto;
+    padding: 4rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    width: 60%;
+    max-width: 600px;
+    margin: 5rem auto;
     text-align: center;
 }
 
 .alert-warning i {
-    font-size: 2.5rem;
-    color: #c62828;
-    margin-bottom: 1rem;
+    font-size: 3rem;
+    color: #d32f2f; /* Rojo profesional */
+    margin-bottom: 1.5rem;
     display: block;
 }
 
 .alert-warning h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    color: #1f2a44;
 }
 
+/* Botón de alerta */
 .alert-btn {
-    background: #ff9800;
+    background: linear-gradient(135deg, #d32f2f, #b71c1c); /* Rojo sofisticado */
     color: #ffffff;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
     font-weight: 600;
     border: none;
-    border-radius: 8px;
+    border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.2);
 }
 
 .alert-btn:hover {
-    background: #ef6c00;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #b71c1c, #9a0007);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
 }
 
 /* Media Queries */
 @media (max-width: 768px) {
+    .overlay {
+        height: 250px;
+    }
+
     .productos-container {
-        margin: 30px 15px;
-        padding: 1.5rem;
+        margin: 40px 20px;
+        padding: 2rem;
     }
-    
+
     .products-btn {
-        width: 43%;
-        margin: 0 0 1rem;
+        width: 70%;
+        margin: 0 auto 1.5rem;
     }
-    
+
     .button-container {
         justify-content: center;
         padding: 0;
+    }
+
+    .alert-warning {
+        width: 90%;
+        padding: 3rem;
     }
 }

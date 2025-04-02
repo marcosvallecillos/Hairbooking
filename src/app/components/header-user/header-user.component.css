@@ -90,13 +90,11 @@
 .nav-link:hover {
     color: #ffc107;
 }
-.navbar-nav .nav-link:focus {
-
-    color: #ffbf00;
-    font-weight: bold;
+.navbar-nav .nav-link.active {
+    color: #ffbf00 !important;
+    font-weight: bold !important;
 }
 
-/* Botón de iniciar sesión */
 .navbar-nav .login-btn {
     cursor: pointer;
     background-color: transparent;
@@ -128,8 +126,8 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='white' viewBox='0 0 30 30'><path stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
     border: none;
 }
-.navbar-toggler-icon:active,
-.navbar-toggler-icon:focus{
+.navbar-toggler-icon.active,
+.navbar-toggler-icon.active{
     border: transparent;
 }
 
@@ -191,6 +189,8 @@
 
 .user-dropdown .dropdown-item {
     color: white;
+    cursor: pointer;
+    font-weight: bold;
     padding: 0.5rem 1rem;
     text-align: left;
     font-size: 1rem;
@@ -199,7 +199,8 @@
 
 .user-dropdown .dropdown-item:hover {
     background-color: #ffc107;
-    color: black;
+    color:  black;
+    font-weight: bold;
 }
 
 .user-icon {

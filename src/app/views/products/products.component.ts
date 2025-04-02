@@ -28,8 +28,25 @@ export class ProductsComponent {
           image: '../../../../images/clipper/clipper_wahl.jpg',
           isFavorite: false,
           insidecart: false,
-        },
- 
+        },{
+        id: 1,
+        name: 'CLIPPER SPACE X VERSACE ',
+        price: "109,99 €",
+        image: '../../../../images/clipper/clipper_space.jpg',
+        isFavorite: false,
+        insidecart: false,
+      },
+      {
+        id: 2,
+        name: 'CLIPPER WAHL VAPOR 5 STAR CORDLESS ',
+        price: " 159,99 €",
+        image: '../../../../images/clipper/clipper_wahl.jpg',
+        isFavorite: false,
+        insidecart: false,
+      },
+      
+      ],
+       trimmer:[
         {
           id: 1,
           name: 'Trimmer Skeleton ',
@@ -137,4 +154,44 @@ export class ProductsComponent {
       this.message = null;
     }, 2000);
   }
+  
+
+  filteredProducts: any[] = this.products.maquinas.clippers; 
+
+  // Método para filtrar productos
+  filterProducts(category: string) {
+    switch (category) {
+      case 'clippers':
+        this.filteredProducts = this.products.maquinas.clippers;
+        break;
+      case 'trimmer':
+        this.filteredProducts = this.products.maquinas.trimmer;
+        break;
+      case 'cosmeticos':
+        this.filteredProducts = this.products.cosmeticos;
+        break;
+     
+      case 'all':
+        this.filteredProducts = [
+          ...this.products.maquinas.clippers,
+          ...this.products.maquinas.trimmer,
+          ...this.products.cosmeticos
+        ];
+        break;
+        case 'maquinas':
+          this.filteredProducts = [
+            ...this.products.maquinas.clippers,
+            ...this.products.maquinas.trimmer
+            
+          ];
+          break;
+      default:
+        this.filteredProducts =[
+          ...this.products.maquinas.clippers,
+          ...this.products.maquinas.trimmer,
+          ...this.products.cosmeticos
+        ];;
+    }
+  }
+
 }

@@ -7,29 +7,31 @@
         <aside class="products-sidebar">
             <button class="filter-button">STOCK</button>
             <div class="filter-section">
-                <h3 class="filter-title">{{getText('Lista de Productos','Products List')}} </h3>
+                <h3 class="filter-title">{{getText('Lista de Productos','Products List')}}</h3>
+                <li>
+                    <a href="#all" (click)="filterProducts('all')">{{getText('Todos', 'All')}}</a>
+                </li>
                 <div class="filter-options">
-                    <div></div>
                     <div>
                         <ul>
-                            <h3> {{getText('Maquinas','Machines')}}</h3>
+                            <h3>{{getText('Maquinas','Machines')}}</h3>
                             <li>
-                                <a href="#maquinas">{{ getText('Clipper', 'Clipper') }}</a>
+                                <a href="#clippers" (click)="filterProducts('clippers')">{{getText('Clipper', 'Clipper')}}</a>
                             </li>
                             <li>
-                                <a href="#trimmer">{{ getText('Trimmer', 'Trimmer') }}</a>
+                                <a href="#trimmer" (click)="filterProducts('trimmer')">{{getText('Trimmer', 'Trimmer')}}</a>
                             </li>
                             <li>
-                                <a href="#">{{ getText('Todos', 'All') }}</a>
+                                <a href="#maquinas" (click)="filterProducts('maquinas')">{{getText('Todos', 'All')}}</a>
                             </li>
                         </ul>
                     </div>
                     <div>
                         <ul>
-                            <a href="#">
-                                <h3> {{getText('Cosmeticos','Cosmetics')}}</h3>
-                            </a>
-
+                            <h3>{{getText('Cosmeticos','Cosmetics')}}</h3>
+                            <li>
+                                <a href="#cosmeticos" (click)="filterProducts('cosmeticos')">{{getText('Cosméticos', 'Cosmeticos')}}</a>
+                            </li>
                         </ul>
                     </div>
                     <div>
@@ -39,7 +41,7 @@
                     </div>
                     <div>
                         <ul>
-                            <h3>{{getText('Tijeras','Scissors')}} </h3>
+                            <h3>{{getText('Tijeras','Scissors')}}</h3>
                         </ul>
                     </div>
                     <div>
@@ -78,55 +80,30 @@
             </div>
           }
           
-            <div class="products-grid" id="clippers">
-                @for (product of products.maquinas.clippers; track product.id) {
-
+          <div class="products-grid">
+            @for (product of filteredProducts; track product.id) {
                 <div class="product-card">
                     <img [src]="product.image" [alt]="product.name" class="product-image">
                     <h3 class="product-name">{{ product.name }}</h3>
                     <p class="product-price">{{ product.price }}</p>
-                   
-                  
-                      <!-- Botón del carrito -->
-                      <button class="add-to-cart" (click)="productInCart(product)">
-                        @if(!product.insidecart){
-                            <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
-                            }@else {
-                                <img src="../../../../images/inside_cart.png" class="inside-carrito"  alt="Añadir al carrito">
-    
-                            }
-                        </button>
-
-                    <button class="favorite-button" (click)="favorite(product)">
-                        @if(!product.isFavorite){
-                            <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
-
-                        }@else{
-                        <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Añadir a favoritos">
-                        }
-                    </button>
-                </div>
-                }
-
-                @for (product of products.cosmeticos; track product.id) {
-                <div class="product-card " id="trimmer"> 
-                    <img [src]="product.image" [alt]="product.name" class="product-image">
-                    <h3 class="product-name">{{ product.name }}</h3>
-                    <p class="product-price">{{ product.price }}</p>
                     <button class="add-to-cart" (click)="productInCart(product)">
-                    @if(!product.insidecart){
-                        <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
-                        }@else {
-                            <img src="../../../../images/inside_cart.png" class="inside-carrito"  alt="Añadir al carrito">
-
+                        @if (!product.insidecart) {
+                            <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
+                        } @else {
+                            <img src="../../../../images/inside_cart.png" class="inside-carrito" alt="Añadir al carrito">
                         }
                     </button>
                     <button class="favorite-button" (click)="favorite(product)">
-                        <img [src]="product.isFavorite ? '../../../../images/favorito_pulse.png' : '../../../../images/favorito.png'"
-                            class="fav-icon" alt="Añadir a favoritos">
+                        @if (!product.isFavorite) {
+                            <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
+                        } @else {
+                            <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Añadir a favoritos">
+                        }
                     </button>
                 </div>
-                }
+            } @empty {
+                <p>No hay productos en esta categoría.</p>
+            }
             </div>
         </section>
     </main>

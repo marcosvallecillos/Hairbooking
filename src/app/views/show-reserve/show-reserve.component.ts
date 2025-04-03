@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { ModalLoginComponent } from '../../components/modal-login/modal-login.component';
 import { ReserveComponent } from '../reserve/reserve.component';
@@ -64,15 +64,15 @@ export class ShowReserveComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private languageService: LanguageService
+    private languageService: LanguageService,
   ) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
     );
   }
-
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
+   
   }
 
   getText(es: string, en: string): string {

@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes,RouterModule } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
 import { AboutUsComponent } from './views/about-us/about-us.component';
 import { ListPriceComponent } from './views/list-price/list-price.component';
@@ -15,6 +15,7 @@ import { CarritoComponent } from './views/carrito/carrito.component';
 import { ModalCompraComponent } from './components/modal-compra/modal-compra.component';
 import { ShowReserveComponent } from './views/show-reserve/show-reserve.component';
 import { ShowBuysComponent } from './views/show-buys/show-buys.component';
+import { NgModule } from '@angular/core';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -36,4 +37,13 @@ export const routes: Routes = [
     { path: 'show-buys', component: ShowBuysComponent },
 ];
 
-    
+    @NgModule({
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'top', 
+    }),
+  ],
+  exports: [RouterModule],
+})
+
+export class AppModule {}

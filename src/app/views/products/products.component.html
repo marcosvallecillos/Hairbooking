@@ -8,10 +8,12 @@
             <button class="filter-button">STOCK</button>
             <div class="filter-section">
                 <h3 class="filter-title">{{getText('Lista de Productos','Products List')}}</h3>
+               <ul>
                 <li>
-                    <a href="#all" (click)="filterProducts('all')">{{getText('Todos', 'All')}}</a>
+                    <a href="" (click)="filterProducts('all')">{{getText('Todos', 'All')}}</a>
                 </li>
-                <div class="filter-options">
+               </ul>
+                <div class="filter-options mt-3">
                     <div>
                         <ul>
                             <h3>{{getText('Maquinas','Machines')}}</h3>
@@ -45,16 +47,25 @@
                     <div>
                         <ul>
                             <h3>{{getText('Tijeras','Scissors')}}</h3>
+                            <li>
+                                <a href="#tijeras" (click)="filterProducts('tijeras')">{{getText('Tijeras', 'Scissors')}}</a>
+                            </li>
                         </ul>
                     </div>
                     <div>
                         <ul>
                             <h3>{{getText('Capas','Layers')}}</h3>
+                            <li>
+                                <a href="#capas" (click)="filterProducts('capas')">{{getText('Capas', 'Layers')}}</a>
+                            </li>
                         </ul>
                     </div>
                     <div>
                         <ul>
                             <h3>{{getText('Accesorios','Accesories')}}</h3>
+                            <li>
+                                <a href="#accesorios" (click)="filterProducts('accesorios')">{{getText('Accesorios', 'Accesories')}}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -83,9 +94,9 @@
             </div>
           }
           
-          <div class="products-grid">
+          <div class="products-grid" >
             @for (product of filteredProducts; track product.id) {
-                <div class="product-card">
+                <div class="product-card" >
                     <img [src]="product.image" [alt]="product.name" class="product-image">
                     <h3 class="product-name">{{ product.name }}</h3>
                     <p class="product-price">{{ product.price }}</p>

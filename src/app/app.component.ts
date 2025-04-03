@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderUserComponent } from './components/header-user/header-user.component';
@@ -22,7 +22,12 @@ export class AppComponent {
   isLoggedIn: boolean = false;
   mostrarHeader: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this.router.events.subscribe((event) => {
+    if (event instanceof NavigationEnd) {
+      window.scrollTo(0, 0); 
+    }
+  });}
 
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
@@ -35,6 +40,4 @@ export class AppComponent {
       this.mostrarHeader = this.router.url !== '/index'; 
     });
   }
-
-  
 }

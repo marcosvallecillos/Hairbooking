@@ -17,7 +17,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 70vh;
     padding: 20px;
     
   }
@@ -156,7 +156,7 @@ body{
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 0 6px 15px rgba(211, 47, 47, 0.2);
+  box-shadow: 0 6px 15px rgba(63, 47, 211, 0.3);
 }
 
 .alert-btn:hover {

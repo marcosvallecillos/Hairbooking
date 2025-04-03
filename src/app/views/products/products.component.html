@@ -12,7 +12,7 @@
                 <h3 class="filter-title">{{getText('Lista de Productos','Products List')}}</h3>
                <ul>
                 <li>
-                    <a href="" (click)="filterProducts('all')">{{getText('Todos', 'All')}}</a>
+                    <a href="#all" (click)="filterProducts('all')">{{getText('Todos', 'All')}}</a>
                 </li>
                </ul>
                 <div class="filter-options mt-3">
@@ -26,7 +26,7 @@
                                 <a href="#trimmer" (click)="filterProducts('trimmer')">{{getText('Trimmer', 'Trimmer')}}</a>
                             </li>
                             <li>
-                                <a href="#maquinas" (click)="filterProducts('maquinas')">{{getText('Todos', 'All')}}</a>
+                                <a href="#x" (click)="filterProducts('maquinas')">{{getText('Todos', 'All')}}</a>
                             </li>
                         </ul>
                     </div>
@@ -104,22 +104,7 @@
           <div class="products-grid">
             @for (product of filteredProducts; track product.id) {
               <div class="product-card">
-                <img [src]="product.image" [alt]="product.name" class="product-image">
-                <h3 class="product-name">{{ product.name }}</h3>
-                <p class="product-price">{{ product.price }}</p>
-  
-                <button class="add-to-cart" (click)="productInCart(product)">
-                  @if (isUser) {
-                    @if (!product.insidecart) {
-                      <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
-                    } @else {
-                      <img src="../../../../images/inside_cart.png" class="inside-carrito" alt="Añadir al carrito">
-                    }
-                  } @else {
-                    <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
-                  }
-                </button>
-  
+                
                 <button class="favorite-button" (click)="favorite(product)">
                   @if (isUser) {
                     @if (!product.isFavorite) {
@@ -131,6 +116,22 @@
                     <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
                   }
                 </button>
+                <img [src]="product.image" [alt]="product.name" class="product-image">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p class="product-price">{{ product.price }}</p>
+  
+                <button class="add-to-cart" (click)="productInCart(product)">
+                  @if (isUser) {
+                    @if (!product.insidecart) {
+                      <button class="añadir_carrito" (click)="addToCart(product)" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >Añadir al carrito</h3></button>
+                    } @else {
+                      <button class="añadir_carrito" (click)="addToCart(product)" >     <h3 ><img src="../../../../images/tick.gif" class="add-carrito" alt="Añadido al carrito" >Añadido al carrito</h3></button>
+                    }
+                  } @else {
+                    <button class="añadir_carrito" (click)="addToCart(product)" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >Añadir al carrito</h3></button>
+                  }
+                </button>
+  
               </div>
             } @empty {
               <p>No hay productos en esta categoría.</p>

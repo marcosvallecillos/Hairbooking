@@ -6,17 +6,18 @@
     left: 0;
     width: 100%;
     z-index: 1000;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .home {
     margin-left: 50px;
 }
-.carrito{
-    list-style: none;
-    border: none;
-    background-color: transparent;;
-    }
+.ast-icon-shopping-bag svg {
+    width: 30px;    
+    height: 30px;
+    cursor: pointer;
+    margin: 30px;
+}   
 .rounded-pill {
     width: 100px;
     height: 100px;
@@ -57,6 +58,7 @@
     }
 
     .navbar-nav .nav-item {
+        cursor: pointer;
         padding: 10px 0;
         text-align: left;
     }
@@ -86,7 +88,13 @@
     color: white;
     font-weight: 500;   
 }
-
+ @media (max-width:1062px) {
+    .nav-link {
+        font-size: 1rem;
+        color: white;
+        font-weight: 500;   
+    }
+ }
 .nav-link:hover {
     color: #ffc107;
 }
@@ -218,3 +226,18 @@
 }hr {
     color: #ffc107;
 }
+
+.cart-count {
+    position: relative;
+    top: -75px;
+    left: 50px;
+    background-color: rgb(189, 189, 189);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }

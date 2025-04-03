@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../../services/api-service.service';
 
 @Component({
   selector: 'app-header-user',
@@ -16,7 +17,7 @@ export class HeaderUserComponent {
   mostrarHeader: boolean = false;
   
   isAuthenticated: boolean = true;
-  constructor(private languageService: LanguageService, private route: ActivatedRoute, private router: Router) {
+  constructor(private languageService: LanguageService, private route: ActivatedRoute, private router: Router,private apiService:ApiService) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
     );
@@ -24,10 +25,13 @@ export class HeaderUserComponent {
     const userData = localStorage.getItem('userData');
     this.isAuthenticated = !!userData; 
   }
+  cartItemsCount:number = 0;
   ngOnInit() {
 
     this.router.events.subscribe(() => {
       this.mostrarHeader = this.router.url !== '/index'; 
+    });this.apiService.cartItemsCount.subscribe((count) => {
+      this.cartItemsCount = count;
     });
   }
   toggleMenu() {
@@ -60,5 +64,6 @@ export class HeaderUserComponent {
       this.isMenuOpen = false;
       document.body.style.overflow = '';
     }
-  }
+  
+}
 }

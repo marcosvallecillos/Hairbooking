@@ -47,12 +47,19 @@ h2 {
     margin-bottom: 25px;
     position: relative;
 }
-.decorative-line {
-    width: 200px;
-    height: 4.5px;
-    background: linear-gradient(90deg, transparent, #ff8503bc, transparent);
-    margin: 0 auto;
+
+h2 .reservas{
+    font-size: 32px;
+    color: #000000;
+    font-weight: bold;
+    text-align: left;
+    margin-left: 15%;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    margin-bottom: 25px;
+    position: relative;
 }
+
 
 
 .reserve-btn, .alert-btn {
@@ -190,6 +197,11 @@ h2 {
     font-size: 1.75rem;
     margin-bottom: 2rem;
     color: #1f2a44;
+}
+@media(max-width:768px){
+    .alert-warning{
+        width: 90%;
+    }
 }
 
 /* Botón de alerta */

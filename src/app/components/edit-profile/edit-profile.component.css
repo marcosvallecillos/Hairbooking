@@ -13,26 +13,17 @@
 body{
     background-color: #ccc;
 }
-h2 {
-    font-size: 32px;
-    color: #000000;
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 25px;
-    position: relative;
-}
+
 .edit-profile-container {
     max-width: 800px;
-    margin: 0 auto; /* Centra horizontalmente */
+    margin: 0 auto;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra verticalmente */
-    align-items: center; /* Centra horizontalmente */
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
-    box-sizing: border-box; /* Incluye el padding en el cálculo del tamaño */
+    justify-content: center; 
+    align-items: center; 
+    height: 70vh; 
+    box-sizing: border-box; 
 }
 
 .edit-profile-card {
@@ -41,7 +32,7 @@ h2 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     width: 100%;
-    max-width: 500px; /* Ajusta el ancho máximo del contenido */
+    max-width: 500px; 
     text-align: center;
 }
 
@@ -213,8 +204,8 @@ label {
 .alert-info h2 {
     font-size: 1.75rem;
     margin-bottom: 2rem;
-    color: #1f2a44;
-}
+    color: #000000;
+  }
 
 .alert-btn {
     background: linear-gradient(135deg, #1900f7, #527bff); /* Rojo sofisticado */
@@ -226,7 +217,7 @@ label {
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.2);
+    box-shadow: 0 6px 15px rgba(63, 47, 211, 0.3);
 }
 
 .alert-btn:hover {

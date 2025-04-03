@@ -27,3 +27,12 @@ export interface Usuario {
     dia: string;
     hora:string;
   }
+  export interface Productos {
+    id: number;
+    name: string;
+    price: number;
+    image: string;
+    isFavorite: boolean;
+    insidecart: boolean;
+    cantidad: number;
+  }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 
 @Component({
@@ -11,10 +11,14 @@ import { LanguageService } from '../../services/language.service';
 export class CosmeticosComponent {
  isSpanish: boolean = true;
   
-    constructor(private languageService: LanguageService) {
+    constructor(private languageService: LanguageService,private router:Router, private route:ActivatedRoute) {
       this.languageService.isSpanish$.subscribe(
         isSpanish => this.isSpanish = isSpanish
       );
+      this.route.queryParams.subscribe((params) => {
+        const category = params['category'] || 'all';
+        this.filterProducts(category);
+      });
     }
   
     getText(es: string, en: string): string {

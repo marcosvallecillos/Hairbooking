@@ -146,10 +146,47 @@ ul h3{
 .fav-icon:hover {
     transform: scale(1.2); 
 }
+.añadir_carrito {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; 
+    border: 1px solid black;
+    background-color: rgb(255, 255, 255); 
+    color: rgb(0, 0, 0);
 
-button.add-to-cart, button.favorite-button{
+    border-radius: 8px;
+    font-weight: bold;
+    height: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.añadir_carrito h3{
+margin-top: 10px;
+    font-size: 16px;
+}
+.añadir_carrito:hover {
+    background-color: #ffffff; 
+    transform: scale(1.1);
+}
+
+.añadir_carrito:active {
+    transform: scale(0.95); 
+}
+
+.add-carrito {
+    width: 20px; 
+    height: 20px;
+}
+
+button.add-to-cart{
   border: none;
   background-color: transparent;
+}
+button.favorite-button{
+    margin-left: 80%;
+    border: none;
+    background-color: transparent; 
 }
 
 ul a{

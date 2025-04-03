@@ -16,15 +16,19 @@
                     </tr>
                 </thead>
                 <tbody class="carrito-body">
-                  
                     @for (product of productos; track product.id) {
                         <tr>
+                          
+                           
+                            
+
                             <td class="producto" data-label="Producto">
-                                    <div class="service-card"
-                                    [class.selected]="selectedName === product.name">
-                                    <img [src]="product.image" [alt]="product.name" class="product-image">
-                                    <h3 class="product-name" >{{product.name}}</h3>
-                                </div>
+                                <button class="eliminar" (click)="eliminarproduct(product)" aria-label="Eliminar producto">
+                                 <i class="bi bi-trash"></i>
+                                </button>
+                                <img [src]="product.image" [alt]="product.name" class="product-image">
+                                    <p class="product-name">{{product.name}}</p>
+       
                             </td>
                             <td class="price" data-label="Precio">
                                 <p>{{ product.price }} €</p>
@@ -38,29 +42,46 @@
                                     (blur)="validarCantidad(product, $event.target)">
                             </td>
                             <td class="subtotal" data-label="Subtotal">
-                                <p>{{ (product.price* product.cantidad ).toFixed(2) }} €</p>
-                              </td>
-                            <td data-label="Eliminar">
-                                <button class="eliminar" (click)="eliminarproduct(product)">
-                                    <img src="../../../../images/papelera.png" alt="">
-                                </button>
+                                <p>{{ (product.price * product.cantidad).toFixed(2) }} €</p>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="acciones">
+                                    <button class="favoritos-btn" (click)="addToFavorites(product)">
+                                        <i class="bi bi-heart"></i> 
+                                    </button>
+                            
+                                </div>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12 mt-5">
-            
-         
             <div class="resumen-carrito">
-              
-                <h2>{{getText('Precio Final','Final Price')}} </h2>
-                <p>Total: <span id="total"> {{this.total.toFixed(2)}} </span> €</p>
-                <button id="finalizar-compra"   (click)="onReserve()">Finalizar compra</button>
-         
-        </div>
+                <h2>{{getText('Cesta', 'Cart')}} ({{productos.length}})</h2>
+                @if(faltaParaDescuento > 0) {
+                    <p class="falta-descuento">
+                        {{getText('Te faltan ' + faltaParaDescuento.toFixed(2) + ' € para conseguir un descuento del 5%', 'You are ' + faltaParaDescuento.toFixed(2) + ' € away from a 5% discount')}}
+                    </p>
+                }
+            
+                <div class="resumen-total">
+                    <p>Subtotal</p>
+                    <span>{{this.total.toFixed(2)}} €</span>
+                </div>
+                @if(descuento > 0) {
+                    <div class="resumen-descuento">
+                        <p>Descuento (5%)</p>
+                        <span>-{{this.descuento.toFixed(2)}} €</span>
+                    </div>
+                }
+                <div class="resumen-total">
+                    <p>Total (impuestos, en su caso, incluidos)</p>
+                    <span id="total">{{this.totalConDescuento.toFixed(2)}} €</span>
+                </div>
+                <button id="finalizar-compra" (click)="onReserve()">Tramitar Pedido</button>
+            </div>
         </div>
     </div>
     } @else{
@@ -74,23 +95,19 @@
                     <th></th>
                 </tr>
             </thead>
-              
-            <div class=" alert-warning text-center p-4 ">
-                <i class="bi bi-exclamation-circle-fill fs-4"></i>
-                <h2 class="titulo mt-3">{{ getText('No hay ningun producto en el carrito.', 'There are no items in the cart.') }}</h2>
-                <button class="alert-login mt-3" routerLink="/products">{{getText('Ver productos','Show products')}}</button>
+            <div class="carrito-vacio">
+                <h5 class="titulo "><i class="bi bi-calendar"></i> {{ getText('Tu carrito está vacío.', 'Your cart is empty') }}</h5>
+                <button class="btn-volver" routerLink="/products">Volver a la tienda</button>
             </div>
         </table>
-        
-       
-     } 
+    } 
 </div>
 }@else{
     <div class="alert-warning">
         <i class="bi bi-exclamation-circle-fill"></i>
         <h2>{{ getText('Debes iniciar sesión para ver tu carrito', 'You must be registered to look your cart.') }}</h2>
-        <button class="alert-btn" (click)="openLoginModal()">{{ getText('Iniciar Sesión', 'Login') }}</button>
-      </div>
+        <button class="alert-btn mt-3" (click)="openLoginModal()">{{ getText('Iniciar Sesión', 'Login') }}</button>
+    </div>
 }
 
 </body>
@@ -99,8 +116,8 @@
 <app-modal-compra
 [show]="showModal"
 [producto]="nombresProductos()"
-[precio]= "precioProductos()"
-[total] = "this.total.toFixed(2)"
+[precio]="precioProductos()"
+[total]="this.totalConDescuento.toFixed(2)"
 (confirm)="onConfirmReserve()"
 (cancel)="onCancelReserve()">
 </app-modal-compra>

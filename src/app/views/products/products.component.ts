@@ -229,13 +229,13 @@ export class ProductsComponent {
   };
 
   isSpanish: boolean = true;
-
+  isUser = false;
   constructor(private languageService: LanguageService,private router: Router, private route:ActivatedRoute ) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
     );
     this.route.queryParams.subscribe((params) => {
-      const category = params['category'] || 'all'; // Por defecto 'all'
+      const category = params['category'] || 'all';
       this.filterProducts(category);
     });
   }
@@ -251,7 +251,19 @@ export class ProductsComponent {
   fav: Product[] = [];
   messageFavorite: string | null = null;
   messageNoFavorite: string | null = null;
+  messageNoUser:string = '';
+  ;
+  messageNoUserDisplay: string | null = null; 
+  
   favorite(product: any): void {
+    if (!this.isUser) {
+      // Si no es usuario, mostrar mensaje y no hacer nada más
+      this.messageNoUserDisplay = this.messageNoUser = this.getText('Deberás iniciar sesion para realizar esta función','You must log in to do this function.'); ;
+      setTimeout(() => {
+        this.messageNoUserDisplay = null;
+      }, 2000);
+      return;
+    }
     const isFavorites = this.fav.find(item => item.id === product.id);
     product.isFavorite = !product.isFavorite;
     if (isFavorites) {
@@ -271,6 +283,14 @@ export class ProductsComponent {
   message: string | null = null;
   messageTrue: string | null = null;
   productInCart(product: any) {
+    if (!this.isUser) {
+      // Si no es usuario, mostrar mensaje y no hacer nada más
+      this.messageNoUserDisplay = this.messageNoUser = this.getText('Deberas iniciar sesion para realizar esta función','You must log in to do this function.'); ;
+      setTimeout(() => {
+        this.messageNoUserDisplay = null;
+      }, 2000);
+      return;
+    }
     const productInCart = this.cart.find(item => item.id === product.id);
 
     if (productInCart) {

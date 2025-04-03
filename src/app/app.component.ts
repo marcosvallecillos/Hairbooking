@@ -21,7 +21,7 @@ export class AppComponent {
 
   isLoggedIn: boolean = false;
   mostrarHeader: boolean = false;
-
+  
   constructor(private authService: AuthService, private router: Router) {
     this.router.events.subscribe((event) => {
     if (event instanceof NavigationEnd) {

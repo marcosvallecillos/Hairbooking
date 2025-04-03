@@ -10,7 +10,9 @@
     clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
 
 }
-
+body{
+    background-color: white;
+}
 h1 {
     text-align: center;
 }
@@ -226,40 +228,52 @@ button:hover {
 }
 
 .alert-warning {
-    background-color: white;
-    border: none;
-    width: 50vw;
-    margin-top: -30px;
-    height: 70vh;
-    border-radius: 10px;
-    font-size: 1rem;
-    display: flex;
-    margin-left: 25%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .alert-warning i {
-    color: #850804;
-  }
+    background: #ffffff;
+    padding: 4rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    width: 60%;
+    max-width: 600px;
+    margin: 5rem auto;
+    text-align: center;
+}
 
-.alert-warning button {
-    background: #ff9800; /* Color llamativo */
-    color: white;
+.alert-warning i {
+    font-size: 3rem;
+    color: #d32f2f; /* Rojo profesional */
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.alert-warning h2 {
+        font-size: 32px;
+        color: #000000;
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 25px;
+        position: relative;
+
+}
+
+/* Botón de alerta */
+.alert-btn {
+    background: linear-gradient(135deg, #d32f2f, #b71c1c); /* Rojo sofisticado */
+    color: #ffffff;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    width:40%;
+    font-weight: 600;
     border: none;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    border-radius: 50px;
     cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.3s ease-in-out;
-    
-    width: 30%;
+    transition: all 0.4s ease;
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.2);
 }
 
-.alert-warning button:hover {
-    background: #523100;
+.alert-btn:hover {
+    background: linear-gradient(135deg, #b71c1c, #9a0007);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
 }
-
-

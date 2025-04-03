@@ -5,10 +5,11 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalCompraComponent } from '../../components/modal-compra/modal-compra.component';
 import { Router, RouterLink } from '@angular/router';
 import { ProductsComponent } from '../products/products.component';
+import { ModalLoginComponent } from '../../components/modal-login/modal-login.component';
 
 @Component({
   selector: 'app-carrito',
-  imports: [FooterComponent, ModalCompraComponent, ProductsComponent,RouterLink],
+  imports: [FooterComponent, ModalCompraComponent, ProductsComponent,RouterLink,ModalLoginComponent],
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css'
 })
@@ -33,10 +34,11 @@ export class CarritoComponent {
     }
   ];
 
-  
+  isUser = false;
   subtotal: number = 0;
   total: number = 0;
   isSpanish: boolean = true;
+  showLoginModal:boolean= false;
 
   constructor(private languageService: LanguageService, private router: Router) {
     this.languageService.isSpanish$.subscribe(
@@ -125,5 +127,8 @@ calcularTotal() {
       .map(producto => producto.price * producto.cantidad)
       .join('€ , ') + '€';
     
+  }
+  openLoginModal() {
+    this.showLoginModal = true;
   }
 }

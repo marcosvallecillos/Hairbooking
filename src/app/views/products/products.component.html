@@ -1,5 +1,7 @@
-<div class="overlay"></div>
+<body>
+    <div class="overlay"></div>
 
+    
 <div class="products-container">
  
     <main class="products-main">
@@ -93,32 +95,49 @@
              {{ messageNoFavorite }}
             </div>
           }
-          
-          <div class="products-grid" >
-            @for (product of filteredProducts; track product.id) {
-                <div class="product-card" >
-                    <img [src]="product.image" [alt]="product.name" class="product-image">
-                    <h3 class="product-name">{{ product.name }}</h3>
-                    <p class="product-price">{{ product.price }}</p>
-                    <button class="add-to-cart" (click)="productInCart(product)">
-                        @if (!product.insidecart) {
-                            <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
-                        } @else {
-                            <img src="../../../../images/inside_cart.png" class="inside-carrito" alt="Añadir al carrito">
-                        }
-                    </button>
-                    <button class="favorite-button" (click)="favorite(product)">
-                        @if (!product.isFavorite) {
-                            <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
-                        } @else {
-                            <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Añadir a favoritos">
-                        }
-                    </button>
-                </div>
-            } @empty {
-                <p>No hay productos en esta categoría.</p>
-            }
+          @if (messageNoUserDisplay) {
+            <div class="alert">
+              {{ messageNoUserDisplay }}
             </div>
+          }
+  
+          <div class="products-grid">
+            @for (product of filteredProducts; track product.id) {
+              <div class="product-card">
+                <img [src]="product.image" [alt]="product.name" class="product-image">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p class="product-price">{{ product.price }}</p>
+  
+                <button class="add-to-cart" (click)="productInCart(product)">
+                  @if (isUser) {
+                    @if (!product.insidecart) {
+                      <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
+                    } @else {
+                      <img src="../../../../images/inside_cart.png" class="inside-carrito" alt="Añadir al carrito">
+                    }
+                  } @else {
+                    <img src="../../../../images/carrito.png" class="add-carrito" alt="Añadir al carrito">
+                  }
+                </button>
+  
+                <button class="favorite-button" (click)="favorite(product)">
+                  @if (isUser) {
+                    @if (!product.isFavorite) {
+                      <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
+                    } @else {
+                      <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Añadir a favoritos">
+                    }
+                  } @else {
+                    <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
+                  }
+                </button>
+              </div>
+            } @empty {
+              <p>No hay productos en esta categoría.</p>
+            }
+          </div>
         </section>
     </main>
 </div>
+
+</body>

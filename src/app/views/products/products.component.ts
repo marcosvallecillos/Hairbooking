@@ -98,6 +98,25 @@ export class ProductsComponent {
         insidecart: false,
       }
     ],
+    mobiliaro:[
+      {
+        id:9,
+        name: 'Sillón de barberia negra',
+        price: "250 €",
+        image: '../../../../images/sillon_negro.jpg',
+        isFavorite: false,
+        insidecart: false,
+      },
+      {
+        id:9,
+        name: 'Sillón de barberia blanca',
+        price: "279,99 €",
+        image: '../../../../images/sillon_blanco.jpg',
+        isFavorite: false,
+        insidecart: false,
+      }
+
+    ]
   };
 
   isSpanish: boolean = true;
@@ -175,7 +194,8 @@ export class ProductsComponent {
         this.filteredProducts = [
           ...this.products.maquinas.clippers,
           ...this.products.maquinas.trimmer,
-          ...this.products.cosmeticos
+          ...this.products.cosmeticos,
+          ...this.products.mobiliaro
         ];
         break;
         case 'maquinas':
@@ -185,11 +205,16 @@ export class ProductsComponent {
             
           ];
           break;
+          case 'mobiliario':
+            this.filteredProducts = this.products.mobiliaro;
+             
+            break;
       default:
         this.filteredProducts =[
           ...this.products.maquinas.clippers,
           ...this.products.maquinas.trimmer,
-          ...this.products.cosmeticos
+          ...this.products.cosmeticos,
+          ...this.products.mobiliaro
         ];;
     }
   }

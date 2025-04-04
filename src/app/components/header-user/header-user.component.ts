@@ -33,6 +33,10 @@ export class HeaderUserComponent {
     });this.apiService.cartItemsCount.subscribe((count) => {
       this.cartItemsCount = count;
     });
+    this.apiService.cartItemsCount.subscribe((count) => {
+      // Asegurarse de que cartItemsCount sea 0 cuando no hay ítems
+      this.cartItemsCount = count !== null && count !== undefined ? count : 0;
+    });
   }
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;

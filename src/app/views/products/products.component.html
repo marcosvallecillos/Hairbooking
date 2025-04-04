@@ -118,17 +118,17 @@
                 </button>
                 <img [src]="product.image" [alt]="product.name" class="product-image">
                 <h3 class="product-name">{{ product.name }}</h3>
-                <p class="product-price">{{ product.price }}</p>
+                <p class="product-price">{{ product.price + ' €' }}</p>
   
                 <button class="add-to-cart" (click)="productInCart(product)">
                   @if (isUser) {
                     @if (!product.insidecart) {
-                      <button class="añadir_carrito" (click)="addToCart(product)" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >Añadir al carrito</h3></button>
+                      <button class="añadir_carrito" (click)="addToCart(product)" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >{{getText('Añadir al carrito','Add to Cart')}} </h3></button>
                     } @else {
-                      <button class="añadir_carrito" (click)="addToCart(product)" >     <h3 ><img src="../../../../images/tick.gif" class="add-carrito" alt="Añadido al carrito" >Añadido al carrito</h3></button>
+                      <button class="añadir_carrito" (click)="addToCart(product)" >     <h3 ><img src="../../../../images/tick.gif" class="add-carrito" alt="Añadido al carrito" >{{getText('Añadir al carrito','Add to Cart')}}</h3></button>
                     }
                   } @else {
-                    <button class="añadir_carrito" (click)="addToCart(product)" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >Añadir al carrito</h3></button>
+                    <button class="añadir_carrito" (click)="addToCart(product)" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >{{getText('Añadir al carrito','Add to Cart')}}</h3></button>
                   }
                 </button>
   

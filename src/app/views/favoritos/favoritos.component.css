@@ -1,0 +1,420 @@
+
+.overlay {
+    width: 100%;
+    height: 200px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+    url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
+    background-size: cover;
+    background-position: center;
+    mask-image: linear-gradient(black 85%, transparent);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
+
+}
+
+
+/* Favorite Container */
+.favorite-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex-direction: row; 
+    gap: 20px;
+    min-height: auto;
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    gap: 30px;
+    width: 100%;
+    padding: 30px;
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    justify-items: center; 
+}
+
+/* Product Card */
+.product-card {
+    
+    border-radius: 12px;
+    width: 100%;
+    max-width: 350px; 
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff; /* Ensure background is white */
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Product Image */
+.product-image {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+/* Favorite and Delete Buttons */
+.favorite-button, .eliminar {
+    position: absolute;
+    top: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.favorite-button {
+    right: 15px;
+}
+
+.eliminar {
+    left: 15px;
+}
+
+.favorite-button:hover, .eliminar:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+.fav-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.eliminar i {
+    font-size: 20px;
+    color: #888;
+}
+
+.eliminar:hover i {
+    color: #e63946;
+}
+
+/* Product Name and Price */
+.product-name {
+    font-size: 1.3rem;
+    margin: 10px 0;
+    color: #222;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.product-price {
+    font-size: 1.15rem;
+    color: #4CAF50;
+    margin: 8px 0;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Add to Cart Button */
+.añadir_carrito {
+    width: 60%;
+    background: #ffffff;
+    border: 1px solid black;
+    border-radius: 26px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+.añadir_carrito:hover {
+    transform: scale(1.07);
+}
+
+.añadir_carrito h3 {
+    margin: 0;
+    color: rgb(0, 0, 0);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.add-carrito {
+    width: 24px;
+    height: 24px;
+}
+
+/* Alerts */
+.alert, .alert-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 12px 24px;
+    border-radius: 6px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 90%; /* Ensure alerts don’t overflow on small screens */
+    max-width: 400px; /* Limit width on larger screens */
+}
+
+.alert {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.alert-message {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Empty Favorites Section */
+.favorito-vacio {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    margin-left: 800px;
+    width: 150%;
+    max-width: 500px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.favorito-vacio img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.favorito-vacio h3 {
+    margin: 0 0 10px;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.favorito-vacio p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+
+.btn-volver {
+    background-color: #333;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: #555;
+}
+
+
+/* Tablets (768px to 991px) */
+@media (max-width: 991px) {
+
+
+    .favorite-container {
+        padding: 30px 15px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        padding: 20px;
+    }
+
+    .product-card {
+        padding: 15px;
+    }
+
+    .product-image {
+        height: 200px;
+    }
+
+    .product-name {
+        font-size: 1.2rem;
+    }
+
+    .product-price {
+        font-size: 1.05rem;
+    }
+
+    .añadir_carrito h3 {
+        font-size: 1rem;
+    }
+
+    .favorito-vacio {
+        max-width: 450px;
+        padding: 25px;
+        
+        margin-left: 600px;
+    }
+
+    .favorito-vacio h3 {
+        font-size: 1.6rem;
+    }
+
+    .favorito-vacio p {
+        font-size: 1rem;
+    }
+}
+
+/* Small screens (576px to 767px) */
+@media (max-width: 767px) {
+   
+
+    .favorite-container {
+        padding: 20px 10px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .product-image {
+        height: 180px;
+    }
+
+    .product-name {
+        font-size: 1.1rem;
+    }
+
+    .product-price {
+        font-size: 1rem;
+    }
+
+    .añadir_carrito h3 {
+        font-size: 0.95rem;
+    }
+
+    .favorito-vacio {
+        max-width: 400px;
+        padding: 20px;
+        
+        margin-left: 300px;
+    }
+
+    .favorito-vacio img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .favorito-vacio h3 {
+        font-size: 1.5rem;
+    }
+
+    .favorito-vacio p {
+        font-size: 0.95rem;
+    }
+
+    .btn-volver {
+        padding: 10px 20px;
+    }
+}
+
+/* Very small screens (below 576px) */
+@media (max-width: 585px) {
+   
+    .favorite-container {
+        padding: 15px 5px;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr; /* Single column */
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .product-card {
+        padding: 12px;
+        max-width: 300px; /* Slightly smaller for very small screens */
+    }
+
+    .product-image {
+        height: 160px;
+        padding: 8px;
+    }
+
+    .product-name {
+        font-size: 1rem;
+    }
+
+    .product-price {
+        font-size: 0.9rem;
+    }
+
+    .favorite-button, .eliminar {
+        padding: 6px;
+    }
+
+    .fav-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .eliminar i {
+        font-size: 18px;
+    }
+
+    .añadir_carrito {
+        padding: 10px;
+    }
+
+    .añadir_carrito h3 {
+        font-size: 0.9rem;
+    }
+
+    .add-carrito {
+        width: 20px;
+        height: 20px;
+    }
+
+    .favorito-vacio {
+        max-width: 90%;
+        padding: 15px;
+        
+        margin-left: 0px;
+    }
+
+    .favorito-vacio img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .favorito-vacio h3 {
+        font-size: 1.4rem;
+    }
+
+    .favorito-vacio p {
+        font-size: 0.9rem;
+    }
+
+    .btn-volver {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}

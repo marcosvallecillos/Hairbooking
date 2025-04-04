@@ -1,173 +1,67 @@
 
-
 .header {
     height: 130px;
-    position: absolute; 
+    position: absolute;
     top: 2%;
     left: 0;
     width: 100%;
-    z-index: 1000; 
-    box-shadow: none; /* Quitamos la sombra por defecto */
-    margin-top: 20px;
-}
-.home{
-    margin-left: 50px;
+    z-index: 1000;
+    margin-top: 10px;
 }
 
+.home {
+    margin-left: 50px;
+}
+.ast-icon-shopping-bag svg {
+    width: 30px;    
+    height: 30px;
+    cursor: pointer;
+    margin: 30px;
+}   
 .rounded-pill {
     width: 100px;
-    /* Ajustar tamaño según sea necesario */
     height: 100px;
-    /* Ajustar tamaño según sea necesario */
     border-radius: 50%;
-    /* Cambiado a 50% para un logo más redondo */
     object-fit: cover;
-    /* Mantiene la relación de aspecto del logo */
 }
 
 .navbar {
     padding: 10px 20px;
-    background-color: transparent; /* Hacemos el navbar completamente transparente */
+    background-color: transparent;
     transition: all 0.3s ease;
 }
 
-/* 📱 Ajustes Responsivos */
-@media (max-width: 991px) { 
-    h1 { 
-            margin-right:80px;
-        font-size: 3rem;
-        text-align: left;
-        animation: none; 
-    }
-}
-
-@media (max-width: 768px) { 
-    h1 {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 576px) { 
-    h1 {
-        font-size: 3rem; 
-    }
-}
-.nav-link {
-    font-weight: 500;
-
-    transition: color 0.3s;
-}
-
-.navbar-nav .nav-link {
-    color: white;
-    font-weight: 500;
-    transition: color 0.3s ease-in-out;
-}
-.carrito{
-    list-style: none;
-    border: none;
-    background-color: transparent;;
-    
-}
-.carrito.active{
-    background-color: #ffbf00;
-    border: #ffbf00;
-    width: auto ;
-    border-radius: 30px;
-}
-.navbar-nav .nav-link:hover {
-    color: #ffc107;
-}
-
-
-.navbar-nav .nav-link.active {
-    
-    color: #ffbf00;
-    font-weight: bold;
-}
-/* Estilos para el botón de Iniciar Sesión */
-.navbar-nav .login-btn {
-    cursor: pointer;
-    background-color: transparent;
-    border: 2px solid white;
-    color: white;
-    padding: 6px 15px;
-    border-radius: 20px;
-    transition: all 0.3s ease-in-out;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.navbar-nav .login-btn:hover {
-    background-color: #ffc107;
-    border-color: #ffc107;
-    color: black;
-}
-
-.navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.5);
-    /* Cambia el color del borde */
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='white' viewBox='0 0 30 30'><path stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
-}
-
-.dropdown-item:hover {
-    background-color: rgb(192, 190, 190);
-}
-@media (max-width: 991px) { 
+/* Ajustes responsivos */
+@media (max-width: 991px) {
     .navbar-collapse {
         position: fixed;
+        border: none;
         top: 0;
-        right: 100%; 
-        width: 280px; 
+        right: 100%;
+        width: 280px;
         height: 100vh;
         background-color: #1a1a1a;
         padding: 2rem;
-        
-        overflow-y: auto;   
         box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
-        transition: right 0.4s ease-in-out; 
+        transition: right 0.4s ease-in-out;
         z-index: 1001;
-      
+        overflow-y: auto;   
     }
-
-   
     .navbar-collapse.show {
         right: 0;
     }
 
-  
     .navbar-nav {
         display: flex;
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .navbar-nav .nav-item {
-        
+        cursor: pointer;
         padding: 10px 0;
         text-align: left;
     }
-    hr{
-        color: #ffc107;
-    }
-    .close-menu {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        font-size: 1.8rem;
-        color: white;
-        cursor: pointer;
-        transition: color 0.3s;
-    }
-
-    .close-menu:hover {
-        color: red;
-    }
-
 
     .menu-overlay {
         position: fixed;
@@ -188,94 +82,124 @@
     }
 }
 
-
-    .navbar-nav .nav-link {
-        font-size: 1.2rem;
+/* Estilo para enlaces */
+.nav-link {
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 500;   
+}
+ @media (max-width:1062px) {
+    .nav-link {
+        font-size: 1rem;
         color: white;
-        padding: 0.5rem 0;
+        font-weight: 500;   
     }
+ }
+.nav-link:hover {
+    color: #ffc107;
+}
+.navbar-nav .nav-link.active {
+    color: #ffbf00 !important;
+    font-weight: bold !important;
+}
 
-    .navbar-toggler {
-        position: absolute;
-        right: 1rem;
-        z-index: 1002;
-        border: none;
-    }
+.navbar-nav .login-btn {
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-    .navbar-toggler:focus {
-        box-shadow: none;
-    }
+.navbar-nav .login-btn:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: black;
+}
 
-    /* Estilo para el botón de cerrar */
-    .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='white' viewBox='0 0 30 30'><path stroke='white' stroke-width='2' d='M6 6L24 24M6 24L24 6'/></svg>");
-    }
+/* Toggler del menú */
+.navbar-toggler {
+    position: absolute;
+    right: 1rem;
+    z-index: 1002;
+    border: none;
+}
 
-  
-    .language-selector .btn-link {
-        color: white;
-        font-size: 1.1rem;
-    }
-
-    .navbar-nav .login-btn {
-        width: fit-content;
-        width: auto;
-    }
-
-    /* Cuando se abra el menu hamburguesa el fondo esta mas oscuro */
-    .navbar::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.3s ease-in-out;
-        z-index: 1000;
-    }
-
-    .navbar.menu-open::before {
-        opacity: 1;
-        visibility: visible;
-    }
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='white' viewBox='0 0 30 30'><path stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+    border: none;
+}
+.navbar-toggler-icon.active,
+.navbar-toggler-icon.active{
+    border: transparent;
+}
 
 
+/* Selector de idioma */
 .language-selector .btn-link {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
 }
 
 .language-selector .btn-link:hover {
-  color: #ffc107;
+    color: #ffc107;
 }
 
 .language-selector .dropdown-menu {
-  min-width: 5rem;
-  background-color: #0c0c0c;
+    min-width: 5rem;
+    background-color: #0c0c0c;
 }
 
 .language-selector .dropdown-item {
-  color: white;
-  text-align: center;
-  padding: 0.5rem 1rem;
+    color: white;
+    text-align: center;
+    padding: 0.5rem 1rem;
+}
+.navbar::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+    z-index: 1000;
 }
 
+.navbar.menu-open::before {
+    opacity: 1;
+    visibility: visible;
+}
 .language-selector .dropdown-item:hover {
-  background-color: #ffc107;
-  color: black;
+    background-color: #ffc107;
+    color: black;
 }
 
-/* Cuando se hace scroll, el navbar se vuelve sólido */
-.navbar.scrolled {
-    background-color: rgb(12, 12, 12);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+hr {
+    color: #ffc107;
 }
-.back-index{
-    width: 30px;
-   height: 30px;
-}
+
+.cart-count {
+    position: relative;
+    top: -75px;
+    left: 50px;
+    background-color: rgb(189, 189, 189);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }

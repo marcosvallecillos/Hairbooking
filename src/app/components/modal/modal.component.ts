@@ -16,6 +16,7 @@ export class ModalComponent {
   @Input() hora: string = '';
   @Input() servicio: string = '';
   @Input() peluquero: string = '';
+  @Input() precio?: string = '';
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Product } from '../../models/user.interface';
+import { Product, Productos } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
 
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -22,6 +22,7 @@ import { ApiService } from '../../services/api-service.service';
   styleUrls: ['./carrito.component.css'],
 })
 export class CarritoComponent {
+  product:Productos[] =[]; 
   productos: Product[] = [];
   isUser = true;
   subtotal: number = 0;
@@ -35,13 +36,13 @@ export class CarritoComponent {
 
   constructor(
     private languageService: LanguageService,
-    private apiService: ApiService, // Inject the apiService
+    private apiService: ApiService, 
     private router: Router
   ) {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => (this.isSpanish = isSpanish)
     );
-    this.productos = this.apiService.getProductos(); // Get products from the service
+    this.productos = this.apiService.getProductos(); 
     this.calcularTotalYDescuento();
   }
 
@@ -78,12 +79,29 @@ export class CarritoComponent {
     return this.isSpanish ? es : en;
   }
 
-  eliminarproduct(product: Product) {
-    this.apiService.removeProduct(product.id); // Use the service to remove the product
+  eliminarproduct(product: Product): void {
+    if (!this.isUser) {
+      this.messageNoUserDisplay = this.getText(
+        'Inicia sesión para eliminar productos de favoritos.',
+        'Log in to remove products from favorites.'
+      );
+      setTimeout(() => {
+        this.messageNoUserDisplay = null;
+      }, 2000);
+      return;
+    }
+    this.apiService.removeProduct(product.id); 
     this.productos = this.apiService.getProductos();
+    product.insidecart = false; 
+    this.messageNoCart = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');
+    setTimeout(() => {
+      this.messageNoCart = null;
+    }, 2000);
     this.calcularTotalYDescuento();
   }
-
+  messageNoUserDisplay: string | null = null;
+  messageNoCart: string | null = null;
+  
   actualizarCantidad(product: Product, input: EventTarget | null): void {
     const inputElement = input as HTMLInputElement;
     const nuevaCantidad = parseInt(inputElement.value);
@@ -118,13 +136,17 @@ export class CarritoComponent {
 
   onConfirmReserve() {
     this.showModal = false;
+    // Enviar productos al historial de compras
+    this.apiService.addToPurchases([...this.productos]);
+    this.apiService.clearCart();
+    this.productos = this.apiService.getProductos();  
     console.log('Datos de la reserva:', {
       nombre: this.productos.map((producto) => producto.name),
       precio: this.productos.map((producto) => producto.price),
       cantidad: this.productos.map((producto) => producto.cantidad),
       total: this.total,
     });
-    this.router.navigate(['/show-buys']);
+    this.router.navigate(['/show-buys']); // Redirigir a show-buys
   }
 
   onReserve() {

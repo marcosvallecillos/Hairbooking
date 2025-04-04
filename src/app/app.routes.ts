@@ -16,6 +16,7 @@ import { ModalCompraComponent } from './components/modal-compra/modal-compra.com
 import { ShowReserveComponent } from './views/show-reserve/show-reserve.component';
 import { ShowBuysComponent } from './views/show-buys/show-buys.component';
 import { NgModule } from '@angular/core';
+import { FavoritosComponent } from './views/favoritos/favoritos.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -35,6 +36,7 @@ export const routes: Routes = [
     { path: 'confirm-compra', component: ModalCompraComponent },
     { path: 'show-reserve', component: ShowReserveComponent },
     { path: 'show-buys', component: ShowBuysComponent },
+    { path: 'favorites', component: FavoritosComponent },
 ];
 
     @NgModule({

@@ -17,7 +17,7 @@
                         [class.selected]="selectedService === service.nombre"
                         (click)="selectService(service.nombre)">
                         <h3>{{ getText(service.nombre, service.name) }}</h3>
-                        <p class="price">{{ service.price }}</p>
+                        <p class="price">{{ service.precio }}</p>
                     </div>
                 }
             </div>
@@ -248,7 +248,8 @@
             [show]="showModal"
             [servicio]="selectedService"
             [fecha]="selectedDate ? (selectedDate | date:'d MMMM yyyy') : ''"
-            [hora]="selectedTime"
+            [hora]="selectedTime" 
+            [precio]="getPrice()"
             [peluquero]="selectedBarber"
             (confirm)="onConfirmReserve()"
             (cancel)="onCancelReserve()">

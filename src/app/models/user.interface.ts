@@ -16,16 +16,16 @@ export interface Usuario {
     cantidad:number;
     isFavorite: boolean;
     
+    insidecart: boolean;
   }
 
   export interface Reserva{
     id: number;
-    nombre: string;
-    apellidos: string;
     servicio:string;
     peluquero:string;
     dia: string;
     hora:string;
+    precio?: string;
   }
   export interface Productos {
     id: number;

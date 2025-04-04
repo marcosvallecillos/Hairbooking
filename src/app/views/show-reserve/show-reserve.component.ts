@@ -7,6 +7,7 @@ import { ReserveComponent } from '../reserve/reserve.component';
 import { Product, Reserva } from '../../models/user.interface';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
+import { ApiService } from '../../services/api-service.service';
 
 @Component({
   selector: 'app-show-reserve',
@@ -15,46 +16,9 @@ import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete
   styleUrl: './show-reserve.component.css'
 })
 export class ShowReserveComponent {
-  reserves: Reserva[] = [
-      {
-        id: 1,
-        nombre: 'Marcos',
-        apellidos: 'Vallecillos Usagre',
-        servicio: 'Degradado',
-        peluquero: 'Jesus',
-        dia: '1/04/2005',
-        hora: '17:15',
-      },
-      {
-        id: 2,
-        nombre: 'pepe',
-        apellidos: 'Vallecillos Usagre',
-        servicio: 'Degradado',
-        peluquero: 'Jesus',
-        dia: '2/04/2025',
-        hora: '11:15',
-      },
-      {
-        id: 3,
-        nombre: 'Raul',
-        apellidos: 'Vallecillos Usagre',
-        servicio: 'Degradado',
-        peluquero: 'Jesus',
-        dia: '4/04/2025',
-        hora: '16:15',
-      },
-      {
-        id: 4,
-        nombre: 'Marcos',
-        apellidos: 'Vallecillos Usagre',
-        servicio: 'Degradado',
-        peluquero: 'Jesus',
-        dia: '7/04/2025',
-        hora: '12:15',
-      }
-  ];
+  reserves: Reserva[] = [];
 
-  isUser = false;
+  isUser = true;
   isAuthenticated = true;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
@@ -65,6 +29,7 @@ export class ShowReserveComponent {
     private authService: AuthService,
     private router: Router,
     private languageService: LanguageService,
+    private apiService:ApiService
   ) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
@@ -72,8 +37,9 @@ export class ShowReserveComponent {
   }
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
-   
+    this.reserves = this.apiService.getReserves();
   }
+
 
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;

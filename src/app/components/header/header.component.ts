@@ -5,6 +5,7 @@ import { LanguageService } from '../../services/language.service';
 import { AboutUsComponent } from '../../views/about-us/about-us.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { ProductsComponent } from '../../views/products/products.component';
+import { ApiService } from '../../services/api-service.service';
 
 @Component({
   selector: 'app-header',
@@ -28,16 +29,28 @@ export class HeaderComponent {mostrarHeader: boolean = true;
   isMenuOpen: boolean = false;
   showLoginModal: boolean = false;
 
+  cartItemsCount:number = 0;
+
+  
+  constructor(private languageService: LanguageService, 
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService:ApiService) {
+    this.languageService.isSpanish$.subscribe(
+      isSpanish => this.isSpanish = isSpanish
+    );
+  }
   ngOnInit() {
 
     this.router.events.subscribe(() => {
       this.mostrarHeader = this.router.url !== '/index'; 
+    });this.apiService.cartItemsCount.subscribe((count) => {
+      this.cartItemsCount = count;
     });
-  }
-  constructor(private languageService: LanguageService, private route: ActivatedRoute,private router: Router) {
-    this.languageService.isSpanish$.subscribe(
-      isSpanish => this.isSpanish = isSpanish
-    );
+    this.apiService.cartItemsCount.subscribe((count) => {
+      // Asegurarse de que cartItemsCount sea 0 cuando no hay ítems
+      this.cartItemsCount = count !== null && count !== undefined ? count : 0;
+    });
   }
 
 

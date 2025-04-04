@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Productos, Usuario } from '../models/user.interface';
+import { Product, Productos, Reserva, Usuario } from '../models/user.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,33 +9,17 @@ export class ApiService {
 private apiUrl = 'http://localhost:8000/api';
 private isUserSubject = new BehaviorSubject<boolean>(true); 
 private productos: Productos[] = [];
-public cartItemsCount = new BehaviorSubject<number>(0);
+private favorites: Productos[] = [];
+private reserves: Reserva[] = [];
+private cart: Productos[] = [];
+private comprasRealizadas: Product[] = [];
 
-// Observable to subscribe to the cart items count
+public cartItemsCount = new BehaviorSubject<number>(0);
+isUser: boolean = false  ;
 cartItemsCount$ = this.cartItemsCount.asObservable();
   isUser$ = this.isUserSubject.asObservable();
   constructor(private http: HttpClient) { 
-    this.productos = [
-      {
-        id: 1,
-        name: 'CLIPPER SPACE X VERSACE',
-        price: 109.99,
-        image: '../../../../images/clipper/clipper_space.jpg',
-        cantidad: 2,
-        insidecart:true,
-        isFavorite: false,
-      },
-      {
-        id: 2,
-        name: 'CLIPPER GOLD EDITION',
-        price: 129.99,
-        image: '../../../../images/clipper/clipper_wahl.jpg',
-        cantidad: 1,
-        insidecart:true,
-        isFavorite: false,
-      },
-    ];
-    this.updateCartItemsCount();
+    this.isUserSubject.next(this.isUser);
   }
 
   registerUser(usuario: Usuario): Observable<Usuario> {
@@ -46,7 +30,10 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
   }
 
   setIsUser(value: boolean) {
-    this.isUserSubject.next(value);
+    this.isUser = value;
+  }
+  getIsUser(): boolean {
+    return this.isUser;
   }
   getProductos(): Productos[] {
     return this.productos;
@@ -54,14 +41,13 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
 
   addProduct(product: Productos) {
     const existingProduct = this.productos.find((p) => p.id === product.id);
-    if (existingProduct) {
-      existingProduct.cantidad += 1;
-    } else {
+    if (!existingProduct) { 
       product.cantidad = 1;
       this.productos.push(product);
     }
     this.updateCartItemsCount();
   }
+  
 
   removeProduct(productId: number) {
     this.productos = this.productos.filter((p) => p.id !== productId);
@@ -83,4 +69,44 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
     );
     this.cartItemsCount.next(totalItems);
   }
+
+  addFavorite(product: Productos) {
+    const existingFavorite = this.favorites.find(p => p.id === product.id);
+    if (!existingFavorite) {
+      const productToAdd = { ...product, isFavorite: true };
+      this.favorites.push(productToAdd);
+    }
+  }
+
+  removeFavorite(productId: number) {
+    this.favorites = this.favorites.filter(p => p.id !== productId);
+  }
+
+  getFavorites(): Productos[] {
+    return this.favorites;
+  }
+
+  getCart(): Productos[] {
+    return this.cart;
+  }
+
+  addToPurchases(products: Product[]): void {
+    this.comprasRealizadas = [...this.comprasRealizadas, ...products];
+  }
+
+  getPurchases(): Product[] {
+    return this.comprasRealizadas;
+  }
+
+  clearCart(): void {
+    this.productos = [];
+  }
+  getReserves(): Reserva[] {
+    return this.reserves;
+  }
+
+  addReserve(reserve: Reserva) {
+    this.reserves.push({ ...reserve, id: this.reserves.length + 1 }); 
+  }
+
 } 

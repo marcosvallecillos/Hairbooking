@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
+import { Reserva } from '../../models/user.interface';
 
 @Component({
   selector: 'app-modal-delete',
@@ -15,7 +16,8 @@ export class ModalDeleteComponent {
   @Input() peluquero: string = '';
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
-
+   services: Reserva[] = []; // Array of services
+  @Input() selectedService: string = ''; // Selected service name
 
   onCancel() {
     this.cancel.emit(); 

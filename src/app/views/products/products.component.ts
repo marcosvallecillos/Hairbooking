@@ -41,18 +41,18 @@ export class ProductsComponent {
           cantidad: 1,
         }, {
           id: 3,
-          name: 'CLIPPER SPACE X VERSACE ',
+          name: 'CLIPPER JRL ',
           price: 109.99,
-          image: '../../../../images/clipper/clipper_space.jpg',
+          image: '../../../../images/clipper/clipper_jrl.jpg',
           isFavorite: false,
           insidecart: false,
           cantidad: 1,
         },
         {
           id: 4,
-          name: 'CLIPPER WAHL VAPOR 5 STAR CORDLESS ',
+          name: 'CLIPPER Saber ',
           price: 159.99 ,
-          image: '../../../../images/clipper/clipper_wahl.jpg',
+          image: '../../../../images/clipper/clipper_styleCraft.jpg',
           isFavorite: false,
           insidecart: false,
           cantidad: 1,
@@ -60,28 +60,36 @@ export class ProductsComponent {
       ],
       trimmer: [
         {
-          id: 1,
+          id:5,
           name: 'Trimmer Skeleton ',
-          price: 12999 ,
+          price: 129.99 ,
           image: '../../../../images/trimmer/trimmer_skeleton.jpg',
           isFavorite: false,
           insidecart: false,
           cantidad: 1,
         },
         {
-          id: 2,
-          name: 'Shaver Wad ',
-          price: 5999 ,
-          image: '../../../../images/shaver/shaver.jpg',
+          id: 6,
+          name: 'Trimmer Saber ',
+          price: 179.99 ,
+          image: '../../../../images/trimmer/trimmer_saber.jpg',
           isFavorite: false,
           insidecart: false,
           cantidad: 1,
-        },
+        },{
+          id: 26,
+          name: 'Trimmer Chamaleon ',
+          price: 175.99 ,
+          image: '../../../../images/trimmer/trimmer_chamaleon.jpg',
+          isFavorite: false,
+          insidecart: false,
+          cantidad: 1,
+        }
       ]
     },
     cosmeticos: [
       {
-        id: 5,
+        id: 7,
         name: 'Difusor de Agua ',
         price: 9.99,
         image: '../../../../images/cosmeticos/difusor.png',
@@ -90,7 +98,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 6,
+        id: 8,
         name: 'Cera de Pelo ',
         price: 2.99,
         image: '../../../../images/cosmeticos/cera.png',
@@ -99,7 +107,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 7,
+        id: 9,
         name: 'Champú para barba ',
         price: 2.99,
         image: '../../../../images/cosmeticos/champu_barba.png',
@@ -108,7 +116,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 8,
+        id: 10,
         name: 'Aceite para Barba ',
         price: 18.99,
         image: '../../../../images/aceite.png',
@@ -119,7 +127,7 @@ export class ProductsComponent {
     ],
     mobiliario: [
       {
-        id: 9,
+        id: 11,
         name: 'Sillón de barberia negra ',
         price: 250 ,
         image: '../../../../images/mobiliario/sillon_negro.jpg',
@@ -128,7 +136,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 9,
+        id: 12,
         name: 'Sillón de barberia blanca ',
         price: 279.99,
         image: '../../../../images/mobiliario/sillon_blanco.jpg',
@@ -137,7 +145,7 @@ export class ProductsComponent {
         cantidad: 1,
       }, {
 
-        id: 10,
+        id: 12,
         name: 'Sillón de barberia negra con toques dorados ',
         price: 279.99,
         image: '../../../../images/mobiliario/sillon_dorado.jpg',
@@ -150,7 +158,7 @@ export class ProductsComponent {
     ],
     tijeras: [
       {
-        id: 11,
+        id: 14,
         name: 'TIJERAS DE ENTRESACAR STUDIO TECNO (5,5 PULGADAS) ',
         price: 15.99 ,
         image: '../../../../images/tijeras/tijeras_5.5.jpg',
@@ -159,7 +167,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 12,
+        id: 15,
         name: 'Tijeras de corte (6 PULGADAS) ',
         price: 10.99,
         image: '../../../../images/tijeras/tijeras_6.jpg',
@@ -168,7 +176,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 13,
+        id: 16,
         name: 'Tijeras de corte academy pro chamaleon (6 PULGADAS) ',
         price: 10.99,
         image: '../../../../images/tijeras/tijeras_chamaleon.jpg',
@@ -179,7 +187,7 @@ export class ProductsComponent {
     ],
     capas: [
       {
-        id: 14,
+        id: 17,
         name: 'Capa Bape ',
         price: 9.99,
         image: '../../../../images/capas/capa_bape.jpg',
@@ -188,7 +196,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 15,
+        id: 18,
         name: 'Capa negra con estampado ',
         price: 9.99,
         image: '../../../../images/capas/capa_lv.jpg',
@@ -197,7 +205,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 16,
+        id: 19,
         name: 'Capa negra  ',
         price: 9.99,
         image: '../../../../images/capas/capa3.jpg',
@@ -208,7 +216,7 @@ export class ProductsComponent {
     ],
     accesorios: [
       {
-        id: 17,
+        id: 20,
         name: 'Difusor de agua',
         price: 9.99,
         image: '../../../../images/accesorios/difusor.png',
@@ -217,7 +225,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 18,
+        id: 21,
         name: 'Espuma para pelo ',
         price: 1.99 ,
         image: '../../../../images/accesorios/espuma.png',
@@ -226,7 +234,7 @@ export class ProductsComponent {
         cantidad: 1,
       },
       {
-        id: 19,
+        id: 22,
         name: 'Peine de puas  ',
         price: 2.99 ,
         image: '../../../../images/accesorios/peine.png',
@@ -234,7 +242,7 @@ export class ProductsComponent {
         insidecart: false,
         cantidad: 1,
       },{
-        id: 20,
+        id: 23,
         name: 'Peine Rulo  ',
         price: 3.99 ,
         image: '../../../../images/accesorios/peine_rulo.png',
@@ -242,7 +250,7 @@ export class ProductsComponent {
         insidecart: false,
         cantidad: 1,
       },{
-        id: 21,
+        id: 24,
         name: 'Cepillo Quitapelos  ',
         price: 2.99,
         image: '../../../../images/accesorios/quita_pelos.png',
@@ -250,7 +258,7 @@ export class ProductsComponent {
         insidecart: false,
         cantidad: 1,
       },{
-        id: 22,
+        id: 25,
         name: 'Secador de pelo  ',
         price: 14.99,
         image: '../../../../images/accesorios/secador.png',
@@ -275,7 +283,7 @@ export class ProductsComponent {
   }
 
   addToCart(product: Productos) {
-    this.apiService.addProduct({ ...product }); 
+    this.apiService.addProduct({ ...product }) ; 
     console.log('se añadio al carrito')
   }
 
@@ -287,34 +295,32 @@ export class ProductsComponent {
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
-  fav: Product[] = [];
   messageFavorite: string | null = null;
   messageNoFavorite: string | null = null;
-  messageNoUser:string = '';
-  ;
-  messageNoUserDisplay: string | null = null; 
-  
-  favorite(product: any): void {
+  messageNoUser: string = '';
+  messageNoUserDisplay: string | null = null;
+
+  favorite(product: Productos): void {
     if (!this.isUser) {
-      // Si no es usuario, mostrar mensaje y no hacer nada más
-      this.messageNoUserDisplay = this.messageNoUser = this.getText('Deberás iniciar sesion para realizar esta función','You must log in to do this function.'); ;
+      this.messageNoUserDisplay = this.getText('Deberás iniciar sesión para realizar esta función', 'You must log in to do this function.');
       setTimeout(() => {
         this.messageNoUserDisplay = null;
       }, 2000);
       return;
     }
-    const isFavorites = this.fav.find(item => item.id === product.id);
+
     product.isFavorite = !product.isFavorite;
-    if (isFavorites) {
-      this.messageFavorite = `${product.name} ` + this.getText('ha sido eliminado de favoritos', 'has been removed from favorites');
+    if (product.isFavorite) {
+      this.apiService.addFavorite({ ...product });
+      this.messageNoFavorite = `${product.name} ` + this.getText('ha sido añadido a favoritos', 'has been added to favorites');
     } else {
-      product.isFavorite = true;
-      this.fav.push(product);
-      this.messageNoFavorite = `${product.name} ` + this.getText('ha sido añadido a favoritos', 'has been added to the favorites');
+      this.apiService.removeFavorite(product.id);
+      this.messageFavorite = `${product.name} ` + this.getText('ha sido eliminado de favoritos', 'has been removed from favorites');
     }
+
     setTimeout(() => {
-      this.messageFavorite = null
-      this.messageNoFavorite = null
+      this.messageFavorite = null;
+      this.messageNoFavorite = null;
     }, 2000);
   }
 
@@ -323,7 +329,6 @@ export class ProductsComponent {
   messageTrue: string | null = null;
   productInCart(product: any) {
     if (!this.isUser) {
-      // Si no es usuario, mostrar mensaje y no hacer nada más
       this.messageNoUserDisplay = this.messageNoUser = this.getText('Deberas iniciar sesion para realizar esta función','You must log in to do this function.'); ;
       setTimeout(() => {
         this.messageNoUserDisplay = null;

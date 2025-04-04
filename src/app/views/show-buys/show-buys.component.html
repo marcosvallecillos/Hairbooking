@@ -29,11 +29,17 @@
     </div>
   </div>
 } @else {
-  <div class="alert-warning">
-    <i class="bi bi-exclamation-circle-fill"></i>
-    <h2>{{getText('No hay has realizado niguna compra.', 'No reservations found.')}}</h2>
-    <button class="alert-btn" routerLink="/products">{{getText('Compra Ahora', 'Buy Now')}}</button>
-  </div>
+  <div class="compras-vacio  mb-5">
+    <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
+      <h3> {{getText('No has realizado ninguna compra.','You have not made any purchases.')}}  </h3>
+      <p> {{getText('Echa un vistazo a los productos que tenemos para ti.','Check out the products we have for you.')}} </p>
+   
+      <button class="btn-volver mt-5" routerLink="/products">
+
+     {{getText('Comprar Ahora','Buy Now')}}
+
+      </button>
+</div>
 }
 
 </body>

@@ -1,0 +1,81 @@
+<div class="overlay"></div>
+
+<div class="favorite-container">
+  <section class="products-content">
+    <div class="products-grid">
+      @if (message) {
+      <div class="alert-message">
+        {{ message }}
+      </div>
+      } @else if (messageTrue) {
+      <div class="alert-message">
+        {{ messageTrue }}
+      </div>
+      } @else if (messageNoFavorite) {
+      <div class="alert">
+        {{ messageNoFavorite }}
+      </div>
+      } @else if (messageNoUserDisplay) {
+      <div class="alert">
+        {{ messageNoUserDisplay }}
+      </div>
+      }
+
+      @for (product of productos; track product.id) {
+        
+      <div class="product-card">
+        <button class="eliminar" (click)="eliminarproduct(product)" aria-label="Eliminar producto">
+          <i class="bi bi-trash"></i>
+        </button>
+        <button class="favorite-button">
+          <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Favorito">
+        </button>
+
+        <img [src]="product.image" [alt]="product.name" class="product-image">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-price">{{ product.price + ' €' }}</p>
+
+        @if (!isUser) {
+        @if (!product.insidecart) {
+        <button class="añadir_carrito" (click)="addToCart(product)">
+          <h3>
+            <img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito">
+            {{getText('Añadir al carrito','Add to Cart')}}
+          </h3>
+        </button>
+        } @else {
+        <button class="añadir_carrito" (click)="addToCart(product)">
+          <h3>
+            <img src="../../../../images/tick.gif" class="add-carrito" alt="Añadido al carrito">
+            {{getText('Añadido al carrito','Added to Cart')}}
+          </h3>
+        </button>
+        }
+        } @else {
+        <button class="añadir_carrito" (click)="addToCart(product)">
+          <h3>
+            <img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito">
+            {{getText('Añadir al carrito','Add to Cart')}}
+          </h3>
+        </button>
+        }
+      </div>
+      } @empty {
+      <div class="favorito-vacio">
+        <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
+
+        <h3> {{ getText('No tienes productos favoritos.','You have no favorite products.') }} </h3>
+      
+        <p> {{getText('Echa un vistazo a la selección que tenemos para ti.','Take a look at the selection we have for you.')}} </p>
+        <button class="btn-volver" routerLink="/products">
+
+          {{getText( 'Ir a productos','Go to products')}}
+
+        </button>
+      </div>
+      }
+    </div>
+  </section>
+</div>
+
+<app-footer></app-footer>

@@ -10,7 +10,7 @@
 
 }
 body{
-    background-color: #ddd;
+    background-color: white;
 }
 /* Contenedor de productos */
 .productos-container {
@@ -238,49 +238,56 @@ img {
 }
 
 /* Alerta de advertencia */
-.alert-warning {
-    background: #ffffff;
-    padding: 4rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    width: 60%;
-    max-width: 600px;
-    margin: 5rem auto;
+
+.compras-vacio {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
     text-align: center;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.alert-warning i {
-    font-size: 3rem;
-    color: #d32f2f; /* Rojo profesional */
-    margin-bottom: 1.5rem;
-    display: block;
+.compras-vacio img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
 }
 
-.alert-warning h2 {
-    font-size: 1.75rem;
-    margin-bottom: 2rem;
-    color: #1f2a44;
+.compras-vacio h3 {
+    margin: 0 0 10px;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: bold;
 }
 
-/* Botón de alerta */
-.alert-btn {
-    background: linear-gradient(135deg, #d32f2f, #b71c1c); /* Rojo sofisticado */
-    color: #ffffff;
-    padding: 1rem 2rem;
-    font-size: 1.125rem;
-    font-weight: 600;
+.compras-vacio p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+
+.btn-volver {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
     border: none;
-    border-radius: 50px;
     cursor: pointer;
-    transition: all 0.4s ease;
-    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.2);
 }
 
-.alert-btn:hover {
-    background: linear-gradient(135deg, #b71c1c, #9a0007);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
+.btn-volver:hover {
+    background-color: #555;
 }
+
 
 /* Media Queries */
 @media (max-width: 768px) {

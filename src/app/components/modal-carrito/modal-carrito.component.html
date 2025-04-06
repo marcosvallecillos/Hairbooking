@@ -1,0 +1,121 @@
+<body>
+    <div class="overlay"></div>
+    <div class="cart-container">
+        @if(show) {
+            <div class="cart-overlay" [class.active]="show" (click)="onClose()">
+                <div class="cart-sidebar" [class.active]="show" (click)="$event.stopPropagation()">
+                    <button class="close-button" (click)="onClose()">×</button>
+
+                    @if(isUser) {
+                        <div class="cart-header">
+                            <h1>{{getText('Cesta', 'Cart')}} ({{productos.length}})</h1>
+                            <h2 class="show-favoritos" routerLink="/favorites">
+                                <i class="bi bi-heart"></i> {{ getText('Favoritos', 'Favorites') }}
+                            </h2>
+                        </div>
+
+                        @if(productos.length > 0) {
+                            @if(faltaParaDescuento > 0) {
+                                <div class="shipping-alert">
+                                    {{getText(
+                                        'Te faltan ' + faltaParaDescuento.toFixed(2) + ' € para conseguir un descuento del 5%', 
+                                        'You are ' + faltaParaDescuento.toFixed(2) + ' € away from a 5% discount'
+                                    )}}
+                                </div>
+                            }
+
+                            <div class="cart-content">
+                                <div class="cart-items">
+                                    @for (product of productos; track product.id) {
+                                        <div class="cart-item">
+                                            <div class="item-image">
+                                                <img [src]="product.image" [alt]="product.name">
+                                            </div>
+                                            <div class="item-details">
+                                                <div class="item-info">
+                                                    <h3>{{product.name}}</h3>
+                                                    <p class="price">{{product.price}}€</p>
+
+                                                    <div class="item-options">
+                                                        <div class="quantity-selector">
+                                                            <input type="number" min="1" [value]="product.cantidad"
+                                                                (input)="actualizarCantidad(product, $event.target)"
+                                                                (blur)="validarCantidad(product, $event.target)">
+                                                        </div>
+                                                        <div class="item-actions">
+                                                            <button class="action-button" routerLink="/favorites" (click)="addToFavorites(product)">
+                                                                <i class="bi bi-heart"></i>
+                                                                {{getText('Mover a favoritos', 'Move to favorites')}}
+                                                            </button>
+                                                            <button class="action-button" (click)="eliminarproduct(product)">
+                                                                <i class="bi bi-trash"></i>
+                                                                {{getText('Eliminar', 'Remove')}}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="cart-summary">
+                                    <div class="summary-details">
+                                        <div class="summary-row">
+                                            <span>{{getText('Subtotal', 'Subtotal')}}</span>
+                                            <span>{{total.toFixed(2)}}€</span>
+                                        </div>
+                                        <div class="summary-row">
+                                            <span>{{getText('Descuento', 'Discount')}}</span>
+                                            <span>-{{descuento.toFixed(2)}}€</span>
+                                        </div>
+                                        <div class="summary-row total">
+                                            <span>{{getText('Total', 'Total')}}</span>
+                                            <span>{{totalConDescuento.toFixed(2)}}€</span>
+                                            <small>{{getText('(Impuestos incluidos)', '(Taxes included)')}}</small>
+                                        </div>
+                                    </div>
+
+                                    <button class="checkout-button" (click)="onReserve()">
+                                        {{getText('TRAMITAR PEDIDO', 'CHECKOUT')}}
+                                    </button>
+                                </div>
+                            </div>
+                        } @else {
+                            <div class="cart-empty">
+                                <img src="../../../../images/disappointed.png" class="empty-icon" alt="Carrito vacío">
+                                <h3>{{ getText('Tu carrito está vacío.', 'Your cart is empty') }}</h3>
+                                <p>{{ getText('Echa un vistazo a la selección que tenemos para ti.', 'Take a look at our selection for you.') }}</p>
+                                <button class="return-button" routerLink="/products" (click)="onClose()">
+                                    {{getText('Ir a productos', 'Go to products')}}
+                                </button>
+                            </div>
+                        }
+                    } @else {
+                        <div class="alert-warning">
+                            <i class="bi bi-exclamation-circle-fill"></i>
+                            <h2>{{ getText('Debes iniciar sesión para ver tu carrito', 'You must be registered to look your cart.') }}</h2>
+                            <button class="alert-btn mt-3" (click)="openLoginModal()">
+                                {{ getText('Iniciar Sesión', 'Login') }}
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <app-modal-login [show]="showLoginModal" (close)="showLoginModal = false"></app-modal-login>
+
+        <app-modal-compra 
+            [show]="showModal" 
+            [producto]="nombresProductos()" 
+            [precio]="precioProductos()"
+            [descuento]="descuento.toFixed(2) + ' €'" 
+            [total]="totalConDescuento.toFixed(2) + ' €'"
+            (confirm)="onConfirmReserve()" 
+            (cancel)="onCancelReserve()">
+        </app-modal-compra>
+    </div>
+</body>
+
+<app-footer></app-footer>

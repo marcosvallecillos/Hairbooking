@@ -3,11 +3,12 @@ import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api-service.service';
+import { ModalCarritoComponent } from '../modal-carrito/modal-carrito.component';
 
 @Component({
   selector: 'app-header-user',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink,ModalCarritoComponent],
   templateUrl: './header-user.component.html',
   styleUrl: './header-user.component.css'
 })
@@ -15,7 +16,7 @@ export class HeaderUserComponent {
   isSpanish: boolean = true;
   isMenuOpen: boolean = false;
   mostrarHeader: boolean = false;
-  
+  showCarritoModal: boolean = false;
   isAuthenticated: boolean = true;
   constructor(private languageService: LanguageService, private route: ActivatedRoute, private router: Router,private apiService:ApiService) {
     this.languageService.isSpanish$.subscribe(
@@ -69,5 +70,8 @@ export class HeaderUserComponent {
       document.body.style.overflow = '';
     }
   
+}
+closeCarritoModal() {
+  this.showCarritoModal = false;
 }
 }

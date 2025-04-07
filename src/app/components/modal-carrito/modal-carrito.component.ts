@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { LanguageService } from '../../services/language.service';
 import { Product, Productos } from '../../models/user.interface';
 import { ApiService } from '../../services/api-service.service';
@@ -13,19 +12,19 @@ import { ModalLoginComponent } from '../modal-login/modal-login.component';
 @Component({
   selector: 'app-modal-carrito',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule,ModalCompraComponent,FooterComponent,ModalLoginComponent],
+  imports: [CommonModule, RouterLink, FormsModule, ModalCompraComponent, FooterComponent, ModalLoginComponent],
   templateUrl: './modal-carrito.component.html',
-  styleUrl: './modal-carrito.component.css'
+  styleUrls: ['./modal-carrito.component.css']
 })
 export class ModalCarritoComponent implements OnInit {
   @Input() show: boolean = false;
   @Output() close = new EventEmitter<void>();
-  
-  product:Productos[] =[]; 
-  productos: Product[] = [];
-  isUser = true;
-  subtotal: number = 0;
   total: number = 0;
+  
+  productos: Product[] = [];
+  productosFavoritos: Product[] = [];
+  isUser = true  ;
+  subtotal: number = 0;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
 
@@ -35,17 +34,26 @@ export class ModalCarritoComponent implements OnInit {
 
   constructor(
     private languageService: LanguageService,
-    private apiService: ApiService, 
+    private apiService: ApiService,
     private router: Router
   ) {
     this.languageService.isSpanish$.subscribe(
-      (isSpanish) => (this.isSpanish = isSpanish)
+      (isSpanish) => {
+        this.isSpanish = isSpanish;
+        this.calcularTotalYDescuento();
+      }
     );
-    this.productos = this.apiService.getProductos(); 
-    this.calcularTotalYDescuento();
+    this.cargarDatosIniciales(); 
   }
 
   ngOnInit() {
+    this.cargarDatosIniciales(); 
+    this.isUser = this.apiService.getIsUser();
+  }
+
+  cargarDatosIniciales() {
+    this.productos = this.apiService.getProductos();
+    this.productosFavoritos = this.apiService.getFavorites(); 
     this.calcularTotalYDescuento();
   }
 
@@ -70,7 +78,9 @@ export class ModalCarritoComponent implements OnInit {
     }
   }
 
-  addToFavorites(product: Product): void {
+  addToFavorites(product: Product) {
+    this.apiService.addFavorite({ ...product }); 
+    this.productosFavoritos = this.apiService.getFavorites(); 
     console.log(`${product.name} añadido a favoritos`);
   }
 
@@ -89,18 +99,20 @@ export class ModalCarritoComponent implements OnInit {
       }, 2000);
       return;
     }
-    this.apiService.removeProduct(product.id); 
+    
+    this.apiService.removeProduct(product.id);
     this.productos = this.apiService.getProductos();
-    product.insidecart = false; 
+    product.insidecart = false;
     this.messageNoCart = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');
     setTimeout(() => {
       this.messageNoCart = null;
     }, 2000);
     this.calcularTotalYDescuento();
   }
+
   messageNoUserDisplay: string | null = null;
   messageNoCart: string | null = null;
-  
+
   actualizarCantidad(product: Product, input: EventTarget | null): void {
     const inputElement = input as HTMLInputElement;
     const nuevaCantidad = parseInt(inputElement.value);
@@ -108,7 +120,7 @@ export class ModalCarritoComponent implements OnInit {
     if (!isNaN(nuevaCantidad) && nuevaCantidad >= 1) {
       product.cantidad = Math.min(nuevaCantidad, 5);
       inputElement.value = product.cantidad.toString();
-      this.apiService.updateQuantity(product.id, product.cantidad); 
+      this.apiService.updateQuantity(product.id, product.cantidad);
     }
     this.calcularTotalYDescuento();
   }
@@ -124,28 +136,20 @@ export class ModalCarritoComponent implements OnInit {
       product.cantidad = Math.min(nuevaCantidad, 5);
       inputElement.value = product.cantidad.toString();
     }
-    this.apiService.updateQuantity(product.id, product.cantidad); 
+    this.apiService.updateQuantity(product.id, product.cantidad);
     this.calcularTotalYDescuento();
   }
 
   showModal: boolean = false;
-  selectedName: string = '';
-  selectedPrice: string = '';
-  selectedCantidad: string = '';
 
   onConfirmReserve() {
-    this.showModal = false;
-    // Enviar productos al historial de compras
+   
     this.apiService.addToPurchases([...this.productos]);
     this.apiService.clearCart();
-    this.productos = this.apiService.getProductos();  
-    console.log('Datos de la reserva:', {
-      nombre: this.productos.map((producto) => producto.name),
-      precio: this.productos.map((producto) => producto.price),
-      cantidad: this.productos.map((producto) => producto.cantidad),
-      total: this.total,
-    });
-    this.router.navigate(['/show-buys']); // Redirigir a show-buys
+    this.productos = this.apiService.getProductos();
+    this.calcularTotalYDescuento();
+    this.router.navigate(['/show-buys']);
+    this.showModal = false;
   }
 
   onReserve() {
@@ -172,10 +176,9 @@ export class ModalCarritoComponent implements OnInit {
   openLoginModal() {
     this.showLoginModal = true;
   }
-  errorMessage: string = '';
+
   onClose() {
     this.close.emit();
-    this.errorMessage = '';
-    console.log('CERRANDO')
+    console.log('CERRANDO');
   }
 }

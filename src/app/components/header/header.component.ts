@@ -6,6 +6,7 @@ import { AboutUsComponent } from '../../views/about-us/about-us.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { ProductsComponent } from '../../views/products/products.component';
 import { ApiService } from '../../services/api-service.service';
+import { ModalCarritoComponent } from '../modal-carrito/modal-carrito.component';
 
 @Component({
   selector: 'app-header',
@@ -15,16 +16,15 @@ import { ApiService } from '../../services/api-service.service';
     RouterLink,
     RouterLinkActive,
     ModalLoginComponent,
-    ProductsComponent
+    ProductsComponent,
+    ModalCarritoComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {mostrarHeader: boolean = true;
-
-
-  
-
+ 
+  showCarritoModal: boolean = false;
   isSpanish: boolean = true;
   isMenuOpen: boolean = false;
   showLoginModal: boolean = false;
@@ -89,4 +89,11 @@ export class HeaderComponent {mostrarHeader: boolean = true;
   closeRegisterModal() {
     this.showRegisterModal = false;
   }
+closeCarritoModal() {
+  this.showCarritoModal = false;
+}
+
+openCarritoModal() {
+  this.showCarritoModal = true;
+}
 }

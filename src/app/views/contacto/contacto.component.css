@@ -84,11 +84,13 @@
 .checkbox-group {
     display: flex;
     align-items: center;
+    gap: 0.5rem; 
 }
 
-.checkbox-group input {
+.checkbox-group input[type="checkbox"] {
     margin-right: 10px;
 }
+
 
 .checkbox-group a {
     color: #007BFF;

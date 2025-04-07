@@ -44,6 +44,9 @@ export class FavoritosComponent {
       product.insidecart = true;
       this.cart.push(product);
       this.apiservice.addProduct({ ...product });
+      this.apiservice.removeFavorite(product.id);
+      this.productos = this.apiservice.getFavorites();
+
       this.message = `${product.name} ` + this.getText('ha sido añadido al carrito.', 'has been added to the cart.');
     }
 
@@ -54,9 +57,6 @@ export class FavoritosComponent {
   }
 
   eliminarproduct(product: Productos) {
-   
-    
-
     this.apiservice.removeFavorite(product.id);
     this.productos = this.apiservice.getFavorites();
     product.isFavorite = false; 

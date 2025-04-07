@@ -4,6 +4,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderUserComponent } from './components/header-user/header-user.component';
 import { AuthService } from './services/auth.service';
+import { ApiService } from './services/api-service.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -13,7 +14,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
 
-  isUser: boolean = true;  
+  isUser: boolean = false;  
 
   toggleUser() {
     this.isUser = !this.isUser;
@@ -22,7 +23,7 @@ export class AppComponent {
   isLoggedIn: boolean = false;
   mostrarHeader: boolean = false;
   
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private apiService: ApiService) {
     this.router.events.subscribe((event) => {
     if (event instanceof NavigationEnd) {
       window.scrollTo(0, 0); 
@@ -30,9 +31,8 @@ export class AppComponent {
   });}
 
   ngOnInit() {
-    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
-      this.isLoggedIn = isLoggedIn;
-    });
+    this.isUser = this.apiService.getIsUser();
+
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 0);

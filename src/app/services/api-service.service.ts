@@ -10,12 +10,13 @@ private apiUrl = 'http://localhost:8000/api';
 private isUserSubject = new BehaviorSubject<boolean>(true); 
 private productos: Productos[] = [];
 private favorites: Productos[] = [];
+
+
 private reserves: Reserva[] = [];
 private cart: Productos[] = [];
 private comprasRealizadas: Product[] = [];
-
 public cartItemsCount = new BehaviorSubject<number>(0);
-isUser: boolean = false  ;
+isUser: boolean = true  ;
 cartItemsCount$ = this.cartItemsCount.asObservable();
   isUser$ = this.isUserSubject.asObservable();
   constructor(private http: HttpClient) { 
@@ -28,10 +29,10 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
   loginUser(email: string, password: string): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/login`, { email, password });
   }
-
-  setIsUser(value: boolean) {
-    this.isUser = value;
+  logoutUser(): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.apiUrl}/logout`, {});
   }
+
   getIsUser(): boolean {
     return this.isUser;
   }
@@ -47,7 +48,6 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
     }
     this.updateCartItemsCount();
   }
-  
 
   removeProduct(productId: number) {
     this.productos = this.productos.filter((p) => p.id !== productId);
@@ -93,13 +93,13 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
   addToPurchases(products: Product[]): void {
     this.comprasRealizadas = [...this.comprasRealizadas, ...products];
   }
-
   getPurchases(): Product[] {
     return this.comprasRealizadas;
   }
 
   clearCart(): void {
     this.productos = [];
+    this.updateCartItemsCount();
   }
   getReserves(): Reserva[] {
     return this.reserves;

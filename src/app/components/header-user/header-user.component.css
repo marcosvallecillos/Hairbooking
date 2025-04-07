@@ -1,9 +1,6 @@
 
-.header {
-    height: 130px;
+.header-user {
     position: absolute;
-    top: 2%;
-    left: 0;
     width: 100%;
     z-index: 1000;
     margin-top: 10px;
@@ -11,6 +8,12 @@
 
 .home {
     margin-left: 50px;
+}
+.logo{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-left: 20px;
 }
 .ast-icon-shopping-bag svg {
     width: 30px;    
@@ -33,6 +36,12 @@
 
 /* Ajustes responsivos */
 @media (max-width: 991px) {
+    .header-user{
+        position: absolute;
+        width: 100%;
+        z-index: 1000;
+        margin-top: 40px;
+    }
     .navbar-collapse {
         position: fixed;
         border: none;

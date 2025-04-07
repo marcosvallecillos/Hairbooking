@@ -70,7 +70,7 @@
                     </ul>
                 </div>
                 <hr>  
-                <li class="nav-item" style="list-style: none;" routerLink="/carrito">
+                <li class="nav-item" style="list-style: none;" (click)="openCarritoModal()">
                     
                     <i class="astra-icon ast-icon-shopping-bag">
                         <span class="ast-icon icon-bag">
@@ -113,3 +113,8 @@
         [show]="showLoginModal"
         (close)="closeLoginModal()">
     </app-modal-login>
+
+    <app-modal-carrito
+    [show]="showCarritoModal"
+    (close)="closeCarritoModal()">
+</app-modal-carrito>

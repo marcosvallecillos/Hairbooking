@@ -15,7 +15,6 @@ export interface Usuario {
     image: string;
     cantidad:number;
     isFavorite: boolean;
-    
     insidecart: boolean;
   }
 

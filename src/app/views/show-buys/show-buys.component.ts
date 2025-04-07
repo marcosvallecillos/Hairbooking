@@ -14,6 +14,7 @@ import { ApiService } from '../../services/api-service.service';
 })
 export class ShowBuysComponent {
   productos: Product[] = []; 
+ 
   isUser = true;
   isAuthenticated = true;
   isSpanish: boolean = true;
@@ -31,7 +32,7 @@ export class ShowBuysComponent {
   }
 
   ngOnInit() {
-    this.isAuthenticated = this.authService.isLoggedIn();
+    this.isUser = this.apiService.getIsUser();
     this.productos = this.apiService.getPurchases();
   }
 

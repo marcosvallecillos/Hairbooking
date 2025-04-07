@@ -18,7 +18,7 @@ import { ApiService } from '../../services/api-service.service';
 export class ShowReserveComponent {
   reserves: Reserva[] = [];
 
-  isUser = true;
+  isUser = false;
   isAuthenticated = true;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
@@ -38,6 +38,7 @@ export class ShowReserveComponent {
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
     this.reserves = this.apiService.getReserves();
+    this.isUser = this.apiService.getIsUser();
   }
 
 

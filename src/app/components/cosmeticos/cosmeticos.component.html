@@ -7,8 +7,8 @@
       <div class="cosmetics-grid">
         
         <div class="cosmetic-item" (click)="filterProducts('all')" >
-          <div class="cosmetic-image" >
-         <button routerLink="/products" [queryParams]="{ category: 'all' }" alt="Todos" style="border:none">   <h5> {{getText('Todos los productos','All products')}}</h5></button>
+          <div class="cosmetic-image" routerLink="/products" [queryParams]="{ category: 'all' }" >
+         <button alt="Todos" style="border:none">   <h5> {{getText('Todos los productos','All products')}}</h5></button>
           </div>
           <h3 class="cosmetic-title">{{getText('Todos los productos','All products')}}</h3>
         </div>

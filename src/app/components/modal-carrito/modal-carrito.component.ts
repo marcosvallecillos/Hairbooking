@@ -158,7 +158,6 @@ export class ModalCarritoComponent implements OnInit {
 
   onCancelReserve() {
     this.showModal = false;
-    window.location.reload();
   }
 
   nombresProductos(): string {

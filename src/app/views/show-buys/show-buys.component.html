@@ -1,46 +1,65 @@
-
 <body>
   <div class="overlay"></div>
 
-@if(productos.length > 0) {
-  <h2 class="mt-5">{{getText('Compras Realizadas', 'Purchases Made')}}</h2>
-  <div class="decorative-line"></div>
+  @if (productos.length > 0) {
+    <h2 class="mt-5">{{ getText('Compras Realizadas', 'Purchases Made') }}</h2>
+    <div class="decorative-line"></div>
 
-  <div class="productos-container">
-    <div class="button-container">
-      <button class="products-btn" routerLink="/products">{{getText('Mostrar Productos', 'Show Products')}}</button>
-    </div>
-    <div class="productos-list">
-      
-      @for (products of productos; track products.id) {
-        <div class="card">
-          <div class="card-content">
-            
-            <div class="image-container">
-              <img src="{{products.image}}" alt="{{products.name}}" loading="lazy">
+    <div class="productos-container">
+      <div class="button-container">
+        <button class="products-btn" routerLink="/products">{{ getText('Mostrar Productos', 'Show Products') }}</button>
+      </div>
+      <div class="productos-list">
+        @for (compra of productos; track compra; let i = $index) {
+          <div class="compra">
+            <h3>{{ getText('Compra', 'Purchase') }} {{ i + 1 }}</h3>
+
+            <table class="products-table">
+              <thead>
+                <tr>
+                  <th>{{ getText('Imagen', 'Image') }}</th>
+                  <th>{{ getText('Producto', 'Product') }}</th>
+                  <th>{{ getText('Cantidad', 'Amount') }}</th>
+                  <th>{{ getText('Precio', 'Price') }}</th>
+                  <th>{{ getText('Total', 'Total') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (product of compra; track product) {
+                  <tr>
+                    <td>
+                      <div class="image-container">
+                        <img src="{{ product.image }}" alt="{{ product.name }}" loading="lazy">
+                      </div>
+                    </td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.cantidad }}</td>
+                    <td>{{ product.price + ' €' }}</td>
+                    <td>{{ product.cantidad * product.price + ' €' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+
+            <!-- Total de la compra -->
+            <div class="compra-total">
+              <strong>{{ getText('Total de la Compra', 'Purchase Total') }}:</strong>
+              {{ calcularTotalCompra(compra) + ' €' }}
             </div>
-            <h3>{{products.name}}</h3>
-            <p><strong>{{getText('Cantidad', 'Amount')}}:</strong> {{products.cantidad }}</p>
-            <p><strong>{{getText('Precio', 'Price')}}:</strong> {{products.price + ' €'}}</p>
-            
           </div>
-        </div>
-      }
+        }
+      </div>
     </div>
-  </div>
-} @else {
-  <div class="compras-vacio  mb-5">
-    <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
-      <h3> {{getText('No has realizado ninguna compra.','You have not made any purchases.')}}  </h3>
-      <p> {{getText('Echa un vistazo a los productos que tenemos para ti.','Check out the products we have for you.')}} </p>
-   
-      <button class="btn-volver mt-5" routerLink="/products">
+  }
 
-     {{getText('Comprar Ahora','Buy Now')}}
-
-      </button>
-</div>
-}
-
+  @if (productos.length === 0) {
+    <div class="compras-vacio mb-5">
+      <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
+      <h3>{{ getText('No has realizado ninguna compra.', 'You have not made any purchases.') }}</h3>
+      <p>{{ getText('Echa un vistazo a los productos que tenemos para ti.', 'Check out the products we have for you.') }}</p>
+      <button class="btn-volver mt-5" routerLink="/products">{{ getText('Comprar Ahora', 'Buy Now') }}</button>
+    </div>
+  }
 </body>
-<app-footer></app-footer>
+
+<app-footer></app-footer> 

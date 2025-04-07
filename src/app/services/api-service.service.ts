@@ -14,7 +14,7 @@ private favorites: Productos[] = [];
 
 private reserves: Reserva[] = [];
 private cart: Productos[] = [];
-private comprasRealizadas: Product[] = [];
+private comprasRealizadas: Product[][] = [];
 public cartItemsCount = new BehaviorSubject<number>(0);
 isUser: boolean = true  ;
 cartItemsCount$ = this.cartItemsCount.asObservable();
@@ -22,7 +22,7 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
   constructor(private http: HttpClient) { 
     this.isUserSubject.next(this.isUser);
   }
-
+ 
   registerUser(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/usuarios`, usuario);
   }
@@ -91,10 +91,11 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
   }
 
   addToPurchases(products: Product[]): void {
-    this.comprasRealizadas = [...this.comprasRealizadas, ...products];
+    this.comprasRealizadas.push(products);  // Aquí agregamos una nueva compra (un arreglo de productos)
   }
-  getPurchases(): Product[] {
-    return this.comprasRealizadas;
+
+  getPurchases(): Product[][] {
+    return this.comprasRealizadas; // Ahora devuelve todas las compras, no solo un arreglo plano de productos
   }
 
   clearCart(): void {

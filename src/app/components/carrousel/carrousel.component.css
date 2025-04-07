@@ -7,6 +7,10 @@
     position: relative;
 }
 
+.carousel:hover {
+    filter: brightness(70%); 
+}
+
 .carousel .carousel-inner,
 .carousel .carousel-item {
     width: 100%;
@@ -24,34 +28,58 @@
     transition: opacity 1.5s ease-in-out;
 }
 
+/* Botones de navegación */
+.carousel-control-prev,
+.carousel-control-next {
+    opacity: 0; /* Ocultos por defecto */
+    transition: opacity 0.3s ease; /* Transición suave */
+    width: 10%; /* Ajusta el área clickable */
+}
 
+.carousel:hover .carousel-control-prev,
+.carousel:hover .carousel-control-next {
+    opacity: 0.8; /* Visibles al hacer hover */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0); 
+    color: white;
+    width: 40px;
+    height: 40px;
+}
+
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0); /* Más oscuro al pasar el ratón */
+}
+
+/* Flecha inferior */
 .arrow-container {
     position: absolute;
-    
-    bottom: 30px; 
-    left: 50%; 
+    bottom: 30px;
+    left: 50%;
     transform: translateX(-50%);
-    z-index: 10; 
+    z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-
 .arrow {
-    color: #000000; 
+    color: #000000;
     text-decoration: none;
     display: inline-block;
-    animation: arrow-bounce 1.5s infinite ease-in-out; 
+    animation: arrow-bounce 1.5s infinite ease-in-out;
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .arrow:hover {
-    transform: translateY(-5px); 
-    color: #7e7e7e; 
-    
+    transform: translateY(-5px);
+    color: #7e7e7e;
 }
-.arrow:active{
+
+.arrow:active {
     border: none;
 }
 
@@ -62,25 +90,26 @@
     height: 60px;
     background: rgb(255, 255, 255);
     border-radius: 50%;
-    z-index: -1; 
+    z-index: -1;
     animation: pulse 2s infinite ease-in-out;
 }
 
-/* Animación de la flecha */
+/* Animaciones */
 @keyframes arrow-bounce {
     0% {
         transform: translateY(0);
         opacity: 1;
     }
     50% {
-        transform: translateY(10px); 
-        opacity: 0.7; 
+        transform: translateY(10px);
+        opacity: 0.7;
     }
     100% {
-        transform: translateY(0); 
-        opacity: 1; 
+        transform: translateY(0);
+        opacity: 1;
     }
 }
+
 @keyframes pulse {
     0% {
         transform: scale(1);

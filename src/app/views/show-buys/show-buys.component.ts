@@ -13,8 +13,7 @@ import { ApiService } from '../../services/api-service.service';
   styleUrl: './show-buys.component.css'
 })
 export class ShowBuysComponent {
-  productos: Product[] = []; 
- 
+  productos: Product[][] = []; 
   isUser = true;
   isAuthenticated = true;
   isSpanish: boolean = true;
@@ -43,4 +42,13 @@ export class ShowBuysComponent {
   openLoginModal() {
     this.showLoginModal = true;
   }
+
+  calcularTotalCompra(compra: Product[]): number {
+    let total = 0;
+    for (let i = 0; i < compra.length; i++) {
+      total += compra[i].price * compra[i].cantidad;
+    }
+    return total;
+  }
+  
 }

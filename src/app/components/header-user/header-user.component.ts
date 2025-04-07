@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api-service.service';
 import { ModalCarritoComponent } from '../modal-carrito/modal-carrito.component';
-import { Productos } from '../../models/user.interface';
+import { Product, Productos } from '../../models/user.interface';
 
 @Component({
   selector: 'app-header-user',
@@ -15,7 +15,7 @@ import { Productos } from '../../models/user.interface';
 })
 export class HeaderUserComponent {
   isSpanish: boolean = true;
-  productos: Productos[] = [];
+  productos: Product[] = [];
   isMenuOpen: boolean = false;
   mostrarHeader: boolean = false;
   showCarritoModal: boolean = false;

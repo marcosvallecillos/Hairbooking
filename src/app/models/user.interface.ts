@@ -16,6 +16,7 @@ export interface Usuario {
     cantidad:number;
     isFavorite: boolean;
     insidecart: boolean;
+    fecha?: Date;
   }
 
   export interface Reserva{

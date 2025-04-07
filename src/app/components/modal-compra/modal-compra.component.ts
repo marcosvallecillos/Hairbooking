@@ -34,14 +34,15 @@ export class ModalCompraComponent {
     }, 0);
   }
   onCancel() {
+ this.show = false;
     this.showAlertCancel = true;
+    setTimeout(() => {
+      this.showAlertCancel = false; 
+      this.cancel.emit(); 
+    }, 1000);
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 0);
-   setTimeout(() => {
-    this.showAlert = false; 
-    this.cancel.emit(); 
-  }, 1000);
   
   }
   onClose() {

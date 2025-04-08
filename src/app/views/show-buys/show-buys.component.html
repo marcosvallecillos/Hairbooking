@@ -9,9 +9,9 @@
       <div class="button-container">
         <button class="products-btn" routerLink="/products">{{ getText('Mostrar Productos', 'Show Products') }}</button>
       </div>
-      <div class="productos-list">
+      <div class="productos-list ">
         @for (compra of productos; track compra; let i = $index) {
-          <div class="compra">
+          <div class="compra mt-5">
             <h3>{{ getText('Compra', 'Purchase') }} {{ i + 1 }}</h3>
 
             <table class="products-table">
@@ -35,16 +35,32 @@
                     <td>{{ product.name }}</td>
                     <td>{{ product.cantidad }}</td>
                     <td>{{ product.price + ' €' }}</td>
-                    <td>{{ product.cantidad * product.price + ' €' }}</td>
+                    <td>{{ (product.cantidad * product.price).toFixed(2) + ' €' }}</td>
                   </tr>
                 }
               </tbody>
             </table>
 
-            <!-- Total de la compra -->
             <div class="compra-total">
-              <strong>{{ getText('Total de la Compra', 'Purchase Total') }}:</strong>
-              {{ calcularTotalCompra(compra) + ' €' }}
+              @if (calcularTotalCompra(compra).descuento > 0) {
+                <div>
+                  <strong>{{ getText('Subtotal', 'Subtotal') }}:</strong>
+                  {{ calcularTotalCompra(compra).total.toFixed(2) + ' €' }}
+                </div>
+                <div>
+                  <strong>{{ getText('Descuento', 'Discount') }} (5%):</strong>
+                  {{ calcularTotalCompra(compra).descuento.toFixed(2) + ' €' }}
+                </div>
+                <div>
+                  <strong>{{ getText('Total con Descuento', 'Total with Discount') }}:</strong>
+                  {{ calcularTotalCompra(compra).totalConDescuento.toFixed(2) + ' €' }}
+                </div>
+              } @else {
+                <div>
+                  <strong>{{ getText('Total de la Compra', 'Purchase Total') }}:</strong>
+                  {{ calcularTotalCompra(compra).total.toFixed(2) + ' €' }}
+                </div>
+              }
             </div>
           </div>
         }
@@ -52,7 +68,7 @@
     </div>
   }
 
-  @if (productos.length === 0) {
+  @if (productos.length == 0) {
     <div class="compras-vacio mb-5">
       <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
       <h3>{{ getText('No has realizado ninguna compra.', 'You have not made any purchases.') }}</h3>
@@ -62,4 +78,4 @@
   }
 </body>
 
-<app-footer></app-footer> 
+<app-footer></app-footer>

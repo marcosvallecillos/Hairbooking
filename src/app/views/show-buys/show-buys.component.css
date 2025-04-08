@@ -55,7 +55,7 @@ h2 {
 }
 
 .products-btn {
-    background: linear-gradient(135deg, #643400, #973b02);
+    background: linear-gradient(135deg, #ff8503, #ff6200);
     color: #ffffff;
     padding: 1rem 2rem;
     font-size: 1.125rem;
@@ -68,7 +68,7 @@ h2 {
 }
 
 .products-btn:hover {
-    background: linear-gradient(135deg, #442401, #5e2401);
+    background: linear-gradient(135deg, #d84315, #ff784e);
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(42, 64, 102, 0.3);
 }
@@ -97,8 +97,9 @@ h2 {
     overflow: hidden;
 }
 
-.products-table th {
-    background: linear-gradient(90deg, #643400, #973b02);
+.products-table th {  
+    background-color: grey;
+    border: 1px solid #e0e0e0;
     color: #ffffff;
     padding: 1rem;
     font-size: 1.1rem;
@@ -106,6 +107,9 @@ h2 {
     text-align: left;
 }
 
+.compra-total div {
+    margin: 5px 0;
+  }
 .products-table td {
     padding: 1rem;
     font-size: 1rem;

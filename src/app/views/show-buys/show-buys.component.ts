@@ -43,12 +43,23 @@ export class ShowBuysComponent {
     this.showLoginModal = true;
   }
 
-  calcularTotalCompra(compra: Product[]): number {
+  total :number = 0;
+  totalConDescuento: number = 0;  
+  descuento: number = 0;
+  calcularTotalCompra(compra: Product[]){
     let total = 0;
     for (let i = 0; i < compra.length; i++) {
       total += compra[i].price * compra[i].cantidad;
     }
-    return total;
+    let descuento = 0;
+    let totalConDescuento = total;
+
+    if (total > 500) {
+      descuento = total * 0.05;
+      totalConDescuento = total - descuento;
+    }
+
+    return { total, totalConDescuento, descuento };
   }
-  
 }
+  

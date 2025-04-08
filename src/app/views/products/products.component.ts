@@ -358,7 +358,7 @@ export class ProductsComponent {
 
   filteredProducts: any[] = this.products.maquinas.clippers;
 
-  // Método para filtrar productos
+  
   filterProducts(category: string) {
     switch (category) {
       case 'clippers':

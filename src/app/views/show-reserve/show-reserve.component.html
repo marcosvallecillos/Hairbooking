@@ -21,7 +21,7 @@
               <p><i class="bi bi-calendar"></i> <strong> {{getText('Dia','Day')}}:</strong> {{ reserve.dia }}</p>
               <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ reserve.hora }}</p>
               <div class="botones"> 
-                <button class="eliminar" (click)="onReserve(reserve)">
+                <button class="eliminar" (click)="deleteReserve(reserve)"  aria-label="Eliminar reserva" (click)="showModal = true">
                   <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
                 </button>   
                 <button>
@@ -47,8 +47,9 @@
   </div>
   }
 } @else {
+  
   <div class="alert-warning">
-    <i class="bi bi-exclamation-circle-fill"></i>
+    <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
     <h2>{{ getText('Debes iniciar sesión para reservar una cita.', 'You must be registered to book an appointment.') }}</h2>
     <button class="alert-btn" (click)="openLoginModal()">{{ getText('Iniciar Sesión', 'Login') }}</button>
   </div>

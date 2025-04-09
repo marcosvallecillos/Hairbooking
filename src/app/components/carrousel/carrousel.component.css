@@ -7,9 +7,6 @@
     position: relative;
 }
 
-.carousel:hover {
-    filter: brightness(70%); 
-}
 
 .carousel .carousel-inner,
 .carousel .carousel-item {
@@ -20,7 +17,7 @@
 .carousel .carousel-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
     margin-top: 0;
 }
 
@@ -31,14 +28,14 @@
 /* Botones de navegación */
 .carousel-control-prev,
 .carousel-control-next {
-    opacity: 0; /* Ocultos por defecto */
-    transition: opacity 0.3s ease; /* Transición suave */
-    width: 10%; /* Ajusta el área clickable */
+    opacity: 0; 
+    transition: opacity 0.3s ease; 
+    width: 10%; 
 }
 
 .carousel:hover .carousel-control-prev,
 .carousel:hover .carousel-control-next {
-    opacity: 0.8; /* Visibles al hacer hover */
+    opacity: 0.8; 
 }
 
 .carousel-control-prev-icon,
@@ -51,7 +48,7 @@
 
 .carousel-control-prev:hover .carousel-control-prev-icon,
 .carousel-control-next:hover .carousel-control-next-icon {
-    background-color: rgba(0, 0, 0, 0); /* Más oscuro al pasar el ratón */
+    background-color: rgba(0, 0, 0, 0); 
 }
 
 /* Flecha inferior */

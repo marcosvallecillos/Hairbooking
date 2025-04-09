@@ -11,7 +11,7 @@ export class ModalCompraComponent {
 
   @Input() show: boolean = false;
   @Input() producto: string | null = '';
-  @Input() precio: string = '';
+  @Input() precio: number  | string = ' ';
   @Input() descuento:string = '';
   @Input() cantidad: string = '';
   @Input() total: string = '';
@@ -20,6 +20,11 @@ export class ModalCompraComponent {
   @Output() close = new EventEmitter<void>();
   showAlert: boolean = false; 
   showAlertCancel: boolean = false;
+  
+ngOnChanges() {
+  this.precio = parseFloat(this.precio as string).toFixed(2); 
+}
+  
   onConfirm() {
     this.show = false;
     this.showAlert = true;

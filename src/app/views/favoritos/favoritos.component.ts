@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {  Productos } from '../../models/user.interface';
+import {  Product } from '../../models/user.interface';
 import { ApiService } from '../../services/api-service.service';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
@@ -12,8 +12,8 @@ import { FooterComponent } from '../../components/footer/footer.component';
   styleUrl: './favoritos.component.css'
 })
 export class FavoritosComponent {
-  productos: Productos[] = [];
-  cart: Productos[] = [];
+  productos: Product[] = [];
+  cart: Product[] = [];
   message: string | null = null;
   messageTrue: string | null = null;
   messageNoFavorite: string | null = null;
@@ -35,8 +35,8 @@ export class FavoritosComponent {
     return this.isSpanish ? es : en;
   }
 
-  addToCart(product: Productos) {
-
+  addToCart(product: Product) {
+    
     const productInCart = this.cart.find(item => item.id === product.id);
     if (productInCart) {
       this.messageTrue = `${product.name} ` + this.getText('ya está en el carrito.', 'is already in the cart.');
@@ -56,7 +56,7 @@ export class FavoritosComponent {
     }, 2000);
   }
 
-  eliminarproduct(product: Productos) {
+  eliminarproduct(product: Product) {
     this.apiservice.removeFavorite(product.id);
     this.productos = this.apiservice.getFavorites();
     product.isFavorite = false; 

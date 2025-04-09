@@ -7,14 +7,14 @@
                 'Favorites') }}</h2>
         </div>
         @if (messageNoCart) {
-            <div class="alert">
-              {{ messageNoCart }}
-            </div>
-          } @else if (messageNoUserDisplay) {
-            <div class="alert">
-              {{ messageNoUserDisplay }}
-            </div>
-          }
+        <div class="alert">
+            {{ messageNoCart }}
+        </div>
+        } @else if (messageNoUserDisplay) {
+        <div class="alert">
+            {{ messageNoUserDisplay }}
+        </div>
+        }
         @if(productos.length > 0){
         <div class="row">
             <div class="col-lg-8 col-md-12 col-sm-12">
@@ -29,12 +29,12 @@
                         </tr>
                     </thead>
                     <tbody class="carrito-body">
-                     
+
                         @for (product of productos; track product.id) {
                         <tr>
 
                             <td class="producto" data-label="Producto">
-                                <button class="eliminar"(click)="eliminarproduct(product)"
+                                <button class="eliminar" (click)="eliminarproduct(product)"
                                     aria-label="Eliminar producto">
                                     <i class="bi bi-trash"></i>
                                 </button>
@@ -96,19 +96,19 @@
             </div>
         </div>
         } @else{
-   
-            <div class="carrito-vacio">
-                  <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
-                    <h3>{{ getText('Tu carrito está vacío.', 'Your cart is
-                        empty') }}
-                    </h3>
-                    <p> Echa un vistazo a la selección que tenemos para ti.</p>
-                    <button class="btn-volver mt-5" routerLink="/products">
-            
-                      Ir a productos
-            
-                    </button>
-            </div>
+
+        <div class="carrito-vacio">
+            <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
+            <h3>{{ getText('Tu carrito está vacío.', 'Your cart is
+                empty') }}
+            </h3>
+            <p> Echa un vistazo a la selección que tenemos para ti.</p>
+            <button class="btn-volver mt-5" routerLink="/products">
+
+                Ir a productos
+
+            </button>
+        </div>
         }
     </div>
     }@else{

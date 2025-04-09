@@ -23,12 +23,16 @@ export class AppComponent {
   isLoggedIn: boolean = false;
   mostrarHeader: boolean = false;
   
-  constructor(private authService: AuthService, private router: Router, private apiService: ApiService) {
+  constructor(private router: Router, private apiService: ApiService) {
     this.router.events.subscribe((event) => {
-    if (event instanceof NavigationEnd) {
-      window.scrollTo(0, 0); 
-    }
-  });}
+      if (event instanceof NavigationEnd) {
+        if (this.router.url !== '/home-barber#jumbotron') {
+          window.scrollTo(0, 0);
+        }
+        this.mostrarHeader = this.router.url !== '/index'; 
+      }
+    });
+  }
 
   ngOnInit() {
     this.isUser = this.apiService.getIsUser();
@@ -39,5 +43,6 @@ export class AppComponent {
     this.router.events.subscribe(() => {
       this.mostrarHeader = this.router.url !== '/index'; 
     });
+    
   }
 }

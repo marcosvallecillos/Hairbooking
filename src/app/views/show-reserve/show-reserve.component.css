@@ -236,11 +236,11 @@ h2 .reservas{
     text-align: center;
 }
 
-.alert-warning i {
-    font-size: 3rem;
-    color: #d32f2f; /* Rojo profesional */
-    margin-bottom: 1.5rem;
-    display: block;
+.alert-warning img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    margin-right: 10px;
 }
 
 .alert-warning h2 {
@@ -256,7 +256,7 @@ h2 .reservas{
 
 /* Botón de alerta */
 .alert-btn {
-    background: linear-gradient(135deg, #d32f2f, #b71c1c); /* Rojo sofisticado */
+    background: linear-gradient(135deg, #163cfd, #031b93); /* Rojo sofisticado */
     color: #ffffff;
     padding: 1rem 2rem;
     font-size: 1.125rem;
@@ -265,13 +265,13 @@ h2 .reservas{
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.2);
+    box-shadow: 0 6px 15px rgba(8, 0, 118, 0.2);
 }
 
 .alert-btn:hover {
-    background: linear-gradient(135deg, #b71c1c, #9a0007);
+    background: linear-gradient(135deg, #002aff, #00035a);
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
+    box-shadow: 0 6px 15px rgba(8, 0, 118, 0.2);
 }
 .eliminar { 
     color: white;

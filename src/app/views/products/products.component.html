@@ -19,13 +19,13 @@
                     <div>
                         <ul>
                             <h3>{{getText('Maquinas','Machines')}}</h3>
-                            <li>
+                            <li routerLinkActive="active">
                                 <a href="#clippers" (click)="filterProducts('clippers')">{{getText('Clipper', 'Clipper')}}</a>
                             </li>
-                            <li>
+                            <li routerLinkActive="active" >
                                 <a href="#trimmer" (click)="filterProducts('trimmer')">{{getText('Trimmer', 'Trimmer')}}</a>
                             </li>
-                            <li>
+                            <li routerLinkActive="active">
                                 <a href="#x" (click)="filterProducts('maquinas')">{{getText('Todos', 'All')}}</a>
                             </li>
                         </ul>
@@ -33,7 +33,7 @@
                     <div>
                         <ul>
                             <h3>{{getText('Cosmeticos','Cosmetics')}}</h3>
-                            <li>
+                            <li routerLinkActive="active">
                                 <a href="#cosmeticos" (click)="filterProducts('cosmeticos')">{{getText('Cosméticos', 'Cosmeticos')}}</a>
                             </li>
                         </ul>
@@ -41,7 +41,7 @@
                     <div>
                         <ul>
                             <h3>{{getText('Mobiliario','Furniture')}}</h3>
-                            <li>
+                            <li routerLinkActive="active">
                                 <a href="#mobiliario" (click)="filterProducts('mobiliario')">{{getText('Mobiliario', 'Furniture')}}</a>
                             </li>
                         </ul>
@@ -49,7 +49,7 @@
                     <div>
                         <ul>
                             <h3>{{getText('Tijeras','Scissors')}}</h3>
-                            <li>
+                            <li routerLinkActive="active">
                                 <a href="#tijeras" (click)="filterProducts('tijeras')">{{getText('Tijeras', 'Scissors')}}</a>
                             </li>
                         </ul>
@@ -57,7 +57,7 @@
                     <div>
                         <ul>
                             <h3>{{getText('Capas','Layers')}}</h3>
-                            <li>
+                            <li routerLinkActive="active">
                                 <a href="#capas" (click)="filterProducts('capas')">{{getText('Capas', 'Layers')}}</a>
                             </li>
                         </ul>
@@ -65,7 +65,7 @@
                     <div>
                         <ul>
                             <h3>{{getText('Accesorios','Accesories')}}</h3>
-                            <li>
+                            <li routerLinkActive="active">
                                 <a href="#accesorios" (click)="filterProducts('accesorios')">{{getText('Accesorios', 'Accesories')}}</a>
                             </li>
                         </ul>
@@ -119,17 +119,20 @@
                 <img [src]="product.image" [alt]="product.name" class="product-image">
                 <h3 class="product-name">{{ product.name }}</h3>
                 <p class="product-price">{{ product.price + ' €' }}</p>
-  
-                <button class="add-to-cart" (click)="productInCart(product)">
+                
+                <button class="add-to-cart" (click)="productInCart(product)" >
+                  <div class="botones_cart">
                   @if (isUser) {
                     @if (!product.insidecart) {
+                        
                       <button class="añadir_carrito" (click)="addToCart(product)" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >{{getText('Añadir al carrito','Add to Cart')}} </h3></button>
                     } @else {
-                      <button class="añadir_carrito" (click)="addToCart(product)" >     <h3 ><img src="../../../../images/tick.gif" class="add-carrito" alt="Añadido al carrito" >{{getText('Añadir al carrito','Add to Cart')}}</h3></button>
+                      <button class="añadir_carrito" (click)="addToCart(product)" >     <h3 ><img src="../../../../images/tick.gif" class="add-carrito" alt="Añadido al carrito" >{{getText('Añadido al carrito','Added to Cart')}}</h3></button>
                     }
                   } @else {
-                    <button class="añadir_carrito" (click)="addToCart(product)" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >{{getText('Añadir al carrito','Add to Cart')}}</h3></button>
+                    <button class="añadir_carrito" (click)="showNoUserMessage()" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >{{getText('Añadir al carrito','Add to Cart')}}</h3></button>
                   }
+                </div>
                 </button>
   
               </div>

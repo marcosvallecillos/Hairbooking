@@ -5,7 +5,7 @@ export interface Usuario {
     email: string;
     password: string;
     telefono: string;
-    citas_reservadas: [];
+    citas_reservadas: Reserva[];
   }
 
   export interface Product {
@@ -19,6 +19,16 @@ export interface Usuario {
     fecha?: Date;
   }
 
+  export interface Compra{
+    id: number;
+    name: string;
+    image: string;
+    cantidad: number;
+    price: number;
+    fecha: Date;
+    productos: Product[];
+  }
+
   export interface Reserva{
     id: number;
     servicio:string;
@@ -26,13 +36,4 @@ export interface Usuario {
     dia: string;
     hora:string;
     precio?: string;
-  }
-  export interface Productos {
-    id: number;
-    name: string;
-    price: number;
-    image: string;
-    isFavorite: boolean;
-    insidecart: boolean;
-    cantidad: number;
   }

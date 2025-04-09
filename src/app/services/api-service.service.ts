@@ -1,20 +1,19 @@
 import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Product, Productos, Reserva, Usuario } from '../models/user.interface';
+import { Compra, Product, Reserva, Usuario } from '../models/user.interface';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 private apiUrl = 'http://localhost:8000/api';
 private isUserSubject = new BehaviorSubject<boolean>(true); 
-private productos: Productos[] = [];
-private favorites: Productos[] = [];
+public productos: Product[] = [];
+private favorites: Product[] = [];
 
 
 private reserves: Reserva[] = [];
-private cart: Productos[] = [];
-private comprasRealizadas: Product[][] = [];
+private cart: Product[] = [];
 public cartItemsCount = new BehaviorSubject<number>(0);
 isUser: boolean = true  ;
 cartItemsCount$ = this.cartItemsCount.asObservable();
@@ -36,11 +35,11 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
   getIsUser(): boolean {
     return this.isUser;
   }
-  getProductos(): Productos[] {
+  getProductos(): Product[] {
     return this.productos;
   }
 
-  addProduct(product: Productos) {
+  addProduct(product: Product) {
     const existingProduct = this.productos.find((p) => p.id === product.id);
     if (!existingProduct) { 
       product.cantidad = 1;
@@ -70,7 +69,7 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
     this.cartItemsCount.next(totalItems);
   }
 
-  addFavorite(product: Productos) {
+  addFavorite(product: Product) {
     const existingFavorite = this.favorites.find(p => p.id === product.id);
     if (!existingFavorite) {
       const productToAdd = { ...product, isFavorite: true };
@@ -82,22 +81,34 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
     this.favorites = this.favorites.filter(p => p.id !== productId);
   }
 
-  getFavorites(): Productos[] {
+  getFavorites(): Product[] {
     return this.favorites;
   }
 
-  getCart(): Productos[] {
+  getCart(): Product[] {
     return this.cart;
   }
 
-  addToPurchases(products: Product[]): void {
-    this.comprasRealizadas.push(products);  // Aquí agregamos una nueva compra (un arreglo de productos)
-  }
+  private comprasRealizadas: Compra[] = [];
 
-  getPurchases(): Product[][] {
-    return this.comprasRealizadas; // Ahora devuelve todas las compras, no solo un arreglo plano de productos
-  }
+addToPurchases(products: Product[]): void {
+  const nuevaCompra: Compra = {
+    id: this.comprasRealizadas.length + 1,
+    name: ` ${this.comprasRealizadas.length + 1}`, 
+    image: '', 
+    cantidad: products.reduce((sum, p) => sum + p.cantidad, 0), 
+    price: products.reduce((sum, p) => sum + p.price * p.cantidad, 0), 
+    fecha: new Date(), 
+    productos: products, 
+  };
+  this.comprasRealizadas.push(nuevaCompra);
+  console.log('Compra realizada:', nuevaCompra);
+}
 
+
+getPurchases(): Compra[] {
+  return this.comprasRealizadas; 
+}
   clearCart(): void {
     this.productos = [];
     this.updateCartItemsCount();
@@ -108,6 +119,14 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
 
   addReserve(reserve: Reserva) {
     this.reserves.push({ ...reserve, id: this.reserves.length + 1 }); 
+  }
+
+  removeReserve(reserveId: number) {
+    this.reserves = this.reserves.filter((r) => r.id !== reserveId);
+  }
+
+  getReserveById(reserveId: number): Reserva | undefined {
+    return this.reserves.find((r) => r.id === reserveId);
   }
 
 } 

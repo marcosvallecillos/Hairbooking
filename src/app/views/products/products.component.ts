@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
-import { Product, Productos } from '../../models/user.interface';
+import { Product } from '../../models/user.interface';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -13,12 +13,12 @@ import { FooterComponent } from '../../components/footer/footer.component';
 })
 export class ProductsComponent {
   products: {
-    maquinas: { clippers: Productos[]; trimmer: Productos[] };
-    cosmeticos: Productos[];
-    mobiliario: Productos[];
-    tijeras: Productos[];
-    capas: Productos[];
-    accesorios: Productos[];
+    maquinas: { clippers: Product[]; trimmer: Product[] };
+    cosmeticos: Product[];
+    mobiliario: Product[];
+    tijeras: Product[];
+    capas: Product[];
+    accesorios: Product[];
   } = {
     maquinas: {
       clippers: [
@@ -286,9 +286,19 @@ export class ProductsComponent {
     this.isUser = this.apiService.getIsUser();
   }
 
-  addToCart(product: Productos) {
+  addToCart(product: Product) {
+   
     this.apiService.addProduct({ ...product }) ; 
     console.log('se añadio al carrito')
+  }
+  showNoUserMessage() {
+    this.messageNoUserDisplay = this.getText(
+      'Deberás iniciar sesión para realizar esta función', 
+      'You must log in to do this function.'
+    );
+    setTimeout(() => {
+      this.messageNoUserDisplay = null;
+    }, 2000);
   }
 
   toggleLanguage(language: 'es' | 'en') {
@@ -304,7 +314,7 @@ export class ProductsComponent {
   messageNoUser: string = '';
   messageNoUserDisplay: string | null = null;
 
-  favorite(product: Productos): void {
+  favorite(product: Product): void {
     if (!this.isUser) {
       this.messageNoUserDisplay = this.getText('Deberás iniciar sesión para realizar esta función', 'You must log in to do this function.');
       setTimeout(() => {
@@ -402,6 +412,7 @@ export class ProductsComponent {
         this.filteredProducts = this.products.mobiliario;
 
         break;
+        
       default:
         this.filteredProducts = [
           ...this.products.maquinas.clippers,

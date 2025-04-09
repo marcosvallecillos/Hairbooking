@@ -4,12 +4,13 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api-service.service';
 import { ModalCarritoComponent } from '../modal-carrito/modal-carrito.component';
-import { Product, Productos } from '../../models/user.interface';
+import { Product } from '../../models/user.interface';
+import { CarritoComponent } from '../../views/carrito/carrito.component';
 
 @Component({
   selector: 'app-header-user',
   standalone: true,
-  imports: [CommonModule, RouterLink, ModalCarritoComponent],
+  imports: [CommonModule, RouterLink, ModalCarritoComponent,CarritoComponent],
   templateUrl: './header-user.component.html',
   styleUrls: ['./header-user.component.css']
 })

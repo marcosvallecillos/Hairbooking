@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Product, Productos } from '../../models/user.interface';
+import { Product } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
 
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -22,7 +22,6 @@ import { ApiService } from '../../services/api-service.service';
   styleUrls: ['./carrito.component.css'],
 })
 export class CarritoComponent {
-  product:Productos[] =[]; 
   productos: Product[] = [];
   isUser = true;
   subtotal: number = 0;
@@ -146,7 +145,7 @@ export class CarritoComponent {
       cantidad: this.productos.map((producto) => producto.cantidad),
       total: this.total,
     });
-    this.router.navigate(['/show-buys']); // Redirigir a show-buys
+    this.router.navigate(['/show-buys']); 
   }
 
   onReserve() {

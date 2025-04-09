@@ -62,7 +62,6 @@ body {
     grid-template-columns: 2fr 1fr;
     gap: 30px;
 }
-
 .cart-items {
     display: flex;
     overflow-y: auto;
@@ -80,11 +79,11 @@ body {
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
+
 .item-image img {
-    width: 120px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 4px;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
 }
 
 .item-details {
@@ -178,27 +177,6 @@ body {
     margin-top: 20px;
 }
 
-.summary-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.summary-row.total {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #ddd;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.summary-row.total small {
-    display: block;
-    font-size: 12px;
-    color: #666;
-    font-weight: normal;
-}
 
 .checkout-button {
     width: 100%;
@@ -546,12 +524,6 @@ body {
     border-bottom: 1px solid #eee;
 }
 
-.item-image img {
-    width: 100px;
-    height: 120px;
-    object-fit: cover;
-}
-
 .item-details {
     flex: 1;
 }
@@ -648,7 +620,7 @@ body {
 .summary-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     font-size: 14px;
 }
 
@@ -660,11 +632,17 @@ body {
     font-weight: 600;
 }
 
-.summary-row.total small {
+.summary-row #descuento  {
     display: block;
-    font-size: 12px;
-    color: #666;
-    font-weight: normal;
+    font-size: 14px;
+    color: #ff0606;
+}
+
+.summary-row.total span {
+    display: block;
+    font-size: 18px;
+    color: #000000;
+    font-weight: bold;
 }
 
 .checkout-button {
@@ -788,7 +766,7 @@ body {
 
 
 .alert-btn {
-    background: linear-gradient(135deg, #d32f2f, #b71c1c); 
+    background: linear-gradient(135deg, #163cfd, #031b93); /* Rojo sofisticado */
     color: #ffffff;
     padding: 1rem 2rem;
     font-size: 1.125rem;
@@ -797,11 +775,31 @@ body {
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.2);
+    box-shadow: 0 6px 15px rgba(12, 0, 184, 0.3);
 }
 
 .alert-btn:hover {
-    background: linear-gradient(135deg, #b71c1c, #9a0007);
+    background: linear-gradient(135deg, #002aff, #00035a);
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
+    box-shadow: 0 8px 20px rgba(12, 0, 184, 0.3);
 }
+
+.alert-warning img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+
+.alert {
+    position: fixed;
+    top: 20px;
+    margin-left: 35px;
+    
+    text-align: center;
+    background-color: #4caf50; 
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+  }

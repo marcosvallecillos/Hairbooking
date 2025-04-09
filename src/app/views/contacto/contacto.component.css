@@ -83,12 +83,20 @@
 
 .checkbox-group {
     display: flex;
-    align-items: center;
-    gap: 0.5rem; 
 }
-
+.checkbox-group label {
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #444;
+}
 .checkbox-group input[type="checkbox"] {
     margin-right: 10px;
+    width: 2.5%;
+    
+}
+.checkbox-group input[type="checkbox"]:active {
+   border: none;
 }
 
 

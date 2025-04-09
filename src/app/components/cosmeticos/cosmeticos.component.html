@@ -6,46 +6,46 @@
       </div>
       <div class="cosmetics-grid">
         
-        <div class="cosmetic-item" (click)="filterProducts('all')" >
-          <div class="cosmetic-image" routerLink="/products" [queryParams]="{ category: 'all' }" >
-         <button alt="Todos" style="border:none">   <h5> {{getText('Todos los productos','All products')}}</h5></button>
+        <div class="cosmetic-item" (click)="filterProducts('all')" routerLink="/products" [queryParams]="{ category: 'all' }">
+          <div class="cosmetic-image"  >
+            {{getText('Todos los productos','All products')}}
           </div>
           <h3 class="cosmetic-title">{{getText('Todos los productos','All products')}}</h3>
         </div>
 
-        <div class="cosmetic-item" (click)="filterProducts('maquinas')">
+        <div class="cosmetic-item" (click)="filterProducts('maquinas')"routerLink="/products" [queryParams]="{ category: 'maquinas' }">
           <div class="cosmetic-image">
-            <img src="../../../../images/clipper.png" routerLink="/products" [queryParams]="{ category: 'maquinas' }" alt="Máquinas">
+            <img src="../../../../images/clipper.png" alt="Máquinas">
           </div>
           <h3 class="cosmetic-title">{{getText('Maquinas','Machines')}}</h3>
         </div>
-        <div class="cosmetic-item" (click)="filterProducts('cosmeticos')">
+        <div class="cosmetic-item" (click)="filterProducts('cosmeticos')" routerLink="/products" [queryParams]="{ category: 'cosmeticos' }">
           <div class="cosmetic-image">
-            <img src="../../../../images/cosmeticos.png" routerLink="/products" [queryParams]="{ category: 'cosmeticos' }" alt="Consumibles">
+            <img src="../../../../images/cosmeticos.png"  alt="Consumibles">
           </div>
           <h3 class="cosmetic-title">{{getText('Cosmeticos','Cosmetics')}}</h3>
         </div>
-        <div class="cosmetic-item" (click)="filterProducts('mobiliario')">
+        <div class="cosmetic-item" (click)="filterProducts('mobiliario')" routerLink="/products" [queryParams]="{ category: 'mobiliario' }">
           <div class="cosmetic-image">
-            <img src="../../../../images/silla_barbero.png" routerLink="/products" [queryParams]="{ category: 'mobiliario' }"alt="Mobiliario">
+            <img src="../../../../images/silla_barbero.png" alt="Mobiliario">
           </div>
           <h3 class="cosmetic-title">{{getText('Mobiliario','Furniture')}}</h3>
         </div>
-        <div class="cosmetic-item" (click)="filterProducts('tijeras')">
+        <div class="cosmetic-item" (click)="filterProducts('tijeras')" routerLink="/products" [queryParams]="{ category: 'tijeras' }">
           <div class="cosmetic-image">
-            <img src="../../../../images/tijeras.png" routerLink="/products" [queryParams]="{ category: 'tijeras' }"alt="Tijeras">
+            <img src="../../../../images/tijeras.png" alt="Tijeras">
           </div>
           <h3 class="cosmetic-title">{{getText('Tijeras','Scissors')}}</h3>
         </div>
-        <div class="cosmetic-item" (click)="filterProducts('capas')">
+        <div class="cosmetic-item" (click)="filterProducts('capas')" routerLink="/products" [queryParams]="{ category: 'capas' }">
           <div class="cosmetic-image">
-            <img src="../../../../images/capa.png" routerLink="/products" [queryParams]="{ category: 'capas' }"alt="Capas">
+            <img src="../../../../images/capa.png" alt="Capas">
           </div>
           <h3 class="cosmetic-title">{{getText('Capas','Layers')}}</h3>
         </div>
-        <div class="cosmetic-item" (click)="filterProducts('accesorios')">
+        <div class="cosmetic-item" (click)="filterProducts('accesorios')" routerLink="/products" [queryParams]="{ category: 'accesorios' }">
           <div class="cosmetic-image">
-            <img src="../../../../images/accesorios.png" routerLink="/products" [queryParams]="{ category: 'accesorios' }" alt="Accesorios">
+            <img src="../../../../images/accesorios.png"  alt="Accesorios">
           </div>
           <h3 class="cosmetic-title">{{getText('Accesorios','Accessories')}}</h3>
         </div>

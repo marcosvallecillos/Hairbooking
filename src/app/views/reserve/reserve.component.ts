@@ -19,6 +19,7 @@ import { Reserva } from '../../models/user.interface';
 })
 export class ReserveComponent {
   currentDate = new Date();
+  reserves: Reserva[] = [];
   selectedDate: Date | null = null;
   selectedService: string = '';
   selectedBarber: string = '';
@@ -72,7 +73,7 @@ export class ReserveComponent {
 
   // Nueva función para obtener el precio del servicio seleccionado
   getPrice(): string {
-    const selected = this.services.find(s => s.nombre === this.selectedService);
+    const selected = this.services.find(services => services.nombre === this.selectedService);
     return selected ? selected.precio : '';
   }
 
@@ -95,12 +96,35 @@ export class ReserveComponent {
     if (!date) return false;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return date >= today && !this.isWeekend(date);
+    const isPast = date < today;
+    const isWeekendDay = this.isWeekend(date);
+    const isFullyBooked = this.isDayFullyBooked(date);
+    return !isPast && !isWeekendDay && !isFullyBooked;
+  }
+
+  // Verificar si el día está completamente reservado
+  isDayFullyBooked(date: Date): boolean {
+    const dateStr = date.toLocaleDateString();
+    const bookingsForDay = this.reserves.filter(reserve => 
+      reserve.dia === dateStr && reserve.peluquero === this.selectedBarber
+    );
+    return bookingsForDay.length >= this.availableHours.length;
   }
 
   isWeekend(date: Date): boolean {
     const day = date.getDay();
     return day === 0 || day === 6;
+  }
+
+  // Verificar si una hora está disponible
+  isTimeAvailable(time: string): boolean {
+    if (!this.selectedDate || !this.selectedBarber) return true;
+    const dateStr = this.selectedDate.toLocaleDateString();
+    return !this.reserves.some(reserve => 
+      reserve.dia === dateStr && 
+      reserve.hora === time && 
+      reserve.peluquero === this.selectedBarber
+    );
   }
 
   nextMonth() {
@@ -126,6 +150,7 @@ export class ReserveComponent {
       };
 
       this.apiService.addReserve(reserveData);
+      this.reserves = this.apiService.getReserves(); // Actualizar reservas
       console.log('Reserva guardada:', reserveData);
       this.router.navigate(['/show-reserve']);
     }
@@ -149,14 +174,14 @@ export class ReserveComponent {
   }
 
   selectTime(time: string) {
-    this.selectedTime = this.selectedTime === time ? '' : time;
+    if (this.isTimeAvailable(time)) {
+      this.selectedTime = this.selectedTime === time ? '' : time;
+    }
   }
 
   selectDate(date: Date) {
-    if (this.selectedDate && this.selectedDate.getTime() === date.getTime()) {
-      this.selectedDate = null;
-    } else {
-      this.selectedDate = date;
+    if (this.isAvailable(date)) {
+      this.selectedDate = this.selectedDate && this.selectedDate.getTime() === date.getTime() ? null : date;
     }
   }
 

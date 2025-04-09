@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Product } from '../../models/user.interface';
+import { Compra, Product } from '../../models/user.interface';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
@@ -13,7 +13,7 @@ import { ApiService } from '../../services/api-service.service';
   styleUrl: './show-buys.component.css'
 })
 export class ShowBuysComponent {
-  productos: Product[][] = []; 
+  compras: Compra[] = []; 
   isUser = true;
   isAuthenticated = true;
   isSpanish: boolean = true;
@@ -32,21 +32,14 @@ export class ShowBuysComponent {
 
   ngOnInit() {
     this.isUser = this.apiService.getIsUser();
-    this.productos = this.apiService.getPurchases();
+    this.compras = this.apiService.getPurchases(); 
   }
 
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
 
-  openLoginModal() {
-    this.showLoginModal = true;
-  }
-
-  total :number = 0;
-  totalConDescuento: number = 0;  
-  descuento: number = 0;
-  calcularTotalCompra(compra: Product[]){
+  calcularTotalCompra(compra: Product[]) {
     let total = 0;
     for (let i = 0; i < compra.length; i++) {
       total += compra[i].price * compra[i].cantidad;

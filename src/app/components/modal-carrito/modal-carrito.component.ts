@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../../services/language.service';
-import { Product, Productos } from '../../models/user.interface';
+import { Product } from '../../models/user.interface';
 import { ApiService } from '../../services/api-service.service';
 import { ModalCompraComponent } from '../modal-compra/modal-compra.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -23,8 +23,7 @@ export class ModalCarritoComponent implements OnInit {
   
   productos: Product[] = [];
   productosFavoritos: Product[] = [];
-  isUser = true  ;
-  subtotal: number = 0;
+  isUser = true;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
 
@@ -40,20 +39,21 @@ export class ModalCarritoComponent implements OnInit {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => {
         this.isSpanish = isSpanish;
-        this.calcularTotalYDescuento();
+       
       }
-    );
-    this.cargarDatosIniciales(); 
+    ); 
+    this.productos = this.apiService.getProductos(); 
+    this.calcularTotalYDescuento();
   }
 
   ngOnInit() {
-    this.cargarDatosIniciales(); 
+    this.cargarDatosIniciales();
     this.isUser = this.apiService.getIsUser();
   }
 
   cargarDatosIniciales() {
     this.productos = this.apiService.getProductos();
-    this.productosFavoritos = this.apiService.getFavorites(); 
+    this.productosFavoritos = this.apiService.getFavorites();
     this.calcularTotalYDescuento();
   }
 
@@ -76,11 +76,24 @@ export class ModalCarritoComponent implements OnInit {
       this.descuento = 0;
       this.totalConDescuento = this.total;
     }
+
+    
+  }
+  message:string |null =  null;
+  showZeroTotalAlert() {
+    this.message = this.getText(
+      'Se ha producido un problema, disculpa las molestias. Contactanos si el problema persiste.',
+      'There was a problem, sorry for the inconvenience. Contact us if the problem persists.'
+    );
+ 
+    setTimeout(() => {
+      this.message = null;
+    }, 4000);
   }
 
   addToFavorites(product: Product) {
-    this.apiService.addFavorite({ ...product }); 
-    this.productosFavoritos = this.apiService.getFavorites(); 
+    this.apiService.addFavorite({ ...product });
+    this.productosFavoritos = this.apiService.getFavorites();
     console.log(`${product.name} añadido a favoritos`);
   }
 
@@ -143,7 +156,10 @@ export class ModalCarritoComponent implements OnInit {
   showModal: boolean = false;
 
   onConfirmReserve() {
-   
+    if (this.totalConDescuento === 0) {
+      this.showZeroTotalAlert();
+      return;
+    }
     this.apiService.addToPurchases([...this.productos]);
     this.apiService.clearCart();
     this.productos = this.apiService.getProductos();
@@ -152,7 +168,11 @@ export class ModalCarritoComponent implements OnInit {
     this.showModal = false;
   }
 
-  onReserve() {
+  onPay() {
+    if (this.totalConDescuento === 0) {
+      this.showZeroTotalAlert();
+      return;
+    }
     this.showModal = true;
   }
 
@@ -178,6 +198,5 @@ export class ModalCarritoComponent implements OnInit {
 
   onClose() {
     this.close.emit();
-    console.log('CERRANDO');
   }
 }

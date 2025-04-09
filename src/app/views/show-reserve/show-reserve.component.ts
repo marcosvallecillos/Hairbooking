@@ -35,6 +35,10 @@ export class ShowReserveComponent {
       isSpanish => this.isSpanish = isSpanish
     );
   }
+  deleteReserve(reserve: Reserva) {
+    this.selectedReserve = reserve;
+    this.showModal = true;
+  }
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
     this.reserves = this.apiService.getReserves();
@@ -46,10 +50,6 @@ export class ShowReserveComponent {
     return this.isSpanish ? es : en;
   }
 
-  onReserve(reserve: Reserva) {
-    this.selectedReserve = reserve;
-    this.showModal = true;
-  }
 
   onConfirmReserve() {
     if (this.selectedReserve) {

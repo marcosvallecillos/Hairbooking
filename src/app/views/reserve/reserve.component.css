@@ -432,7 +432,11 @@
     background-color: #02410c;
     transition: all 0.3s ease;
 }
-
+.time-slot[disabled] {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 .time-slot.available {
     background-color: #00c020;
     color: white;

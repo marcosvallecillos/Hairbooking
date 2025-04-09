@@ -58,6 +58,7 @@
             </div>
 
             <div class="calendar-grid">
+             
                 <!-- Días de la semana -->
                 @for (day of [getText('Lu', 'Mo'), getText('Ma', 'Tu'), getText('Mi', 'We'), getText('Ju', 'Th'), getText('Vi', 'Fr'), 'Sa', getText('Do', 'Su')]; track day) {
                     <div class="weekday">{{ day }}</div>
@@ -83,21 +84,21 @@
         </div>
 
         <!-- Horas Disponibles -->
-          @if (selectedDate && selectedService && selectedBarber) {
-            <div class="time-slots-section">
-              <h3>{{ getText('Horarios Disponibles para el', 'Available Schedules for') }} {{ selectedDate | date:'EEEE d MMMM yyyy' }}</h3>
-              <div class="time-slots-grid">
-                @for (time of availableHours; track time) {
-                  <button class="time-slot"
-                    [class.selected]="selectedTime === time"
-                    [disabled]="!isTimeAvailable(time)"
-                    (click)="selectTime(time)">
-                    {{ time }}
-                  </button>
-                }
-              </div>
+        @if (selectedDate && selectedService && selectedBarber) {
+          <div class="time-slots-section">
+            <h3>{{ getText('Horarios Disponibles para el', 'Available Schedules for') }} {{ selectedDate | date:'EEEE d MMMM yyyy' }}</h3>
+            <div class="time-slots-grid">
+              @for (time of availableHours; track time) {
+                <button class="time-slot"
+                  [class.selected]="selectedTime === time"
+                  [disabled]="!isTimeAvailable(time)"
+                  (click)="selectTime(time)">
+                  {{ time }}
+                </button>
+              }
             </div>
-          } @else {
+          </div>
+        } @else {
             <!--Condiciones Servicio-->
             @if (selectedService && !selectedDate && !selectedBarber) {
                 <div class="alert alert-info">

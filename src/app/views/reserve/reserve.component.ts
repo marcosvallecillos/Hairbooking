@@ -62,18 +62,22 @@ export class ReserveComponent {
 
   isUser = true;
   isAuthenticated = true;
-
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
+    this.loadReserves(); // Cargar reservas al iniciar
+  }
+
+  // Cargar reservas desde el servicio
+  loadReserves() {
+    this.reserves = this.apiService.getReserves();
   }
 
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
 
-  // Nueva función para obtener el precio del servicio seleccionado
   getPrice(): string {
-    const selected = this.services.find(services => services.nombre === this.selectedService);
+    const selected = this.services.find(service => service.nombre === this.selectedService);
     return selected ? selected.precio : '';
   }
 
@@ -92,8 +96,9 @@ export class ReserveComponent {
     return days;
   }
 
+  // Verificar si un día está disponible
   isAvailable(date: Date): boolean {
-    if (!date) return false;
+    if (!date || !this.selectedBarber) return false; // Requiere peluquero seleccionado
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const isPast = date < today;
@@ -102,11 +107,12 @@ export class ReserveComponent {
     return !isPast && !isWeekendDay && !isFullyBooked;
   }
 
-  // Verificar si el día está completamente reservado
+  // Verificar si el día está completamente reservado para el peluquero seleccionado
   isDayFullyBooked(date: Date): boolean {
     const dateStr = date.toLocaleDateString();
     const bookingsForDay = this.reserves.filter(reserve => 
-      reserve.dia === dateStr && reserve.peluquero === this.selectedBarber
+      reserve.dia === dateStr && 
+      reserve.peluquero === this.selectedBarber
     );
     return bookingsForDay.length >= this.availableHours.length;
   }
@@ -116,15 +122,16 @@ export class ReserveComponent {
     return day === 0 || day === 6;
   }
 
-  // Verificar si una hora está disponible
+  // Verificar si una hora específica está disponible
   isTimeAvailable(time: string): boolean {
-    if (!this.selectedDate || !this.selectedBarber) return true;
+    if (!this.selectedDate || !this.selectedBarber) return false;
     const dateStr = this.selectedDate.toLocaleDateString();
-    return !this.reserves.some(reserve => 
+    const isReserved = this.reserves.some(reserve => 
       reserve.dia === dateStr && 
       reserve.hora === time && 
       reserve.peluquero === this.selectedBarber
     );
+    return !isReserved;
   }
 
   nextMonth() {
@@ -150,7 +157,7 @@ export class ReserveComponent {
       };
 
       this.apiService.addReserve(reserveData);
-      this.reserves = this.apiService.getReserves(); // Actualizar reservas
+      this.loadReserves(); // Recargar reservas después de agregar una nueva
       console.log('Reserva guardada:', reserveData);
       this.router.navigate(['/show-reserve']);
     }
@@ -171,6 +178,8 @@ export class ReserveComponent {
 
   selectBarber(barber: string) {
     this.selectedBarber = this.selectedBarber === barber ? '' : barber;
+    this.selectedDate = null; // Reiniciar fecha al cambiar peluquero
+    this.selectedTime = ''; // Reiniciar hora al cambiar peluquero
   }
 
   selectTime(time: string) {
@@ -181,7 +190,8 @@ export class ReserveComponent {
 
   selectDate(date: Date) {
     if (this.isAvailable(date)) {
-      this.selectedDate = this.selectedDate && this.selectedDate.getTime() === date.getTime() ? null : date;
+      this.selectedDate = this.selectedDate?.getTime() === date.getTime() ? null : date;
+      this.selectedTime = ''; // Reiniciar hora al cambiar fecha
     }
   }
 

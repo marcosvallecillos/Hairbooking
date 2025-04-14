@@ -33,11 +33,16 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
         console.error("ERROR: El email o la contraseña están vacíos");
         return throwError(() => new Error("El email y la contraseña son obligatorios."));
     }
-    return this.http.post<Usuario>(`${this.apiUrlUsuarios}/{id}`, { email, password });
+    return this.http.get<Usuario>(`${this.apiUrlUsuarios}/login`);
 }
-
-  logoutUser(): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/logout`, {});
+  showProfile(id: number):Observable<Usuario>{
+    return this.http.get<Usuario>(`${this.apiUrlUsuarios}/${id}`)
+  }
+  editProfile(id: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.apiUrlUsuarios}/${id}/edit`)
+  }
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrlUsuarios}/${id}`);
   }
 
   getIsUser(): boolean {

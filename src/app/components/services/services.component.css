@@ -6,8 +6,9 @@
     height: auto;
     align-items: center;
     background-size: cover;
-}
+    mask-image: linear-gradient(black 90%, transparent 100%);
 
+}
 .container {
     height: 100vh;
     max-width: 1200px;

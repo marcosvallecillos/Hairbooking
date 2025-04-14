@@ -1,13 +1,15 @@
 import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Compra, Product, Reserva, Usuario } from '../models/user.interface';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 private apiUrl = 'http://localhost:8000/api';
-private isUserSubject = new BehaviorSubject<boolean>(true); 
+private apiUrlUsuarios = 'http://localhost:8000/api/usuarios'
+private apiUrlReservas = 'http://localhost:8000/api/reservas'
+public isUserSubject = new BehaviorSubject<boolean>(true); 
 public productos: Product[] = [];
 private favorites: Product[] = [];
 
@@ -15,7 +17,7 @@ private favorites: Product[] = [];
 private reserves: Reserva[] = [];
 private cart: Product[] = [];
 public cartItemsCount = new BehaviorSubject<number>(0);
-isUser: boolean = true  ;
+isUser: boolean = false  ;
 cartItemsCount$ = this.cartItemsCount.asObservable();
   isUser$ = this.isUserSubject.asObservable();
   constructor(private http: HttpClient) { 
@@ -23,11 +25,17 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
   }
  
   registerUser(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/usuarios`, usuario);
+    return this.http.post<Usuario>(`${this.apiUrlUsuarios}/new`, usuario);
   }
+
   loginUser(email: string, password: string): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/login`, { email, password });
-  }
+    if (!email || !password) {
+        console.error("ERROR: El email o la contraseña están vacíos");
+        return throwError(() => new Error("El email y la contraseña son obligatorios."));
+    }
+    return this.http.post<Usuario>(`${this.apiUrlUsuarios}/{id}`, { email, password });
+}
+
   logoutUser(): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/logout`, {});
   }

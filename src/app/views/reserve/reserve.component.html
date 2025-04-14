@@ -90,11 +90,14 @@
             <div class="time-slots-grid">
               @for (time of availableHours; track time) {
                 <button class="time-slot"
-                  [class.selected]="selectedTime === time"
-                  [disabled]="!isTimeAvailable(time)"
-                  (click)="selectTime(time)">
-                  {{ time }}
-                </button>
+                [class.selected]="selectedTime === time"
+                [class.reserved]="isTimeReserved(time)"
+                [class.past]="isTimePast(time)"
+                [disabled]="!isTimeAvailable(time)"
+                [title]="isTimeReserved(time) ? getText('Hora reservada', 'Time reserved') : isTimePast(time) ? getText('Hora pasada', 'Time passed') : ''"
+                (click)="selectTime(time)">
+                {{ time }}
+            </button>
               }
             </div>
           </div>

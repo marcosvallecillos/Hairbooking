@@ -432,8 +432,16 @@
     background-color: #02410c;
     transition: all 0.3s ease;
 }
-.time-slot[disabled] {
-    background-color: #d3d3d3;
+.time-slot.reserved {
+    background-color: red; /* Red background */
+    color: #fff;
+    border-color: #cc0000;
+    opacity: 0.9;
+  }
+  
+
+  .time-slot:disabled {
+    color: white;
     cursor: not-allowed;
     opacity: 0.6;
   }
@@ -441,7 +449,12 @@
     background-color: #00c020;
     color: white;
 }
-
+.time-slot.past {
+    background-color: #ccc; 
+    color: #666;
+    border-color: #999;
+    opacity: 0.7;
+  }
 .time-slot.unavailable {
     background-color: #ff3b30;
     color: white;

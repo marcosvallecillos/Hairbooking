@@ -46,6 +46,36 @@ editProfile(id: number, userData: Usuario): Observable<Usuario> {
 deleteUser(id: number): Observable<any> {
   return this.http.delete<any>(`${this.apiUrlUsuarios}/${id}`);
 }
+getReserves(): Reserva[] {
+  return this.reserves;
+}
+
+addReserve(reserve: Reserva) {
+  this.reserves.push({ ...reserve, id: this.reserves.length + 1 }); 
+}
+
+getReserveByUsuario(id: number):Observable<Reserva>{
+  return this.http.get<Reserva>(`${this.apiUrlReservas}/${id}`)
+}
+
+newReserve(reservas: Reserva): Observable<Reserva> {
+  return this.http.post<Reserva>(`${this.apiUrlUsuarios}/new`, reservas);
+}
+
+editReserve(id:number):Observable<Reserva>{
+  return this.http.put<Reserva>(`${this.apiUrlReservas}/${id}/edit`, id);
+}
+deleteReserve(id: number): Observable<any> {
+  return this.http.delete<any>(`${this.apiUrlReservas}/${id}`);
+}
+removeReserve(reserveId: number) {
+  this.reserves = this.reserves.filter((r) => r.id !== reserveId);
+}
+
+getReserveById(reserveId: number): Reserva | undefined {
+  return this.reserves.find((r) => r.id === reserveId);
+}
+
 
 getProductos(): Product[] {
   return this.productos;
@@ -125,20 +155,5 @@ getPurchases(): Compra[] {
     this.productos = [];
     this.updateCartItemsCount();
   }
-  getReserves(): Reserva[] {
-    return this.reserves;
-  }
-
-  addReserve(reserve: Reserva) {
-    this.reserves.push({ ...reserve, id: this.reserves.length + 1 }); 
-  }
-
-  removeReserve(reserveId: number) {
-    this.reserves = this.reserves.filter((r) => r.id !== reserveId);
-  }
-
-  getReserveById(reserveId: number): Reserva | undefined {
-    return this.reserves.find((r) => r.id === reserveId);
-  }
-
+  
 } 

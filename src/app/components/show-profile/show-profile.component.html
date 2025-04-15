@@ -2,17 +2,7 @@
     <div class="overlay"></div>
     @if (usuario) {
       <div class="profile-container">
-        <div class="profile-header">
-          <h1>{{ getText('Mi Perfil', 'My Profile') }}</h1>
-          <div class="header-buttons">
-            <button class="edit-button" (click)="editarPerfil()">
-              {{ getText('Editar Perfil', 'Edit Profile') }}
-            </button>
-            <button class="logout-button" (click)="cerrarSesion()">
-              {{ getText('Cerrar Sesión', 'Logout') }}
-            </button>
-          </div>
-        </div>
+      
     
         <div class="profile-content">
           <div class="profile-section">
@@ -34,8 +24,18 @@
               <p>{{ usuario.telefono }}</p>
             </div>
           </div>
+          <div class="buttons">
+            <button class="edit-button" (click)="editarPerfil()">
+              {{ getText('Editar Perfil', 'Edit Profile') }}
+            </button>
+            <button class="logout-button" (click)="cerrarSesion()">
+              {{ getText('Cerrar Sesión', 'Logout') }}
+            </button>
+          </div>
         </div>
+        
       </div>
+      
     } @else {
       <div class="alert-info">
         <i class="fas fa-user-lock"></i>
@@ -45,7 +45,7 @@
         </button>
       </div>
     }
-  
+    
     <app-footer></app-footer>
     @if (showLoginModal) {
       <app-modal-login (closeModal)="showLoginModal = false"></app-modal-login>

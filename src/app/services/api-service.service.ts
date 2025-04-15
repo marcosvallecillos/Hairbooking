@@ -57,7 +57,6 @@ addReserve(reserve: Reserva) {
 getReserveByUsuario(usuario_Id: number): Observable<Reserva[]> {
   return this.http.get<Reserva[]>(`${this.apiUrlReservas}/usuario/${usuario_Id}`);
 }
-
 newReserve(reservas: Reserva): Observable<Reserva> {
   return this.http.post<Reserva>(`${this.apiUrlReservas}/new`, reservas);
 }

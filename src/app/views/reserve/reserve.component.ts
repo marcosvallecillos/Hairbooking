@@ -199,7 +199,12 @@ export class ReserveComponent implements OnInit {
     this.currentDate.setMonth(this.currentDate.getMonth() - 1);
     this.currentDate = new Date(this.currentDate);
   }
-
+   formatearFecha(year: number, month: number, day: number): string {
+    const mm = (month < 10 ? '0' : '') + month;
+    const dd = (day < 10 ? '0' : '') + day;
+    return `${year}-${mm}-${dd}`;
+  }
+  
   onConfirmReserve() {
     this.showModal = false;
     const userId = this.authService.getUserId();
@@ -208,7 +213,7 @@ export class ReserveComponent implements OnInit {
       const year = this.selectedDate.getFullYear();
       const month = this.selectedDate.getMonth() + 1;
       const day = this.selectedDate.getDate();
-      const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      const formattedDate = this.formatearFecha(year, month, day);
       
       console.log('Fecha a enviar:', formattedDate);
 

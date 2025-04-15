@@ -6,10 +6,11 @@ import { FooterComponent } from '../footer/footer.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { LanguageService } from '../../services/language.service';
 import { UserStateService } from '../../services/user-state.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-show-profile',
-  imports: [FormsModule, FooterComponent, ModalLoginComponent],
+  imports: [FormsModule, FooterComponent, ModalLoginComponent,NgClass],
   templateUrl: './show-profile.component.html',
   styleUrl: './show-profile.component.css'
 })
@@ -31,7 +32,13 @@ export class ShowProfileComponent implements OnInit {
   ngOnInit() {
     this.checkUserSession();
   }
+  showPassword: boolean = false;
 
+  togglePasswordVisibility(field: 'password') {
+    if (field === 'password') {
+      this.showPassword = !this.showPassword;
+    }
+  }
   checkUserSession() {
     const userDataStr = localStorage.getItem('userData');
     if (userDataStr) {

@@ -23,6 +23,21 @@
               <label>{{ getText('Teléfono', 'Phone') }}:</label>
               <p>{{ usuario.telefono }}</p>
             </div>
+            <div class="info-group position-relative">
+              <label>{{ getText('Contraseña', 'Password') }}:</label>
+              <p style="margin-right: 30px;">
+                {{ showPassword ? usuario.password : '*'.repeat(usuario.password.length) }}
+                <span
+                class="position-absolute end-0 translate-middle-y me-3   "
+                style="top: 70%;cursor: pointer; color: #6c757d;"
+                (click)="togglePasswordVisibility('password')"
+                role="button"
+              >
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+              </span>
+              </p>
+            </div>
+            
           </div>
           <div class="buttons">
             <button class="edit-button" (click)="editarPerfil()">

@@ -174,16 +174,18 @@ export class ReserveComponent {
   onConfirmReserve() {
     this.showModal = false;
     if (this.selectedDate && this.selectedService && this.selectedBarber && this.selectedTime) {
+      const userId = this.authService.getUserId();
       const reserveData: Reserva = {
         id: Date.now(),
         servicio: this.selectedService,
         peluquero: this.selectedBarber,
         dia: this.selectedDate.toLocaleDateString(),
         hora: this.selectedTime,
-        precio: this.getPrice()
+        precio: this.getPrice(),
+       usuarioId: userId || undefined
       };
 
-      this.apiService.addReserve(reserveData);
+      this.apiService.newReserve(reserveData);
       this.loadReserves();
       console.log('Reserva guardada:', reserveData);
       this.router.navigate(['/show-reserve']);

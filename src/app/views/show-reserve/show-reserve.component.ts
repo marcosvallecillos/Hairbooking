@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // Asegúrate de importar OnInit
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
@@ -12,13 +12,13 @@ import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-show-reserve',
+  standalone: true,
   imports: [ModalLoginComponent, ReserveComponent, RouterLink, FooterComponent, ModalDeleteComponent],
   templateUrl: './show-reserve.component.html',
   styleUrl: './show-reserve.component.css'
 })
-export class ShowReserveComponent {
+export class ShowReserveComponent implements OnInit {
   reserves: Reserva[] = [];
-
   isUser = false;
   isAuthenticated = true;
   isSpanish: boolean = true;
@@ -37,29 +37,64 @@ export class ShowReserveComponent {
       isSpanish => this.isSpanish = isSpanish
     );
   }
-  deleteReserve(reserve: Reserva) {
-    this.selectedReserve = reserve;
-    this.showModal = true;
-  }
+
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
-    this.reserves = this.apiService.getReserves();
     this.isUser = this.userStateService.getIsUser();
     this.userStateService.isUser$.subscribe(isUser => {
       this.isUser = isUser;
     });
+
+
   }
 
-
-  getText(es: string, en: string): string {
-    return this.isSpanish ? es : en;
+  loadUserReserves() {
+    
+    const userId = this.authService.getUserId();
+    console.log('Id del Usuario', userId);
+    
+    if (userId) {
+      // Obtener todas las reservas del usuario
+      this.apiService.getReserves().forEach(reserve => {
+        // Filtrar las reservas que pertenecen al usuario actual usando usuarioId
+        if (reserve.usuarioId === userId) {
+          this.reserves.push(reserve);
+        }
+      });
+      
+      // Si no hay reservas, intentar obtenerlas del backend
+      if (this.reserves.length === 0) {
+        this.apiService.getReserveByUsuario(userId).subscribe({
+          next: (reserva: Reserva) => {
+            if (reserva) {
+              this.reserves = [reserva];
+            }
+          },
+          error: err => {
+            console.error('Error al cargar reservas', err);
+          }
+        });
+      }
+    }
   }
 
+  deleteReserve(reserve: Reserva) {
+    this.selectedReserve = reserve;
+    this.showModal = true;
+  }
 
   onConfirmReserve() {
     if (this.selectedReserve) {
-      this.reserves = this.reserves.filter(r => r.id !== this.selectedReserve!.id);
-      this.selectedReserve = null;
+      const reserveId = this.selectedReserve.id;
+      this.apiService.deleteReserve(reserveId).subscribe({
+        next: () => {
+          this.reserves = this.reserves.filter(r => r.id !== reserveId);
+          this.selectedReserve = null;
+        },
+        error: err => {
+          console.error('Error al eliminar la reserva', err);
+        }
+      });
     }
     this.showModal = false;
   }
@@ -67,6 +102,10 @@ export class ShowReserveComponent {
   onCancelReserve() {
     this.showModal = false;
     this.selectedReserve = null;
+  }
+
+  getText(es: string, en: string): string {
+    return this.isSpanish ? es : en;
   }
 
   openLoginModal() {

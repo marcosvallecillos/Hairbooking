@@ -8,6 +8,7 @@ import { Product, Reserva } from '../../models/user.interface';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { ApiService } from '../../services/api-service.service';
+import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-show-reserve',
@@ -29,7 +30,8 @@ export class ShowReserveComponent {
     private authService: AuthService,
     private router: Router,
     private languageService: LanguageService,
-    private apiService:ApiService
+    private apiService: ApiService,
+    private userStateService: UserStateService
   ) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
@@ -42,7 +44,10 @@ export class ShowReserveComponent {
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
     this.reserves = this.apiService.getReserves();
-    this.isUser = this.apiService.getIsUser();
+    this.isUser = this.userStateService.getIsUser();
+    this.userStateService.isUser$.subscribe(isUser => {
+      this.isUser = isUser;
+    });
   }
 
 

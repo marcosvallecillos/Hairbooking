@@ -1,45 +1,53 @@
 <body>
-    
-<div class="overlay"></div>
-<div class="profile-container">
+    <div class="overlay"></div>
     @if (usuario) {
-        <div class="profile-card">
-            <div class="profile-header">
-                <h2>Mi Perfil</h2>
-            </div>
-
-            <div class="profile-info">
-                <div class="info-group">
-                    <label>Nombre completo</label>
-                    <p>{{ usuario.nombre }} {{ usuario.apellidos }}</p>
-                </div>
-
-                <div class="info-group">
-                    <label>Correo electrónico</label>
-                    <p>{{ usuario.email }}</p>
-                </div>
-
-                <div class="info-group">
-                    <label>Teléfono</label>
-                    <p>{{ usuario.telefono }}</p>
-                </div>
-
-            </div>
-
-            <div class="profile-actions">
-                <button class="btn btn-primary animated-button" routerLink="/editProfile">
-                    <i class="bi bi-pencil-square me-2"></i>Editar perfil
-                </button>
-            </div>
-        </div>
-    } @else {
-        <div class="alert-info">
-            <i class="bi bi-exclamation-circle-fill"></i>
-            <h2>{{ getText('No se encontraron datos del usuario.', 'You must be registered to book an appointment.') }}</h2>
-            <button class="alert-btn" (click)="openLoginModal()">{{ getText('Iniciar Sesión', 'Login') }}</button>
+      <div class="profile-container">
+        <div class="profile-header">
+          <h1>{{ getText('Mi Perfil', 'My Profile') }}</h1>
+          <div class="header-buttons">
+            <button class="edit-button" (click)="editarPerfil()">
+              {{ getText('Editar Perfil', 'Edit Profile') }}
+            </button>
+            <button class="logout-button" (click)="cerrarSesion()">
+              {{ getText('Cerrar Sesión', 'Logout') }}
+            </button>
           </div>
-        }
-    </div>
-</body>
-<app-modal-login [show]="showLoginModal" (close)="showLoginModal = false"></app-modal-login>
-<app-footer></app-footer>
+        </div>
+    
+        <div class="profile-content">
+          <div class="profile-section">
+            <h2>{{ getText('Información Personal', 'Personal Information') }}</h2>
+            <div class="info-group">
+              <label>{{ getText('Nombre', 'Name') }}:</label>
+              <p>{{ usuario.nombre }}</p>
+            </div>
+            <div class="info-group">
+              <label>{{ getText('Apellidos', 'Last Name') }}:</label>
+              <p>{{ usuario.apellidos }}</p>
+            </div>
+            <div class="info-group">
+              <label>{{ getText('Email', 'Email') }}:</label>
+              <p>{{ usuario.email }}</p>
+            </div>
+            <div class="info-group">
+              <label>{{ getText('Teléfono', 'Phone') }}:</label>
+              <p>{{ usuario.telefono }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="alert-info">
+        <i class="fas fa-user-lock"></i>
+        <h2>{{ getText('No has iniciado sesión', 'You are not logged in') }}</h2>
+        <button class="alert-btn" (click)="openLoginModal()">
+          {{ getText('Iniciar Sesión', 'Login') }}
+        </button>
+      </div>
+    }
+  
+    <app-footer></app-footer>
+    @if (showLoginModal) {
+      <app-modal-login (closeModal)="showLoginModal = false"></app-modal-login>
+    }
+  </body>

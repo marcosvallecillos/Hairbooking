@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { LanguageService } from '../../services/language.service';
 import { Usuario } from '../../models/user.interface';
 import { ApiService } from '../../services/api-service.service';
+import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-modal-login',
@@ -32,7 +33,8 @@ export class ModalLoginComponent {
     private router: Router,
     private authService: AuthService,
     private fb: FormBuilder,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private userStateService: UserStateService
   ) {
     this.loginForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
@@ -110,33 +112,45 @@ export class ModalLoginComponent {
       this.loginForm.markAllAsTouched();
       return;
     }
-
+  
     this.isLoading = true;
     this.errorMessage = '';
-
+  
     const { email, password } = this.loginForm.value;
     this.apiService.loginUser(email, password).subscribe({
       next: (usuario: any) => {
-        this.apiService.isUserSubject.next(true);
-        localStorage.setItem('user', JSON.stringify({
-          id: usuario.id,
-          email: usuario.email,
-          nombre: usuario.nombre
-        }));
-        this.close.emit();
-        this.router.navigate(['/reserve']);
+        if (usuario.status === 'ok') {
+          const userData: Usuario = {
+            id: usuario.id,
+            email: usuario.email,
+            nombre: usuario.nombre,
+            apellidos: usuario.apellidos,
+            telefono: usuario.telefono,
+            password: '',
+            citas_reservadas: []
+          };
+          
+          // Actualizar el estado del usuario
+          this.userStateService.updateUser(userData);
+          
+          this.close.emit();
+          this.router.navigate(['/home-barber']);
+        } else {
+          this.errorMessage = this.getText('Credenciales inválidas', 'Invalid credentials');
+        }
+  
         this.isLoading = false;
       },
       error: (error: any) => {
         this.errorMessage = this.getText(
-          error.error?.message || 'Credenciales inválidas',
-          error.error?.message || 'Invalid credentials'
+          error.error?.message || 'Error de servidor',
+          error.error?.message || 'Server error'
         );
         this.isLoading = false;
       }
     });
   }
-
+  
   registrarUsuario() {
     if (this.loginForm.invalid || this.loginForm.hasError('passwordsDoNotMatch')) {
       this.errorMessage = this.getText(
@@ -146,31 +160,48 @@ export class ModalLoginComponent {
       this.loginForm.markAllAsTouched();
       return;
     }
-
+  
     this.isLoading = true;
     this.errorMessage = '';
-
+  
     const usuario: Usuario = {
-      id: this.loginForm.get('id')?.value,
+      id: 0,
       nombre: this.loginForm.get('nombre')?.value,
       apellidos: this.loginForm.get('apellidos')?.value,
       email: this.loginForm.get('email')?.value,
-      telefono: this.loginForm.get(' ')?.value,
+      telefono: this.loginForm.get('telefono')?.value,
       password: this.loginForm.get('password')?.value,
       citas_reservadas: []
     };
-
+  
+    console.log('Usuario a registrar:', usuario);
+  
     this.apiService.registerUser(usuario).subscribe({
       next: (response) => {
         this.isLoading = false;
+        console.log('Respuesta del backend:', response);
+        const userData: Usuario = {
+          id: response.id,
+          email: usuario.email,
+          nombre: usuario.nombre,
+          apellidos: usuario.apellidos,
+          telefono: usuario.telefono,
+          password: '',
+          citas_reservadas: []
+        };
+        
+        // Actualizar el estado del usuario
+        this.userStateService.updateUser(userData);
+        
         this.errorMessage = this.getText(
           'Registro exitoso, ahora puedes iniciar sesión',
           'Registration successful, you can now log in'
         );
-        this.toggleTab(false); // Switch to login tab
+        this.toggleTab(false); 
       },
       error: (error) => {
         this.isLoading = false;
+        console.error('Error al registrar:', error);
         if (error.status === 400) {
           const errorMsg = error.error?.error || 'Error en los datos proporcionados';
           this.errorMessage = this.getText(

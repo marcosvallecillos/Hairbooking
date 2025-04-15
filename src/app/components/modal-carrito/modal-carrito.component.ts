@@ -8,6 +8,7 @@ import { ApiService } from '../../services/api-service.service';
 import { ModalCompraComponent } from '../modal-compra/modal-compra.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
+import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-modal-carrito',
@@ -23,7 +24,7 @@ export class ModalCarritoComponent implements OnInit {
   
   productos: Product[] = [];
   productosFavoritos: Product[] = [];
-  isUser = true;
+  isUser = false;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
 
@@ -34,12 +35,12 @@ export class ModalCarritoComponent implements OnInit {
   constructor(
     private languageService: LanguageService,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private userStateService: UserStateService
   ) {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => {
         this.isSpanish = isSpanish;
-       
       }
     ); 
     this.productos = this.apiService.getProductos(); 
@@ -47,8 +48,11 @@ export class ModalCarritoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isUser = this.userStateService.getIsUser();
+    this.userStateService.isUser$.subscribe(isUser => {
+      this.isUser = isUser;
+    });
     this.cargarDatosIniciales();
-    this.isUser = this.apiService.getIsUser();
   }
 
   cargarDatosIniciales() {

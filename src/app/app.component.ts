@@ -5,6 +5,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderUserComponent } from './components/header-user/header-user.component';
 import { AuthService } from './services/auth.service';
 import { ApiService } from './services/api-service.service';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -13,13 +14,8 @@ import { ApiService } from './services/api-service.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-
-  isUser: boolean = false;  
-
-  toggleUser() {
-    this.isUser = !this.isUser;
-  }
-
+  isUserRegistered: string | null = null;
+  isUser: boolean = false; 
   isLoggedIn: boolean = false;
   mostrarHeader: boolean = false;
   
@@ -33,16 +29,40 @@ export class AppComponent {
       }
     });
   }
-
+  
   ngOnInit() {
-    this.isUser = this.apiService.getIsUser();
+    this.actualizarEstadoUsuario();
+    
+    window.addEventListener("storage", () => {
+      this.actualizarEstadoUsuario();
+    });
 
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 0);
+    
     this.router.events.subscribe(() => {
       this.mostrarHeader = this.router.url !== '/index'; 
     });
+  }
+  
+  private actualizarEstadoUsuario() {
+    const userType = localStorage.getItem('userType');
+    const userData = localStorage.getItem('userData');
     
+    this.isUserRegistered = userType || null;
+    this.isUser = userType === 'usuario';
+    this.isLoggedIn = !!userData;
+  }
+
+  logout() {
+    localStorage.removeItem('userData');
+    localStorage.removeItem('userType');
+    this.isUserRegistered = null;
+    this.isUser = false;
+    this.isLoggedIn = false;
+    console.log('cerrando sesion asdasdada')
+    window.dispatchEvent(new Event("storage"));
+    window.location.reload();
   }
 }

@@ -71,8 +71,10 @@ export class HeaderUserComponent {
     localStorage.removeItem('userType');
     localStorage.removeItem('userData');
     this.isUser = false;
+    console.log('cerrando sesion')
     this.isAuthenticated = false;
     this.router.navigate(['/home-barber']);
+    window.location.reload()
   }
 
   @HostListener('document:keydown.escape', ['$event'])

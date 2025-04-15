@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ApiService } from '../../services/api-service.service';
+import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-show-buys',
@@ -14,7 +15,7 @@ import { ApiService } from '../../services/api-service.service';
 })
 export class ShowBuysComponent {
   compras: Compra[] = []; 
-  isUser = true;
+  isUser = false;
   isAuthenticated = true;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
@@ -23,7 +24,8 @@ export class ShowBuysComponent {
     private authService: AuthService,
     private router: Router,
     private languageService: LanguageService,
-    private apiService: ApiService 
+    private apiService: ApiService,
+    private userStateService: UserStateService
   ) {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => (this.isSpanish = isSpanish)
@@ -31,8 +33,11 @@ export class ShowBuysComponent {
   }
 
   ngOnInit() {
-    this.isUser = this.apiService.getIsUser();
-    this.compras = this.apiService.getPurchases(); 
+    this.compras = this.apiService.getPurchases();
+    this.isUser = this.userStateService.getIsUser();
+    this.userStateService.isUser$.subscribe(isUser => {
+      this.isUser = isUser;
+    });
   }
 
   getText(es: string, en: string): string {

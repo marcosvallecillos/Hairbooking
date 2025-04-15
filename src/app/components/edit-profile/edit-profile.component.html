@@ -1,12 +1,14 @@
-
 <body>
     <div class="overlay"></div><div class="edit-profile-container">
+    <div class="edit-profile-header">
+        <h1>{{ getText('Editar Perfil', 'Edit Profile') }}</h1>
+    </div>
+
     @if (userData) {
     <div class="edit-profile-card">
-        <h2>Editar Perfil</h2>
-        <form #editForm="ngForm">
+        <form (ngSubmit)="guardarCambios()" #editForm="ngForm">
             <div class="form-group">
-                <label for="nombre">Nombre</label>
+                <label for="nombre">{{ getText('Nombre', 'Name') }}</label>
                 <input type="text" 
                        class="form-control" 
                        id="nombre" 
@@ -14,25 +16,25 @@
                        [(ngModel)]="userData.nombre"
                        [class.is-invalid]="errors['nombre']">
                 @if (errors['nombre']) {
-                    <div class="alert alert-danger">{{ errors['nombre'] }}</div>
+                    <div class="invalid-feedback">{{ errors['nombre'] }}</div>
                 }
             </div>
 
             <div class="form-group">
-                <label for="apellido">Apellidos</label>
+                <label for="apellidos">{{ getText('Apellidos', 'Last Name') }}</label>
                 <input type="text" 
                        class="form-control" 
-                       id="apellido" 
-                       name="apellido"
+                       id="apellidos" 
+                       name="apellidos"
                        [(ngModel)]="userData.apellidos"
                        [class.is-invalid]="errors['apellidos']">
                 @if (errors['apellidos']) {
-                    <div class="alert alert-danger">{{ errors['apellidos'] }}</div>
+                    <div class="invalid-feedback">{{ errors['apellidos'] }}</div>
                 }
             </div>
 
             <div class="form-group">
-                <label for="email">Correo electrónico</label>
+                <label for="email">{{ getText('Email', 'Email') }}</label>
                 <input type="email" 
                        class="form-control" 
                        id="email" 
@@ -40,38 +42,49 @@
                        [(ngModel)]="userData.email"
                        [class.is-invalid]="errors['email']">
                 @if (errors['email']) {
-                    <div class="alert alert-danger">{{ errors['email'] }}</div>
+                    <div class="invalid-feedback">{{ errors['email'] }}</div>
                 }
             </div>
 
             <div class="form-group">
-                <label for="telefono">Teléfono</label>
-                <input type="tel" 
+                <label for="telefono">{{ getText('Teléfono', 'Phone') }}</label>
+                <input type="text" 
                        class="form-control" 
                        id="telefono" 
                        name="telefono"
                        [(ngModel)]="userData.telefono"
                        [class.is-invalid]="errors['telefono']">
                 @if (errors['telefono']) {
-                    <div class="alert alert-danger">{{ errors['telefono'] }}</div>
+                    <div class="invalid-feedback">{{ errors['telefono'] }}</div>
                 }
             </div>
 
+            @if (successMessage) {
+                <div class="alert alert-success">
+                    {{ successMessage }}
+                </div>
+            }
+
+            @if (errorMessage) {
+                <div class="alert alert-danger">
+                    {{ errorMessage }}
+                </div>
+            }
+
             <div class="profile-actions">
-                <button type="button" 
-                        class="btn btn-success animated-button"
-                        (click)="guardarCambios()"
-                        [disabled]="loading">
-                    @if (loading) {
-                        <span class="spinner-border spinner-border-sm me-2"></span>
-                    }
-                    <i class="bi bi-check-circle me-2"></i>Guardar cambios
-                </button>
                 <button type="button" 
                         class="btn btn-secondary animated-button"
                         (click)="cancelar()"
                         [disabled]="loading">
                     <i class="bi bi-x-circle me-2"></i>Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="loading">
+                    @if (loading) {
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        {{ getText('Guardando...', 'Saving...') }}
+                    } @else {
+                        {{ getText('Guardar Cambios', 'Save Changes') }}
+                    }
                 </button>
             </div>
         </form>
@@ -88,4 +101,5 @@
 
 </body>
 <app-modal-login [show]="showLoginModal" (close)="showLoginModal = false"></app-modal-login>
+<app-footer></app-footer>
 <app-footer></app-footer>

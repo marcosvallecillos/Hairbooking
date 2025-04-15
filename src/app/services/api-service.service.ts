@@ -1,5 +1,5 @@
 import { Injectable, ResourceRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Compra, Product, Reserva, Usuario } from '../models/user.interface';
 @Injectable({
@@ -9,100 +9,99 @@ export class ApiService {
 private apiUrl = 'http://localhost:8000/api';
 private apiUrlUsuarios = 'http://localhost:8000/api/usuarios'
 private apiUrlReservas = 'http://localhost:8000/api/reservas'
-public isUserSubject = new BehaviorSubject<boolean>(true); 
 public productos: Product[] = [];
 private favorites: Product[] = [];
-
-
 private reserves: Reserva[] = [];
 private cart: Product[] = [];
 public cartItemsCount = new BehaviorSubject<number>(0);
-isUser: boolean = false  ;
 cartItemsCount$ = this.cartItemsCount.asObservable();
-  isUser$ = this.isUserSubject.asObservable();
-  constructor(private http: HttpClient) { 
-    this.isUserSubject.next(this.isUser);
-  }
+
+constructor(private http: HttpClient) { }
  
-  registerUser(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrlUsuarios}/new`, usuario);
-  }
-
-  loginUser(email: string, password: string): Observable<Usuario> {
-    if (!email || !password) {
-        console.error("ERROR: El email o la contraseña están vacíos");
-        return throwError(() => new Error("El email y la contraseña son obligatorios."));
-    }
-    return this.http.get<Usuario>(`${this.apiUrlUsuarios}/login`);
+registerUser(usuario: Usuario): Observable<Usuario> {
+  return this.http.post<Usuario>(`${this.apiUrlUsuarios}/new`, usuario);
 }
-  showProfile(id: number):Observable<Usuario>{
-    return this.http.get<Usuario>(`${this.apiUrlUsuarios}/${id}`)
-  }
-  editProfile(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrlUsuarios}/${id}/edit`)
-  }
-  deleteUser(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrlUsuarios}/${id}`);
-  }
 
-  getIsUser(): boolean {
-    return this.isUser;
-  }
-  getProductos(): Product[] {
-    return this.productos;
-  }
+loginUser(email: string, password: string): Observable<any> {
+  const body = {
+    email: email,
+    password: password
+  };
 
-  addProduct(product: Product) {
-    const existingProduct = this.productos.find((p) => p.id === product.id);
-    if (!existingProduct) { 
-      product.cantidad = 1;
-      this.productos.push(product);
-    }
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
+  return this.http.post(`${this.apiUrlUsuarios}/login`, body, httpOptions);
+}
+  
+showProfile(id: number):Observable<Usuario>{
+  return this.http.get<Usuario>(`${this.apiUrlUsuarios}/${id}`)
+}
+editProfile(id: number, userData: Usuario): Observable<Usuario> {
+  return this.http.put<Usuario>(`${this.apiUrlUsuarios}/${id}/edit`, userData);
+}
+deleteUser(id: number): Observable<any> {
+  return this.http.delete<any>(`${this.apiUrlUsuarios}/${id}`);
+}
+
+getProductos(): Product[] {
+  return this.productos;
+}
+
+addProduct(product: Product) {
+  const existingProduct = this.productos.find((p) => p.id === product.id);
+  if (!existingProduct) { 
+    product.cantidad = 1;
+    this.productos.push(product);
+  }
+  this.updateCartItemsCount();
+}
+
+removeProduct(productId: number) {
+  this.productos = this.productos.filter((p) => p.id !== productId);
+  this.updateCartItemsCount();
+}
+
+updateQuantity(productId: number, quantity: number) {
+  const product = this.productos.find((p) => p.id === productId);
+  if (product) {
+    product.cantidad = quantity;
     this.updateCartItemsCount();
   }
+}
 
-  removeProduct(productId: number) {
-    this.productos = this.productos.filter((p) => p.id !== productId);
-    this.updateCartItemsCount();
+private updateCartItemsCount() {
+  const totalItems = this.productos.reduce(
+    (sum, product) => sum + (product.cantidad || 0),
+    0
+  );
+  this.cartItemsCount.next(totalItems);
+}
+
+addFavorite(product: Product) {
+  const existingFavorite = this.favorites.find(p => p.id === product.id);
+  if (!existingFavorite) {
+    const productToAdd = { ...product, isFavorite: true };
+    this.favorites.push(productToAdd);
   }
+}
 
-  updateQuantity(productId: number, quantity: number) {
-    const product = this.productos.find((p) => p.id === productId);
-    if (product) {
-      product.cantidad = quantity;
-      this.updateCartItemsCount();
-    }
-  }
+removeFavorite(productId: number) {
+  this.favorites = this.favorites.filter(p => p.id !== productId);
+}
 
-  private updateCartItemsCount() {
-    const totalItems = this.productos.reduce(
-      (sum, product) => sum + (product.cantidad || 0),
-      0
-    );
-    this.cartItemsCount.next(totalItems);
-  }
+getFavorites(): Product[] {
+  return this.favorites;
+}
 
-  addFavorite(product: Product) {
-    const existingFavorite = this.favorites.find(p => p.id === product.id);
-    if (!existingFavorite) {
-      const productToAdd = { ...product, isFavorite: true };
-      this.favorites.push(productToAdd);
-    }
-  }
+getCart(): Product[] {
+  return this.cart;
+}
 
-  removeFavorite(productId: number) {
-    this.favorites = this.favorites.filter(p => p.id !== productId);
-  }
-
-  getFavorites(): Product[] {
-    return this.favorites;
-  }
-
-  getCart(): Product[] {
-    return this.cart;
-  }
-
-  private comprasRealizadas: Compra[] = [];
+private comprasRealizadas: Compra[] = [];
 
 addToPurchases(products: Product[]): void {
   const nuevaCompra: Compra = {

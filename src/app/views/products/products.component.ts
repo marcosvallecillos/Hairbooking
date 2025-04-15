@@ -4,6 +4,7 @@ import { Product } from '../../models/user.interface';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-products',
@@ -272,8 +273,14 @@ export class ProductsComponent {
   };
 
   isSpanish: boolean = true;
-  isUser = false ;
-  constructor(private languageService: LanguageService,private router: Router, private route:ActivatedRoute,private apiService:ApiService ) {
+  isUser = false;
+  constructor(
+    private languageService: LanguageService,
+    private apiService: ApiService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private userStateService: UserStateService
+  ) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
     );
@@ -282,8 +289,12 @@ export class ProductsComponent {
       this.filterProducts(category);
     });
   }
+
   ngOnInit() {
-    this.isUser = this.apiService.getIsUser();
+    this.isUser = this.userStateService.getIsUser();
+    this.userStateService.isUser$.subscribe(isUser => {
+      this.isUser = isUser;
+    });
   }
 
   addToCart(product: Product) {

@@ -31,11 +31,11 @@ export interface Usuario {
   }
 
   export interface Reserva{
-    id: number;
-    servicio:string;
-    peluquero:string;
-    dia: string;
-    hora:string;
-    precio?: string;
-    usuarioId:number;
+    id:         number;
+    servicio:   string;
+    peluquero:  string;
+    precio:     string;
+    dia:        string;
+    hora:       string;
+    usuario_id: number;
   }

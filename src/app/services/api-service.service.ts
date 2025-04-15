@@ -62,8 +62,8 @@ newReserve(reservas: Reserva): Observable<Reserva> {
   return this.http.post<Reserva>(`${this.apiUrlReservas}/new`, reservas);
 }
 
-editReserve(id:number):Observable<Reserva>{
-  return this.http.put<Reserva>(`${this.apiUrlReservas}/${id}/edit`, id);
+editReserve(id: number, reservaData: Reserva): Observable<Reserva> {
+  return this.http.put<Reserva>(`${this.apiUrlReservas}/${id}/edit`, reservaData);
 }
 deleteReserve(id: number): Observable<any> {
   return this.http.delete<any>(`${this.apiUrlReservas}/${id}`);

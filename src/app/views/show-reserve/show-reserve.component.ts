@@ -70,7 +70,7 @@ export class ShowReserveComponent implements OnInit {
     this.selectedReserve = reserve;
     this.showModal = true;
   }
-
+  
   onConfirmReserve() {
     if (this.selectedReserve) {
       const reserveId = this.selectedReserve.id;
@@ -98,5 +98,26 @@ export class ShowReserveComponent implements OnInit {
 
   openLoginModal() {
     this.showLoginModal = true;
+  }
+
+  editReserve(reserve: Reserva) {
+    // Ajustar la fecha correctamente
+    const [year, month, day] = reserve.dia.split('-').map(Number);
+    const date = new Date(year, month - 1, day + 1);
+    const adjustedDate = date.toISOString().split('T')[0];
+    console.log('Fecha original:', reserve.dia);
+    console.log('Fecha ajustada:', adjustedDate);
+
+    // Navegar a la página de reserva con los datos de la reserva actual
+    this.router.navigate(['/reserve'], { 
+      queryParams: { 
+        id: reserve.id,
+        servicio: reserve.servicio,
+        peluquero: reserve.peluquero,
+        dia: adjustedDate,
+        hora: reserve.hora,
+        precio: reserve.precio
+      } 
+    });
   }
 }

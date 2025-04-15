@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { AuthService } from '../../services/auth.service';
@@ -17,7 +17,7 @@ import { Reserva } from '../../models/user.interface';
   templateUrl: './reserve.component.html',
   styleUrls: ['./reserve.component.css'],
 })
-export class ReserveComponent {
+export class ReserveComponent implements OnInit {
   currentDate = new Date();
   reserves: Reserva[] = [];
   selectedDate: Date | null = null;
@@ -27,6 +27,8 @@ export class ReserveComponent {
   showModal: boolean = false;
   showLoginModal: boolean = false;
   isSpanish: boolean = true;
+  isEditing: boolean = false;
+  reserveId: number | null = null;
 
   services = [
     { nombre: 'Mascarilla Puntos Negros', precio: '10 €', name: 'Blackhead Mask' },
@@ -55,7 +57,8 @@ export class ReserveComponent {
     private authService: AuthService,
     private router: Router,
     private languageService: LanguageService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private route: ActivatedRoute
   ) {
     this.languageService.isSpanish$.subscribe((isSpanish) => (this.isSpanish = isSpanish));
   }
@@ -65,6 +68,24 @@ export class ReserveComponent {
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
     this.loadReserves();
+
+    // Verificar si hay parámetros de consulta para edición
+    this.route.queryParams.subscribe(params => {
+      if (params['id']) {
+        this.isEditing = true;
+        this.reserveId = Number(params['id']);
+        this.selectedService = params['servicio'] || '';
+        this.selectedBarber = params['peluquero'] || '';
+        if (params['dia']) {
+          const [year, month, day] = params['dia'].split('-').map(Number);
+          this.selectedDate = new Date(year, month - 1, day);
+          this.currentDate = new Date(year, month - 1, 1);
+          console.log('Fecha recibida:', params['dia']);
+          console.log('Fecha seleccionada:', this.selectedDate);
+        }
+        this.selectedTime = params['hora'] || '';
+      }
+    });
   }
 
   loadReserves() {
@@ -182,26 +203,46 @@ export class ReserveComponent {
   onConfirmReserve() {
     this.showModal = false;
     const userId = this.authService.getUserId();
-   if (this.selectedDate && this.selectedService && this.selectedBarber && this.selectedTime && userId) {
-    const reserveData: Reserva = {
-      id: Date.now(),
-      servicio: this.selectedService,
-      peluquero: this.selectedBarber,
-      dia: this.selectedDate.toLocaleDateString(),
-      hora: this.selectedTime,
-      precio: this.getPrice(),
-      usuarioId: userId
-    };
+    if (this.selectedDate && this.selectedService && this.selectedBarber && this.selectedTime && userId) {
+      // Formatear la fecha correctamente
+      const year = this.selectedDate.getFullYear();
+      const month = this.selectedDate.getMonth() + 1;
+      const day = this.selectedDate.getDate();
+      const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      
+      console.log('Fecha a enviar:', formattedDate);
 
-      this.apiService.newReserve(reserveData).subscribe({
-        next: (response) => {
-          console.log('Reserva guardada:', response);
-          this.router.navigate(['/show-reserve']);
-        },
-        error: (error) => {
-          console.error('Error al guardar la reserva:', error);
-        }
-      });
+      const reserveData: Reserva = {
+        id: this.isEditing ? this.reserveId! : Date.now(),
+        servicio: this.selectedService,
+        peluquero: this.selectedBarber,
+        dia: formattedDate,
+        hora: this.selectedTime,
+        precio: this.getPrice(),
+        usuario_id: userId
+      };
+
+      if (this.isEditing && this.reserveId) {
+        this.apiService.editReserve(this.reserveId, reserveData).subscribe({
+          next: (response) => {
+            console.log('Reserva actualizada:', response);
+            this.router.navigate(['/show-reserve']);
+          },
+          error: (error) => {
+            console.error('Error al actualizar la reserva:', error);
+          }
+        });
+      } else {
+        this.apiService.newReserve(reserveData).subscribe({
+          next: (response) => {
+            console.log('Reserva guardada:', response);
+            this.router.navigate(['/show-reserve']);
+          },
+          error: (error) => {
+            console.error('Error al guardar la reserva:', error);
+          }
+        });
+      }
     }
   }
 

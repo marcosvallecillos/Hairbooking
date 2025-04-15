@@ -68,7 +68,15 @@ export class ReserveComponent {
   }
 
   loadReserves() {
-    this.reserves = this.apiService.getReserves();
+    this.apiService.getReserves().subscribe({
+      next: (reserves) => {
+        console.log('Reservas:' , reserves)
+        this.reserves = reserves;
+      },
+      error: (error) => {
+        console.error('Error al cargar reservas:', error);
+      }
+    });
   }
 
   getText(es: string, en: string): string {
@@ -77,7 +85,7 @@ export class ReserveComponent {
 
   getPrice(): string {
     const selected = this.services.find(service => service.nombre === this.selectedService);
-    return selected ? selected.precio : '';
+    return selected ? selected.precio.replace(' €', '') : '';
   }
 
   getDaysInMonth(month: number, year: number): (Date | null)[] {
@@ -173,22 +181,27 @@ export class ReserveComponent {
 
   onConfirmReserve() {
     this.showModal = false;
-    if (this.selectedDate && this.selectedService && this.selectedBarber && this.selectedTime) {
-      const userId = this.authService.getUserId();
-      const reserveData: Reserva = {
-        id: Date.now(),
-        servicio: this.selectedService,
-        peluquero: this.selectedBarber,
-        dia: this.selectedDate.toLocaleDateString(),
-        hora: this.selectedTime,
-        precio: this.getPrice(),
-       usuarioId: userId || undefined
-      };
+    const userId = this.authService.getUserId();
+   if (this.selectedDate && this.selectedService && this.selectedBarber && this.selectedTime && userId) {
+    const reserveData: Reserva = {
+      id: Date.now(),
+      servicio: this.selectedService,
+      peluquero: this.selectedBarber,
+      dia: this.selectedDate.toLocaleDateString(),
+      hora: this.selectedTime,
+      precio: this.getPrice(),
+      usuarioId: userId
+    };
 
-      this.apiService.newReserve(reserveData);
-      this.loadReserves();
-      console.log('Reserva guardada:', reserveData);
-      this.router.navigate(['/show-reserve']);
+      this.apiService.newReserve(reserveData).subscribe({
+        next: (response) => {
+          console.log('Reserva guardada:', response);
+          this.router.navigate(['/show-reserve']);
+        },
+        error: (error) => {
+          console.error('Error al guardar la reserva:', error);
+        }
+      });
     }
   }
 

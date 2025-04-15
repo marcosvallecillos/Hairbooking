@@ -32,10 +32,10 @@ export interface Usuario {
 
   export interface Reserva{
     id: number;
-    servicio: string;
-    peluquero: string;
+    servicio:string;
+    peluquero:string;
     dia: string;
-    hora: string;
+    hora:string;
     precio?: string;
-    usuarioId?: number;
+    usuarioId:number;
   }

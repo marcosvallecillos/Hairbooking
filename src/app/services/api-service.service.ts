@@ -46,20 +46,20 @@ editProfile(id: number, userData: Usuario): Observable<Usuario> {
 deleteUser(id: number): Observable<any> {
   return this.http.delete<any>(`${this.apiUrlUsuarios}/${id}`);
 }
-getReserves(): Reserva[] {
-  return this.reserves;
+getReserves(): Observable<Reserva[]> {
+  return this.http.get<Reserva[]>(`${this.apiUrlReservas}`);
 }
 
 addReserve(reserve: Reserva) {
   this.reserves.push({ ...reserve, id: this.reserves.length + 1 }); 
 }
 
-getReserveByUsuario(id: number):Observable<Reserva>{
-  return this.http.get<Reserva>(`${this.apiUrlReservas}/${id}`)
+getReserveByUsuario(usuario_Id: number): Observable<Reserva[]> {
+  return this.http.get<Reserva[]>(`${this.apiUrlReservas}/usuario/${usuario_Id}`);
 }
 
 newReserve(reservas: Reserva): Observable<Reserva> {
-  return this.http.post<Reserva>(`${this.apiUrlUsuarios}/new`, reservas);
+  return this.http.post<Reserva>(`${this.apiUrlReservas}/new`, reservas);
 }
 
 editReserve(id:number):Observable<Reserva>{

@@ -9,6 +9,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { ApiService } from '../../services/api-service.service';
 import { UserStateService } from '../../services/user-state.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-show-reserve',
@@ -44,37 +45,24 @@ export class ShowReserveComponent implements OnInit {
     this.userStateService.isUser$.subscribe(isUser => {
       this.isUser = isUser;
     });
-
-
+    this.loadUserReserves();
   }
 
   loadUserReserves() {
-    
     const userId = this.authService.getUserId();
     console.log('Id del Usuario', userId);
     
     if (userId) {
-      // Obtener todas las reservas del usuario
-      this.apiService.getReserves().forEach(reserve => {
-        // Filtrar las reservas que pertenecen al usuario actual usando usuarioId
-        if (reserve.usuarioId === userId) {
-          this.reserves.push(reserve);
+      // Obtener las reservas del usuario directamente
+      this.apiService.getReserveByUsuario(userId).subscribe({
+        next: (reserves: Reserva[]) => {
+          this.reserves = reserves;
+          console.log('Reservas del usuario:', reserves);
+        },
+        error: (error: Error) => {
+          console.error('Error al cargar las reservas del usuario:', error);
         }
       });
-      
-      // Si no hay reservas, intentar obtenerlas del backend
-      if (this.reserves.length === 0) {
-        this.apiService.getReserveByUsuario(userId).subscribe({
-          next: (reserva: Reserva) => {
-            if (reserva) {
-              this.reserves = [reserva];
-            }
-          },
-          error: err => {
-            console.error('Error al cargar reservas', err);
-          }
-        });
-      }
     }
   }
 
@@ -90,13 +78,13 @@ export class ShowReserveComponent implements OnInit {
         next: () => {
           this.reserves = this.reserves.filter(r => r.id !== reserveId);
           this.selectedReserve = null;
+          this.showModal = false;
         },
-        error: err => {
-          console.error('Error al eliminar la reserva', err);
+        error: (error: Error) => {
+          console.error('Error al eliminar la reserva', error);
         }
       });
     }
-    this.showModal = false;
   }
 
   onCancelReserve() {

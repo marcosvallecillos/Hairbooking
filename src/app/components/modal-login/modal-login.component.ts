@@ -24,6 +24,7 @@ export class ModalLoginComponent {
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
   errorMessage: string = '';
+  goodMessage:string = '';
   isLoading: boolean = false;
   isSpanish: boolean = true;
   rememberMe: boolean = false;
@@ -163,7 +164,7 @@ export class ModalLoginComponent {
   
     this.isLoading = true;
     this.errorMessage = '';
-  
+    this.goodMessage = '';
     const usuario: Usuario = {
       id: 0,
       nombre: this.loginForm.get('nombre')?.value,
@@ -180,24 +181,16 @@ export class ModalLoginComponent {
       next: (response) => {
         this.isLoading = false;
         console.log('Respuesta del backend:', response);
-        const userData: Usuario = {
-          id: response.id,
-          email: usuario.email,
-          nombre: usuario.nombre,
-          apellidos: usuario.apellidos,
-          telefono: usuario.telefono,
-          password: '',
-          citas_reservadas: []
-        };
         
-        // Actualizar el estado del usuario
-        this.userStateService.updateUser(userData);
-        
-        this.errorMessage = this.getText(
+        this.goodMessage = this.getText(
           'Registro exitoso, ahora puedes iniciar sesión',
           'Registration successful, you can now log in'
         );
-        this.toggleTab(false); 
+        
+        // Cambiar a la pestaña de login y limpiar el formulario
+        this.isRegister = false;
+        this.loginForm.reset();
+        this.toggleFormValidators();
       },
       error: (error) => {
         this.isLoading = false;

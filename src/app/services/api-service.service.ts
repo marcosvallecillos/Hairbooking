@@ -9,6 +9,8 @@ export class ApiService {
 private apiUrl = 'http://localhost:8000/api';
 private apiUrlUsuarios = 'http://localhost:8000/api/usuarios'
 private apiUrlReservas = 'http://localhost:8000/api/reservas'
+private apiUrlProductos = 'http://localhost:8000/api/productos'
+
 public productos: Product[] = [];
 private favorites: Product[] = [];
 private reserves: Reserva[] = [];
@@ -75,7 +77,9 @@ getReserveById(reserveId: number): Reserva | undefined {
   return this.reserves.find((r) => r.id === reserveId);
 }
 
-
+getAllProductos():Observable<Product[]>{
+  return this.http.get<Product[]>(`${this.apiUrlProductos}/list`)
+}
 getProductos(): Product[] {
   return this.productos;
 }

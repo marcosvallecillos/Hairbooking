@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { Product } from '../../models/user.interface';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -12,7 +12,7 @@ import { UserStateService } from '../../services/user-state.service';
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   products: {
     maquinas: { clippers: Product[]; trimmer: Product[] };
     cosmeticos: Product[];
@@ -21,256 +21,16 @@ export class ProductsComponent {
     capas: Product[];
     accesorios: Product[];
   } = {
-    maquinas: {
-      clippers: [
-        {
-          id: 1,
-          name: 'CLIPPER SPACE X VERSACE ',
-          price: 109.99 ,
-          image: '../../../../images/clipper/clipper_space.jpg',
-          isFavorite: false,
-          insidecart: false,
-          cantidad: 1,
-        },
-        {
-          id: 2,
-          name: 'CLIPPER WAHL VAPOR 5 STAR CORDLESS ',
-          price: 159.99,
-          
-          image: '../../../../images/clipper/clipper_wahl.jpg',
-          isFavorite: false,
-          insidecart: false,
-          cantidad: 1,
-        }, {
-          id: 3,
-          name: 'CLIPPER JRL ',
-          price: 109.99,
-          image: '../../../../images/clipper/clipper_jrl.jpg',
-          isFavorite: false,
-          insidecart: false,
-          cantidad: 1,
-        },
-        {
-          id: 4,
-          name: 'CLIPPER Saber ',
-          price: 159.99 ,
-          image: '../../../../images/clipper/clipper_styleCraft.jpg',
-          isFavorite: false,
-          insidecart: false,
-          cantidad: 1,
-        },
-      ],
-      trimmer: [
-        {
-          id:5,
-          name: 'Trimmer Skeleton ',
-          price: 129.99 ,
-          image: '../../../../images/trimmer/trimmer_skeleton.jpg',
-          isFavorite: false,
-          insidecart: false,
-          cantidad: 1,
-        },
-        {
-          id: 6,
-          name: 'Trimmer Saber ',
-          price: 179.99 ,
-          image: '../../../../images/trimmer/trimmer_saber.jpg',
-          isFavorite: false,
-          insidecart: false,
-          cantidad: 1,
-        },{
-          id: 26,
-          name: 'Trimmer Chamaleon ',
-          price: 175.99 ,
-          image: '../../../../images/trimmer/trimmer_chamaleon.jpg',
-          isFavorite: false,
-          insidecart: false,
-          cantidad: 1,
-        }
-      ]
-    },
-    cosmeticos: [
-      {
-        id: 7,
-        name: 'Difusor de Agua ',
-        price: 9.99,
-        image: '../../../../images/cosmeticos/difusor.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 8,
-        name: 'Cera de Pelo ',
-        price: 2.99,
-        image: '../../../../images/cosmeticos/cera.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 9,
-        name: 'Champú para barba ',
-        price: 2.99,
-        image: '../../../../images/cosmeticos/champu_barba.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 10,
-        name: 'Aceite para Barba ',
-        price: 18.99,
-        image: '../../../../images/aceite.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      }
-    ],
-    mobiliario: [
-      {
-        id: 11,
-        name: 'Sillón de barberia negra ',
-        price: 250 ,
-        image: '../../../../images/mobiliario/sillon_negro.jpg',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 12,
-        name: 'Sillón de barberia blanca ',
-        price: 279.99,
-        image: '../../../../images/mobiliario/sillon_blanco.jpg',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      }, {
-
-        id: 12,
-        name: 'Sillón de barberia negra con toques dorados ',
-        price: 279.99,
-        image: '../../../../images/mobiliario/sillon_dorado.jpg',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-
-      }
-
-    ],
-    tijeras: [
-      {
-        id: 14,
-        name: 'TIJERAS DE ENTRESACAR STUDIO TECNO (5,5 PULGADAS) ',
-        price: 15.99 ,
-        image: '../../../../images/tijeras/tijeras_5.5.jpg',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 15,
-        name: 'Tijeras de corte (6 PULGADAS) ',
-        price: 10.99,
-        image: '../../../../images/tijeras/tijeras_6.jpg',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 16,
-        name: 'Tijeras de corte academy pro chamaleon (6 PULGADAS) ',
-        price: 10.99,
-        image: '../../../../images/tijeras/tijeras_chamaleon.jpg',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      }
-    ],
-    capas: [
-      {
-        id: 17,
-        name: 'Capa Bape ',
-        price: 9.99,
-        image: '../../../../images/capas/capa_bape.jpg',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 18,
-        name: 'Capa negra con estampado ',
-        price: 9.99,
-        image: '../../../../images/capas/capa_lv.jpg',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 19,
-        name: 'Capa negra  ',
-        price: 9.99,
-        image: '../../../../images/capas/capa3.jpg',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      }
-    ],
-    accesorios: [
-      {
-        id: 20,
-        name: 'Difusor de agua',
-        price: 9.99,
-        image: '../../../../images/accesorios/difusor.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 21,
-        name: 'Espuma para pelo ',
-        price: 1.99 ,
-        image: '../../../../images/accesorios/espuma.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },
-      {
-        id: 22,
-        name: 'Peine de puas  ',
-        price: 2.99 ,
-        image: '../../../../images/accesorios/peine.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },{
-        id: 23,
-        name: 'Peine Rulo  ',
-        price: 3.99 ,
-        image: '../../../../images/accesorios/peine_rulo.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },{
-        id: 24,
-        name: 'Cepillo Quitapelos  ',
-        price: 2.99,
-        image: '../../../../images/accesorios/quita_pelos.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      },{
-        id: 25,
-        name: 'Secador de pelo  ',
-        price: 14.99,
-        image: '../../../../images/accesorios/secador.png',
-        isFavorite: false,
-        insidecart: false,
-        cantidad: 1,
-      }
-
-    ]
+    maquinas: { clippers: [], trimmer: [] },
+    cosmeticos: [],
+    mobiliario: [],
+    tijeras: [],
+    capas: [],
+    accesorios: []
   };
+
+  filteredProducts: Product[] = [];
+  isLoading: boolean = true;
 
   isSpanish: boolean = true;
   isUser = false;
@@ -284,10 +44,6 @@ export class ProductsComponent {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
     );
-    this.route.queryParams.subscribe((params) => {
-      const category = params['category'] || 'all';
-      this.filterProducts(category);
-    });
   }
 
   ngOnInit() {
@@ -295,6 +51,52 @@ export class ProductsComponent {
     this.userStateService.isUser$.subscribe(isUser => {
       this.isUser = isUser;
     });
+
+    this.apiService.getAllProductos().subscribe(
+      (apiProducts: Product[]) => {
+        // Categorize products based on their type
+        apiProducts.forEach(product => {
+          if (product.subcategorias === 'clippers') {
+            this.products.maquinas.clippers.push(product);
+          } else if (product.subcategorias === 'trimmer') {
+            this.products.maquinas.trimmer.push(product);
+          } else if (product.categorias === 'cosmeticos') {
+            this.products.cosmeticos.push(product);
+          } else if (product.categorias === 'mobiliario') {
+            this.products.mobiliario.push(product);
+          } else if (product.categorias === 'tijeras') {
+            this.products.tijeras.push(product);
+          } else if (product.categorias === 'capas') {
+            this.products.capas.push(product);
+          } else if (product.categorias === 'accesorios') {
+            this.products.accesorios.push(product);
+          }
+        });
+
+        // Initialize filteredProducts with all products
+        this.filteredProducts = [
+          ...this.products.maquinas.clippers,
+          ...this.products.maquinas.trimmer,
+          ...this.products.cosmeticos,
+          ...this.products.mobiliario,
+          ...this.products.tijeras,
+          ...this.products.capas,
+          ...this.products.accesorios
+        ];
+        
+        this.isLoading = false;
+        
+        // Subscribe to route params after products are loaded
+        this.route.queryParams.subscribe((params) => {
+          const category = params['category'] || 'all';
+          this.filterProducts(category);
+        });
+      },
+      error => {
+        console.error('Error fetching products:', error);
+        this.isLoading = false;
+      }
+    );
   }
 
   addToCart(product: Product) {
@@ -376,10 +178,6 @@ export class ProductsComponent {
     }, 2000);
   }
 
-
-  filteredProducts: any[] = this.products.maquinas.clippers;
-
-  
   filterProducts(category: string) {
     switch (category) {
       case 'clippers':

@@ -10,14 +10,17 @@ export interface Usuario {
 
   
   export interface Product {
-    id: number;
-    name: string;
-    price: number;
-    image: string;
-    cantidad:number;
-    isFavorite: boolean;
-    insidecart: boolean;
-    fecha?: Date;
+    id:            number;
+    name:          string;
+    price:         number;
+    image:         string;
+    cantidad:      number;
+    isFavorite:      boolean;
+    insidecart:          boolean;
+    date:          Date;
+    compras:       Compra[];
+    categorias:    string;
+    subcategorias: null | string;
   }
 
   export interface Compra{

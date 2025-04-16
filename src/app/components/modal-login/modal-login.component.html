@@ -17,7 +17,10 @@
       @if(errorMessage) {
         <div class="alert alert-danger">{{ errorMessage }}</div>
       }
+      @if(goodMessage){
+        <div class="alert alert-success">{{ goodMessage }}</div>
 
+      }
       @if(isRegister) {
         <form [formGroup]="loginForm" (ngSubmit)="registrarUsuario()">
           <!-- Nombre -->

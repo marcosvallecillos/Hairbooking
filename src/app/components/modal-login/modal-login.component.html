@@ -67,8 +67,8 @@
           <div class="form-group position-relative">
             <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
                   (click)="togglePasswordVisibility('password')" style="cursor: pointer; color:white" role="button">
-              <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
-            </span>
+                  <i class="bi" [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
+                </span>
             <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password" class="form-input" />
             @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
               <small class="text-danger">
@@ -82,7 +82,7 @@
           <div class="form-group position-relative">
             <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
                   (click)="toggleConfirmPasswordVisibility()" style="cursor: pointer; color:white" role="button">
-              <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+              <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
             </span>
             <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirm Password" class="form-input" />
             @if(loginForm.get('confirmPassword')?.touched && loginForm.hasError('passwordsDoNotMatch')) {
@@ -111,8 +111,8 @@
               <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password" class="form-input" />
               <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-3"
                     (click)="togglePasswordVisibility('password')" style="cursor: pointer; color:white" role="button">
-                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
-              </span>
+                    <i class="bi" [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
+                  </span>
               @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
                 <small class="text-danger">
                   {{ getText('La contraseña es obligatoria', 'Password is required') }}

@@ -52,6 +52,7 @@ export class ReserveComponent implements OnInit {
     { name: 'Miguel', imagen: '../../../../images/colorista.jpg', descripcion: 'Colorista', description: 'Color Specialist' },
     { name: 'Leo', imagen: '../../../../images/barber2.jpg', descripcion: 'Ayudante', description: 'Assistant' },
   ];
+  isLoading: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -86,6 +87,7 @@ export class ReserveComponent implements OnInit {
         this.selectedTime = params['hora'] || '';
       }
     });
+    this.isLoading = false;
   }
 
   loadReserves() {

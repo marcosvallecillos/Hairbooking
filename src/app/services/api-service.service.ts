@@ -2,6 +2,7 @@ import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Compra, Product, Reserva, Usuario } from '../models/user.interface';
+import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +19,7 @@ private cart: Product[] = [];
 public cartItemsCount = new BehaviorSubject<number>(0);
 cartItemsCount$ = this.cartItemsCount.asObservable();
 
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient, private authService: AuthService) { }
  
 registerUser(usuario: Usuario): Observable<Usuario> {
   return this.http.post<Usuario>(`${this.apiUrlUsuarios}/new`, usuario);
@@ -91,6 +92,18 @@ addProduct(product: Product) {
     this.productos.push(product);
   }
   this.updateCartItemsCount();
+}
+
+updateProductFavorite(productId: number, isFavorite: boolean): Observable<any> {
+  const userId = this.authService.getUserId();
+  return this.http.post(`${this.apiUrlProductos}/favoritos/${productId}`, { 
+    usuario_id: userId,
+    isFavorite: isFavorite 
+  });
+}
+
+getFavoritesByUsuarioId(usuario_Id: number): Observable<any> {
+  return this.http.get(`${this.apiUrlProductos}/favoritos/usuario/${usuario_Id}`);
 }
 
 removeProduct(productId: number) {

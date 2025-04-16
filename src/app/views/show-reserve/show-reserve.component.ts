@@ -26,6 +26,7 @@ export class ShowReserveComponent implements OnInit {
   showLoginModal: boolean = false;
   showModal: boolean = false;
   selectedReserve: Reserva | null = null;
+  isLoading: boolean = true; // Renombrado a isLoading
 
   constructor(
     private authService: AuthService,
@@ -49,20 +50,24 @@ export class ShowReserveComponent implements OnInit {
   }
 
   loadUserReserves() {
+    this.isLoading = true;
     const userId = this.authService.getUserId();
     console.log('Id del Usuario', userId);
-    
+
     if (userId) {
-      // Obtener las reservas del usuario directamente
       this.apiService.getReserveByUsuario(userId).subscribe({
         next: (reserves: Reserva[]) => {
           this.reserves = reserves;
+          this.isLoading = false;
           console.log('Reservas del usuario:', reserves);
         },
         error: (error: Error) => {
           console.error('Error al cargar las reservas del usuario:', error);
+          this.isLoading = false;
         }
       });
+    } else {
+      this.isLoading = false;
     }
   }
 

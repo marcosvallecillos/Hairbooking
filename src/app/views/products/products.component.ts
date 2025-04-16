@@ -136,19 +136,35 @@ export class ProductsComponent implements OnInit {
       return;
     }
 
+    // Cambiar el estado de isFavorite
     product.isFavorite = !product.isFavorite;
-    if (product.isFavorite) {
-      this.apiService.addFavorite({ ...product });
-      this.messageNoFavorite = `${product.name} ` + this.getText('ha sido añadido a favoritos', 'has been added to favorites');
-    } else {
-      this.apiService.removeFavorite(product.id);
-      this.messageFavorite = `${product.name} ` + this.getText('ha sido eliminado de favoritos', 'has been removed from favorites');
-    }
+    
+    // Actualizar el producto en la base de datos
+    this.apiService.updateProductFavorite(product.id, product.isFavorite ? true : false).subscribe({
+      next: (response: any) => {
+        if (product.isFavorite) {
+          this.apiService.addFavorite({ ...product });
+          this.messageNoFavorite = `${product.name} ` + this.getText('ha sido añadido a favoritos', 'has been added to favorites');
+        } else {
+          this.apiService.removeFavorite(product.id);
+          this.messageFavorite = `${product.name} ` + this.getText('ha sido eliminado de favoritos', 'has been removed from favorites');
+        }
 
-    setTimeout(() => {
-      this.messageFavorite = null;
-      this.messageNoFavorite = null;
-    }, 2000);
+        setTimeout(() => {
+          this.messageFavorite = null;
+          this.messageNoFavorite = null;
+        }, 2000);
+      },
+      error: (error: any) => {
+        console.error('Error al actualizar favorito:', error);
+        // Revertir el cambio si hay error
+        product.isFavorite = !product.isFavorite;
+        this.messageNoUserDisplay = this.getText(
+          'Error al actualizar favoritos',
+          'Error updating favorites'
+        );
+      }
+    });
   }
 
   cart: Product[] = [];

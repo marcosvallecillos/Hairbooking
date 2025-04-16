@@ -15,8 +15,8 @@ export interface Usuario {
     price:         number;
     image:         string;
     cantidad:      number;
-    isFavorite:      boolean;
-    insidecart:          boolean;
+    isFavorite:    boolean;
+    insidecart:    boolean;
     date:          Date;
     compras:       Compra[];
     categorias:    string;

@@ -235,7 +235,24 @@ h2 .reservas{
     margin: 5rem auto;
     text-align: center;
 }
-
+.loading-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    font-size: 1.5rem;
+    color: #000000;
+    background-color: none;
+    border-radius: 8px;
+    margin: 20px;
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
 .alert-warning img {
     width: 100px;
     height: 100px;

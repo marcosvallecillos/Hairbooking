@@ -291,7 +291,26 @@ li a.active{
         z-index: 1000;
       }
 
-.loading-message,
+      
+.loading-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    font-size: 1.5rem;
+    color: #000000;
+    background-color: none;
+    border-radius: 8px;
+    margin: 20px;
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+  
 .no-products-message {
   width: 100%;
   text-align: center;
@@ -300,7 +319,6 @@ li a.active{
   color: #666;
 }
 
-.loading-message p,
 .no-products-message p {
   margin: 0;
 }

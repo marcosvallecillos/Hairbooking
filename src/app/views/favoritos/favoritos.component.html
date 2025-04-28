@@ -1,5 +1,23 @@
 <div class="overlay"></div>
+@if (isLoading) {
+  <div class="loading-message">
+    <p>{{ getText('Cargando favoritos...', 'Loading favorites...') }}</p>
+  </div>
+} @else if (productos.length == 0){
+  <div class="favorito-vacio">
+    <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
 
+    <h3> {{ getText('No tienes productos favoritos.','You have no favorite products.') }} </h3>
+
+    <p> {{getText('Echa un vistazo a la selección que tenemos para ti.','Take a look at the selection we have for
+      you.')}} </p>
+    <button class="btn-volver" routerLink="/products">
+
+      {{getText( 'Ir a productos','Go to products')}}
+
+    </button>
+  </div>
+  }
 <div class="favorite-container">
   <section class="products-content">
     <div class="products-grid">
@@ -20,7 +38,8 @@
         {{ messageNoUserDisplay }}
       </div>
       }
-      @if(productos.length > 0) {
+     
+      @else if(productos.length > 0) {
       @for (product of productos; track product.id) {
       <div class="product-card">
         <button class="eliminar" (click)="eliminarproduct(product)" aria-label="Eliminar producto">
@@ -44,21 +63,7 @@
       </div>
 
       }
-      } @else {
-      <div class="favorito-vacio">
-        <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
-
-        <h3> {{ getText('No tienes productos favoritos.','You have no favorite products.') }} </h3>
-
-        <p> {{getText('Echa un vistazo a la selección que tenemos para ti.','Take a look at the selection we have for
-          you.')}} </p>
-        <button class="btn-volver" routerLink="/products">
-
-          {{getText( 'Ir a productos','Go to products')}}
-
-        </button>
-      </div>
-      }
+      } 
     </div>
   </section>
 </div>

@@ -7,10 +7,10 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class ApiService {
-private apiUrl = 'http://localhost:8000/api';
-private apiUrlUsuarios = 'http://localhost:8000/api/usuarios'
-private apiUrlReservas = 'http://localhost:8000/api/reservas'
-private apiUrlProductos = 'http://localhost:8000/api/productos'
+private apiUrl = 'https://localhost:8000/api';
+private apiUrlUsuarios = 'https://localhost:8000/api/usuarios'
+private apiUrlReservas = 'https://localhost:8000/api/reservas'
+private apiUrlProductos = 'https://localhost:8000/api/productos'
 
 public productos: Product[] = [];
 private favorites: Product[] = [];

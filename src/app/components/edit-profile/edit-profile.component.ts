@@ -102,8 +102,7 @@ export class EditProfileComponent implements OnInit {
       this.errors['telefono'] = this.getText('El teléfono debe tener 9 dígitos', 'Phone must have 9 digits');
     }
 
-    // Password validation (commented out since no password field in HTML)
-    /*
+    
     if (!this.userData.password || String(this.userData.password).trim() === '') {
       this.errors['password'] = this.getText('La contraseña es obligatoria', 'Password is required');
     } else if (String(this.userData.password).length < 6) {
@@ -114,8 +113,7 @@ export class EditProfileComponent implements OnInit {
         'Password must include at least one uppercase letter and one number'
       );
     }
-    */
-
+    
     return Object.keys(this.errors).length === 0;
   }
 

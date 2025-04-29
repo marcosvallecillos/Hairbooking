@@ -106,6 +106,16 @@ getFavoritesByUsuarioId(usuario_Id: number): Observable<any> {
   return this.http.get(`${this.apiUrlProductos}/favoritos/usuario/${usuario_Id}`);
 }
 
+updateProductCart(productId: number, insidecart: boolean): Observable<any> {
+  const userId = this.authService.getUserId();
+  return this.http.post(`${this.apiUrlProductos}/carrito/${productId}`, { 
+    usuario_id: userId,
+    insidecart: insidecart 
+  });
+}
+getCartByUsuarioId(usuario_Id: number): Observable<any> {
+  return this.http.get(`${this.apiUrlProductos}/carrito/usuario/${usuario_Id}`);
+}
 removeProduct(productId: number) {
   this.productos = this.productos.filter((p) => p.id !== productId);
   this.updateCartItemsCount();
@@ -137,6 +147,17 @@ addFavorite(product: Product) {
 
 removeFavorite(productId: number) {
   this.favorites = this.favorites.filter(p => p.id !== productId);
+}
+addCart(product: Product) {
+  const existingCart = this.cart.find(p => p.id === product.id);
+  if (!existingCart) {
+    const productToAdd = { ...product, insideCart: true };
+    this.cart.push(productToAdd);
+  }
+}
+
+removeCart(productId: number) {
+  this.cart = this.cart.filter(p => p.id !== productId);
 }
 
 getFavorites(): Product[] {

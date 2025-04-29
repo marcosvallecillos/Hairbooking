@@ -98,7 +98,7 @@ export class FavoritosComponent implements OnInit {
     if (productInCart) {
       this.messageTrue = `${product.name} ` + this.getText('ya está en el carrito.', 'is already in the cart.');
     } else {
-      product.insidecart = true;
+      product.cart = true;
       this.cart.push(product);
       this.apiservice.addProduct({ ...product });
       this.apiservice.updateProductFavorite(product.id, false).subscribe({

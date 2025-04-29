@@ -119,7 +119,7 @@ export class ModalCarritoComponent implements OnInit {
     
     this.apiService.removeProduct(product.id);
     this.productos = this.apiService.getProductos();
-    product.insidecart = false;
+    product.cart = false;
     this.messageNoCart = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');
     setTimeout(() => {
       this.messageNoCart = null;

@@ -1,6 +1,6 @@
 import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, tap } from 'rxjs';
 import { Compra, Product, Reserva, Usuario } from '../models/user.interface';
 import { AuthService } from '../services/auth.service';
 @Injectable({
@@ -90,8 +90,8 @@ addProduct(product: Product) {
   if (!existingProduct) { 
     product.cantidad = 1;
     this.productos.push(product);
+    this.updateCartItemsCount();
   }
-  this.updateCartItemsCount();
 }
 
 updateProductFavorite(productId: number, isFavorite: boolean): Observable<any> {
@@ -105,17 +105,58 @@ updateProductFavorite(productId: number, isFavorite: boolean): Observable<any> {
 getFavoritesByUsuarioId(usuario_Id: number): Observable<any> {
   return this.http.get(`${this.apiUrlProductos}/favoritos/usuario/${usuario_Id}`);
 }
-
 updateProductCart(productId: number, insidecart: boolean): Observable<any> {
   const userId = this.authService.getUserId();
-  return this.http.post(`${this.apiUrlProductos}/carrito/${productId}`, { 
+  const payload = { 
     usuario_id: userId,
     insidecart: insidecart 
+  };
+  
+  const observable = this.http.post(`${this.apiUrlProductos}/carrito/${productId}`, payload);
+  
+  observable.subscribe({
+    next: () => {
+      if (!insidecart) {
+        this.productos = this.productos.filter(p => p.id !== productId);
+        this.updateCartItemsCount();
+      }
+    },
+    error: (error) => {
+      console.error('Error updating cart:', error);
+    }
   });
+  
+  return observable;
 }
+
 getCartByUsuarioId(usuario_Id: number): Observable<any> {
-  return this.http.get(`${this.apiUrlProductos}/carrito/usuario/${usuario_Id}`);
+  const observable = this.http.get(`${this.apiUrlProductos}/carrito/usuario/${usuario_Id}`);
+  
+  observable.subscribe({
+    next: (response: any) => {
+      if (response.status === 'success' && response.carrito) {
+        this.productos = response.carrito.map((producto: any) => ({
+          id: producto.id,
+          name: producto.name,
+          price: producto.price,
+          image: producto.image,
+          cantidad: producto.cantidad || 1,
+          isFavorite: producto.favorite,
+          insidecart: producto.cart,
+          categorias: producto.categoria,
+          subcategorias: producto.subcategoria
+        }));
+        this.updateCartItemsCount();
+      }
+    },
+    error: (error) => {
+      console.error('Error fetching cart:', error);
+    }
+  });
+  
+  return observable;
 }
+
 removeProduct(productId: number) {
   this.productos = this.productos.filter((p) => p.id !== productId);
   this.updateCartItemsCount();
@@ -129,7 +170,7 @@ updateQuantity(productId: number, quantity: number) {
   }
 }
 
-private updateCartItemsCount() {
+ updateCartItemsCount() {
   const totalItems = this.productos.reduce(
     (sum, product) => sum + (product.cantidad || 0),
     0
@@ -148,6 +189,7 @@ addFavorite(product: Product) {
 removeFavorite(productId: number) {
   this.favorites = this.favorites.filter(p => p.id !== productId);
 }
+
 addCart(product: Product) {
   const existingCart = this.cart.find(p => p.id === product.id);
   if (!existingCart) {
@@ -193,4 +235,20 @@ getPurchases(): Compra[] {
     this.updateCartItemsCount();
   }
   
+eliminarDelCarrito(productId: number): Observable<any> {
+  const userId = this.authService.getUserId();
+  if (!userId) {
+    return throwError(() => new Error('Usuario no encontrado'));
+  }
+
+  return this.http.post(`${this.apiUrlProductos}/carrito/eliminar/${productId}?usuario_id=${userId}`, {}).pipe(
+    tap((response: any) => {
+      if (response.status === 'success') {
+        this.productos = this.productos.filter(p => p.id !== productId);
+        this.updateCartItemsCount();
+      }
+    })
+  );
+    window.location.reload();
+}
 } 

@@ -1,11 +1,8 @@
 .container-fluid {
     width: 100vw;
-    height: 100vh;
-    margin: 5rem auto;
     padding: 0;
     overflow: hidden;
-    
-}
+  }
 
 .row {
     height: 100vh;

@@ -76,25 +76,7 @@
 
         <!-- Main Content -->  
         <section class="products-content">
-            
-        @if (message) {
-            <div class="alert">
-                {{ message }}
-              </div>
-          }@else if(messageTrue){
-            <div class="alert">
-             {{ messageTrue }}
-            </div>
-          }
-          @if (messageFavorite) {
-            <div class="alert">
-                {{ messageFavorite }}
-              </div>
-          }@else if(messageNoFavorite){
-            <div class="alert">
-             {{ messageNoFavorite }}
-            </div>
-          }
+      
           @if (messageNoUserDisplay) {
             <div class="alert">
               {{ messageNoUserDisplay }}

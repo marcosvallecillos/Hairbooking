@@ -73,7 +73,7 @@ export class ProductsComponent implements OnInit {
           }
         });
 
-        // Initialize filteredProducts with all products
+      
         this.filteredProducts = [
           ...this.products.maquinas.clippers,
           ...this.products.maquinas.trimmer,
@@ -86,7 +86,7 @@ export class ProductsComponent implements OnInit {
         
         this.isLoading = false;
         
-        // Subscribe to route params after products are loaded
+       
         this.route.queryParams.subscribe((params) => {
           const category = params['category'] || 'all';
           this.filterProducts(category);
@@ -102,7 +102,6 @@ export class ProductsComponent implements OnInit {
   addToCart(product: Product) {
    
     this.apiService.addProduct({ ...product }) ; 
-    console.log('se añadio al carrito')
   }
   showNoUserMessage() {
     this.messageNoUserDisplay = this.getText(
@@ -122,8 +121,6 @@ export class ProductsComponent implements OnInit {
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
-  messageFavorite: string | null = null;
-  messageNoFavorite: string | null = null;
   messageNoUser: string = '';
   messageNoUserDisplay: string | null = null;
 
@@ -144,16 +141,9 @@ export class ProductsComponent implements OnInit {
       next: (response: any) => {
         if (product.isFavorite) {
           this.apiService.addFavorite({ ...product });
-          this.messageNoFavorite = `${product.name} ` + this.getText('ha sido añadido a favoritos', 'has been added to favorites');
         } else {
           this.apiService.removeFavorite(product.id);
-          this.messageFavorite = `${product.name} ` + this.getText('ha sido eliminado de favoritos', 'has been removed from favorites');
         }
-
-        setTimeout(() => {
-          this.messageFavorite = null;
-          this.messageNoFavorite = null;
-        }, 2000);
       },
       error: (error: any) => {
         console.error('Error al actualizar favorito:', error);

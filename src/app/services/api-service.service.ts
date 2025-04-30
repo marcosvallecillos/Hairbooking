@@ -79,7 +79,7 @@ getReserveById(reserveId: number): Reserva | undefined {
   return this.reserves.find((r) => r.id === reserveId);
 }
 
-makePurchase(purchase: Compra, usuarioId: number): Observable<any> {
+makePurchase(purchase: { productos: { productoId: number; cantidad: number; }[] }, usuarioId: number): Observable<any> {
   const httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ makePurchase(purchase: Compra, usuarioId: number): Observable<any> {
   return this.http.post<any>(`${this.apiUrlCompras}/usuarios/${usuarioId}/compras`, purchase, httpOptions).pipe(
     tap(response => {
       console.log('Respuesta del servidor en makePurchase:', response);
-      if (response.status === 'success') {
+      if (response.mensaje === 'Compra registrada') {
         this.clearCart();
       }
     })
@@ -248,14 +248,18 @@ private comprasRealizadas: Compra[] = [];
 addToPurchases(products: Product[]): void {
   const nuevaCompra: Compra = {
     id: this.comprasRealizadas.length + 1,
-    name: `Compra ${this.comprasRealizadas.length + 1}`, 
-    image: 'default.jpg', 
-    cantidad: products.reduce((sum, p) => sum + p.cantidad, 0), 
-    price: products.reduce((sum, p) => sum + p.price * p.cantidad, 0), 
-    fecha: new Date(), 
-    productos: products.map(p => ({
+    nombre: `Compra ${this.comprasRealizadas.length + 1}`,
+    image: 'default.jpg',
+    fecha: new Date(),
+    total: products.reduce((sum, p) => sum + p.price * p.cantidad, 0),
+    cantidadTotal: products.reduce((sum, p) => sum + p.cantidad, 0),
+    precio: products.reduce((sum, p) => sum + p.price * p.cantidad, 0),
+    detalles: products.map(p => ({
       productoId: p.id,
-      cantidad: p.cantidad
+      nombre: p.name,
+      cantidad: p.cantidad,
+      precioUnitario: p.price,
+      total: p.price * p.cantidad
     }))
   };
   this.comprasRealizadas.push(nuevaCompra);
@@ -282,6 +286,16 @@ eliminarDelCarrito(productId: number): Observable<any> {
       if (response.status === 'success') {
         this.productos = this.productos.filter(p => p.id !== productId);
         this.updateCartItemsCount();
+      }
+    })
+  );
+}
+
+getHistorialCompras(usuarioId: number): Observable<any> {
+  return this.http.get<any>(`${this.apiUrlCompras}/usuarios/${usuarioId}/historial`).pipe(
+    tap(response => {
+      if (response.status === 'success') {
+        this.comprasRealizadas = response.compras;
       }
     })
   );

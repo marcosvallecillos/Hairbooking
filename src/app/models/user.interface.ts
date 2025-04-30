@@ -25,14 +25,18 @@ export interface Usuario {
 
   export interface Compra{
     id: number;
-    name: string;
-    image: string;
-    cantidad: number;
-    price: number;
+    nombre: string;
+    image:string,
     fecha: Date;
-    productos: {
+    total: number;
+    cantidadTotal: number;
+    precio:number,
+    detalles: {
       productoId: number;
+      nombre: string;
       cantidad: number;
+      precioUnitario: number;
+      total: number;
     }[];
   }
 

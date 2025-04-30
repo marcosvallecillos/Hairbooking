@@ -1,31 +1,35 @@
-import { Component } from '@angular/core';
-import { Compra, Product } from '../../models/user.interface';
+import { Component, OnInit } from '@angular/core';
+import { Compra } from '../../models/user.interface';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ApiService } from '../../services/api-service.service';
 import { UserStateService } from '../../services/user-state.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-show-buys',
-  imports: [RouterLink,FooterComponent],
+  standalone: true,
+  imports: [RouterLink, FooterComponent, DatePipe],
   templateUrl: './show-buys.component.html',
   styleUrl: './show-buys.component.css'
 })
-export class ShowBuysComponent {
-  compras: Compra[] = []; 
+export class ShowBuysComponent implements OnInit {
+  compras: any[] = [];
+  loading = true;
   isUser = false;
   isAuthenticated = true;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
+  userId: number | null = null;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private languageService: LanguageService,
     private apiService: ApiService,
-    private userStateService: UserStateService
+    private userStateService: UserStateService,
   ) {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => (this.isSpanish = isSpanish)
@@ -33,10 +37,32 @@ export class ShowBuysComponent {
   }
 
   ngOnInit() {
-    this.compras = this.apiService.getPurchases();
+    this.userId = this.authService.getUserId();
+    if (this.userId) {
+      this.loadCompras();
+    }
     this.isUser = this.userStateService.getIsUser();
     this.userStateService.isUser$.subscribe(isUser => {
       this.isUser = isUser;
+    });
+  }
+
+  loadCompras() {
+    this.loading = true;
+    this.apiService.getHistorialCompras(this.userId!).subscribe({
+      next: (response) => {
+        if (response.status === 'success' && response.compras) {
+          // Filtrar solo la compra que tiene detalles
+          this.compras = response.compras.filter((compra: any) => 
+            compra.detalles && compra.detalles.length > 0
+          );
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar las compras:', error);
+        this.loading = false;
+      }
     });
   }
 
@@ -44,20 +70,11 @@ export class ShowBuysComponent {
     return this.isSpanish ? es : en;
   }
 
-  calcularTotalCompra(compra: Product[]) {
-    let total = 0;
-    for (let i = 0; i < compra.length; i++) {
-      total += compra[i].price * compra[i].cantidad;
-    }
-    let descuento = 0;
-    let totalConDescuento = total;
-
-    if (total > 500) {
-      descuento = total * 0.05;
-      totalConDescuento = total - descuento;
-    }
-
-    return { total, totalConDescuento, descuento };
+  calcularTotalCompra(compra: Compra) {
+    return {
+      total: compra.total,
+      cantidadTotal: compra.cantidadTotal
+    };
   }
 }
   

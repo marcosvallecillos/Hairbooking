@@ -100,17 +100,7 @@ export class ModalCompraComponent implements OnInit {
       return;
     }
 
-    const totalCantidad = this.cartItems.reduce((sum, p) => sum + (p.cantidad || 1), 0);
-    const totalPrecio = this.cartItems.reduce((sum, p) => sum + (p.price * (p.cantidad || 1)), 0);
-    const primerProducto = this.cartItems[0];
-
-    const purchase: Compra = {
-      id: 0,
-      name: primerProducto ? primerProducto.name : 'Compra',
-      image: 'default.jpg',
-      cantidad: totalCantidad,
-      price: totalPrecio,
-      fecha: new Date(),
+    const purchase = {
       productos: this.cartItems.map(product => ({
         productoId: product.id,
         cantidad: product.cantidad || 1

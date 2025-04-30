@@ -60,27 +60,26 @@ export class ModalCarritoComponent implements OnInit {
     this.userStateService.isUser$.subscribe(isUser => {
       this.isUser = isUser;
       if (isUser) {
-        // Carga inicial del carrito
         this.cargarCarrito();
-        // Suscribirse a los cambios del carrito
         this.cartSubscription = this.apiService.cartItemsCount$.subscribe(count => {
-          // Solo recargar el carrito si hay productos
           if (count > 0) {
             this.cargarCarrito();
           } else {
-            // Si el carrito está vacío, limpiar los productos localmente
             this.productos = [];
+            this.calcularTotalYDescuento();
             this.cdr.detectChanges();
           }
         });
       } else {
         this.productos = [];
+        this.calcularTotalYDescuento();
         if (this.cartSubscription) {
           this.cartSubscription.unsubscribe();
         }
       }
     });
   }
+
   cargarCarrito() {
     const userId = this.authService.getUserId();
     if (userId) {
@@ -100,6 +99,10 @@ export class ModalCarritoComponent implements OnInit {
               subcategorias: producto.subcategoria
             }));
             this.calcularTotalYDescuento();
+            this.cdr.detectChanges();
+          } else {
+            this.productos = [];
+            this.calcularTotalYDescuento();
           }
           this.isLoading = false;
         },
@@ -109,6 +112,8 @@ export class ModalCarritoComponent implements OnInit {
             'Error al cargar el carrito',
             'Error loading cart'
           );
+          this.productos = [];
+          this.calcularTotalYDescuento();
           this.isLoading = false;
         }
       });

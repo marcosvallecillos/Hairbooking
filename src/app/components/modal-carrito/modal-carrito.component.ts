@@ -259,12 +259,39 @@ export class ModalCarritoComponent implements OnInit {
       this.showZeroTotalAlert();
       return;
     }
-    this.apiService.addToPurchases([...this.productos]);
-    this.apiService.clearCart();
-    this.productos = [];
-    this.calcularTotalYDescuento();
-    this.router.navigate(['/show-buys']);
-    this.showModal = false;
+    
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    // Verificar que hay productos en el carrito
+    if (!this.productos || this.productos.length === 0) {
+      console.error('No hay productos en el carrito');
+      return;
+    }
+
+    const purchase = {
+      productos: this.productos.map(product => ({
+        productoId: product.id,
+        cantidad: product.cantidad || 1
+      }))
+    };
+
+    console.log('Enviando compra:', purchase); // Para debug
+
+    this.apiService.makePurchase(purchase, userId).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response); // Para debug
+        if (response.mensaje === 'Compra registrada') {
+          this.productos = [];
+          this.calcularTotalYDescuento();
+          this.showModal = false;
+          this.router.navigate(['/show-buys']);
+        }
+      },
+      error: (error) => {
+        console.error('Error al realizar la compra:', error);
+      }
+    });
   }
 
   onPay() {

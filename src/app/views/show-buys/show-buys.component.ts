@@ -23,6 +23,7 @@ export class ShowBuysComponent implements OnInit {
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
   userId: number | null = null;
+  isLoading: boolean = true; // Renombrado a isLoading
 
   constructor(
     private authService: AuthService,
@@ -57,7 +58,7 @@ export class ShowBuysComponent implements OnInit {
             compra.detalles && compra.detalles.length > 0
           );
         }
-        this.loading = false;
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error al cargar las compras:', error);

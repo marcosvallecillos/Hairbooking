@@ -1,7 +1,18 @@
 <body>
   <div class="overlay"></div>
-
-  @if (compras.length > 0) {
+  @if (isLoading) {
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+    } @else if (compras.length === 0) {
+      <div class="compras-vacio mb-5">
+        <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
+        <h3>{{ getText('No se encontraron detalles de compra.', 'No purchase details found.') }}</h3>
+        <p>{{ getText('Echa un vistazo a los productos que tenemos para ti.', 'Check out the products we have for you.') }}</p>
+        <button class="btn-volver mt-5" routerLink="/products">{{ getText('Comprar Ahora', 'Buy Now') }}</button>
+      </div>
+    }
+  @else if (compras.length > 0) {
     <h2 class="mt-5">{{ getText('Detalles de la Compra', 'Purchase Details') }}</h2>
     <div class="decorative-line"></div>
 
@@ -54,14 +65,7 @@
     </div>
   }
 
-  @if (compras.length === 0) {
-    <div class="compras-vacio mb-5">
-      <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
-      <h3>{{ getText('No se encontraron detalles de compra.', 'No purchase details found.') }}</h3>
-      <p>{{ getText('Echa un vistazo a los productos que tenemos para ti.', 'Check out the products we have for you.') }}</p>
-      <button class="btn-volver mt-5" routerLink="/products">{{ getText('Comprar Ahora', 'Buy Now') }}</button>
-    </div>
-  }
+ 
 </body>
 
 <app-footer></app-footer>

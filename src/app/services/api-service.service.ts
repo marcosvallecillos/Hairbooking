@@ -90,7 +90,14 @@ makePurchase(purchase: { productos: { productoId: number; cantidad: number; }[] 
     tap(response => {
       console.log('Respuesta del servidor en makePurchase:', response);
       if (response.mensaje === 'Compra registrada') {
-        this.clearCart();
+        // Eliminar cada producto del carrito
+        purchase.productos.forEach(producto => {
+          this.eliminarDelCarrito(producto.productoId).subscribe();
+        });
+        
+        // Vaciar el carrito localmente
+        this.productos = [];
+        this.updateCartItemsCount();
       }
     })
   );

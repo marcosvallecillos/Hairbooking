@@ -11,6 +11,7 @@ private apiUrl = 'http://localhost:8000/api';
 private apiUrlUsuarios = 'http://localhost:8000/api/usuarios'
 private apiUrlReservas = 'http://localhost:8000/api/reservas'
 private apiUrlProductos = 'http://localhost:8000/api/productos'
+private apiUrlCompras = 'http://localhost:8000/api/compras'
 
 public productos: Product[] = [];
 private favorites: Product[] = [];
@@ -77,6 +78,27 @@ removeReserve(reserveId: number) {
 getReserveById(reserveId: number): Reserva | undefined {
   return this.reserves.find((r) => r.id === reserveId);
 }
+
+makePurchase(purchase: Compra, usuarioId: number): Observable<any> {
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+  
+  return this.http.post<any>(`${this.apiUrlCompras}/usuarios/${usuarioId}/compras`, purchase, httpOptions).pipe(
+    tap(response => {
+      console.log('Respuesta del servidor en makePurchase:', response);
+      if (response.status === 'success') {
+        this.clearCart();
+      }
+    })
+  );
+}
+getPurchasesByUsuarioId(usuario_Id: number): Observable<Compra[]> {
+  return this.http.get<Compra[]>(`${this.apiUrlCompras}/usuario/${usuario_Id}`);
+}
+
 
 getAllProductos():Observable<Product[]>{
   return this.http.get<Product[]>(`${this.apiUrlProductos}/list`)
@@ -215,25 +237,26 @@ removeCart(productId: number) {
   this.cart = this.cart.filter(p => p.id !== productId);
 }
 
-getFavorites(): Product[] {
-  return this.favorites;
-}
-
 getCart(): Product[] {
   return this.cart;
 }
 
 private comprasRealizadas: Compra[] = [];
 
+
+
 addToPurchases(products: Product[]): void {
   const nuevaCompra: Compra = {
     id: this.comprasRealizadas.length + 1,
-    name: ` ${this.comprasRealizadas.length + 1}`, 
-    image: '', 
+    name: `Compra ${this.comprasRealizadas.length + 1}`, 
+    image: 'default.jpg', 
     cantidad: products.reduce((sum, p) => sum + p.cantidad, 0), 
     price: products.reduce((sum, p) => sum + p.price * p.cantidad, 0), 
     fecha: new Date(), 
-    productos: products, 
+    productos: products.map(p => ({
+      productoId: p.id,
+      cantidad: p.cantidad
+    }))
   };
   this.comprasRealizadas.push(nuevaCompra);
   console.log('Compra realizada:', nuevaCompra);

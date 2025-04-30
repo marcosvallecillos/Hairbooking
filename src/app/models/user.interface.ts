@@ -30,7 +30,10 @@ export interface Usuario {
     cantidad: number;
     price: number;
     fecha: Date;
-    productos: Product[];
+    productos: {
+      productoId: number;
+      cantidad: number;
+    }[];
   }
 
   export interface Reserva{

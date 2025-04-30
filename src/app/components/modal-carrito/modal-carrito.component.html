@@ -23,9 +23,7 @@
                     </h2>
                 </div>
                 @if (isLoading) {
-                    <div class="loading">
-                        <div class="spinner"></div>
-                    </div>
+                    
                     } @else if (productos.length == 0) {
                         <div class="cart-empty">
                             <img src="../../../../images/disappointed.png" class="empty-icon" alt="Carrito vacío">
@@ -96,7 +94,7 @@
                             </div>
                             <div class="summary-row total">
                                 <span>{{getText('Total', 'Total')}}</span>
-                                <span id="total">{{ this.totalConDescuento.toFixed(2) || '1000.00' }} €</span>
+                                <span id="total">{{ this.totalConDescuento.toFixed(2) }} €</span>
                             </div>
                         </div>
 

@@ -10,6 +10,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { UserStateService } from '../../services/user-state.service';
 import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modal-carrito',
@@ -52,19 +53,34 @@ export class ModalCarritoComponent implements OnInit {
       }
     );
   }
+  private cartSubscription: Subscription | undefined; // Para manejar la suscripción a cartItemsCount$
 
   ngOnInit() {
     this.isUser = this.userStateService.getIsUser();
     this.userStateService.isUser$.subscribe(isUser => {
       this.isUser = isUser;
       if (isUser) {
+        // Carga inicial del carrito
         this.cargarCarrito();
+        // Suscribirse a los cambios del carrito
+        this.cartSubscription = this.apiService.cartItemsCount$.subscribe(count => {
+          // Solo recargar el carrito si hay productos
+          if (count > 0) {
+            this.cargarCarrito();
+          } else {
+            // Si el carrito está vacío, limpiar los productos localmente
+            this.productos = [];
+            this.cdr.detectChanges();
+          }
+        });
+      } else {
+        this.productos = [];
+        if (this.cartSubscription) {
+          this.cartSubscription.unsubscribe();
+        }
       }
     });
-
-   
   }
-
   cargarCarrito() {
     const userId = this.authService.getUserId();
     if (userId) {

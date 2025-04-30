@@ -16,7 +16,6 @@ import { ShowReserveComponent } from './views/show-reserve/show-reserve.componen
 import { ShowBuysComponent } from './views/show-buys/show-buys.component';
 import { NgModule } from '@angular/core';
 import { FavoritosComponent } from './views/favoritos/favoritos.component';
-import { CarritoComponent } from './views/carrito/carrito.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -36,7 +35,6 @@ export const routes: Routes = [
     { path: 'show-reserve', component: ShowReserveComponent },
     { path: 'show-buys', component: ShowBuysComponent },
     { path: 'favorites', component: FavoritosComponent },
-    {path: 'carrito', component: CarritoComponent}, // Cambia a la ruta de tu carrito
 ];
 
     @NgModule({

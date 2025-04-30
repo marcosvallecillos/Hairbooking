@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -42,7 +42,9 @@ export class ModalCarritoComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private userStateService: UserStateService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
+
   ) {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => {
@@ -59,6 +61,8 @@ export class ModalCarritoComponent implements OnInit {
         this.cargarCarrito();
       }
     });
+
+   
   }
 
   cargarCarrito() {
@@ -68,7 +72,17 @@ export class ModalCarritoComponent implements OnInit {
       this.apiService.getCartByUsuarioId(userId).subscribe({
         next: (response: any) => {
           if (response.status === 'success' && response.carrito) {
-            this.productos = response.carrito;
+            this.productos = response.carrito.map((producto: any) => ({
+              id: producto.id,
+              name: producto.name,
+              price: producto.price,
+              image: producto.image,
+              cantidad: producto.cantidad || 1,
+              isFavorite: producto.favorite,
+              insidecart: producto.cart,
+              categorias: producto.categoria,
+              subcategorias: producto.subcategoria
+            }));
             this.calcularTotalYDescuento();
           }
           this.isLoading = false;
@@ -164,7 +178,9 @@ export class ModalCarritoComponent implements OnInit {
     this.apiService.eliminarDelCarrito(product.id).subscribe({
       next: (response: any) => {
         if (response.status === 'success') {
+          this.productos = this.productos.filter(p => p.id !== product.id);
           this.calcularTotalYDescuento();
+          this.apiService.updateCartItemsCount();
           this.message = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');
         } else {
           this.message = this.getText(
@@ -261,4 +277,6 @@ export class ModalCarritoComponent implements OnInit {
   onClose() {
     this.close.emit();
   }
+
+ 
 }

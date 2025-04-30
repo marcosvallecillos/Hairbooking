@@ -89,6 +89,7 @@ addProduct(product: Product) {
   const existingProduct = this.productos.find((p) => p.id === product.id);
   if (!existingProduct) { 
     product.cantidad = 1;
+    product.cart = true;
     this.productos.push(product);
     this.updateCartItemsCount();
   }
@@ -107,26 +108,38 @@ getFavoritesByUsuarioId(usuario_Id: number): Observable<any> {
 }
 updateProductCart(productId: number, insidecart: boolean): Observable<any> {
   const userId = this.authService.getUserId();
-  const payload = { 
+  if (!userId) {
+    return throwError(() => new Error('Usuario no encontrado'));
+  }
+
+  return this.http.post(`${this.apiUrlProductos}/carrito/${productId}`, { 
     usuario_id: userId,
     insidecart: insidecart 
-  };
-  
-  const observable = this.http.post(`${this.apiUrlProductos}/carrito/${productId}`, payload);
-  
-  observable.subscribe({
-    next: () => {
-      if (!insidecart) {
-        this.productos = this.productos.filter(p => p.id !== productId);
-        this.updateCartItemsCount();
+  }).pipe(
+    tap((response: any) => {
+      if (response.status === 'success') {
+        // Actualizar el estado del carrito
+        this.getCartByUsuarioId(userId).subscribe({
+          next: (cartResponse: any) => {
+            if (cartResponse.status === 'success' && cartResponse.carrito) {
+              this.productos = cartResponse.carrito.map((producto: any) => ({
+                id: producto.id,
+                name: producto.name,
+                price: producto.price,
+                image: producto.image,
+                cantidad: producto.cantidad || 1,
+                isFavorite: producto.favorite,
+                insidecart: producto.cart,
+                categorias: producto.categoria,
+                subcategorias: producto.subcategoria
+              }));
+              this.updateCartItemsCount();
+            }
+          }
+        });
       }
-    },
-    error: (error) => {
-      console.error('Error updating cart:', error);
-    }
-  });
-  
-  return observable;
+    })
+  );
 }
 
 getCartByUsuarioId(usuario_Id: number): Observable<any> {
@@ -249,6 +262,5 @@ eliminarDelCarrito(productId: number): Observable<any> {
       }
     })
   );
-    window.location.reload();
 }
 } 

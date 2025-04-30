@@ -100,9 +100,45 @@ export class ProductsComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-   
-    this.apiService.addProduct({ ...product }) ; 
+    if (!this.isUser) {
+      this.messageNoUserDisplay = this.getText(
+        'Debes iniciar sesión para añadir al carrito',
+        'You must log in to add to cart'
+      );
+      return;
+    }
+
+    this.apiService.updateProductCart(product.id, true).subscribe({
+      next: (response: any) => {
+        if (response.status === 'success') {
+          // Actualizar el estado del producto en el array local
+          const productIndex = this.filteredProducts.findIndex(p => p.id === product.id);
+          if (productIndex !== -1) {
+            this.filteredProducts[productIndex].cart = true;
+          }
+          this.message = `${product.name} ` + this.getText('ha sido añadido al carrito.', 'has been added to cart.');
+        } else {
+          this.message = this.getText(
+            'Error al añadir al carrito',
+            'Error adding to cart'
+          );
+        }
+      },
+      error: (error) => {
+        console.error('Error al añadir al carrito:', error);
+        this.message = this.getText(
+          'Error al añadir al carrito',
+          'Error adding to cart'
+        );
+      }
+    });
+
+    setTimeout(() => {
+      this.message = null;
+      this.messageNoUserDisplay = null;
+    }, 2000);
   }
+
   showNoUserMessage() {
     this.messageNoUserDisplay = this.getText(
       'Deberás iniciar sesión para realizar esta función', 
@@ -163,34 +199,66 @@ export class ProductsComponent implements OnInit {
 
   productInCart(product: any) {
     if (!this.isUser) {
-      this.messageNoUserDisplay = this.messageNoUser = this.getText('Deberas iniciar sesion para realizar esta función','You must log in to do this function.'); ;
+      this.messageNoUserDisplay = this.messageNoUser = this.getText(
+        'Deberas iniciar sesion para realizar esta función',
+        'You must log in to do this function.'
+      );
       setTimeout(() => {
         this.messageNoUserDisplay = null;
       }, 2000);
       return;
     }
-    // Cambiar el estado de favorite
-    product.insidecart = !product.insidecart;
-    console.log(product.name, 'se ha añadido al carrito');
+
+    // Cambiar el estado de cart
+    product.cart = !product.cart;
+    
+    // Actualizar el estado en filteredProducts inmediatamente
+    const productIndex = this.filteredProducts.findIndex(p => p.id === product.id);
+    if (productIndex !== -1) {
+      this.filteredProducts[productIndex].cart = product.cart;
+    }
+    
     // Actualizar el producto en la base de datos
-    this.apiService.updateProductCart(product.id, product.insidecart ? true : false).subscribe({
+    this.apiService.updateProductCart(product.id, product.cart).subscribe({
       next: (response: any) => {
-        if (product.insidecart) {
-          this.apiService.addCart({ ...product });
+        if (response.status === 'success') {
+          if (product.cart) {
+            this.apiService.addCart({ ...product });
+            this.message = `${product.name} ` + this.getText('ha sido añadido al carrito.', 'has been added to cart.');
+          } else {
+            this.apiService.removeCart(product.id);
+            this.message = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');
+          }
         } else {
-          this.apiService.removeCart(product.id);
+          // Revertir el cambio si hay error
+          product.cart = !product.cart;
+          if (productIndex !== -1) {
+            this.filteredProducts[productIndex].cart = product.cart;
+          }
+          this.message = this.getText(
+            'Error al actualizar carrito',
+            'Error updating cart'
+          );
         }
       },
       error: (error: any) => {
         console.error('Error al actualizar carrito:', error);
         // Revertir el cambio si hay error
-        product.insidecart = !product.insidecart;
-        this.messageNoUserDisplay = this.getText(
+        product.cart = !product.cart;
+        if (productIndex !== -1) {
+          this.filteredProducts[productIndex].cart = product.cart;
+        }
+        this.message = this.getText(
           'Error al actualizar carrito',
           'Error updating cart'
         );
       }
     });
+
+    setTimeout(() => {
+      this.message = null;
+      this.messageNoUserDisplay = null;
+    }, 2000);
   }
 
   filterProducts(category: string) {

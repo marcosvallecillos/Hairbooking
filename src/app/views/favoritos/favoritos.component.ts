@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Product } from '../../models/user.interface';
 import { ApiService } from '../../services/api-service.service';
 import { Router, RouterLink } from '@angular/router';
@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 export class FavoritosComponent implements OnInit {
   productos: Product[] = [];
   cart: Product[] = [];
+  cartItems: Product[] = [];
   message: string | null = null;
   messageTrue: string | null = null;
   messageNoFavorite: string | null = null;
@@ -27,7 +28,8 @@ export class FavoritosComponent implements OnInit {
     private languageService: LanguageService,
     private apiservice: ApiService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => (this.isSpanish = isSpanish)
@@ -94,33 +96,47 @@ export class FavoritosComponent implements OnInit {
       return;
     }
 
-    const productInCart = this.cart.find(item => item.id === product.id);
-    if (productInCart) {
-      this.messageTrue = `${product.name} ` + this.getText('ya está en el carrito.', 'is already in the cart.');
-    } else {
-      product.cart = true;
-      this.cart.push(product);
-      this.apiservice.addProduct({ ...product });
-      this.apiservice.updateProductFavorite(product.id, false).subscribe({
-        next: () => {
-          this.productos = this.productos.filter(p => p.id !== product.id);
-          this.message = `${product.name} ` + this.getText('ha sido añadido al carrito.', 'has been added to the cart.');
-        },
-        error: (error) => {
-          console.error('Error al actualizar favorito:', error);
-          this.messageNoUserDisplay = this.getText(
-            'Error al actualizar el producto',
-            'Error updating product'
-          );
-        }
-      });
-    }
-
-    setTimeout(() => {
-      this.message = null;
-      this.messageTrue = null;
-      this.messageNoUserDisplay = null;
-    }, 2000);
+    console.log('Intentando actualizar favorito para ID:', product.id);
+    this.apiservice.updateProductFavorite(product.id, false).subscribe({
+      next: () => {
+        console.log('Favorito actualizado correctamente');
+        console.log('Intentando añadir al carrito para ID:', product.id);
+        this.apiservice.updateProductCart(product.id, true).subscribe({
+          next: (response: any) => {
+            console.log('Respuesta del carrito:', response);
+            if (response.message === 'Producto agregado al carrito correctamente') {
+              console.log('Productos antes del filter:', this.productos);
+              this.productos = this.productos.filter(p => p.id !== product.id);
+              console.log('Productos después del filter:', this.productos);
+              
+              console.log('Carrito actualizado:', this.cartItems);
+              this.message = `${product.name} ` + this.getText('ha sido añadido al carrito.', 'has been added to the cart.');
+              this.cdr.detectChanges();
+            } else {
+              console.error('Respuesta no exitosa:', response);
+              this.message = this.getText(
+                'Error al añadir el producto al carrito',
+                'Error adding product to cart'
+              );
+            }
+          },
+          error: (error) => {
+            console.error('Error en updateProductCart:', error);
+            this.message = this.getText(
+              'Error al añadir al carrito',
+              'Error adding to cart'
+            );
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error en updateProductFavorite:', error);
+        this.messageNoUserDisplay = this.getText(
+          'Error al actualizar el producto',
+          'Error updating product'
+        );
+      }
+    });
   }
 
   eliminarproduct(product: Product) {

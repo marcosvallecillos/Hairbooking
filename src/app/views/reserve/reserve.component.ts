@@ -81,9 +81,7 @@ export class ReserveComponent implements OnInit {
           const [year, month, day] = params['dia'].split('-').map(Number);
           this.selectedDate = new Date(year, month - 1, day);
           this.currentDate = new Date(year, month - 1, 1);
-          console.log('Fecha recibida:', params['dia']);
-          console.log('Fecha seleccionada:', this.selectedDate);
-        }
+         }
         this.selectedTime = params['hora'] || '';
       }
     });
@@ -93,7 +91,6 @@ export class ReserveComponent implements OnInit {
   loadReserves() {
     this.apiService.getReserves().subscribe({
       next: (reserves) => {
-        console.log('Reservas:' , reserves)
         this.reserves = reserves;
       },
       error: (error) => {
@@ -151,17 +148,23 @@ export class ReserveComponent implements OnInit {
   }
 
   isTimeReserved(time: string): boolean {
-
-      // Verificar si una hora específica está disponible
-
     if (!this.selectedDate || !this.selectedBarber) return false;
-    const dateStr = this.selectedDate.toLocaleDateString();
-    return this.reserves.some(reserve => 
-      reserve.dia === dateStr && 
-      reserve.hora === time && 
+
+    const year = this.selectedDate.getFullYear();
+    const month = this.selectedDate.getMonth() + 1;
+    const day = this.selectedDate.getDate();
+    const dateStr = this.formatearFecha(year, month, day);
+
+    // Verificar si hay alguna reserva que coincida con la fecha, hora y peluquero
+    const found = this.reserves.some(reserve =>
+      reserve.dia === dateStr &&
+      reserve.hora === time &&
       reserve.peluquero === this.selectedBarber
     );
+
+    return found;
   }
+  
 
   isTimePast(time: string): boolean {
     if (!this.selectedDate) return false;
@@ -217,7 +220,6 @@ export class ReserveComponent implements OnInit {
       const day = this.selectedDate.getDate();
       const formattedDate = this.formatearFecha(year, month, day);
       
-      console.log('Fecha a enviar:', formattedDate);
 
       const reserveData: Reserva = {
         id: this.isEditing ? this.reserveId! : Date.now(),
@@ -232,7 +234,6 @@ export class ReserveComponent implements OnInit {
       if (this.isEditing && this.reserveId) {
         this.apiService.editReserve(this.reserveId, reserveData).subscribe({
           next: (response) => {
-            console.log('Reserva actualizada:', response);
             this.router.navigate(['/show-reserve']);
           },
           error: (error) => {
@@ -242,7 +243,6 @@ export class ReserveComponent implements OnInit {
       } else {
         this.apiService.newReserve(reserveData).subscribe({
           next: (response) => {
-            console.log('Reserva guardada:', response);
             this.router.navigate(['/show-reserve']);
           },
           error: (error) => {

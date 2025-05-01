@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,8 @@ import { ModalCompraComponent } from '../modal-compra/modal-compra.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { UserStateService } from '../../services/user-state.service';
+import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modal-carrito',
@@ -27,38 +29,95 @@ export class ModalCarritoComponent implements OnInit {
   isUser = false;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
+  isLoading: boolean = true;
 
   totalConDescuento: number = 0;
   descuento: number = 0;
   faltaParaDescuento: number = 0;
 
+  message: string | null = null;
+  messageNoUserDisplay: string | null = null;
+
   constructor(
     private languageService: LanguageService,
     private apiService: ApiService,
     private router: Router,
-    private userStateService: UserStateService
+    private userStateService: UserStateService,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
+
   ) {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => {
         this.isSpanish = isSpanish;
       }
-    ); 
-    this.productos = this.apiService.getProductos(); 
-    this.calcularTotalYDescuento();
+    );
   }
+  private cartSubscription: Subscription | undefined; // Para manejar la suscripción a cartItemsCount$
 
   ngOnInit() {
     this.isUser = this.userStateService.getIsUser();
     this.userStateService.isUser$.subscribe(isUser => {
       this.isUser = isUser;
+      if (isUser) {
+        this.cargarCarrito();
+        this.cartSubscription = this.apiService.cartItemsCount$.subscribe(count => {
+          if (count > 0) {
+            this.cargarCarrito();
+          } else {
+            this.productos = [];
+            this.calcularTotalYDescuento();
+            this.cdr.detectChanges();
+          }
+        });
+      } else {
+        this.productos = [];
+        this.calcularTotalYDescuento();
+        if (this.cartSubscription) {
+          this.cartSubscription.unsubscribe();
+        }
+      }
     });
-    this.cargarDatosIniciales();
   }
 
-  cargarDatosIniciales() {
-    this.productos = this.apiService.getProductos();
-    this.productosFavoritos = this.apiService.getFavorites();
-    this.calcularTotalYDescuento();
+  cargarCarrito() {
+    const userId = this.authService.getUserId();
+    if (userId) {
+      this.isLoading = true;
+      this.apiService.getCartByUsuarioId(userId).subscribe({
+        next: (response: any) => {
+          if (response.status === 'success' && response.carrito) {
+            this.productos = response.carrito.map((producto: any) => ({
+              id: producto.id,
+              name: producto.name,
+              price: producto.price,
+              image: producto.image,
+              cantidad: producto.cantidad || 1,
+              isFavorite: producto.favorite,
+              insidecart: producto.cart,
+              categorias: producto.categoria,
+              subcategorias: producto.subcategoria
+            }));
+            this.calcularTotalYDescuento();
+            this.cdr.detectChanges();
+          } else {
+            this.productos = [];
+            this.calcularTotalYDescuento();
+          }
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error al cargar el carrito:', error);
+          this.message = this.getText(
+            'Error al cargar el carrito',
+            'Error loading cart'
+          );
+          this.productos = [];
+          this.calcularTotalYDescuento();
+          this.isLoading = false;
+        }
+      });
+    }
   }
 
   calcularTotalYDescuento() {
@@ -80,10 +139,8 @@ export class ModalCarritoComponent implements OnInit {
       this.descuento = 0;
       this.totalConDescuento = this.total;
     }
-
-    
   }
-  message:string |null =  null;
+
   showZeroTotalAlert() {
     this.message = this.getText(
       'Se ha producido un problema, disculpa las molestias. Contactanos si el problema persiste.',
@@ -96,39 +153,77 @@ export class ModalCarritoComponent implements OnInit {
   }
 
   addToFavorites(product: Product) {
-    this.apiService.addFavorite({ ...product });
-    this.productosFavoritos = this.apiService.getFavorites();
-    console.log(`${product.name} añadido a favoritos`);
+    if (!this.isUser) {
+      this.messageNoUserDisplay = this.getText(
+        'Debes iniciar sesión para añadir a favoritos',
+        'You must log in to add to favorites'
+      );
+      
+      return;
+
+
+    }
+
+    this.apiService.updateProductFavorite(product.id, true).subscribe({
+      next: () => {
+        this.message = `${product.name} ` + this.getText('ha sido añadido a favoritos.', 'has been added to favorites.');
+      },
+      error: (error) => {
+        console.error('Error al añadir a favoritos:', error);
+        this.message = this.getText(
+          'Error al añadir a favoritos',
+          'Error adding to favorites'
+        );
+      }
+    });
+
+    setTimeout(() => {
+      this.message = null;
+      this.messageNoUserDisplay = null;
+    }, 2000);
   }
 
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
 
-  eliminarproduct(product: Product): void {
+  eliminarproduct(product: Product) {
     if (!this.isUser) {
       this.messageNoUserDisplay = this.getText(
-        'Inicia sesión para eliminar productos de favoritos.',
-        'Log in to remove products from favorites.'
+        'Debes iniciar sesión para eliminar productos',
+        'You must log in to remove products'
       );
-      setTimeout(() => {
-        this.messageNoUserDisplay = null;
-      }, 2000);
       return;
     }
-    
-    this.apiService.removeProduct(product.id);
-    this.productos = this.apiService.getProductos();
-    product.insidecart = false;
-    this.messageNoCart = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');
-    setTimeout(() => {
-      this.messageNoCart = null;
-    }, 2000);
-    this.calcularTotalYDescuento();
-  }
 
-  messageNoUserDisplay: string | null = null;
-  messageNoCart: string | null = null;
+    this.apiService.eliminarDelCarrito(product.id).subscribe({
+      next: (response: any) => {
+        if (response.status === 'success') {
+          this.productos = this.productos.filter(p => p.id !== product.id);
+          this.calcularTotalYDescuento();
+          this.apiService.updateCartItemsCount();
+          this.message = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');
+        } else {
+          this.message = this.getText(
+            'Error al eliminar el producto',
+            'Error removing product'
+          );
+        }
+      },
+      error: (error) => {
+        console.error('Error al eliminar del carrito:', error);
+        this.message = this.getText(
+          'Error al eliminar del carrito',
+          'Error removing from cart'
+        );
+      }
+    });
+
+    setTimeout(() => {
+      this.message = null;
+      this.messageNoUserDisplay = null;
+    }, 2000);
+  }
 
   actualizarCantidad(product: Product, input: EventTarget | null): void {
     const inputElement = input as HTMLInputElement;
@@ -138,8 +233,8 @@ export class ModalCarritoComponent implements OnInit {
       product.cantidad = Math.min(nuevaCantidad, 5);
       inputElement.value = product.cantidad.toString();
       this.apiService.updateQuantity(product.id, product.cantidad);
+      this.calcularTotalYDescuento();
     }
-    this.calcularTotalYDescuento();
   }
 
   validarCantidad(product: Product, input: EventTarget | null): void {
@@ -164,12 +259,39 @@ export class ModalCarritoComponent implements OnInit {
       this.showZeroTotalAlert();
       return;
     }
-    this.apiService.addToPurchases([...this.productos]);
-    this.apiService.clearCart();
-    this.productos = this.apiService.getProductos();
-    this.calcularTotalYDescuento();
-    this.router.navigate(['/show-buys']);
-    this.showModal = false;
+    
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    // Verificar que hay productos en el carrito
+    if (!this.productos || this.productos.length === 0) {
+      console.error('No hay productos en el carrito');
+      return;
+    }
+
+    const purchase = {
+      productos: this.productos.map(product => ({
+        productoId: product.id,
+        cantidad: product.cantidad || 1
+      }))
+    };
+
+    console.log('Enviando compra:', purchase); // Para debug
+
+    this.apiService.makePurchase(purchase, userId).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response); // Para debug
+        if (response.mensaje === 'Compra registrada') {
+          this.productos = [];
+          this.calcularTotalYDescuento();
+          this.showModal = false;
+          this.router.navigate(['/show-buys']);
+        }
+      },
+      error: (error) => {
+        console.error('Error al realizar la compra:', error);
+      }
+    });
   }
 
   onPay() {
@@ -203,4 +325,6 @@ export class ModalCarritoComponent implements OnInit {
   onClose() {
     this.close.emit();
   }
+
+ 
 }

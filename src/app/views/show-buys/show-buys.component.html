@@ -1,82 +1,71 @@
 <body>
   <div class="overlay"></div>
-
-  @if (compras.length > 0) {
-    <h2 class="mt-5">{{ getText('Compras Realizadas', 'Purchases Made') }}</h2>
+  @if (isLoading) {
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+    } @else if (compras.length === 0) {
+      <div class="compras-vacio mb-5">
+        <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
+        <h3>{{ getText('No se encontraron detalles de compra.', 'No purchase details found.') }}</h3>
+        <p>{{ getText('Echa un vistazo a los productos que tenemos para ti.', 'Check out the products we have for you.') }}</p>
+        <button class="btn-volver mt-5" routerLink="/products">{{ getText('Comprar Ahora', 'Buy Now') }}</button>
+      </div>
+    }
+  @else if (compras.length > 0) {
+    <h2 class="mt-5">{{ getText('Detalles de la Compra', 'Purchase Details') }}</h2>
     <div class="decorative-line"></div>
 
     <div class="productos-container">
       <div class="button-container">
-        <button class="products-btn" routerLink="/products">{{ getText('Mostrar Productos', 'Show Products') }}</button>
+        <button class="products-btn" routerLink="/products">{{ getText('Volver a Productos', 'Back to Products') }}</button>
       </div>
       <div class="productos-list">
         @for (compra of compras; track compra; let i = $index) {
-          <div class="compra mt-5">
-            <h3>{{ getText('Compra', 'Purchase') }} {{ compra.name }}</h3>
-            <p>{{ getText('Fecha de la compra:', 'Purchase date:') }} {{ compra.fecha.toLocaleDateString() }}</p>
+          @if (compra.detalles && compra.detalles.length > 0) {
+            <div class="compra mt-5">
+              <h3>{{ getText('Compra', 'Purchase') }} #{{ i + 1 }}</h3>
+        <p class="fecha">{{ getText('Fecha de la compra:', 'Purchase date:') }} {{ compra.fecha | date:'medium' }}</p>
 
-            <table class="products-table">
-              <thead>
-                <tr>
-                  <th>{{ getText('Imagen', 'Image') }}</th>
-                  <th>{{ getText('Producto', 'Product') }}</th>
-                  <th>{{ getText('Cantidad', 'Amount') }}</th>
-                  <th>{{ getText('Precio', 'Price') }}</th>
-                  <th>{{ getText('Total', 'Total') }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (product of compra.productos; track product) {
+              <table class="products-table">
+                <thead>
                   <tr>
-                    <td>
-                      <div class="image-container">
-                        <img src="{{ product.image }}" alt="{{ product.name }}" loading="lazy">
-                      </div>
-                    </td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.cantidad }}</td>
-                    <td>{{ product.price + ' €' }}</td>
-                    <td>{{ (product.cantidad * product.price).toFixed(2) + ' €' }}</td>
+                    <th>{{ getText('Producto', 'Product') }}</th>
+                    <th>{{ getText('Cantidad', 'Amount') }}</th>
+                    <th>{{ getText('Precio Unitario', 'Unit Price') }}</th>
+                    <th>{{ getText('Total', 'Total') }}</th>
                   </tr>
-                }
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  @for (detalle of compra.detalles; track detalle) {
+                    <tr>
+                      <td>{{ detalle.nombre }}</td>
+                      <td>{{ detalle.cantidad }}</td>
+                      <td>{{ detalle.precioUnitario + ' €' }}</td>
+                      <td>{{ detalle.total + ' €' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
 
-            <div class="compra-total">
-              @if (calcularTotalCompra(compra.productos).descuento > 0) {
-                <div>
-                  <strong>{{ getText('Subtotal', 'Subtotal') }}:</strong>
-                  {{ calcularTotalCompra(compra.productos).total.toFixed(2) + ' €' }}
-                </div>
-                <div>
-                  <strong >{{ getText('Descuento', 'Discount') }} (5%):</strong>
-                 - {{ calcularTotalCompra(compra.productos).descuento.toFixed(2) + ' €' }}
-                </div>
-                <div>
-                  <strong>{{ getText('Total con Descuento', 'Total with Discount') }}:</strong>
-                  {{ calcularTotalCompra(compra.productos).totalConDescuento.toFixed(2) + ' €' }}
-                </div>
-              } @else {
+              <div class="compra-total">
                 <div>
                   <strong>{{ getText('Total de la Compra', 'Purchase Total') }}:</strong>
-                  {{ calcularTotalCompra(compra.productos).total.toFixed(2) + ' €' }}
+                  {{ compra.total + ' €' }}
                 </div>
-              }
+                <div>
+                  <strong>{{ getText('Cantidad Total de Productos', 'Total Products Amount') }}:</strong>
+                  {{ compra.cantidadTotal }}
+                </div>
+              </div>
             </div>
-          </div>
+          }
         }
       </div>
     </div>
   }
 
-  @if (compras.length == 0) {
-    <div class="compras-vacio mb-5">
-      <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
-      <h3>{{ getText('No has realizado ninguna compra.', 'You have not made any purchases.') }}</h3>
-      <p>{{ getText('Echa un vistazo a los productos que tenemos para ti.', 'Check out the products we have for you.') }}</p>
-      <button class="btn-volver mt-5" routerLink="/products">{{ getText('Comprar Ahora', 'Buy Now') }}</button>
-    </div>
-  }
+ 
 </body>
 
 <app-footer></app-footer>

@@ -76,25 +76,7 @@
 
         <!-- Main Content -->  
         <section class="products-content">
-            
-        @if (message) {
-            <div class="alert">
-                {{ message }}
-              </div>
-          }@else if(messageTrue){
-            <div class="alert">
-             {{ messageTrue }}
-            </div>
-          }
-          @if (messageFavorite) {
-            <div class="alert">
-                {{ messageFavorite }}
-              </div>
-          }@else if(messageNoFavorite){
-            <div class="alert">
-             {{ messageNoFavorite }}
-            </div>
-          }
+      
           @if (messageNoUserDisplay) {
             <div class="alert">
               {{ messageNoUserDisplay }}
@@ -116,7 +98,7 @@
                   
                   <button class="favorite-button" (click)="favorite(product)">
                     @if (isUser) {
-                      @if (!product.isFavorite) {
+                      @if (!product.favorite) {
                         <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
                       } @else {
                         <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Añadir a favoritos">
@@ -132,7 +114,7 @@
                   <button class="add-to-cart" (click)="productInCart(product)" >
                     <div class="botones_cart">
                     @if (isUser) {
-                      @if (!product.insidecart) {
+                      @if (!product.cart) {
                           
                         <button class="añadir_carrito" (click)="addToCart(product)" > <h3 ><img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito" >{{getText('Añadir al carrito','Add to Cart')}} </h3></button>
                       } @else {

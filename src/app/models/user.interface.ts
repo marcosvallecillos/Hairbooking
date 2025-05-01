@@ -15,9 +15,9 @@ export interface Usuario {
     price:         number;
     image:         string;
     cantidad:      number;
-    isFavorite:    boolean;
-    insidecart:    boolean;
-    date:          Date;
+    favorite:      boolean;
+    cart:          boolean;
+    date:          Date[];
     compras:       Compra[];
     categorias:    string;
     subcategorias: null | string;
@@ -25,12 +25,19 @@ export interface Usuario {
 
   export interface Compra{
     id: number;
-    name: string;
-    image: string;
-    cantidad: number;
-    price: number;
+    nombre: string;
+    image:string,
     fecha: Date;
-    productos: Product[];
+    total: number;
+    cantidadTotal: number;
+    precio:number,
+    detalles: {
+      productoId: number;
+      nombre: string;
+      cantidad: number;
+      precioUnitario: number;
+      total: number;
+    }[];
   }
 
   export interface Reserva{

@@ -53,7 +53,7 @@
         <h3 class="product-name">{{ product.name }}</h3>
         <p class="product-price">{{ product.price + ' €' }}</p>
 
-        <button class="añadir_carrito" (click)="addToCart(product)" (click)="eliminarproduct(product)">
+        <button class="añadir_carrito" (click)="addToCart(product)" >
           <h3>
             <img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito">
             {{getText('Añadir al carrito','Add to Cart')}}
@@ -64,6 +64,7 @@
 
       }
       } 
+      
     </div>
   </section>
 </div>

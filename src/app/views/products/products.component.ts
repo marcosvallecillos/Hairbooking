@@ -73,7 +73,7 @@ export class ProductsComponent implements OnInit {
           }
         });
 
-        // Initialize filteredProducts with all products
+      
         this.filteredProducts = [
           ...this.products.maquinas.clippers,
           ...this.products.maquinas.trimmer,
@@ -86,7 +86,7 @@ export class ProductsComponent implements OnInit {
         
         this.isLoading = false;
         
-        // Subscribe to route params after products are loaded
+       
         this.route.queryParams.subscribe((params) => {
           const category = params['category'] || 'all';
           this.filterProducts(category);
@@ -100,10 +100,45 @@ export class ProductsComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-   
-    this.apiService.addProduct({ ...product }) ; 
-    console.log('se añadio al carrito')
+    if (!this.isUser) {
+      this.messageNoUserDisplay = this.getText(
+        'Debes iniciar sesión para añadir al carrito',
+        'You must log in to add to cart'
+      );
+      return;
+    }
+
+    this.apiService.updateProductCart(product.id, true).subscribe({
+      next: (response: any) => {
+        if (response.status === 'success') {
+          // Actualizar el estado del producto en el array local
+          const productIndex = this.filteredProducts.findIndex(p => p.id === product.id);
+          if (productIndex !== -1) {
+            this.filteredProducts[productIndex].cart = true;
+          }
+          this.message = `${product.name} ` + this.getText('ha sido añadido al carrito.', 'has been added to cart.');
+        } else {
+          this.message = this.getText(
+            'Error al añadir al carrito',
+            'Error adding to cart'
+          );
+        }
+      },
+      error: (error) => {
+        console.error('Error al añadir al carrito:', error);
+        this.message = this.getText(
+          'Error al añadir al carrito',
+          'Error adding to cart'
+        );
+      }
+    });
+
+    setTimeout(() => {
+      this.message = null;
+      this.messageNoUserDisplay = null;
+    }, 2000);
   }
+
   showNoUserMessage() {
     this.messageNoUserDisplay = this.getText(
       'Deberás iniciar sesión para realizar esta función', 
@@ -122,8 +157,6 @@ export class ProductsComponent implements OnInit {
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
-  messageFavorite: string | null = null;
-  messageNoFavorite: string | null = null;
   messageNoUser: string = '';
   messageNoUserDisplay: string | null = null;
 
@@ -136,29 +169,22 @@ export class ProductsComponent implements OnInit {
       return;
     }
 
-    // Cambiar el estado de isFavorite
-    product.isFavorite = !product.isFavorite;
+    // Cambiar el estado de favorite
+    product.favorite = !product.favorite;
     
     // Actualizar el producto en la base de datos
-    this.apiService.updateProductFavorite(product.id, product.isFavorite ? true : false).subscribe({
+    this.apiService.updateProductFavorite(product.id, product.favorite ? true : false).subscribe({
       next: (response: any) => {
-        if (product.isFavorite) {
+        if (product.favorite) {
           this.apiService.addFavorite({ ...product });
-          this.messageNoFavorite = `${product.name} ` + this.getText('ha sido añadido a favoritos', 'has been added to favorites');
         } else {
           this.apiService.removeFavorite(product.id);
-          this.messageFavorite = `${product.name} ` + this.getText('ha sido eliminado de favoritos', 'has been removed from favorites');
         }
-
-        setTimeout(() => {
-          this.messageFavorite = null;
-          this.messageNoFavorite = null;
-        }, 2000);
       },
       error: (error: any) => {
         console.error('Error al actualizar favorito:', error);
         // Revertir el cambio si hay error
-        product.isFavorite = !product.isFavorite;
+        product.favorite = !product.favorite;
         this.messageNoUserDisplay = this.getText(
           'Error al actualizar favoritos',
           'Error updating favorites'
@@ -170,27 +196,68 @@ export class ProductsComponent implements OnInit {
   cart: Product[] = [];
   message: string | null = null;
   messageTrue: string | null = null;
+
   productInCart(product: any) {
     if (!this.isUser) {
-      this.messageNoUserDisplay = this.messageNoUser = this.getText('Deberas iniciar sesion para realizar esta función','You must log in to do this function.'); ;
+      this.messageNoUserDisplay = this.messageNoUser = this.getText(
+        'Deberas iniciar sesion para realizar esta función',
+        'You must log in to do this function.'
+      );
       setTimeout(() => {
         this.messageNoUserDisplay = null;
       }, 2000);
       return;
     }
-    const productInCart = this.cart.find(item => item.id === product.id);
 
-    if (productInCart) {
-      this.messageTrue = `${product.name} ` + this.getText('ya está en el carrito.', 'it´s already in the cart');
-    } else {
-      product.insidecart = true;
-      this.cart.push(product);
-      this.message = `${product.name}` + this.getText('ha sido añadido al carrito.', 'has been added to the cart.');
+    // Cambiar el estado de cart
+    product.cart = !product.cart;
+    
+    // Actualizar el estado en filteredProducts inmediatamente
+    const productIndex = this.filteredProducts.findIndex(p => p.id === product.id);
+    if (productIndex !== -1) {
+      this.filteredProducts[productIndex].cart = product.cart;
     }
+    
+    // Actualizar el producto en la base de datos
+    this.apiService.updateProductCart(product.id, product.cart).subscribe({
+      next: (response: any) => {
+        if (response.status === 'success') {
+          if (product.cart) {
+            this.apiService.addCart({ ...product });
+            this.message = `${product.name} ` + this.getText('ha sido añadido al carrito.', 'has been added to cart.');
+          } else {
+            this.apiService.removeCart(product.id);
+            this.message = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');
+          }
+        } else {
+          // Revertir el cambio si hay error
+          product.cart = !product.cart;
+          if (productIndex !== -1) {
+            this.filteredProducts[productIndex].cart = product.cart;
+          }
+          this.message = this.getText(
+            'Error al actualizar carrito',
+            'Error updating cart'
+          );
+        }
+      },
+      error: (error: any) => {
+        console.error('Error al actualizar carrito:', error);
+        // Revertir el cambio si hay error
+        product.cart = !product.cart;
+        if (productIndex !== -1) {
+          this.filteredProducts[productIndex].cart = product.cart;
+        }
+        this.message = this.getText(
+          'Error al actualizar carrito',
+          'Error updating cart'
+        );
+      }
+    });
 
     setTimeout(() => {
-      this.messageTrue = null
       this.message = null;
+      this.messageNoUserDisplay = null;
     }, 2000);
   }
 

@@ -359,3 +359,15 @@ button{
     }
 
 }
+
+.eliminar.disabled,
+.edit-button.disabled {
+  opacity: 0.5;
+cursor: not-allowed
+;
+}
+
+.eliminar.disabled img,
+.edit-button.disabled img {
+  filter: grayscale(100%);
+}

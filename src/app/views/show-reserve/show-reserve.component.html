@@ -43,10 +43,18 @@
               <p><i class="bi bi-calendar"></i> <strong> {{getText('Dia','Day')}}:</strong> {{ reserve.dia }}</p>
               <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ reserve.hora }}</p>
               <div class="botones"> 
-                <button class="eliminar" (click)="deleteReserve(reserve)"  aria-label="Eliminar reserva" (click)="showModal = true">
+                <button class="eliminar" 
+                  (click)="deleteReserve(reserve)"  
+                  aria-label="Eliminar reserva" 
+                  [disabled]="isReservePast(reserve)"
+                  aria-placeholder="Cita expirada"
+                  [class.disabled]="isReservePast(reserve)">
                   <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
                 </button>   
-                <button class="edit-button" (click)="editReserve(reserve)">
+                <button class="edit-button" 
+                  (click)="editReserve(reserve)"
+                  [disabled]="isReservePast(reserve)"
+                  [class.disabled]="isReservePast(reserve)">
                   <img src="../../../../images/editar.png" class="editar" alt="Editar reserva">
                 </button> 
               </div>

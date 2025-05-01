@@ -71,7 +71,18 @@ export class ShowReserveComponent implements OnInit {
     }
   }
 
+  isReservePast(reserve: Reserva): boolean {
+    const [year, month, day] = reserve.dia.split('-').map(Number);
+    const [hours, minutes] = reserve.hora.split(':').map(Number);
+    
+    const reserveDate = new Date(year, month - 1, day, hours, minutes);
+    const now = new Date();
+    
+    return reserveDate < now;
+  }
+
   deleteReserve(reserve: Reserva) {
+    if (this.isReservePast(reserve)) return;
     this.selectedReserve = reserve;
     this.showModal = true;
   }
@@ -106,23 +117,16 @@ export class ShowReserveComponent implements OnInit {
   }
 
   editReserve(reserve: Reserva) {
-    // Ajustar la fecha correctamente
-    const [year, month, day] = reserve.dia.split('-').map(Number);
-    const date = new Date(year, month - 1, day + 1);
-    const adjustedDate = date.toISOString().split('T')[0];
-    console.log('Fecha original:', reserve.dia);
-    console.log('Fecha ajustada:', adjustedDate);
-
-    // Navegar a la página de reserva con los datos de la reserva actual
-    this.router.navigate(['/reserve'], { 
-      queryParams: { 
+    if (this.isReservePast(reserve)) return;
+    
+    this.router.navigate(['/reserve'], {
+      queryParams: {
         id: reserve.id,
         servicio: reserve.servicio,
         peluquero: reserve.peluquero,
-        dia: adjustedDate,
-        hora: reserve.hora,
-        precio: reserve.precio
-      } 
+        dia: reserve.dia,
+        hora: reserve.hora
+      }
     });
   }
 }

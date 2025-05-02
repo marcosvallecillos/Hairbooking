@@ -119,11 +119,7 @@
                 </small>
               }
             </div>
-            <div class="form-options">
-              <input type="checkbox" id="customcb1" name="rememberMe" [(ngModel)]="rememberMe" [ngModelOptions]="{standalone: true}" />
-              <label class="inner" for="customcb1"></label>
-              <label class="outer" for="customcb1">{{ getText('Recuérdame', 'Remember Me') }}</label>
-            </div>
+          
             <button class="login-button" [disabled]="loginForm.invalid || isLoading">
               {{ isLoading ? getText('Iniciando...', 'Logging in...') : getText('Iniciar Sesión', 'Sign In') }}
             </button>

@@ -101,42 +101,6 @@ h2.active{
   font-weight: bold;
   transform: scale(1.2);
 }
-.form-options {
-    width: 17px;
-    height: 17px;
-    margin: 2px 0 2px 0;
-    background: #ddd;
-    border-radius: 100%;
-    position: relative;
-  }
-  .form-options label.inner {
-    display: block;
-    width: 12.75px;
-    height: 12.75px;
-    border-radius: 100px;
-    -webkit-transition: all .5s ease;
-    -moz-transition: all .5s ease;
-    -o-transition: all .5s ease;
-    -ms-transition: all .5s ease;
-    transition: all .5s ease;
-    cursor: pointer;
-    position: absolute;
-    top: 2.125px;
-    left: 2.125px;
-    z-index: 1;
-    background: #eee;
-  }
-  .form-options label.outer {
-    color: white;
-    margin-left: 25px;
-  }
-  .form-options [type=checkbox] {
-    
-    display: none
-  }
-  .form-options input[type=checkbox]:checked+label.inner {
-    background: rgb(13, 255, 0)
-  }
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -157,22 +121,26 @@ h2.active{
 
 .login-button {
     width: 50%;
+    margin-top:1rem;
     padding: 12px;
     align-items: center;
-    background-color: #031b93;
-    color: white;
+    background: linear-gradient(135deg, #b58801, #ffd65b);
+    color: black;
+    font-weight: bold;
     border: none;
     border-radius: 20px;
     font-size: 1rem;
     cursor: pointer;
-    
+    box-shadow: 0 6px 15px #b58801;
     margin: 0 auto;
     display: block;
     transition: all 0.3s ease;
 }
 
 .login-button:hover {
-    background-color: #163cfd;
+    background: linear-gradient(135deg, #b58801, #ffd65b);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px #b58801;
 }
 
 .register-section {
@@ -188,21 +156,26 @@ h2.active{
 
 .register-button {
     width: 50%;
+    margin-top:1rem;
     padding: 12px;
-    background-color: #031b93;
-    color: white;
+    align-items: center;
+    background: linear-gradient(135deg, #b58801, #ffd65b);
+    color: black;
+    font-weight: bold;
     border: none;
     border-radius: 20px;
     font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 6px 15px #b58801;
     margin: 0 auto;
     display: block;
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .register-button:hover {
-    background-color: #163cfd;  
-    color: white;
+    background: linear-gradient(135deg, #b58801, #ffd65b);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px #b58801;
 }
 
 .register-link {

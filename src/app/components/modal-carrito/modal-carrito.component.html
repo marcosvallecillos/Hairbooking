@@ -7,12 +7,12 @@
         <div class="cart-overlay" [class.active]="show" (click)="onClose()">
             <div class="cart-sidebar" [class.active]="show" (click)="$event.stopPropagation()">
                 <button class="close-button  mb-9" (click)="onClose()">×</button>
-            
+
                 @if(isUser) {
-                  
+
                 <div class="cart-header mt-5">
                     <h1>{{getText('Cesta', 'Cart')}} ({{productos.length}})</h1>
-                  
+
                     <h2 class="show-favoritos" routerLink="/favorites">
                         @if(productosFavoritos.length > 0) {
                         <i class="bi bi-heart-fill"></i> {{ getText('Favoritos', 'Favorites') }}
@@ -24,18 +24,18 @@
                 </div>
                 @if (isLoading) {
 
-                    
-                    } @else if (productos.length == 0) {
-                        <div class="cart-empty">
-                            <img src="../../../../images/disappointed.png" class="empty-icon" alt="Carrito vacío">
-                            <h3>{{ getText('Tu carrito está vacío.', 'Your cart is empty') }}</h3>
-                            <p>{{ getText('Echa un vistazo a la selección que tenemos para ti.', 'Take a look at our selection
-                                for you.') }}</p>
-                            <button class="return-button" routerLink="/products" (click)="onClose()">
-                                {{getText('Ir a productos', 'Go to products')}}
-                            </button>
-                        </div>
-                        }
+
+                } @else if (productos.length == 0) {
+                <div class="cart-empty">
+                    <img src="../../../../images/disappointed.png" class="empty-icon" alt="Carrito vacío">
+                    <h3>{{ getText('Tu carrito está vacío.', 'Your cart is empty') }}</h3>
+                    <p>{{ getText('Echa un vistazo a la selección que tenemos para ti.', 'Take a look at our selection
+                        for you.') }}</p>
+                    <button class="return-button" routerLink="/products" (click)="onClose()">
+                        {{getText('Ir a productos', 'Go to products')}}
+                    </button>
+                </div>
+                }
                 @if(productos.length > 0) {
                 @if(faltaParaDescuento > 0) {
                 <div class="shipping-alert">
@@ -72,7 +72,7 @@
                                             </button>
                                             <button class="action-button" (click)="eliminarproduct(product)">
                                                 <i class="bi bi-trash"></i>
-                                                {{getText('Eliminar', 'Remove')}}
+                                                {{ isProcessing[product.id] ? getText('Eliminando...', 'Deleting...') : getText('Eliminar', 'Delete') }}
                                             </button>
                                         </div>
                                     </div>
@@ -104,7 +104,7 @@
                         </button>
                     </div>
                 </div>
-                } 
+                }
                 } @else {
                 <div class="alert-warning">
                     <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">

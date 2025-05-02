@@ -32,7 +32,13 @@ body{
     transform: scale(1.02);
 }
 
+.card.disabled {
+    opacity: 0.7;
 
+    filter: grayscale(80%);
+    cursor: not-allowed;
+  }
+  
 .header {
     display: flex;
     justify-content: flex-end;

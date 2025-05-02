@@ -23,7 +23,8 @@ export class ModalCarritoComponent implements OnInit {
   @Input() show: boolean = false;
   @Output() close = new EventEmitter<void>();
   total: number = 0;
-  
+  isProcessing:{ [productId: number]: boolean } = {};
+
   productos: Product[] = [];
   productosFavoritos: Product[] = [];
   isUser = false;
@@ -195,6 +196,7 @@ export class ModalCarritoComponent implements OnInit {
   }
 
   eliminarproduct(product: Product) {
+    this.isProcessing[product.id] = true; // Marcar el producto como en proceso de eliminación
     if (!this.isUser) {
       this.messageNoUserDisplay = this.getText(
         'Debes iniciar sesión para eliminar productos',
@@ -215,6 +217,8 @@ export class ModalCarritoComponent implements OnInit {
             'Error al eliminar el producto',
             'Error removing product'
           );
+          this.isProcessing[product.id] = false;
+
         }
       },
       error: (error) => {

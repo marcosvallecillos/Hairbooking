@@ -9,7 +9,7 @@
 
 <!-- Empty favorites state -->
 @if (!isLoading && productos.length === 0) {
-  <div class="favorito-vacio">
+  <div class="favorito-vacio  mb-5">
     <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
     <h3>{{ getText('No tienes productos favoritos.', 'You have no favorite products.') }}</h3>
     <p>{{ getText('Echa un vistazo a la selección que tenemos para ti.', 'Take a look at the selection we have for you.') }}</p>
@@ -21,8 +21,8 @@
 
 <!-- Products list -->
 @if (!isLoading && productos.length > 0) {
-  <div class="favorite-container">
-    <section class="products-content">
+  <div class="favorite-container ">
+    <section class="products-content  ">
       <div class="products-grid">
         @for (product of productos; track product.id) {
           <div class="product-card">

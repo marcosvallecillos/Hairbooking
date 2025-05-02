@@ -79,7 +79,7 @@ getReserveById(reserveId: number): Reserva | undefined {
   return this.reserves.find((r) => r.id === reserveId);
 }
 
-makePurchase(purchase: { productos: { productoId: number; cantidad: number; }[] }, usuarioId: number): Observable<any> {
+makePurchase(purchase: { productos: { productoId: number; cantidad: number; }[]; descuento?: number }, usuarioId: number): Observable<any> {
   const httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -261,6 +261,7 @@ addToPurchases(products: Product[]): void {
     total: products.reduce((sum, p) => sum + p.price * p.cantidad, 0),
     cantidadTotal: products.reduce((sum, p) => sum + p.cantidad, 0),
     precio: products.reduce((sum, p) => sum + p.price * p.cantidad, 0),
+    descuento: 0,
     detalles: products.map(p => ({
       productoId: p.id,
       nombre: p.name,

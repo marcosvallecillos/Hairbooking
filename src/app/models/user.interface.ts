@@ -32,6 +32,7 @@ export interface Usuario {
     total: number;
     cantidadTotal: number;
     precio:number,
+    descuento?: number;
     detalles: {
       productoId: number;
       nombre: string;

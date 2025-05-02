@@ -76,5 +76,12 @@ export class ShowBuysComponent implements OnInit {
       cantidadTotal: compra.cantidadTotal
     };
   }
+
+  calcularDescuento(total: number): number {
+    if (total > 500) {
+      return total * 0.05; // 5% de descuento si el total es mayor a 500€
+    }
+    return 0;
+  }
 }
   

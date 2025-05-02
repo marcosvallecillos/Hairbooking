@@ -316,7 +316,8 @@ export class ModalCarritoComponent implements OnInit {
       productos: this.productos.map(product => ({
         productoId: product.id,
         cantidad: product.cantidad
-      }))
+      })),
+      descuento: this.descuento
     };
 
     console.log('Enviando compra:', purchase); // Para debug

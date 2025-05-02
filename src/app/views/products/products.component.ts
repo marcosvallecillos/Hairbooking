@@ -49,10 +49,9 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.isUser = this.userStateService.getIsUser();
     
-    // First load all products
     this.apiService.getAllProductos().subscribe(
       (apiProducts: Product[]) => {
-        // Categorize products based on their type
+        //Categorizar a los productos
         apiProducts.forEach(product => {
           if (product.subcategorias === 'clippers') {
             this.products.maquinas.clippers.push(product);
@@ -87,7 +86,7 @@ export class ProductsComponent implements OnInit {
           if (isUser) {
             this.userStateService.user$.subscribe(user => {
               if (user && user.id) {
-                // Load favorites
+                // Cargar Favoritos
                 this.apiService.getFavoritesByUsuarioId(user.id).subscribe({
                   next: (favoritesResponse: any) => {
                     if (favoritesResponse.status === 'success' && favoritesResponse.favoritos) {
@@ -120,7 +119,7 @@ export class ProductsComponent implements OnInit {
           }
         });
 
-        // Set up category filtering
+        // Predeterminado saldra la categoria all
         this.route.queryParams.subscribe((params) => {
           const category = params['category'] || 'all';
           this.filterProducts(category);

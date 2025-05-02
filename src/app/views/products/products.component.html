@@ -34,7 +34,7 @@
                         <ul>
                             <h3>{{getText('Cosmeticos','Cosmetics')}}</h3>
                             <li routerLinkActive="active">
-                                <a href="#cosmeticos" (click)="filterProducts('cosmeticos')">{{getText('Cosméticos', 'Cosmeticos')}}</a>
+                                <a href="#cosmeticos" (click)="filterProducts('cosmeticos')">{{getText('Cosméticos', 'Cosmetics')}}</a>
                             </li>
                         </ul>
                     </div>
@@ -99,12 +99,12 @@
                   <button class="favorite-button" (click)="favorite(product)">
                     @if (isUser) {
                       @if (!product.favorite) {
-                        <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
+                        <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos"  [title]="getText('Añadir a favoritos','Add to favorites')">
                       } @else {
-                        <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Añadir a favoritos">
+                        <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Añadido a favoritos" [title]="getText('Añadido a favoritos','Added to favorites')">
                       }
                     } @else {
-                      <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos">
+                      <img src="../../../../images/favorito.png" class="fav-icon" alt="Añadir a favoritos" [title]="getText('Añadir a favoritos','Add to favorites')">
                     }
                   </button>
                   <img [src]="product.image" [alt]="product.name" class="product-image">

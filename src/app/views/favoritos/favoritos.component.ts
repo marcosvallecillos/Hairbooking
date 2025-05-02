@@ -201,7 +201,6 @@ export class FavoritosComponent implements OnInit {
     this.apiservice.updateProductFavorite(product.id, false).subscribe({
       next: () => {
         this.productos = this.productos.filter(p => p.id !== product.id);
-        this.messageNoFavorite = `${product.name} ` + this.getText('ha sido eliminado de favoritos.', 'has been removed from favorites.');
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -214,7 +213,6 @@ export class FavoritosComponent implements OnInit {
     });
 
     setTimeout(() => {
-      this.messageNoFavorite = null;
       this.messageNoUserDisplay = null;
       this.cdr.detectChanges();
     }, 2000);

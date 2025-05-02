@@ -48,10 +48,8 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.isUser = this.userStateService.getIsUser();
-    this.userStateService.isUser$.subscribe(isUser => {
-      this.isUser = isUser;
-    });
-
+    
+    // First load all products
     this.apiService.getAllProductos().subscribe(
       (apiProducts: Product[]) => {
         // Categorize products based on their type
@@ -73,7 +71,6 @@ export class ProductsComponent implements OnInit {
           }
         });
 
-      
         this.filteredProducts = [
           ...this.products.maquinas.clippers,
           ...this.products.maquinas.trimmer,
@@ -83,10 +80,47 @@ export class ProductsComponent implements OnInit {
           ...this.products.capas,
           ...this.products.accesorios
         ];
-        
-        this.isLoading = false;
-        
-       
+
+        // Verificar si los productos estan en favoritos o en el carrito
+        this.userStateService.isUser$.subscribe(isUser => {
+          this.isUser = isUser;
+          if (isUser) {
+            this.userStateService.user$.subscribe(user => {
+              if (user && user.id) {
+                // Load favorites
+                this.apiService.getFavoritesByUsuarioId(user.id).subscribe({
+                  next: (favoritesResponse: any) => {
+                    if (favoritesResponse.status === 'success' && favoritesResponse.favoritos) {
+                      const favoriteIds = favoritesResponse.favoritos.map((favoritos: any) => favoritos.id);
+                      this.filteredProducts.forEach(product => {
+                        product.favorite = favoriteIds.includes(product.id);
+                      });
+                    }
+                  }
+                });
+
+                // Cargar Carrito
+                this.apiService.getCartByUsuarioId(user.id).subscribe({
+                  next: (cartResponse: any) => {
+                    if (cartResponse.status === 'success' && cartResponse.carrito) {
+                      const cartIds = cartResponse.carrito.map((carrito: any) => carrito.id);
+                      this.filteredProducts.forEach(product => {
+                        product.cart = cartIds.includes(product.id);
+                      });
+                    }
+                    this.isLoading = false;
+                  }
+                });
+              } else {
+                this.isLoading = false;
+              }
+            });
+          } else {
+            this.isLoading = false;
+          }
+        });
+
+        // Set up category filtering
         this.route.queryParams.subscribe((params) => {
           const category = params['category'] || 'all';
           this.filterProducts(category);

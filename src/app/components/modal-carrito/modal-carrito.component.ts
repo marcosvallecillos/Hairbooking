@@ -62,6 +62,7 @@ export class ModalCarritoComponent implements OnInit {
         this.isUser = isUser;
         if (isUser) {
             this.cargarCarrito();
+            this.cargarFavoritos();
             this.cartSubscription = this.apiService.cartItemsCount$.subscribe(count => {
                 if (count > 0) {
                     this.cargarCarrito();
@@ -73,6 +74,7 @@ export class ModalCarritoComponent implements OnInit {
             });
         } else {
             this.productos = [];
+            this.productosFavoritos = [];
             this.calcularTotalYDescuento();
             if (this.cartSubscription) {
                 this.cartSubscription.unsubscribe();
@@ -123,6 +125,36 @@ export class ModalCarritoComponent implements OnInit {
           this.productos = [];
           this.calcularTotalYDescuento();
           this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  cargarFavoritos() {
+    const userId = this.authService.getUserId();
+    if (userId) {
+      this.apiService.getFavoritesByUsuarioId(userId).subscribe({
+        next: (response: any) => {
+          if (response.status === 'success' && response.favoritos) {
+            this.productosFavoritos = response.favoritos.map((producto: any) => ({
+              id: producto.id,
+              name: producto.name,
+              price: producto.price,
+              image: producto.image,
+              cantidad: 1,
+              isFavorite: true,
+              insidecart: producto.cart,
+              categorias: producto.categoria,
+              subcategorias: producto.subcategoria
+            }));
+            this.cdr.detectChanges();
+          } else {
+            this.productosFavoritos = [];
+          }
+        },
+        error: (error) => {
+          console.error('Error al cargar favoritos:', error);
+          this.productosFavoritos = [];
         }
       });
     }

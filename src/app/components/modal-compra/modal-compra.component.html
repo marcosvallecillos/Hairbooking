@@ -27,8 +27,10 @@
                 <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>            </div>
             <div class="modal-actions">
                 <button class="btn-cancel" (click)="onCancel()">{{ getText('Cancelar', 'Cancel') }}</button>
-                <button class="btn-confirm" (click)="onConfirm()">{{ getText('Pagar', 'Pay') }}</button>
-            </div>
+                <button class="btn-confirm" (click)="onConfirm()" [disabled]="isProcessing">
+                    {{ isProcessing ? getText('Comprando...', 'Purchasing...') : getText('Pagar', 'Pay') }}
+                </button>
+                            </div>
         </div>
     </div>
     }

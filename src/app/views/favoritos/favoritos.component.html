@@ -56,7 +56,7 @@
         <button class="añadir_carrito" (click)="addToCart(product)" >
           <h3>
             <img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito">
-            {{getText('Añadir al carrito','Add to Cart')}}
+            {{ isProcessing ? getText('Añadiendo al carrito...', 'Adding Cart...') : getText('Añadir al carrito', 'Add Cart') }}
           </h3>
         </button>
 

@@ -3,6 +3,7 @@ import { LanguageService } from '../../services/language.service';
 import { ApiService } from '../../services/api-service.service';
 import { Compra, Product } from '../../models/user.interface';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-compra',
@@ -17,6 +18,7 @@ export class ModalCompraComponent implements OnInit {
   @Input() descuento: string = '';
   @Input() cantidad: string = '';
   @Input() total: string = '';
+  isProcessing: boolean = false;
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
@@ -31,7 +33,8 @@ export class ModalCompraComponent implements OnInit {
   constructor(
     private languageService: LanguageService,
     private apiService: ApiService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
@@ -81,7 +84,12 @@ export class ModalCompraComponent implements OnInit {
   onConfirm() {
     console.log('Iniciando proceso de compra...');
     console.log('Cart items:', this.cartItems);
-    
+    this.messageNoUserDisplay = this.getText(
+      'Comprando...',
+      'Purchasing...'
+    );
+    console.log(this.messageNoUserDisplay);
+    this.isProcessing = true;
     if (!this.userId) {
       console.error('No hay userId');
       this.messageNoUserDisplay = this.getText(
@@ -96,7 +104,10 @@ export class ModalCompraComponent implements OnInit {
       this.messageNoUserDisplay = this.getText(
         'El carrito está vacío',
         'Cart is empty'
+        
       );
+      this.isProcessing = false;
+
       return;
     }
 
@@ -121,13 +132,18 @@ export class ModalCompraComponent implements OnInit {
           setTimeout(() => {
             this.showAlert = false;
             this.confirm.emit();
+            this.isProcessing = false;
+
           }, 1000);
+          this.router.navigate(['/show-buys']);
         } else {
           console.error('Error en la respuesta:', response);
           this.messageNoUserDisplay = this.getText(
             'Error al realizar la compra',
             'Error making purchase'
           );
+          this.isProcessing = false;
+
         }
       },
       error: (error) => {
@@ -136,6 +152,8 @@ export class ModalCompraComponent implements OnInit {
           'Error al realizar la compra: ' + (error.error?.message || error.message),
           'Error making purchase: ' + (error.error?.message || error.message)
         );
+        this.isProcessing = false;
+
       }
     });
   }

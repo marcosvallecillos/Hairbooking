@@ -22,6 +22,8 @@ export class FavoritosComponent implements OnInit {
   isSpanish: boolean = true;
   isUser = false;
   isLoading: boolean = true;
+  isProcessing: boolean = false;
+
 
   constructor(
     private languageService: LanguageService,
@@ -121,6 +123,9 @@ export class FavoritosComponent implements OnInit {
   }
 
   addToCart(product: Product) {
+   
+    this.isProcessing = true;
+
     if (!this.isUser) {
       this.messageNoUserDisplay = this.getText(
         'Debes iniciar sesión para añadir al carrito',
@@ -128,32 +133,34 @@ export class FavoritosComponent implements OnInit {
       );
       return;
     }
-
-    console.log('Intentando actualizar favorito para ID:', product.id);
-    this.apiservice.updateProductFavorite(product.id, false).subscribe({
+    this.apiservice.updateProductFavorite(product.id, true).subscribe({
       next: () => {
-        console.log('Favorito actualizado correctamente');
-        console.log('Intentando añadir al carrito para ID:', product.id);
         this.apiservice.updateProductCart(product.id, true).subscribe({
           next: (response: any) => {
             console.log('Respuesta del carrito:', response);
             if (response.message === 'Producto agregado al carrito correctamente') {
-              console.log('Productos antes del filter:', this.productos);
               this.productos = this.productos.filter(p => p.id !== product.id);
-              console.log('Productos después del filter:', this.productos);
-              
-              // Actualizar cartItems desde el servicio
-              this.cartItems = this.apiservice.getCart();
-              console.log('Carrito actualizado:', this.cartItems);
-              
+            
+              // Volver a cargar favoritos y carrito para asegurar la actualización
+              const userId = this.authService.getUserId();
+              if (userId) {
+                this.loadFavorites(userId);
+                this.loadCart(userId);
+              }
+            
               this.message = `${product.name} ` + this.getText('ha sido añadido al carrito.', 'has been added to the cart.');
-              this.cdr.detectChanges();
-            } else {
+              setTimeout(() => {
+                this.message = null;
+                this.cdr.detectChanges();
+              }, 2000);
+              }
+            else {
               console.error('Respuesta no exitosa:', response);
               this.message = this.getText(
                 'Error al añadir el producto al carrito',
                 'Error adding product to cart'
               );
+              this.isProcessing = false;
             }
           },
           error: (error) => {
@@ -162,6 +169,8 @@ export class FavoritosComponent implements OnInit {
               'Error al añadir al carrito',
               'Error adding to cart'
             );
+            this.isProcessing = false;
+
           }
         });
       },
@@ -171,6 +180,8 @@ export class FavoritosComponent implements OnInit {
           'Error al actualizar el producto',
           'Error updating product'
         );
+        this.isProcessing = false;
+
       }
     });
   }

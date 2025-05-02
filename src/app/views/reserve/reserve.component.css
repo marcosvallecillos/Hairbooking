@@ -434,7 +434,8 @@
 }
 .time-slot.reserved {
     background-color: red; /* Red background */
-    color: #fff;
+    color: white;
+    font-weight: bold;
     border-color: #cc0000;
     opacity: 0.9;
   }

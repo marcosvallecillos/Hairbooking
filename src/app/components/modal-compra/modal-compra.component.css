@@ -253,3 +253,10 @@
       transform: scale(1);
   }
 }
+.process-message {
+  margin: 10px 0;
+  padding: 8px;
+  text-align: center;
+  font-weight: bold;
+  color: #007bff; /* o el color que prefieras */
+}

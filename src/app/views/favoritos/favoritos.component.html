@@ -1,72 +1,67 @@
 <div class="overlay"></div>
+
+<!-- Loading state -->
 @if (isLoading) {
   <div class="loading-message">
     <p>{{ getText('Cargando favoritos...', 'Loading favorites...') }}</p>
   </div>
-} @else if (productos.length == 0){
+}
+
+<!-- Empty favorites state -->
+@if (!isLoading && productos.length === 0) {
   <div class="favorito-vacio">
     <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
-
-    <h3> {{ getText('No tienes productos favoritos.','You have no favorite products.') }} </h3>
-
-    <p> {{getText('Echa un vistazo a la selección que tenemos para ti.','Take a look at the selection we have for
-      you.')}} </p>
+    <h3>{{ getText('No tienes productos favoritos.', 'You have no favorite products.') }}</h3>
+    <p>{{ getText('Echa un vistazo a la selección que tenemos para ti.', 'Take a look at the selection we have for you.') }}</p>
     <button class="btn-volver" routerLink="/products">
-
-      {{getText( 'Ir a productos','Go to products')}}
-
+      {{ getText('Ir a productos', 'Go to products') }}
     </button>
   </div>
-  }
-<div class="favorite-container">
-  <section class="products-content">
-    <div class="products-grid">
-      @if (message) {
-      <div class="alert-message">
-        {{ message }}
-      </div>
-      } @else if (messageTrue) {
-      <div class="alert-message">
-        {{ messageTrue }}
-      </div>
-      } @else if (messageNoFavorite) {
-      <div class="alert">
-        {{ messageNoFavorite }}
-      </div>
-      } @else if (messageNoUserDisplay) {
-      <div class="alert">
-        {{ messageNoUserDisplay }}
-      </div>
-      }
-     
-      @else if(productos.length > 0) {
-      @for (product of productos; track product.id) {
-      <div class="product-card">
-        <button class="eliminar" (click)="eliminarproduct(product)" aria-label="Eliminar producto">
-          <i class="bi bi-trash"></i>
-        </button>
-        <button class="favorite-button">
-          <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Favorito">
-        </button>
+}
 
-        <img [src]="product.image" [alt]="product.name" class="product-image">
-        <h3 class="product-name">{{ product.name }}</h3>
-        <p class="product-price">{{ product.price + ' €' }}</p>
-
-        <button class="añadir_carrito" (click)="addToCart(product)" >
-          <h3>
-            <img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito">
-            {{ isProcessing ? getText('Añadiendo al carrito...', 'Adding Cart...') : getText('Añadir al carrito', 'Add Cart') }}
-          </h3>
-        </button>
-
+<!-- Products list -->
+@if (!isLoading && productos.length > 0) {
+  <div class="favorite-container">
+    <section class="products-content">
+      <div class="products-grid">
+        @for (product of productos; track product.id) {
+          <div class="product-card">
+            <button class="eliminar" (click)="eliminarproduct(product)" aria-label="Eliminar producto">
+              <i class="bi bi-trash"></i>
+            </button>
+            <button class="favorite-button">
+              <img src="../../../../images/favorito_pulse.png" class="fav-icon" alt="Favorito">
+            </button>
+            
+            <img [src]="product.image" [alt]="product.name" class="product-image">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-price">{{ product.price }} €</p>
+            
+            <button class="añadir_carrito" (click)="addToCart(product)">
+              <h3>
+                <img src="../../../../images/add_cart.gif" class="add-carrito" alt="Añadir al carrito">
+                {{ isProcessing[product.id] ? getText('Añadiendo al carrito...', 'Adding Cart...') : getText('Añadir al carrito', 'Add Cart') }}
+              </h3>
+            </button>
+          </div>
+        }
       </div>
-
-      }
-      } 
       
-    </div>
-  </section>
-</div>
+      <!-- Alert messages -->
+      @if (message) {
+        <div class="alert-message">{{ message }}</div>
+      }
+      @if (messageTrue) {
+        <div class="alert-message">{{ messageTrue }}</div>
+      }
+      @if (messageNoFavorite) {
+        <div class="alert">{{ messageNoFavorite }}</div>
+      }
+      @if (messageNoUserDisplay) {
+        <div class="alert">{{ messageNoUserDisplay }}</div>
+      }
+    </section>
+  </div>
+}
 
 <app-footer></app-footer>

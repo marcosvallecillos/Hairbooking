@@ -58,27 +58,32 @@ export class ModalCarritoComponent implements OnInit {
   ngOnInit() {
     this.isUser = this.userStateService.getIsUser();
     this.userStateService.isUser$.subscribe(isUser => {
-      this.isUser = isUser;
-      if (isUser) {
-        this.cargarCarrito();
-        this.cartSubscription = this.apiService.cartItemsCount$.subscribe(count => {
-          if (count > 0) {
+        this.isUser = isUser;
+        if (isUser) {
             this.cargarCarrito();
-          } else {
+            this.cartSubscription = this.apiService.cartItemsCount$.subscribe(count => {
+                if (count > 0) {
+                    this.cargarCarrito();
+                } else {
+                    this.productos = [];
+                    this.calcularTotalYDescuento();
+                    this.cdr.detectChanges();
+                }
+            });
+        } else {
             this.productos = [];
             this.calcularTotalYDescuento();
-            this.cdr.detectChanges();
-          }
-        });
-      } else {
-        this.productos = [];
-        this.calcularTotalYDescuento();
-        if (this.cartSubscription) {
-          this.cartSubscription.unsubscribe();
+            if (this.cartSubscription) {
+                this.cartSubscription.unsubscribe();
+            }
         }
-      }
     });
-  }
+
+    this.apiService.cartUpdated.subscribe(() => {
+        this.calcularTotalYDescuento(); // Solo recalcular, no volver a cargar
+    });
+}
+
 
   cargarCarrito() {
     const userId = this.authService.getUserId();

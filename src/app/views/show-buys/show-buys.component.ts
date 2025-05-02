@@ -6,12 +6,11 @@ import { LanguageService } from '../../services/language.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ApiService } from '../../services/api-service.service';
 import { UserStateService } from '../../services/user-state.service';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-show-buys',
   standalone: true,
-  imports: [RouterLink, FooterComponent, DatePipe],
+  imports: [RouterLink, FooterComponent],
   templateUrl: './show-buys.component.html',
   styleUrl: './show-buys.component.css'
 })

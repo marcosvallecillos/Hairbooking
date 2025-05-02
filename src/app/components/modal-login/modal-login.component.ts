@@ -43,7 +43,7 @@ export class ModalLoginComponent {
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/)]],
-      confirmPassword: ['']
+      confirmPassword: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/)]]
     }, { validators: this.passwordMatchValidator });
 
     this.languageService.isSpanish$.subscribe(isSpanish => {
@@ -64,7 +64,7 @@ export class ModalLoginComponent {
         Validators.minLength(5),
         Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/)
       ]);
-      this.loginForm.get('confirmPassword')?.setValidators([Validators.required]);
+      this.loginForm.get('confirmPassword')?.setValidators([ ]);
     } else {
       this.loginForm.get('nombre')?.clearValidators();
       this.loginForm.get('apellidos')?.clearValidators();
@@ -80,13 +80,13 @@ export class ModalLoginComponent {
     this.loginForm.get('confirmPassword')?.updateValueAndValidity();
   }
 
-  passwordMatchValidator() {
-    return (form: FormGroup): ValidationErrors | null => {
-      const password = form.get('password')?.value;
-      const confirmPassword = form.get('confirmPassword')?.value;
-      return password && confirmPassword && password !== confirmPassword ? { passwordsDoNotMatch: true } : null;
-    };
-  }
+    passwordMatchValidator() {
+      return (form: FormGroup): ValidationErrors | null => {
+        const password = form.get('password')?.value;
+        const confirmPassword = form.get('confirmPassword')?.value;
+        return password && confirmPassword && password !== confirmPassword ? { passwordsDoNotMatch: true } : null;
+      };
+    }
 
   toggleTab(isRegister: boolean) {
     this.isRegister = isRegister;
@@ -128,6 +128,7 @@ export class ModalLoginComponent {
             apellidos: usuario.apellidos,
             telefono: usuario.telefono,
             password: '',
+            confirm_password: '',
             citas_reservadas: []
           };
           
@@ -172,6 +173,7 @@ export class ModalLoginComponent {
       email: this.loginForm.get('email')?.value,
       telefono: this.loginForm.get('telefono')?.value,
       password: this.loginForm.get('password')?.value,
+      confirm_password: this.loginForm.get('confirmPassword')?.value,
       citas_reservadas: []
     };
   

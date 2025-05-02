@@ -4,6 +4,7 @@ export interface Usuario {
     apellidos: string;
     email: string;
     password: string;
+    confirm_password: string;
     telefono: string;
     citas_reservadas: Reserva[];
   }

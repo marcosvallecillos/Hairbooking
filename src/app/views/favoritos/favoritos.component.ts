@@ -22,7 +22,7 @@ export class FavoritosComponent implements OnInit {
   isSpanish: boolean = true;
   isUser = false;
   isLoading: boolean = true;
-  isProcessing: boolean = false;
+  isProcessing:{ [productId: number]: boolean } = {};
 
 
   constructor(
@@ -124,7 +124,7 @@ export class FavoritosComponent implements OnInit {
 
   addToCart(product: Product) {
    
-    this.isProcessing = true;
+   
 
     if (!this.isUser) {
       this.messageNoUserDisplay = this.getText(
@@ -134,7 +134,10 @@ export class FavoritosComponent implements OnInit {
       return;
     }
     this.apiservice.updateProductFavorite(product.id, true).subscribe({
+      
       next: () => {
+        this.isProcessing[product.id] = true;
+
         this.apiservice.updateProductCart(product.id, true).subscribe({
           next: (response: any) => {
             console.log('Respuesta del carrito:', response);
@@ -160,7 +163,7 @@ export class FavoritosComponent implements OnInit {
                 'Error al añadir el producto al carrito',
                 'Error adding product to cart'
               );
-              this.isProcessing = false;
+              this.isProcessing[product.id] = false;
             }
           },
           error: (error) => {
@@ -169,7 +172,7 @@ export class FavoritosComponent implements OnInit {
               'Error al añadir al carrito',
               'Error adding to cart'
             );
-            this.isProcessing = false;
+            this.isProcessing[product.id] = false;
 
           }
         });
@@ -180,7 +183,7 @@ export class FavoritosComponent implements OnInit {
           'Error al actualizar el producto',
           'Error updating product'
         );
-        this.isProcessing = false;
+        this.isProcessing[product.id] = false;
 
       }
     });

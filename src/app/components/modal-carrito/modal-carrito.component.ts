@@ -237,9 +237,13 @@ export class ModalCarritoComponent implements OnInit {
     const nuevaCantidad = parseInt(inputElement.value);
 
     if (!isNaN(nuevaCantidad) && nuevaCantidad >= 1) {
-      product.cantidad = Math.min(nuevaCantidad, 5);
-      inputElement.value = product.cantidad.toString();
-      this.apiService.updateQuantity(product.id, product.cantidad);
+      const cantidad = Math.min(nuevaCantidad, 5);
+      product.cantidad = cantidad;
+      inputElement.value = cantidad.toString();
+      this.calcularTotalYDescuento();
+    } else {
+      product.cantidad = 1;
+      inputElement.value = '1';
       this.calcularTotalYDescuento();
     }
   }
@@ -251,12 +255,8 @@ export class ModalCarritoComponent implements OnInit {
     if (isNaN(nuevaCantidad) || nuevaCantidad < 1) {
       product.cantidad = 1;
       inputElement.value = '1';
-    } else {
-      product.cantidad = Math.min(nuevaCantidad, 5);
-      inputElement.value = product.cantidad.toString();
+      this.calcularTotalYDescuento();
     }
-    this.apiService.updateQuantity(product.id, product.cantidad);
-    this.calcularTotalYDescuento();
   }
 
   showModal: boolean = false;
@@ -279,7 +279,7 @@ export class ModalCarritoComponent implements OnInit {
     const purchase = {
       productos: this.productos.map(product => ({
         productoId: product.id,
-        cantidad: product.cantidad || 1
+        cantidad: product.cantidad
       }))
     };
 

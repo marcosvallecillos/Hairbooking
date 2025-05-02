@@ -214,7 +214,7 @@ updateQuantity(productId: number, quantity: number) {
 
  updateCartItemsCount() {
   const totalItems = this.productos.reduce(
-    (sum, product) => sum + (product.cantidad || 0),
+    (sum, product) => sum + (product.cantidad ? product.cantidad : 0),
     0
   );
   this.cartItemsCount.next(totalItems);

@@ -79,9 +79,6 @@ export class ModalCarritoComponent implements OnInit {
         }
     });
 
-    this.apiService.cartUpdated.subscribe(() => {
-        this.calcularTotalYDescuento(); // Solo recalcular, no volver a cargar
-    });
 }
 
 
@@ -92,17 +89,22 @@ export class ModalCarritoComponent implements OnInit {
       this.apiService.getCartByUsuarioId(userId).subscribe({
         next: (response: any) => {
           if (response.status === 'success' && response.carrito) {
-            this.productos = response.carrito.map((producto: any) => ({
-              id: producto.id,
-              name: producto.name,
-              price: producto.price,
-              image: producto.image,
-              cantidad: producto.cantidad || 1,
-              isFavorite: producto.favorite,
-              insidecart: producto.cart,
-              categorias: producto.categoria,
-              subcategorias: producto.subcategoria
-            }));
+            // Mantener las cantidades existentes si el producto ya está en el carrito
+            const nuevosProductos = response.carrito.map((producto: any) => {
+              const productoExistente = this.productos.find(p => p.id === producto.id);
+              return {
+                id: producto.id,
+                name: producto.name,
+                price: producto.price,
+                image: producto.image,
+                cantidad: productoExistente ? productoExistente.cantidad : (producto.cantidad || 1),
+                isFavorite: producto.favorite,
+                insidecart: producto.cart,
+                categorias: producto.categoria,
+                subcategorias: producto.subcategoria
+              };
+            });
+            this.productos = nuevosProductos;
             this.calcularTotalYDescuento();
             this.cdr.detectChanges();
           } else {

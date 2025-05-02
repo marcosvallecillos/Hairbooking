@@ -23,7 +23,7 @@
                     </h2>
                 </div>
                 @if (isLoading) {
-                 
+
                     
                     } @else if (productos.length == 0) {
                         <div class="cart-empty">
@@ -60,7 +60,7 @@
 
                                     <div class="item-options">
                                         <div class="quantity-selector">
-                                            <input type="number" min="1" [value]="product.cantidad"
+                                            <input type="number" min="1" [(ngModel)]="product.cantidad"
                                                 (input)="actualizarCantidad(product, $event.target)"
                                                 (blur)="validarCantidad(product, $event.target)">
                                         </div>

@@ -34,11 +34,12 @@
         {{getText('Reservar Cita','Reserve Quote')}}
       </button>
     </div>
+    <!--[class.disabled]="isReservePast(reserve)"-->
     <div class="reserves-list">
       @for (reserve of reserves; track reserve.id) {
-      <div class="card" [class.disabled]="isReservePast(reserve)"
+      <div class="card"  
         [title]="isReservePast(reserve) ? getText('Cita expirada', 'Expired appointment') : getText('Eliminar reserva', 'Delete appointment')">
-        <div class="card-content">
+        <div class="card-content"  >
           <p class=""><i class="bi bi-scissors"></i> <strong> {{getText('Servicio','Service')}}:</strong> {{
             reserve.servicio }}</p>
           <p><i class="bi bi-person"></i> <strong> {{getText('Peluquero','Barber')}}:</strong> {{ reserve.peluquero }}
@@ -47,13 +48,22 @@
           <p><i class="bi bi-calendar"></i> <strong> {{getText('Dia','Day')}}:</strong> {{ reserve.dia }}</p>
           <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ reserve.hora }}</p>
           <div class="botones">
-            <button class="eliminar" (click)="deleteReserve(reserve)" aria-label="Eliminar reserva"
-              [class.disabled]="isReservePast(reserve)">
+            @if (isReservePast(reserve)) {
+              <button class="rate-button" routerLink="/rate-service">    <img src="../../../../images/valoracion.png" class="fav-icon" alt="Favorito vacío">
+              </button>
+              <button class="eliminar" (click)="deleteReserve(reserve)" aria-label="Eliminar reserva"
+              >
+               <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
+             </button>
+            } @else {
+              <button class="eliminar" (click)="deleteReserve(reserve)" aria-label="Eliminar reserva"
+             >
               <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
             </button>
-            <button class="edit-button" (click)="editReserve(reserve)" [class.disabled]="isReservePast(reserve)">
+            <button class="edit-button" (click)="editReserve(reserve)">
               <img src="../../../../images/editar.png" class="editar" alt="Editar reserva">
             </button>
+            }
           </div>
         </div>
       </div>

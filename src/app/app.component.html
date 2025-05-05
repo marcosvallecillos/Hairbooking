@@ -1,12 +1,12 @@
 <div class="header">
+  @if (mostrarHeader) {
     @if (isUser) {
-      @if (mostrarHeader) {
       <app-header-user></app-header-user>
-    } } @else {
-      @if (mostrarHeader) {
-        <app-header></app-header>
-      }
+    } @else if (usuario && usuario.nombre === 'admin') {
+      <app-header-admin></app-header-admin>
+    } @else {
+      <app-header></app-header>
     }
-  </div>
-  <router-outlet />
-  
+  }
+</div>
+<router-outlet></router-outlet>

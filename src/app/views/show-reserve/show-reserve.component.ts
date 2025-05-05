@@ -10,6 +10,7 @@ import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete
 import { ApiService } from '../../services/api-service.service';
 import { UserStateService } from '../../services/user-state.service';
 import { Observable } from 'rxjs';
+import { RateServiceComponent } from '../rate-service/rate-service.component';
 
 @Component({
   selector: 'app-show-reserve',
@@ -26,7 +27,7 @@ export class ShowReserveComponent implements OnInit {
   showLoginModal: boolean = false;
   showModal: boolean = false;
   selectedReserve: Reserva | null = null;
-  isLoading: boolean = true; // Renombrado a isLoading
+  isLoading: boolean = true; 
 
   constructor(
     private authService: AuthService,
@@ -80,11 +81,12 @@ export class ShowReserveComponent implements OnInit {
     
     return reserveDate < now;
   }
-
+  
   deleteReserve(reserve: Reserva) {
     if (this.isReservePast(reserve)) return;
     this.selectedReserve = reserve;
     this.showModal = true;
+    console.log('Reserva seleccionada para eliminar:', reserve);
   }
   
   onConfirmReserve() {

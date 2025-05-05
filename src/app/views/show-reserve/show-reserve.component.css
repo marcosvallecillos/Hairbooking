@@ -142,7 +142,24 @@ h2 .reservas{
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
 }
-
+.rate-button {
+    background-color: transparent; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+}
+.rate-button img{
+    width: 45px;
+    height: 35px;
+    margin-right: 5px;
+}
+.rate-button:hover {
+ transform: scale(1.1);
+}
 .card {
     background: #ffffff;
     padding: 25px;

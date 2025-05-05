@@ -1,17 +1,17 @@
 import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError, tap } from 'rxjs';
-import { Compra, Product, Reserva, Usuario } from '../models/user.interface';
+import { Compra, Product, Reserva, Usuario, Valoracion } from '../models/user.interface';
 import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-private apiUrl = 'http://localhost:8000/api';
 private apiUrlUsuarios = 'http://localhost:8000/api/usuarios'
 private apiUrlReservas = 'http://localhost:8000/api/reservas'
 private apiUrlProductos = 'http://localhost:8000/api/productos'
 private apiUrlCompras = 'http://localhost:8000/api/compras'
+private apiUrlValoracion = 'http://localhost:8000/api/valoracion'
 
 public productos: Product[] = [];
 private favorites: Product[] = [];
@@ -71,6 +71,16 @@ editReserve(id: number, reservaData: Reserva): Observable<Reserva> {
 deleteReserve(id: number): Observable<any> {
   return this.http.delete<any>(`${this.apiUrlReservas}/${id}`);
 }
+
+newValoracion(valoracion: Valoracion): Observable<Valoracion> {
+  return this.http.post<Valoracion>(`${this.apiUrlValoracion}/valoraciones`,valoracion,
+    { headers: { 'Content-Type': 'application/json' } }
+  );
+}
+
+getValoraciones(): Observable<Valoracion[]> {
+  return this.http.get<Valoracion[]>(`${this.apiUrlValoracion}/list`);
+}
 removeReserve(reserveId: number) {
   this.reserves = this.reserves.filter((r) => r.id !== reserveId);
 }
@@ -78,7 +88,6 @@ removeReserve(reserveId: number) {
 getReserveById(reserveId: number): Reserva | undefined {
   return this.reserves.find((r) => r.id === reserveId);
 }
-
 makePurchase(purchase: { productos: { productoId: number; cantidad: number; }[]; descuento?: number }, usuarioId: number): Observable<any> {
   const httpOptions = {
     headers: new HttpHeaders({

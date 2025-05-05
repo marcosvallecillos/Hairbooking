@@ -9,7 +9,15 @@ export interface Usuario {
     citas_reservadas: Reserva[];
   }
 
-  
+  export interface Valoracion {
+    id: number;
+    servicioRating: number;
+    peluqueroRating: number;
+    comentario: string;
+    fecha: string;
+    usuario_id: number;
+}
+
   export interface Product {
     id:            number;
     name:          string;

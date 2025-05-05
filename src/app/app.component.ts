@@ -5,11 +5,14 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderUserComponent } from './components/header-user/header-user.component';
 import { AuthService } from './services/auth.service';
 import { ApiService } from './services/api-service.service';
+import { Usuario } from './models/user.interface';
+import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
+import { Form, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent],
+  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent,HeaderAdminComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -18,8 +21,9 @@ export class AppComponent {
   isUser: boolean = false; 
   isLoggedIn: boolean = false;
   mostrarHeader: boolean = false;
-  
-  constructor(private router: Router, private apiService: ApiService) {
+  usuario: Usuario | null = null;
+
+    constructor(private router: Router, private apiService: ApiService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (this.router.url !== '/home-barber#jumbotron') {
@@ -29,6 +33,7 @@ export class AppComponent {
       }
     });
   }
+
   
   ngOnInit() {
     this.actualizarEstadoUsuario();

@@ -1,0 +1,77 @@
+<div class="overlay"></div>
+
+<div class="valoracion-container">
+  <form (ngSubmit)="onSubmit()">
+    <div class="valoracion">
+      <h3>Valora el servicio</h3>
+      <div class="stars" id="stars-servicio">
+        @for (star of [5, 4, 3, 2, 1]; track star) {
+          <input
+            [id]="'servicio-radio' + star"
+            type="radio"
+            name="servicio-estrellas"
+            [value]="star"
+            [(ngModel)]="servicioRating"
+            (change)="onRatingChange('servicio', star)"
+          >
+          <label
+            [for]="'servicio-radio' + star"
+            [attr.aria-label]="star + (star === 1 ? ' estrella' : ' estrellas') + ' servicio'"
+            [ngClass]="{'selected': servicioRating >= star}"
+          >
+            <i class="fas fa-star"></i>
+          </label>
+        }
+      </div>
+    </div>
+
+    <br><br>
+
+    <div class="valoracion">
+      <h3>Valora al peluquero</h3>
+      <div class="stars" id="stars-peluquero">
+        @for (star of [5, 4, 3, 2, 1]; track star) {
+          <input
+            [id]="'peluquero-radio' + star"
+            type="radio"
+            name="peluquero-estrellas"
+            [value]="star"
+            [(ngModel)]="peluqueroRating"
+            (change)="onRatingChange('peluquero', star)"
+          >
+          <label
+            [for]="'peluquero-radio' + star"
+            [attr.aria-label]="star + (star === 1 ? ' estrella' : ' estrellas') + ' peluquero'"
+            [ngClass]="{'selected': peluqueroRating >= star}"
+          >
+            <i class="fas fa-star"></i>
+          </label>
+        }
+      </div>
+    </div>
+
+    <div class="comentarios">
+      <label for="comentario">Comentarios adicionales:</label>
+      <textarea
+        id="comentario"
+        name="comentario"
+        rows="4"
+        placeholder="Escribe aquí tu opinión..."
+        [(ngModel)]="comentario"
+      ></textarea>
+    </div>
+    <div class="botones">
+      <button type="submit" class="btn btn-primary"> {{ isProcessing ? getText('Enviando...', 'Sending...') : getText('Enviar', 'Send') }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="reiniciarValoraciones()">Cancelar</button>
+    </div>
+  </form>
+</div>  
+
+@if (showAlert) {
+  <div class="alert-overlay">
+      <div class="alert-box">
+          <p>{{ getText('¡Servicio valorado con éxito!', 'Service rated successfully') }}</p>
+      </div>
+  </div>
+  }

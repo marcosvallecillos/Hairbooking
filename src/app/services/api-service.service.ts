@@ -85,8 +85,8 @@ removeReserve(reserveId: number) {
   this.reserves = this.reserves.filter((r) => r.id !== reserveId);
 }
 
-getReserveById(reserveId: number): Reserva | undefined {
-  return this.reserves.find((r) => r.id === reserveId);
+getReserveById(id: number): Observable<Reserva> {
+  return this.http.get<Reserva>(`${this.apiUrlReservas}/${id}`);
 }
 makePurchase(purchase: { productos: { productoId: number; cantidad: number; }[]; descuento?: number }, usuarioId: number): Observable<any> {
   const httpOptions = {

@@ -10,12 +10,13 @@ export interface Usuario {
   }
 
   export interface Valoracion {
-    id: number;
+    id?: number;
     servicioRating: number;
     peluqueroRating: number;
     comentario: string;
-    fecha: string;
+    fecha?: string;
     usuario_id: number;
+    reserva_id: number;
 }
 
   export interface Product {

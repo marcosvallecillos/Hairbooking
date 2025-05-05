@@ -60,6 +60,10 @@
                     <strong>{{ getText('Total con Descuento', 'Total with Discount') }}:</strong>
                     {{ (compra.total - calcularDescuento(compra.total)).toFixed(2) + ' €' }}
                   </div>
+                }@else {
+                  <div>  <strong>{{ getText('Total de la Compra', 'Purchase Total') }}:</strong>
+                    {{ compra.total + ' €' }}</div>
+                  
                 }
                 <div>
                 

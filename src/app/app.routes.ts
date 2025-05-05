@@ -36,7 +36,7 @@ export const routes: Routes = [
     { path: 'show-reserve', component: ShowReserveComponent },
     { path: 'show-buys', component: ShowBuysComponent },
     { path: 'favorites', component: FavoritosComponent },
-    { path: 'rate-service', component: RateServiceComponent },
+    { path: 'rate-service/:id', component: RateServiceComponent },
 ];
 
     @NgModule({

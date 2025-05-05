@@ -49,7 +49,8 @@
           <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ reserve.hora }}</p>
           <div class="botones">
             @if (isReservePast(reserve)) {
-              <button class="rate-button" routerLink="/rate-service">    <img src="../../../../images/valoracion.png" class="fav-icon" alt="Favorito vacío">
+              <button class="rate-button" [routerLink]="['/rate-service', reserve.id]">
+                <img src="../../../../images/valoracion.png" class="fav-icon" alt="Favorito vacío">
               </button>
               <button class="eliminar" (click)="deleteReserve(reserve)" aria-label="Eliminar reserva"
               >

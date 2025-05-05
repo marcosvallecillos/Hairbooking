@@ -188,7 +188,11 @@ h2 .reservas{
     font-size: 1.2rem;
     color: #FFD700; 
 }
-    
+    .stars{
+        color: #ffd700;
+        font-size: 1.2rem;
+        margin-right: 5px;
+    }
 .card {
     background: #ffffff;
     padding: 25px;

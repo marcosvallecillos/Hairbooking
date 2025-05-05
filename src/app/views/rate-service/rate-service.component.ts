@@ -134,7 +134,7 @@ export class RateServiceComponent implements OnInit {
                 setTimeout(() => {
                     this.showAlert = false;
                     this.confirm.emit();
-                }, 1000);
+                }, 3000);
                 setTimeout(() => {
                     window.scrollTo(0, 0);
                 }, 0);

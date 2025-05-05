@@ -69,7 +69,7 @@ editReserve(id: number, reservaData: Reserva): Observable<Reserva> {
   return this.http.put<Reserva>(`${this.apiUrlReservas}/${id}/edit`, reservaData);
 }
 deleteReserve(id: number): Observable<any> {
-  return this.http.delete<any>(`${this.apiUrlReservas}/${id}`);
+  return this.http.delete<any>(`${this.apiUrlReservas}/delete/${id}`);
 }
 
 newValoracion(valoracion: Valoracion): Observable<Valoracion> {

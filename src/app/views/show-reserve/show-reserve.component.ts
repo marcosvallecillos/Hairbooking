@@ -83,7 +83,6 @@ export class ShowReserveComponent implements OnInit {
   }
   
   deleteReserve(reserve: Reserva) {
-    if (this.isReservePast(reserve)) return;
     this.selectedReserve = reserve;
     this.showModal = true;
     console.log('Reserva seleccionada para eliminar:', reserve);
@@ -130,5 +129,14 @@ export class ShowReserveComponent implements OnInit {
         hora: reserve.hora
       }
     });
+  }
+
+  getStars(rating: number | null | undefined): string {
+    if (rating === null || rating === undefined) {
+      return '☆☆☆☆☆';
+    }
+    const fullStar = '★';
+    const emptyStar = '☆';
+    return fullStar.repeat(rating) + emptyStar.repeat(5 - rating);
   }
 }

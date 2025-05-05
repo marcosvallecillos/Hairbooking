@@ -13,7 +13,7 @@
             </div>
             <div class="modal-actions">
                 <button class="btn-cancel" (click)="onCancel()">{{ getText('Cancelar', 'Cancel') }}</button>
-                <button class="btn-confirm" (click)="onConfirm()">{{ getText('Anular', 'Annular') }}</button>
+                <button class="btn-confirm" (click)="onConfirm()">{{ isProcessing ? getText('Eliminando...', 'Deleting...') : getText('Eliminar', 'Delete') }}</button>
             </div>
         </div>
     </div>

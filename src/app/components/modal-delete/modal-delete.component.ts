@@ -14,6 +14,7 @@ export class ModalDeleteComponent {
   @Input() hora: string = '';
   @Input() servicio: string = '';
   @Input() peluquero: string = '';
+  isProcessing: boolean = false;
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
    services: Reserva[] = []; // Array of services
@@ -21,9 +22,14 @@ export class ModalDeleteComponent {
 
   onCancel() {
     this.cancel.emit(); 
-  
+    this.isProcessing = false;
+
   }
   onConfirm() {
+    this.isProcessing = true;
+    setTimeout(() => {
+      this.isProcessing = false;  
+    }, 2000); 
  this.confirm.emit(); 
     }
 

@@ -37,9 +37,9 @@
     <!--[class.disabled]="isReservePast(reserve)"-->
     <div class="reserves-list">
       @for (reserve of reserves; track reserve.id) {
-      <div class="card"  
+      <div class="card"
         [title]="isReservePast(reserve) ? getText('Cita expirada', 'Expired appointment') : getText('Eliminar reserva', 'Delete appointment')">
-        <div class="card-content"  >
+        <div class="card-content">
           <p class=""><i class="bi bi-scissors"></i> <strong> {{getText('Servicio','Service')}}:</strong> {{
             reserve.servicio }}</p>
           <p><i class="bi bi-person"></i> <strong> {{getText('Peluquero','Barber')}}:</strong> {{ reserve.peluquero }}
@@ -48,40 +48,31 @@
           <p><i class="bi bi-calendar"></i> <strong> {{getText('Dia','Day')}}:</strong> {{ reserve.dia }}</p>
           <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ reserve.hora }}</p>
           <div class="botones">
+            <button class="eliminar " [title]="getText('Eliminar reserva', 'Delete appointment')"
+            (click)="deleteReserve(reserve)" aria-label="Eliminar reserva">
+                <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
+            </button>
+        
             @if (isReservePast(reserve)) {
-              @if(reserve.valoracion == null){
-              <button class="rate-button" [routerLink]="['/rate-service', reserve.id]">
-                <img src="../../../../images/valoracion.png" class="fav-icon" alt="Favorito vacío">
-               
-              </button>
-              <button class="eliminar" (click)="deleteReserve(reserve)" aria-label="Eliminar reserva"
-              >
-               <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
-             </button>
-             }  @else {
-              <button class="rate-button">
-                <img src="../../../../images/reserva_valorada.png" class="fav-icon" alt="Favorito vacío">
-              </button>
-              <button class="eliminar" (click)="deleteReserve(reserve)" aria-label="Eliminar reserva"
-              >
-               <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
-             </button>
-             <p class="comentario"> Comentario: {{reserve.valoracion_comentario}} </p>
-              <p class="valoracion"> Valoración Servicio: {{reserve.valoracion_servicio}} </p>
-              <p class="valoracion"> Valoración Peluquero: {{reserve.valoracion_peluquero}} </p>
-              
-
-             }
+                @if(reserve.valoracion == null){
+                    <button class="rate-button"  [title]="getText('Valorar Reserva', 'Rate Reservation')"[routerLink]="['/rate-service', reserve.id]">
+                        <img src="../../../../images/valoracion.png" class="fav-icon" alt="Favorito vacío">
+                    </button>
+                } @else {
+                    <button class="rate-button" [title]="getText('Reserva Valorada', 'Valued Reserve')">
+                        <img src="../../../../images/reserva_valorada.png" class="fav-icon" alt="Favorito vacío">
+                    </button>
+                    <p class="comentario"> {{getText('Comentario', 'Comment')}}: {{reserve.valoracion_comentario}} </p>
+                    <p class="valoracion"> {{getText('Valoración Servicio', 'Service Rating')}}: <span class="stars">{{getStars(reserve.valoracion_servicio)}}</span> </p>
+                    <p class="valoracion"> {{getText('Valoración Peluquero', 'Barber Rating')}}: <span class="stars">{{getStars(reserve.valoracion_peluquero)}}</span> </p>
+                }
             } @else {
-              <button class="eliminar" (click)="deleteReserve(reserve)" aria-label="Eliminar reserva"
-             >
-              <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
-            </button>
-            <button class="edit-button" (click)="editReserve(reserve)">
-              <img src="../../../../images/editar.png" class="editar" alt="Editar reserva">
-            </button>
+                <button class="edit-button" (click)="editReserve(reserve)">
+                    <img src="../../../../images/editar.png" class="editar" alt="Editar reserva">
+                </button>
             }
-          </div>
+        </div>
+        
         </div>
       </div>
       }

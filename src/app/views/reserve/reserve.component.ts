@@ -43,7 +43,7 @@ export class ReserveComponent implements OnInit {
 
   availableHours = [
     '09:00', '09:30', '10:00', '10:15', '11:00', '11:30',
-    '11:55', '12:30', '13:00', '13:30', '16:00', '16:30',
+    '11:55', '12:30', '13:00', '13:30', '16:00', '16:33',
     '17:00', '17:30', '18:00', '18:30', '19:00', '19:30',
   ];
 
@@ -228,7 +228,8 @@ export class ReserveComponent implements OnInit {
         dia: formattedDate,
         hora: this.selectedTime,
         precio: this.getPrice(),
-        usuario_id: userId
+        usuario_id: userId,
+        valoracion: null,
       };
 
       if (this.isEditing && this.reserveId) {

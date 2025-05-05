@@ -58,6 +58,16 @@ export class AppComponent {
     this.isUserRegistered = userType || null;
     this.isUser = userType === 'usuario';
     this.isLoggedIn = !!userData;
+
+    if (userData) {
+      try {
+        this.usuario = JSON.parse(userData);
+      } catch (e) {
+        this.usuario = null;
+      }
+    } else {
+      this.usuario = null;
+    }
   }
 
   logout() {
@@ -66,7 +76,8 @@ export class AppComponent {
     this.isUserRegistered = null;
     this.isUser = false;
     this.isLoggedIn = false;
-    console.log('cerrando sesion asdasdada')
+    this.usuario = null;
+    console.log('cerrando sesion')
     window.dispatchEvent(new Event("storage"));
     window.location.reload();
   }

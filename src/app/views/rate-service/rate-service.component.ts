@@ -23,6 +23,9 @@ export class RateServiceComponent implements OnInit {
     showAlert: boolean = false;
     isProcessing: boolean = false;
     isSpanish: boolean = true;
+    reservaValidada: boolean = false;
+    yaValorada: boolean = false;
+    
     @Output() confirm = new EventEmitter<void>();
     reserve: Reserva | null = null;
 
@@ -45,6 +48,7 @@ export class RateServiceComponent implements OnInit {
                 this.apiService.getReserveById(reserveId).subscribe({
                     next: (reserve) => {
                         this.reserve = reserve;
+                        this.yaValorada = !!reserve.valoracion;
                     },
                     error: (error) => {
                         console.error('Error al obtener la reserva:', error);
@@ -77,7 +81,7 @@ export class RateServiceComponent implements OnInit {
     onSubmit(): void {
         this.isProcessing = true;
         this.formSubmitted = true;
-    
+        this.showAlert = true;
         if (
             this.servicioRating === 0 ||
             this.peluqueroRating === 0 ||
@@ -124,12 +128,7 @@ export class RateServiceComponent implements OnInit {
                     fecha
                 };
                 console.log('Valoración enviada exitosamente:', valoracionResponse);
-                alert('Valoración enviada con éxito');
                 this.reiniciarValoraciones();
-                this.router.navigate(['/show-reserve']);
-            },
-            error: (error) => {
-                console.error('Error al enviar la valoración:', error);
                 this.router.navigate(['/show-reserve']);
                 this.showAlert = true;
                 setTimeout(() => {
@@ -139,6 +138,11 @@ export class RateServiceComponent implements OnInit {
                 setTimeout(() => {
                     window.scrollTo(0, 0);
                 }, 0);
+            },
+            error: (error) => {
+                console.error('Error al enviar la valoración:', error);
+                alert('Error al enviar la valoración. Por favor, inténtalo de nuevo más tarde.');
+                this.isProcessing = false;
             }
         });
     }

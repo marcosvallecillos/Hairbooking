@@ -30,7 +30,14 @@ export class HeaderAdminComponent {
     );
 
     const userData = localStorage.getItem('userData');
-    this.isAuthenticated = !!userData;
+    if (userData) {
+      const user = JSON.parse(userData);
+      this.isAuthenticated = true;
+      this.mostrarHeader = user.name === 'admin';
+    } else {
+      this.isAuthenticated = false;
+      this.mostrarHeader = false;
+    }
   }
 
   ngOnInit() {

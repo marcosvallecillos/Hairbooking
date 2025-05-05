@@ -59,4 +59,8 @@ export interface Usuario {
     dia:        string;
     hora:       string;
     usuario_id: number;
+    valoracion: number | null; 
+    valoracion_comentario?: string | null;
+    valoracion_servicio?: number | null;
+    valoracion_peluquero?: number | null;
   }

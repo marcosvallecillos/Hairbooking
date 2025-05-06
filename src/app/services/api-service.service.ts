@@ -22,6 +22,10 @@ cartItemsCount$ = this.cartItemsCount.asObservable();
 
 constructor(private http: HttpClient, private authService: AuthService) { }
  
+
+getAllUsers(): Observable<Usuario[]> {
+  return this.http.get<Usuario[]>(`${this.apiUrlUsuarios}`);
+}
 registerUser(usuario: Usuario): Observable<Usuario> {
   return this.http.post<Usuario>(`${this.apiUrlUsuarios}/new`, usuario);
 }
@@ -48,7 +52,7 @@ editProfile(id: number, userData: Usuario): Observable<Usuario> {
   return this.http.put<Usuario>(`${this.apiUrlUsuarios}/${id}/edit`, userData);
 }
 deleteUser(id: number): Observable<any> {
-  return this.http.delete<any>(`${this.apiUrlUsuarios}/${id}`);
+  return this.http.delete<any>(`${this.apiUrlUsuarios}/delete/${id}`);
 }
 getReserves(): Observable<Reserva[]> {
   return this.http.get<Reserva[]>(`${this.apiUrlReservas}`);

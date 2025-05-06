@@ -17,6 +17,7 @@ import { ShowBuysComponent } from './views/show-buys/show-buys.component';
 import { NgModule } from '@angular/core';
 import { FavoritosComponent } from './views/favoritos/favoritos.component';
 import { RateServiceComponent } from './views/rate-service/rate-service.component';
+import { ShowClientsComponent } from './views/show-clients/show-clients.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -37,6 +38,9 @@ export const routes: Routes = [
     { path: 'show-buys', component: ShowBuysComponent },
     { path: 'favorites', component: FavoritosComponent },
     { path: 'rate-service/:id', component: RateServiceComponent },
+    { path: 'show-clients', component: ShowClientsComponent },
+    { path: 'show-reserves', component: ShowReserveComponent },
+
 ];
 
     @NgModule({

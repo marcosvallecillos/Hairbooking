@@ -171,14 +171,14 @@ h2 .reservas{
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }   
 .valoracion {
-    font-size: 1rem; /* Tamaño de fuente cómodo para leer */
-    color: #444; /* Color gris oscuro para buena legibilidad */
-    background-color: #f8f8f8; /* Fondo sutil para destacar */
+    font-size: 1rem; 
+    color: #444; 
+    background-color: #f8f8f8; 
     padding: 8px 12px;
-    border-left: 4px solid #4CAF50; /* Barra de color para resaltar */
+    border-left: 4px solid #4CAF50; 
     border-radius: 8px;
-    margin: 10px 0; /* Separación vertical */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin: 10px 0; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  
     display: flex;
     align-items: center;
     gap: 8px;

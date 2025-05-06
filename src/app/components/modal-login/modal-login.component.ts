@@ -43,7 +43,8 @@ export class ModalLoginComponent {
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/)]]
+      confirmPassword: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/)]],
+      rol: ['user', [Validators.required]],
     }, { validators: this.passwordMatchValidator });
 
     this.languageService.isSpanish$.subscribe(isSpanish => {
@@ -64,13 +65,16 @@ export class ModalLoginComponent {
         Validators.minLength(5),
         Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/)
       ]);
+
       this.loginForm.get('confirmPassword')?.setValidators([ ]);
+      this.loginForm.get('rol')?.setValidators([Validators.required]);
     } else {
       this.loginForm.get('nombre')?.clearValidators();
       this.loginForm.get('apellidos')?.clearValidators();
       this.loginForm.get('telefono')?.clearValidators();
       this.loginForm.get('password')?.setValidators([Validators.required]);
       this.loginForm.get('confirmPassword')?.clearValidators();
+      this.loginForm.get('rol')?.clearValidators();
       this.loginForm.clearValidators();
     }
     this.loginForm.get('nombre')?.updateValueAndValidity();
@@ -78,6 +82,7 @@ export class ModalLoginComponent {
     this.loginForm.get('telefono')?.updateValueAndValidity();
     this.loginForm.get('password')?.updateValueAndValidity();
     this.loginForm.get('confirmPassword')?.updateValueAndValidity();
+    this.loginForm.get('rol')?.updateValueAndValidity();
   }
 
     passwordMatchValidator() {
@@ -129,6 +134,7 @@ export class ModalLoginComponent {
             telefono: usuario.telefono,
             password: '',
             confirm_password: '',
+            rol: usuario.rol,
             citas_reservadas: []
           };
           
@@ -174,6 +180,7 @@ export class ModalLoginComponent {
       telefono: this.loginForm.get('telefono')?.value,
       password: this.loginForm.get('password')?.value,
       confirm_password: this.loginForm.get('confirmPassword')?.value,
+      rol: this.loginForm.get('rol')?.value,
       citas_reservadas: []
     };
   

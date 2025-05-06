@@ -92,6 +92,15 @@
             }
           </div>
 
+          <div class="form-group">
+            <input type="rol" formControlName="rol" placeholder="Rol" class="form-input" />
+            @if(loginForm.get('rol')?.invalid && loginForm.get('rol')?.touched) {
+            <small class="text-danger">
+                {{ getText('El rol es obligatorio', 'Role is required') }}
+              </small>
+            }
+          </div>
+
           <button type="submit" class="register-button" [disabled]="loginForm.invalid || isLoading">
             {{ isLoading ? getText('Registrando...', 'Registering...') : getText('Registrarse', 'Sign Up') }}
           </button>

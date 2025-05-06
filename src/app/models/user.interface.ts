@@ -5,8 +5,9 @@ export interface Usuario {
     email: string;
     password: string;
     confirm_password: string;
-    telefono: string;
+    telefono: number;
     citas_reservadas: Reserva[];
+    rol?: string;
   }
 
   export interface Valoracion {

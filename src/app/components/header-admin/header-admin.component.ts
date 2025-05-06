@@ -1,49 +1,69 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Product } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Route, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
 import { CommonModule } from '@angular/common';
+import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-header-admin',
-  imports: [ RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './header-admin.component.html',
   styleUrl: './header-admin.component.css'
 })
-export class HeaderAdminComponent {
+export class HeaderAdminComponent implements OnInit {
   isSpanish: boolean = true;
   productos: Product[] = [];
   isMenuOpen: boolean = false;
   mostrarHeader: boolean = false;
   showCarritoModal: boolean = false;
-  isAuthenticated: boolean = true;
+  isAuthenticated: boolean = false;
   cartItemsCount: number = 0;
+  isUser: boolean = false;
 
   constructor(
     private languageService: LanguageService,
     private route: ActivatedRoute,
     private router: Router,
     private apiService: ApiService,
+    private userStateService: UserStateService
   ) {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => (this.isSpanish = isSpanish)
     );
+  }
 
+  ngOnInit() {
+    // Inicializar el estado del idioma desde localStorage
+    const savedLanguage = localStorage.getItem('language');
+    this.isSpanish = savedLanguage ? savedLanguage === 'es' : true;
+
+    // Suscribirse a los cambios de estado del usuario
+    this.userStateService.user$.subscribe(user => {
+      this.isAuthenticated = !!user;
+      this.isUser = !!user;
+      this.mostrarHeader = user?.rol === 'admin';
+    });
+
+    // Verificar el estado inicial
     const userData = localStorage.getItem('userData');
     if (userData) {
       const user = JSON.parse(userData);
       this.isAuthenticated = true;
-      this.mostrarHeader = user.name === 'admin';
-    } else {
-      this.isAuthenticated = false;
-      this.mostrarHeader = false;
+      this.isUser = true;
+      this.mostrarHeader = user.rol === 'admin';
     }
-  }
 
-  ngOnInit() {
+    // Suscribirse a los cambios de ruta
     this.router.events.subscribe(() => {
-      this.mostrarHeader = this.router.url !== '/index';
+      this.userStateService.user$.subscribe(user => {
+        if (user) {
+          this.isAuthenticated = true;
+          this.isUser = true;
+          this.mostrarHeader = user.rol === 'admin';
+        }
+      });
     });
 
     // Suscribirse al observable de cartItemsCount
@@ -51,7 +71,7 @@ export class HeaderAdminComponent {
       this.cartItemsCount = count !== null && count !== undefined ? count : 0;
     });
 
-    // Opcional: inicializar con el valor actual
+    // Inicializar con el valor actual
     this.cartItemsCount = this.apiService.cartItemsCount.value || 0;
   }
 
@@ -69,16 +89,14 @@ export class HeaderAdminComponent {
     return this.isSpanish ? es : en;
   }
 
-  isUser: boolean = true;
-
   signout() {
     localStorage.removeItem('userType');
     localStorage.removeItem('userData');
     this.isUser = false;
-    console.log('cerrando sesion')
     this.isAuthenticated = false;
+    this.mostrarHeader = false;
+    this.userStateService.clearUser();
     this.router.navigate(['/home-barber']);
-    window.location.reload()
   }
 
   @HostListener('document:keydown.escape', ['$event'])
@@ -88,6 +106,4 @@ export class HeaderAdminComponent {
       document.body.style.overflow = '';
     }
   }
-
-
 }

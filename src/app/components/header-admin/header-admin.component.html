@@ -1,10 +1,10 @@
 @if(mostrarHeader){
-<div class="header-admin" >
-
+<div class="header-admin">
     <nav class="navbar navbar-expand-lg" [class.menu-open]="isMenuOpen">
-       
         <div class="container-fluid">
-            <button routerLink="/home-barber" style="background-color:transparent;border: none;">   <img src="../../../../images/logo_hb.PNG"  class="logo"alt="" style="font-size:36px;color:white;margin-top:-10px;cursor:pointer"> </button>
+            <button routerLink="/home-barber" style="background-color:transparent;border: none;">
+                <img src="../../../../images/logo_hb.PNG" class="logo" alt="Logo" style="font-size:36px;color:white;margin-top:-10px;cursor:pointer">
+            </button>
                
             <button class="navbar-toggler" 
                     type="button" 
@@ -14,9 +14,6 @@
             </button>
           
             <div class="collapse navbar-collapse" [class.show]="isMenuOpen">
-                <a class="navbar-brand" href="#" routerLink="/home-barber">
-                 
-                </a>
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link ms-3" routerLink="/home-barber" routerLinkActive="active">
@@ -24,9 +21,8 @@
                         </a>
                     </li>
                     <hr>  
-                    <li class="nav-item ">
-                        <a class="nav-link ms-3 " routerLink="/show-clients" href="#" id="navbarDropdown" routerLinkActive="active"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item">
+                        <a class="nav-link ms-3" routerLink="/show-clients" routerLinkActive="active">
                             {{ getText('Usuarios', 'Users') }}
                         </a>
                     </li>
@@ -48,47 +44,36 @@
                         </a>
                     </li>
                     <hr>
-                  
-
-                    <hr>  
                 </ul>
+
                 <div class="dropdown language-selector">
                     <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         {{ isSpanish ? 'ES' : 'EN' }}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-start">
                         <li>
-                            <button class="dropdown-item" (click)="toggleLanguage('es')">
-                                ES
-                            </button>
-                            
-                      
+                            <button class="dropdown-item" (click)="toggleLanguage('es')">ES</button>
                         </li>
                         <li>
-                            <button class="dropdown-item" (click)="toggleLanguage('en')">
-                                EN
-                            </button>
+                            <button class="dropdown-item" (click)="toggleLanguage('en')">EN</button>
                         </li>
                     </ul>
                 </div>
                 <hr>  
-             
-                <hr> 
+
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle user-icon" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                            <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="profileDropdown">
-                          <li><a class="dropdown-item" routerLink="/showProfile">{{getText('Ver Perfil','Show Profile')}}</a></li>
-                          <li><a class="dropdown-item" routerLink="/editProfile">{{getText('Editar Perfil', 'Edit Profile')}}</a></li>
-                          <li><hr class="dropdown-divider"></li>
-                          <li><a class="dropdown-item" (click)="signout()">{{getText('Cerrar sesión','Sign Out')}}</a></li>
+                            <li><a class="dropdown-item" routerLink="/showProfile">{{getText('Ver Perfil','Show Profile')}}</a></li>
+                            <li><a class="dropdown-item" routerLink="/editProfile">{{getText('Editar Perfil', 'Edit Profile')}}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" (click)="signout()">{{getText('Cerrar sesión','Sign Out')}}</a></li>
                         </ul>
-                      </li>
-                  </ul>
-                  
-                
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

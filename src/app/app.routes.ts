@@ -18,6 +18,8 @@ import { NgModule } from '@angular/core';
 import { FavoritosComponent } from './views/favoritos/favoritos.component';
 import { RateServiceComponent } from './views/rate-service/rate-service.component';
 import { ShowClientsComponent } from './views/show-clients/show-clients.component';
+import { ReservationsComponent } from './views/reservations/reservations.component';
+import { BoughtProductsComponent } from './views/bought-products/bought-products.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -39,7 +41,8 @@ export const routes: Routes = [
     { path: 'favorites', component: FavoritosComponent },
     { path: 'rate-service/:id', component: RateServiceComponent },
     { path: 'show-clients', component: ShowClientsComponent },
-    { path: 'show-reserves', component: ShowReserveComponent },
+    { path: 'reservations', component: ReservationsComponent },
+    { path: 'bought_products', component: BoughtProductsComponent}
 
 ];
 

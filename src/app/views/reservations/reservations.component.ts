@@ -1,0 +1,54 @@
+import { Component } from '@angular/core';
+import { Reserva } from '../../models/user.interface';
+import { LanguageService } from '../../services/language.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../../services/api-service.service';
+import { FooterComponent } from '../../components/footer/footer.component';
+
+@Component({
+  selector: 'app-reservations',
+  imports: [FooterComponent],
+  templateUrl: './reservations.component.html',
+  styleUrl: './reservations.component.css'
+})
+export class ReservationsComponent {
+ reserves: Reserva[] = [];
+  isSpanish: boolean = true;
+  isLoading: boolean = false;
+
+  
+  constructor(
+    private languageService: LanguageService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private apiService: ApiService
+  ) {
+    this.languageService.isSpanish$.subscribe(
+      isSpanish => this.isSpanish = isSpanish
+    );
+  }
+
+  getText(es: string, en: string): string {
+    return this.isSpanish ? es : en;
+  }
+  ngOnInit(): void {
+    
+   this.getAllReserves();
+
+   
+  }
+  getAllReserves() {
+    this.isLoading = true;
+    this.apiService.getReserves().subscribe({
+      next: (response) => {
+        this.reserves = response; 
+        this.isLoading = false;
+        console.log('Reservas:', response);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.error('Error al obtener reservas:', error);
+      }
+    });
+  }
+}

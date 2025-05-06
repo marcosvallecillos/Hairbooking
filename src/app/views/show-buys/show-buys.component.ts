@@ -15,7 +15,7 @@ import { UserStateService } from '../../services/user-state.service';
   styleUrl: './show-buys.component.css'
 })
 export class ShowBuysComponent implements OnInit {
-  compras: any[] = [];
+  compras: Compra[] = [];
   loading = true;
   isUser = false;
   isAuthenticated = true;

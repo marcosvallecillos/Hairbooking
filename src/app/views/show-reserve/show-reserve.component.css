@@ -309,26 +309,29 @@ h2 .reservas{
     50% { opacity: 0.5; }
     100% { opacity: 1; }
   }
+  /* Loading Spinner */
   .loading {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
-}
-
-.spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
+    height: 80vh;
+    background: rgba(255, 255, 255, 0.9); /* Subtle backdrop */
+  }
+  
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #e2e8f0; /* Softer base color */
+    border-top: 6px solid #ff8503; /* Matches accent color */
     border-radius: 50%;
     animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
+  }
+  
+  @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
+  }
+  
 .alert-warning img {
     width: 100px;
     height: 100px;

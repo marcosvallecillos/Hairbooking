@@ -1,0 +1,388 @@
+/* Reset and Base Styles */
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif; /* Modern, clean font */
+    background: #f5f5f5; /* Subtle background */
+  }
+  
+  .overlay {
+    width: 100%;
+    height: 200px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+     url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
+    background-size: cover;
+    background-position: center;
+    mask-image: linear-gradient(black 85%, transparent);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
+}
+  
+  /* Typography */
+  h2 {
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 2.5rem); /* Responsive font size */
+    color: #1f2a44;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  
+  h3 {
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+    color: #1f2a44;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+  }
+  
+  .decorative-line {
+    width: 200px;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, #643400, transparent);
+    margin: 0 auto 2rem;
+  }
+  
+  /* Containers */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .productos-container,
+  .compras-container {
+    margin: 60px auto;
+    padding: 2.5rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Button Styles */
+  .products-btn,
+  .btn-comprar,
+  .btn-volver {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .products-btn {
+    background: linear-gradient(135deg, #ff8503, #ff6200);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .products-btn:hover {
+    background: linear-gradient(135deg, #d84315, #ff784e);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-comprar {
+    background: #007bff;
+    color: #ffffff;
+  }
+  
+  .btn-comprar:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  .btn-volver {
+    background: #333333;
+    color: #ffffff;
+  }
+  
+  .btn-volver:hover {
+    background: #555555;
+    transform: translateY(-2px);
+  }
+  
+  /* Button Container */
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 2.5rem 1.5rem;
+  }
+  
+  /* Product List and Table */
+  .productos-list {
+    padding: 0 2rem;
+  }
+  
+  .products-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  
+  .products-table th {
+    background: #666666;
+    border: 1px solid #e0e0e0;
+    color: #ffffff;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: left;
+  }
+  
+  .products-table td {
+    padding: 1rem;
+    font-size: 1rem;
+    color: #5a6377;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .products-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .products-table tr:hover {
+    background: #f9f9f9;
+  }
+  
+  .image-container {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .products-table img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+  }
+  
+  .products-table tr:hover img {
+    transform: scale(1.1);
+  }
+  
+  /* Compra Item */
+  .compra-item {
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .compra-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .fecha {
+    color: #666666;
+    font-size: 0.9rem;
+  }
+  
+  .detalles-compra {
+    margin: 1rem 0;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+  
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #eeeeee;
+  }
+  
+  th {
+    background: #f8f9fa;
+    font-weight: 600;
+  }
+  
+  .compra-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #eeeeee;
+    text-align: right;
+  }
+  
+  .compra-total p {
+    margin: 0.5rem 0;
+    font-weight: 500;
+  }
+  
+  .compra-total div {
+    margin: 5px 0;
+  }
+  
+  /* Empty Purchases Section */
+  .compras-vacio {
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 500px;
+    margin: 100px auto;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .compras-vacio img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+  }
+  
+  .compras-vacio h3 {
+    margin: 0 0 0.5rem;
+    color: #333333;
+  }
+  
+  .compras-vacio p {
+    color: #666666;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .no-compras {
+    text-align: center;
+    padding: 3rem;
+  }
+  
+  /* Loading Spinner */
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background: rgba(255, 255, 255, 0.9); /* Subtle backdrop */
+  }
+  
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #e2e8f0; /* Softer base color */
+    border-top: 6px solid #ff8503; /* Matches accent color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .overlay {
+      height: 200px;
+    }
+  
+    .productos-container,
+    .compras-container {
+      margin: 40px 1rem;
+      padding: 1.5rem;
+    }
+  
+    .button-container {
+      justify-content: center;
+      padding: 0;
+    }
+  
+    .products-btn {
+      width: 70%;
+      margin: 0 auto 1rem;
+    }
+  
+    .products-table th,
+    .products-table td {
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+  
+    .image-container {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  
+  @media (max-width: 425px) {
+    .products-table {
+      font-size: 0.85rem;
+    }
+  
+    .image-container {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .products-table th,
+    .products-table td {
+      padding: 0.5rem;
+    }
+  }
+  .comprado_por {
+    color: #000000;
+    font-weight: 700; 
+    text-align: left; 
+    margin: 2rem 0 1.5rem; 
+    letter-spacing: 0.4px; 
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 1rem; 
+  }
+  
+  .comprado_por::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px; 
+    height: 4px;
+    background: linear-gradient(90deg, #ff8503, #ff6200); /* Matches button gradient */
+    border-radius: 2px; /* Subtle rounding */
+  }
+
+  .title {
+    font-size: 2.25rem; /* Slightly larger for emphasis */
+    color: #1a252f; /* Darker, richer color */
+    font-weight: 700;
+    text-align: left;
+    margin-left: 10%; /* Adjusted for better alignment */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  
+  .title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #ff8503, #ff6200); /* Matches card accent */
+  }

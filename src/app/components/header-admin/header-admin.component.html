@@ -1,5 +1,5 @@
 @if(mostrarHeader){
-<div class="header-user" >
+<div class="header-admin" >
 
     <nav class="navbar navbar-expand-lg" [class.menu-open]="isMenuOpen">
        
@@ -32,14 +32,14 @@
                     </li>
                     <hr>  
                     <li class="nav-item">
-                        <a class="nav-link ms-3" routerLink="/show-reserves" routerLinkActive="active">
+                        <a class="nav-link ms-3" routerLink="/reservations" routerLinkActive="active">
                             {{ getText('Citas Reservadas', 'Reserve Quote') }}
                         </a>
                     </li>
                     <hr>  
                     <li class="nav-item">
-                        <a class="nav-link ms-3" routerLink="/products" routerLinkActive="active">
-                            {{ getText('Productos Comprados', 'Products') }}
+                        <a class="nav-link ms-3" routerLink="/bought_products" routerLinkActive="active">
+                            {{ getText('Productos Comprados', 'Bought Products') }}
                         </a>
                     </li>
                     <li class="nav-item">

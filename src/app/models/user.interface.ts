@@ -50,6 +50,7 @@ export interface Usuario {
       precioUnitario: number;
       total: number;
     }[];
+    usuario?: Usuario;
   }
 
   export interface Reserva{
@@ -60,6 +61,7 @@ export interface Usuario {
     dia:        string;
     hora:       string;
     usuario_id: number;
+    usuario?: Usuario;
     valoracion: number | null; 
     valoracion_comentario?: string | null;
     valoracion_servicio?: number | null;

@@ -72,8 +72,8 @@ newReserve(reservas: Reserva): Observable<Reserva> {
 editReserve(id: number, reservaData: Reserva): Observable<Reserva> {
   return this.http.put<Reserva>(`${this.apiUrlReservas}/${id}/edit`, reservaData);
 }
-deleteReserve(id: number): Observable<any> {
-  return this.http.delete<any>(`${this.apiUrlReservas}/delete/${id}`);
+deleteReserve(id: number): Observable<Reserva> {
+  return this.http.delete<Reserva>(`${this.apiUrlReservas}/delete/${id}`);
 }
 
 newValoracion(valoracion: Valoracion): Observable<Valoracion> {
@@ -119,7 +119,9 @@ getPurchasesByUsuarioId(usuario_Id: number): Observable<Compra[]> {
   return this.http.get<Compra[]>(`${this.apiUrlCompras}/usuario/${usuario_Id}`);
 }
 
-
+getCompras(): Observable<Compra[]> {
+  return this.http.get<Compra[]>(`${this.apiUrlCompras}`);
+}
 getAllProductos():Observable<Product[]>{
   return this.http.get<Product[]>(`${this.apiUrlProductos}/list`)
 }
@@ -265,6 +267,7 @@ private comprasRealizadas: Compra[] = [];
 
 
 
+
 addToPurchases(products: Product[]): void {
   const nuevaCompra: Compra = {
     id: this.comprasRealizadas.length + 1,
@@ -287,10 +290,6 @@ addToPurchases(products: Product[]): void {
   console.log('Compra realizada:', nuevaCompra);
 }
 
-
-getPurchases(): Compra[] {
-  return this.comprasRealizadas; 
-}
   clearCart(): void {
     this.productos = [];
     this.updateCartItemsCount();

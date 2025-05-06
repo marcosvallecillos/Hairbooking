@@ -13,7 +13,7 @@ import { UserStateService } from '../../services/user-state.service';
 @Component({
   selector: 'app-show-reserve',
   standalone: true,
-  imports: [ModalLoginComponent, ReserveComponent, RouterLink, FooterComponent, ModalDeleteComponent],
+  imports: [ModalLoginComponent, RouterLink, FooterComponent, ModalDeleteComponent],
   templateUrl: './show-reserve.component.html',
   styleUrl: './show-reserve.component.css'
 })

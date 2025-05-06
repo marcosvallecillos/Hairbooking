@@ -1,0 +1,167 @@
+.overlay {
+    width: 100%;
+    height: 200px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+     url("https://cdn.pixabay.com/photo/2019/09/17/18/54/barbershop-4484300_960_720.jpg");
+    background-size: cover;
+    background-position: center;
+    mask-image: linear-gradient(black 85%, transparent);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 90% 90%, 80% 85%, 70% 95%, 60% 85%, 50% 90%, 40% 80%, 30% 85%, 20% 75%, 10% 85%, 0% 70%);
+}
+/* Contenedor Principal */
+.create-class-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #ffffff;
+    min-height: 100vh;
+  }
+  
+  /* Formulario */
+  .card {
+    border: 1px solid gray;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 40px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .card-header h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+  }
+  
+  /* Grupos de Formulario */
+  .mb-3 {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* Mensajes de error */
+  .text-danger {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    color: #dc3545;
+  }
+  
+  /* Botones */
+  .text-center button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 20px;
+    top: 70%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: black;
+    z-index: 2;
+  }
+  
+  .error-message {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    font-size: 12px;
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .text-center button {
+      width: 100%;
+    }
+  
+    .card {
+      padding: 20px;
+    }
+  
+    .card-header h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+  }
+  
+  /* Caja de alerta de éxito */
+  .alert-box {
+    background: linear-gradient(135deg, #2ecc71, #27ae60); /* Gradiente verde elegante */
+    color: #fff;
+    padding: 1.75rem 2.5rem;
+    border-radius: 12px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.4s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }

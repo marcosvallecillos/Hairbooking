@@ -103,10 +103,12 @@ h2.active{
 }
 .form-group {
     margin-bottom: 1.5rem;
+    position: relative;
 }
 .form-input {
     width: 100%;
     padding: 12px;
+    padding-right: 40px;
     border: 1px solid #333;
     border-radius: 6px;
     background-color: #2a2a2a;
@@ -117,6 +119,25 @@ h2.active{
 .form-input:focus {
     outline: none;
     border-color: #ffffff;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: #ffd65b;
+}
+
+.password-toggle i {
+    font-size: 1.2rem;
 }
 
 .login-button {

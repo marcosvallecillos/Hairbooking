@@ -10,9 +10,7 @@
     } @else if (compras.length === 0) {
         <div class="compras-vacio mb-5">
           <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
-          <h3>{{ getText('No se encontraron detalles de compra.', 'No purchase details found.') }}</h3>
-          <p>{{ getText('Echa un vistazo a los productos que tenemos para ti.', 'Check out the products we have for you.') }}</p>
-          <button class="btn-volver mt-5" routerLink="/products">{{ getText('Comprar Ahora', 'Buy Now') }}</button>
+          <h3>{{ getText('No se encontraron compras realizadas por el usuario.', 'No purchases made by the user were found.') }}</h3>
         </div>
       }
       @else if (compras.length > 0) {

@@ -20,6 +20,8 @@ import { RateServiceComponent } from './views/rate-service/rate-service.componen
 import { ShowClientsComponent } from './views/show-clients/show-clients.component';
 import { ReservationsComponent } from './views/reservations/reservations.component';
 import { BoughtProductsComponent } from './views/bought-products/bought-products.component';
+import { ValuedServicesComponent } from './views/valued-services/valued-services.component';
+import { CreateUserComponent } from './views/create-user/create-user.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -42,7 +44,9 @@ export const routes: Routes = [
     { path: 'rate-service/:id', component: RateServiceComponent },
     { path: 'show-clients', component: ShowClientsComponent },
     { path: 'reservations', component: ReservationsComponent },
-    { path: 'bought_products', component: BoughtProductsComponent}
+    { path: 'bought_products', component: BoughtProductsComponent},
+    { path: 'valued_services', component: ValuedServicesComponent },
+    { path: 'create-user', component: CreateUserComponent },
 
 ];
 

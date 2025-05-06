@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
 import { Usuario } from '../../models/user.interface';
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-show-clients',
   standalone: true,
-  imports: [FooterComponent, CommonModule, RouterModule],
+  imports: [FooterComponent, CommonModule, RouterModule,RouterLink],
   templateUrl: './show-clients.component.html',
   styleUrls: ['./show-clients.component.css']
 })

@@ -1,12 +1,13 @@
 import { Component, HostListener } from '@angular/core';
 import { Product } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header-admin',
-  imports: [],
+  imports: [ RouterLink, RouterLinkActive],
   templateUrl: './header-admin.component.html',
   styleUrl: './header-admin.component.css'
 })
@@ -23,7 +24,7 @@ export class HeaderAdminComponent {
     private languageService: LanguageService,
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) {
     this.languageService.isSpanish$.subscribe(
       (isSpanish) => (this.isSpanish = isSpanish)

@@ -62,6 +62,7 @@ export class AppComponent {
     if (userData) {
       try {
         this.usuario = JSON.parse(userData);
+        console.log('User data:', this.usuario);
       } catch (e) {
         this.usuario = null;
       }

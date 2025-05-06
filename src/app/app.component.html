@@ -1,9 +1,9 @@
 <div class="header">
   @if (mostrarHeader) {
-    @if (isUser) {
-      <app-header-user></app-header-user>
-    } @else if (usuario && usuario.nombre === 'admin') {
+    @if (usuario && usuario.rol === 'admin') {
       <app-header-admin></app-header-admin>
+    } @else if (isUser) {
+      <app-header-user></app-header-user>
     } @else {
       <app-header></app-header>
     }

@@ -9,8 +9,6 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { ApiService } from '../../services/api-service.service';
 import { UserStateService } from '../../services/user-state.service';
-import { Observable } from 'rxjs';
-import { RateServiceComponent } from '../rate-service/rate-service.component';
 
 @Component({
   selector: 'app-show-reserve',

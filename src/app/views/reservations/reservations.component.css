@@ -5,7 +5,11 @@
     box-sizing: border-box;
     font-family: 'Inter', sans-serif; /* Modern, professional font */
   }
-  
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
   .overlay {
     width: 100%;
     height: 200px;

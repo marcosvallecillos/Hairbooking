@@ -8,8 +8,8 @@
     padding: 0;
     min-height: 100vh;
     overflow-x: hidden;
-    font-family: 'Inter', sans-serif; /* Modern, clean font */
-    background: #f5f5f5; /* Subtle background */
+    font-family: 'Inter', sans-serif; 
+    background: #f5f5f5; /
   }
   
   .overlay {
@@ -26,7 +26,7 @@
   /* Typography */
   h2 {
     text-align: center;
-    font-size: clamp(2rem, 5vw, 2.5rem); /* Responsive font size */
+    font-size: clamp(2rem, 5vw, 2.5rem); 
     color: #1f2a44;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -272,19 +272,19 @@
   }
   .d-flex {
     display: flex;
-    justify-content: space-between;  /* Esto separa el h5 y el botón */
-    align-items: center;             /* Esto alinea ambos elementos verticalmente */
+    justify-content: space-between;  
+    align-items: center;             
 }
 
 .btn-danger {
     background-color: #ff0000;
     color: #ffffff;
-    width: auto; /* Eliminar el ancho fijo */
-    padding: 0.5rem 1rem; /* Ajustar tamaño del botón */
+    width: auto; 
+    padding: 0.5rem 1rem; 
 }
 
 .comprado_por {
-    font-size: 1.25rem; /* Asegúrate de que el tamaño de la fuente del h5 esté bien ajustado */
+    font-size: 1.25rem; 
     color: #000000;
     font-weight: 700; 
     text-align: left; 
@@ -306,14 +306,14 @@
     justify-content: center;
     align-items: center;
     height: 80vh;
-    background: rgba(255, 255, 255, 0.9); /* Subtle backdrop */
+    background: rgba(255, 255, 255, 0.9); 
   }
   
   .spinner {
     width: 60px;
     height: 60px;
-    border: 6px solid #e2e8f0; /* Softer base color */
-    border-top: 6px solid #ff8503; /* Matches accent color */
+    border: 6px solid #e2e8f0; 
+    border-top: 6px solid #ff8503; 
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
@@ -397,16 +397,16 @@
     left: 0;
     width: 100px; 
     height: 4px;
-    background: linear-gradient(90deg, #ff8503, #ff6200); /* Matches button gradient */
-    border-radius: 2px; /* Subtle rounding */
+    background: linear-gradient(90deg, #ff8503, #ff6200); 
+    border-radius: 2px; 
   }
 
   .title {
-    font-size: 2.25rem; /* Slightly larger for emphasis */
-    color: #1a252f; /* Darker, richer color */
+    font-size: 2.25rem; 
+    color: #1a252f; 
     font-weight: 700;
     text-align: left;
-    margin-left: 10%; /* Adjusted for better alignment */
+    margin-left: 10%; 
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 30px;
@@ -420,5 +420,5 @@
     left: 0;
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #ff8503, #ff6200); /* Matches card accent */
+    background: linear-gradient(90deg, #ff8503, #ff6200);
   }

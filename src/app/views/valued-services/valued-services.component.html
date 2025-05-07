@@ -15,7 +15,7 @@
     </div>
   } @else {
     <!-- Si hay valoraciones -->
-    <h2 class="valoraciones mt-5">{{ getText('Valoraciones', 'Ratings') }}</h2>
+      <h2 class="title mb-4">{{ getText('Valoraciones Creadas por Usuarios', 'Ratings By Users') }}</h2>
     <div class="valoraciones-container">
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @for (valoracion of valoraciones; track valoracion.id) {
@@ -23,8 +23,8 @@
             <div class="card h-100">
               <div class="card-header">
                 <h5 class="card-title">
-                  <i class="bi bi-person"></i> <strong>{{ getText('Valoración Creada por ID', 'Rating Created by ID') }}:</strong> {{ valoracion.usuario_id }} <i class="bi" [ngClass]=" 'bi-eye'" (click)="openUserModal(valoracion.usuario_id)"></i></h5>
-                <p class="card-text"><i class="bi bi-calendar"></i> <strong>{{ getText(' Fecha de Valoración', 'Rating Date') }}:</strong> {{ valoracion.fecha }}</p>
+               <i class="bi bi-person"></i> <strong>{{ getText('Valoración Creada por ID', ' Rating Created by ID') }}:</strong> {{ valoracion.usuario_id }} <i class="bi" [ngClass]=" 'bi-eye'" (click)="openUserModal(valoracion.usuario_id)" style="cursor:pointer"></i> </h5>
+                <p class="card-text"><i class="bi bi-calendar"></i> <strong>{{ getText(' Fecha de Valoración', ' Rating Date') }}:</strong> {{ valoracion.fecha }}</p>
               </div>
                   <div class="card-content">
                 <div class="card-body">

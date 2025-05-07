@@ -21,12 +21,22 @@
         @for (valoracion of valoraciones; track valoracion.id) {
           <div class="col-12 col-sm-6 col-lg-4">
             <div class="card h-100">
-              <div class="card-content">
+              <div class="card-header">
+                <h5 class="card-title">
+                  <i class="bi bi-person"></i> <strong>{{ getText('Valoración Creada por ', 'Rating Created by ID') }}:</strong> {{ valoracion.usuario?.nombre }}</h5>
+                <p class="card-text"><i class="bi bi-calendar"></i> <strong>{{ getText(' Fecha de Valoración', 'Rating Date') }}:</strong> {{ valoracion.fecha }}</p>
+              </div>
+                  <div class="card-content">
                 <div class="card-body">
-                  <h4>{{ getText('Id Usuario', 'Id User') }}: {{ valoracion.usuario_id }}</h4>
-                  <h4>{{ getText('Id Reserva', 'Id Reservation') }}: {{ valoracion.reserva_id }}</h4>
+                  <p class=""><i class="bi bi-scissors"></i> <strong> {{getText('Servicio','Service')}}:</strong> {{
+                    valoracion.reserva?.servicio }}</p>
+                  <p><i class="bi bi-person"></i> <strong> {{getText('Peluquero','Barber')}}:</strong> {{ valoracion.reserva?.peluquero }}
+                  </p>
+                  <p><i class="bi bi-cash"></i> <strong> {{getText('Precio','Price')}}:</strong> {{ valoracion.reserva?.precio }}€ </p>
+                  <p><i class="bi bi-calendar"></i> <strong> {{getText('Dia','Day')}}:</strong> {{ valoracion.reserva?.dia }}</p>
+                  <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ valoracion.reserva?.hora }}</p>
+
                   <p class="comentario">{{ getText('Comentario', 'Comment') }}: {{ valoracion.comentario }}</p>
-                  <p class="fecha">{{ getText('Fecha', 'Date') }}: {{ valoracion.fecha }}</p>
                   <p class="valoracion">{{ getText('Valoración Servicio', 'Service Rating') }}: <span class="stars">{{ getStars(valoracion.servicioRating) }}</span></p>
                   <p class="valoracion">{{ getText('Valoración Peluquero', 'Barber Rating') }}: <span class="stars">{{ getStars(valoracion.peluqueroRating) }}</span></p>
                 </div>

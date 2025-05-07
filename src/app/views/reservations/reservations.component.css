@@ -211,3 +211,39 @@
       height: 50px;
     }
   }
+
+  
+.reserva-vacio {
+  background: #f9f9f9;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin: 0 auto;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.reserva-vacio img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.reserva-vacio h3 {
+  margin: 0 0 10px;
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.reserva-vacio p {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}

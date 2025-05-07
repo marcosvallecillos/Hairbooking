@@ -18,8 +18,13 @@ export interface Usuario {
     fecha?: string;
     usuario_id: number;
     reserva_id: number;
+    usuario?: Usuario;
+    reserva?: Reserva;
+    
 }
-
+export interface ValoracionesResponse {
+  valoraciones: Valoracion[];
+}
   export interface Product {
     id:            number;
     name:          string;

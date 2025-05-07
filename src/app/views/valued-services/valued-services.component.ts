@@ -30,7 +30,7 @@ export class ValuedServicesComponent implements OnInit {
     this.isLoading = true;
     this.apiService.getValoraciones().subscribe({
       next: (response) => {
-        this.valoraciones = response; // Accede a la propiedad 'valoraciones'
+        this.valoraciones = response.valoraciones; // Accede a la propiedad 'valoraciones'
         this.isLoading = false;
         console.log('Valoraciones:', this.valoraciones);
       },

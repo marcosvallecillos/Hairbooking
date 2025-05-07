@@ -1,7 +1,7 @@
 import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError, tap } from 'rxjs';
-import { Compra, Product, Reserva, Usuario, Valoracion } from '../models/user.interface';
+import { Compra, Product, Reserva, Usuario, Valoracion, ValoracionesResponse } from '../models/user.interface';
 import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
@@ -82,9 +82,10 @@ newValoracion(valoracion: Valoracion): Observable<Valoracion> {
   );
 }
 
-getValoraciones(): Observable<Valoracion[]> {
-  return this.http.get<Valoracion[]>(`${this.apiUrlValoracion}/list`)
+getValoraciones(): Observable<ValoracionesResponse> {
+  return this.http.get<ValoracionesResponse>(`${this.apiUrlValoracion}/list`);
 }
+
 removeReserve(reserveId: number) {
   this.reserves = this.reserves.filter((r) => r.id !== reserveId);
 }

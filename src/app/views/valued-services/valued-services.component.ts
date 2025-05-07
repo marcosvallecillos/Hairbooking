@@ -3,10 +3,11 @@ import { Valoracion } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
 import { ApiService } from '../../services/api-service.service';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-valued-services',
-  imports: [FooterComponent],
+  imports: [FooterComponent,NgClass],
   templateUrl: './valued-services.component.html',
   styleUrl: './valued-services.component.css'
 })
@@ -14,11 +15,13 @@ export class ValuedServicesComponent implements OnInit {
 
   valoraciones:Valoracion[] = [];
   isLoading: boolean = false;
-  isSpanish: boolean = true; // Cambia esto según el idioma actual
-  constructor(private languageService: LanguageService, private apiService: ApiService,private cdr: ChangeDetectorRef) {
+  isSpanish: boolean = true;
+  userId: number = 0;
+    constructor(private languageService: LanguageService, private apiService: ApiService,private cdr: ChangeDetectorRef) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
     );
+    
   }
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
@@ -49,4 +52,8 @@ export class ValuedServicesComponent implements OnInit {
     const emptyStar = '☆';
     return fullStar.repeat(rating) + emptyStar.repeat(5 - rating);
   }
+  openUserModal(userId: number) {
+    // Aquí puedes implementar la lógica para abrir el modal del usuario
+    console.log('Abrir modal para el usuario con ID:', userId);
+    }
 }

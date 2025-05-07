@@ -22,6 +22,7 @@ import { ReservationsComponent } from './views/reservations/reservations.compone
 import { BoughtProductsComponent } from './views/bought-products/bought-products.component';
 import { ValuedServicesComponent } from './views/valued-services/valued-services.component';
 import { CreateUserComponent } from './views/create-user/create-user.component';
+import { ModalUserComponent } from './components/modal-user/modal-user.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -47,6 +48,7 @@ export const routes: Routes = [
     { path: 'bought_products', component: BoughtProductsComponent},
     { path: 'valued_services', component: ValuedServicesComponent },
     { path: 'create-user', component: CreateUserComponent },
+    {path: 'modal-user', component: ModalUserComponent},
 
 ];
 

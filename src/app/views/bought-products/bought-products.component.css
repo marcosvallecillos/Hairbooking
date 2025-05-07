@@ -270,7 +270,36 @@
     text-align: center;
     padding: 3rem;
   }
-  
+  .d-flex {
+    display: flex;
+    justify-content: space-between;  /* Esto separa el h5 y el botón */
+    align-items: center;             /* Esto alinea ambos elementos verticalmente */
+}
+
+.btn-danger {
+    background-color: #ff0000;
+    color: #ffffff;
+    width: auto; /* Eliminar el ancho fijo */
+    padding: 0.5rem 1rem; /* Ajustar tamaño del botón */
+}
+
+.comprado_por {
+    font-size: 1.25rem; /* Asegúrate de que el tamaño de la fuente del h5 esté bien ajustado */
+    color: #000000;
+    font-weight: 700; 
+    text-align: left; 
+    letter-spacing: 0.4px; 
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+  .btn-danger i{
+    position: abs;
+  }
+  .btn-danger:hover {
+    background-color: #dc2626;
+    transform: scale(1.1);
+  }
   /* Loading Spinner */
   .loading {
     display: flex;
@@ -331,6 +360,13 @@
   @media (max-width: 425px) {
     .products-table {
       font-size: 0.85rem;
+    }
+    .productos-container{
+    width: 110%;
+    margin-left: -20px;
+    }
+    .productos-list {
+      padding: 0 1rem;
     }
   
     .image-container {

@@ -119,6 +119,9 @@ makePurchase(purchase: { productos: { productoId: number; cantidad: number; }[];
 getPurchasesByUsuarioId(usuario_Id: number): Observable<Compra[]> {
   return this.http.get<Compra[]>(`${this.apiUrlCompras}/usuario/${usuario_Id}`);
 }
+deletePurchase(id: number): Observable<Compra> {
+  return this.http.delete<Compra>(`${this.apiUrlCompras}/delete/${id}`);
+}
 
 getCompras(): Observable<Compra[]> {
   return this.http.get<Compra[]>(`${this.apiUrlCompras}`);

@@ -3,6 +3,7 @@
 
 <div class="container mt-5 mb-5">
     <!-- Mostrar estado de carga -->
+    
     @if (isLoading) {
         <div class="loading">
             <div class="spinner"></div>
@@ -23,9 +24,19 @@
                 <div class="productos-list">
                     @for (compra of compras; track compra.id) {
                         @if (compra.detalles && compra.detalles.length > 0) {
-                        <div class="compras mt-5">
-                            <h5 class="comprado_por mt-5"> {{ getText('Compra Realizada por  ', 'Purchase Made by ') }} {{ compra.usuario?.id }} <i class="bi" [ngClass]=" 'bi-eye'" (click)="compra.usuario && openUserModal(compra.usuario.id)"></i> </h5>
-                                <p class="fecha">{{ getText('Fecha de la compra:', 'Purchase date:') }} {{ compra.fecha }}</p>
+                          <div class="compras mt-5">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="comprado_por mt-5"> 
+                                    {{ getText('Compra Realizada por el ID ', 'Purchase Made by ID ') }} {{ compra.usuario?.id }} 
+                                    <i class="bi" [ngClass]=" 'bi-eye'" (click)="compra.usuario && openUserModal(compra.usuario.id)"></i> 
+                                </h5>
+                                <button class="btn btn-danger" (click)="deleteBuy(compra.id)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        
+                        
+                            <p class="fecha">{{ getText('Fecha de la compra:', 'Purchase date:') }} {{ compra.fecha }}</p>
             
                                 <table class="products-table">
                                   <thead>

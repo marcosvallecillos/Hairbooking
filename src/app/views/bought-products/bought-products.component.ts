@@ -14,6 +14,7 @@ import { ModalUserComponent } from '../../components/modal-user/modal-user.compo
 })
 export class BoughtProductsComponent {
 isLoading: boolean = false;
+error: string | null = null;
 compras: Compra[] = [];
 selectedUserId: number | null = null;
 showLoginModal: boolean = false;
@@ -57,6 +58,27 @@ calcularDescuento(total: number): number {
 openUserModal(usuarioId: number) {
   this.selectedUserId = usuarioId;
   this.showLoginModal = true;
+}
+deleteBuy(id: number) {
+  this.isLoading = true;
+  this.error = null;
+
+  this.apiService.deletePurchase(id).subscribe({
+    next: () => {
+      this.getAllCompras(); 
+      
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 0);
+    },
+    error: (error) => {
+      this.error = 'Error al eliminar el cliente. Por favor, intenta de nuevo.';
+      this.isLoading = false;
+      console.error('Error al eliminar el cliente:', error);
+    }
+    
+  });
+  
 }
 
 }

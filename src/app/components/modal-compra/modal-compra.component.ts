@@ -63,7 +63,7 @@ export class ModalCompraComponent implements OnInit {
             name: producto.name,
             price: producto.price,
             image: producto.image,
-            cantidad: producto.cantidad || 1,
+            cantidad: producto.cantidad ,
             isFavorite: producto.favorite,
             insidecart: producto.cart,
             categorias: producto.categoria,

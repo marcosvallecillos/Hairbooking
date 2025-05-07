@@ -141,7 +141,7 @@ export class ModalCarritoComponent implements OnInit {
               name: producto.name,
               price: producto.price,
               image: producto.image,
-              cantidad: 1,
+              cantidad: producto.cantidad || 1,
               isFavorite: true,
               insidecart: producto.cart,
               categorias: producto.categoria,
@@ -354,6 +354,11 @@ export class ModalCarritoComponent implements OnInit {
     return this.productos.map((producto) => producto.name).join(', ');
   }
 
+  cantidadProductos(): string {
+    return this.productos
+      .map((producto) => producto.cantidad)
+      .join(' , ') + ' unidades';
+  }
   precioProductos(): string {
     return (
       this.productos

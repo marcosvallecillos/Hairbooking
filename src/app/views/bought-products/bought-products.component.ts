@@ -4,16 +4,19 @@ import { LanguageService } from '../../services/language.service';
 import { Compra } from '../../models/user.interface';
 import { ApiService } from '../../services/api-service.service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { ModalUserComponent } from '../../components/modal-user/modal-user.component';
 
 @Component({
   selector: 'app-bought-products',
-  imports: [CommonModule, FooterComponent],
+  imports: [CommonModule, FooterComponent,ModalUserComponent],
   templateUrl: './bought-products.component.html',
   styleUrl: './bought-products.component.css'
 })
 export class BoughtProductsComponent {
 isLoading: boolean = false;
 compras: Compra[] = [];
+selectedUserId: number | null = null;
+showLoginModal: boolean = false;
   isSpanish: boolean = true; // Cambia esto según el idioma actual
 
   constructor(private languageService: LanguageService, private apiService: ApiService) {
@@ -50,4 +53,10 @@ calcularDescuento(total: number): number {
   }
   return 0;
 }
+
+openUserModal(usuarioId: number) {
+  this.selectedUserId = usuarioId;
+  this.showLoginModal = true;
+}
+
 }

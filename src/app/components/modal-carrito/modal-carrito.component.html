@@ -23,7 +23,9 @@
                     </h2>
                 </div>
                 @if (isLoading) {
-
+                        <div class="loadingtrete">
+                            <div class="spinnerrete"></div>
+                        </div>
                 } @else if (productos.length == 0) {
                 <div class="cart-empty">
                     <img src="../../../../images/disappointed.png" class="empty-icon" alt="Carrito vacío">
@@ -121,7 +123,7 @@
         <app-modal-login [show]="showLoginModal" (close)="showLoginModal = false"></app-modal-login>
 
         <app-modal-compra [show]="showModal" [producto]="nombresProductos()" [precio]="precioProductos()"
-            [descuento]="descuento.toFixed(2) + ' €'" [total]="totalConDescuento.toFixed(2) + ' €'"
+            [descuento]="descuento.toFixed(2) + ' €'" [total]="totalConDescuento.toFixed(2) + ' €'" [cantidad]="cantidadProductos()"
             (confirm)="onConfirmReserve()" (cancel)="onCancelReserve()">
         </app-modal-compra>
     </div>

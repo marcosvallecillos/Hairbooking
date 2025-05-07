@@ -4,10 +4,12 @@ import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { NgClass } from '@angular/common';
+import { ModalUserComponent } from '../../components/modal-user/modal-user.component';
 
 @Component({
   selector: 'app-reservations',
-  imports: [FooterComponent],
+  imports: [FooterComponent,NgClass,ModalUserComponent],
   templateUrl: './reservations.component.html',
   styleUrl: './reservations.component.css'
 })
@@ -15,7 +17,8 @@ export class ReservationsComponent {
  reserves: Reserva[] = [];
   isSpanish: boolean = true;
   isLoading: boolean = false;
-
+  showLoginModal: boolean = false;
+  selectedUserId: number | null = null;
   
   constructor(
     private languageService: LanguageService,
@@ -51,4 +54,10 @@ export class ReservationsComponent {
       }
     });
   }
+
+  openUserModal(usuarioId: number) {
+    this.selectedUserId = usuarioId;
+    this.showLoginModal = true;
+  }
+
 }

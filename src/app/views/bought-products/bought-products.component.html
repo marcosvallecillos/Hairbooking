@@ -24,7 +24,7 @@
                     @for (compra of compras; track compra.id) {
                         @if (compra.detalles && compra.detalles.length > 0) {
                         <div class="compras mt-5">
-                            <h5 class="comprado_por mt-5"> {{ getText('Compra Realizada por  ', 'Purchase Made by ') }} {{ compra.usuario?.nombre }} {{ compra.usuario?.apellidos }} </h5>
+                            <h5 class="comprado_por mt-5"> {{ getText('Compra Realizada por  ', 'Purchase Made by ') }} {{ compra.usuario?.id }} <i class="bi" [ngClass]=" 'bi-eye'" (click)="compra.usuario && openUserModal(compra.usuario.id)"></i> </h5>
                                 <p class="fecha">{{ getText('Fecha de la compra:', 'Purchase date:') }} {{ compra.fecha }}</p>
             
                                 <table class="products-table">
@@ -83,3 +83,9 @@
 </div>
 
 <app-footer></app-footer>
+
+<app-modal-user
+[show]="showLoginModal"
+[id]="selectedUserId"
+(close)="showLoginModal = false">
+</app-modal-user>

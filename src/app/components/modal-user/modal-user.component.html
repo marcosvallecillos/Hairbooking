@@ -1,5 +1,7 @@
-@if(show){
-    <div class="modal-overlay mt-5">
+
+
+    @if(show){
+        <div class="container-fluid">
     <div class="modal-content">
         <h2>{{ getText('Información Personal', 'Personal Information') }}</h2>
         <button type="button" class="close" (click)="onClose()">
@@ -47,11 +49,6 @@
                         <label>{{ getText('Rol:', 'Role:') }}</label>
                         <input type="text" [value]="rol" readonly>
                     </div>
-                </div>
-                <hr>
-                <div class="form-group">
-                    <label>{{ getText('ID de la Reserva:', 'Reservation ID:') }}</label>
-                    <input type="text" [value]="id" readonly>
                 </div>
             }
         </div>

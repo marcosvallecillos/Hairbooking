@@ -55,7 +55,7 @@ export interface ValoracionesResponse {
       precioUnitario: number;
       total: number;
     }[];
-    usuario?: Usuario;
+    usuario?: Usuario ;
   }
 
   export interface Reserva{

@@ -16,7 +16,7 @@
       <div class="reserves-list">
         @for (reserve of reserves; track reserve.id) {
         <div class="card">
-          <p class="reserva_creada"><i class="bi bi-person"></i> <strong> {{getText('Reserva Creada por el Id','User')}}:</strong> {{ reserve.usuario_id }}
+          <p class="reserva_creada"><i class="bi bi-person"></i> <strong> {{getText('Reserva Creada por el Id','User')}}:</strong> {{ reserve.usuario_id }} <i class="bi" [ngClass]=" 'bi-eye'" (click)="openUserModal(reserve.usuario_id)"></i></p>
           <div class="card-content">
 
             <p class=""><i class="bi bi-scissors"></i> <strong> {{getText('Servicio','Service')}}:</strong> {{
@@ -35,3 +35,9 @@
     }
     
     <app-footer></app-footer>
+
+    <app-modal-user
+[show]="showLoginModal"
+[id]="selectedUserId"
+(close)="showLoginModal = false">
+</app-modal-user>

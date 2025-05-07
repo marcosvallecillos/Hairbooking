@@ -37,16 +37,21 @@ showLoginModal: boolean = false;
     this.isLoading = true;
     this.apiService.getCompras().subscribe({
       next: (response) => {
-        this.compras = response; 
+        this.compras = response.sort((a, b) => {
+          if (a.usuario && b.usuario) {
+            return a.usuario.id - b.usuario.id;
+          }
+          return 0;
+        });
         this.isLoading = false;
-        console.log('Compras:', response);
+        console.log('Compras ordenadas:', this.compras);
       },
       error: (error) => {
         this.isLoading = false;
         console.error('Error al obtener compras:', error);
       }
     });
-}
+  }
 
 calcularDescuento(total: number): number {
   if (total > 500) {

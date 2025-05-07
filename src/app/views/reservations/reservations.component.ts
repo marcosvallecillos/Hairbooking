@@ -44,9 +44,14 @@ export class ReservationsComponent {
     this.isLoading = true;
     this.apiService.getReserves().subscribe({
       next: (response) => {
-        this.reserves = response; 
+        this.reserves = response.sort((a, b) => {
+          if (a.usuario && b.usuario) {
+            return a.usuario.id - b.usuario.id;
+          }
+          return 0;
+        });
         this.isLoading = false;
-        console.log('Reservas:', response);
+        console.log('Reservas ordenadas:', this.reserves);
       },
       error: (error) => {
         this.isLoading = false;

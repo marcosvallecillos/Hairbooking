@@ -37,9 +37,15 @@ export class ValuedServicesComponent implements OnInit {
     this.isLoading = true;
     this.apiService.getValoraciones().subscribe({
       next: (response) => {
-        this.valoraciones = response.valoraciones; // Accede a la propiedad 'valoraciones'
+        // Ordenar las valoraciones por ID de usuario
+        this.valoraciones = response.valoraciones.sort((a, b) => {
+          if (a.usuario && b.usuario) {
+            return a.usuario.id - b.usuario.id;
+          }
+          return 0;
+        });
         this.isLoading = false;
-        console.log('Valoraciones:', this.valoraciones);
+        console.log('Valoraciones ordenadas:', this.valoraciones);
       },
       error: (error) => {
         this.isLoading = false;

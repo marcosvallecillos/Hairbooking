@@ -12,6 +12,7 @@ private apiUrlReservas = 'http://localhost:8000/api/reservas'
 private apiUrlProductos = 'http://localhost:8000/api/productos'
 private apiUrlCompras = 'http://localhost:8000/api/compras'
 private apiUrlValoracion = 'http://localhost:8000/api/valoracion'
+private apiUrlContact = 'http://localhost:8000/contact'
 
 public productos: Product[] = [];
 private favorites: Product[] = [];
@@ -321,6 +322,28 @@ getHistorialCompras(usuarioId: number): Observable<any> {
       if (response.status === 'success') {
         this.comprasRealizadas = response.compras;
       }
+    })
+  );
+}
+
+sendContactForm(contactData: {
+  name: string;
+  apellidos: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}): Observable<any> {
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    })
+  };
+  
+  return this.http.post<any>(this.apiUrlContact, contactData, httpOptions).pipe(
+    tap(response => {
+      console.log('Contact form response:', response);
     })
   );
 }

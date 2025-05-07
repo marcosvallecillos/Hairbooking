@@ -1,15 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api-service.service';
 import { LanguageService } from '../../services/language.service';
 import { Router } from '@angular/router';
+import { Valoracion, ValoracionesResponse } from '../../models/user.interface';
 
 @Component({
   selector: 'app-modal-user',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './modal-user.component.html',
   styleUrl: './modal-user.component.css'
 })
-export class ModalUserComponent {
+export class ModalUserComponent implements OnChanges {
   @Input() show: boolean = false;
   @Input() id: number | null = null;
   @Input() nombre: string | null = '';
@@ -18,10 +21,13 @@ export class ModalUserComponent {
   @Input() telefono: string | null = '';
   @Input() rol: string | null = '';
   @Output() close = new EventEmitter<void>();
+  
   isSpanish: boolean = true;
+  isLoading: boolean = false;
+
   constructor(
     private languageService: LanguageService,
-     private router: Router, 
+    private router: Router, 
     private apiService: ApiService 
   ) {
     this.languageService.isSpanish$.subscribe(
@@ -29,12 +35,40 @@ export class ModalUserComponent {
     );
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['show'] && changes['show'].currentValue && this.id) {
+      this.loadUserData();
+    }
+  }
+
+  loadUserData() {
+    this.isLoading = true;
+    this.apiService.getValoraciones().subscribe({
+      next: (response) => {
+        const valoracion = response.valoraciones.find((valoracion: Valoracion) => valoracion.usuario_id === this.id);
+        if (valoracion && valoracion.usuario) {
+          this.nombre = valoracion.usuario.nombre;
+          this.apellidos = valoracion.usuario.apellidos;
+          this.email = valoracion.usuario.email;
+          this.telefono = valoracion.usuario.telefono?.toString() || '';
+          this.rol = valoracion.usuario.rol || '';
+        }
+        this.isLoading = false;
+        console.log('Datos del usuario:', this.nombre, this.apellidos, this.email, this.telefono, this.rol);
+      },
+      error: (error) => {
+        console.error('Error al cargar datos del usuario:', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
+
   onClose() {
     this.close.emit();
     console.log('Modal closed');
   }
-
 }

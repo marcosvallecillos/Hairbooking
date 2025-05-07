@@ -1,52 +1,60 @@
-<div class="modal-overlay mt-5">
+@if(show){
+    <div class="modal-overlay mt-5">
     <div class="modal-content">
-        
         <h2>{{ getText('Información Personal', 'Personal Information') }}</h2>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
-                <i class="bi bi-x"></i>
-              </button>
+        <button type="button" class="close" (click)="onClose()">
+            <i class="bi bi-x"></i>
+        </button>
         <div class="modal-body">
-            <div class="profile-header">
-                <i class="bi bi-person-circle" ></i>
-            </div>
-            
-            <hr>
-            <div class="form-group name-group">
-                <label>{{ getText('Nombre:', 'Name:') }}</label>
-                <div class="name-inputs">
-                    <input type="text" value="{{ nombre }}" placeholder="{{ getText('Nombre', 'First name') }}">
-                    <input class="apellido-large" type="text" value="{{ apellidos }}" placeholder="{{ getText('Apellidos', 'Last name') }}">
+            @if(isLoading) {
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>{{ getText('Cargando datos...', 'Loading data...') }}</p>
                 </div>
-            </div>
-            <hr class="name-separator">
-            <!-- Apellido separado solo visible en móvil -->
-            <div class="form-group apellido-small">
-           
-                <label>{{ getText('Apellidos:', 'Last name:') }}</label>
-                <input type="text" value="{{ apellidos }}" placeholder="{{ getText('Apellidos', 'Last name') }}">
-            </div>
-            
-            
-            <hr>
-            <div class="form-group">
-                <label>{{ getText('Email:', 'Email:') }}</label>
-                <input type="email" value="{{ email }}">
-            </div>
-            <hr>
-         
-
-            <div class="form-group-row">
-                <div class="form-group">
-                    <label>{{ getText('Teléfono:', 'Phone:') }}</label>
-                    <input type="text" value="{{ telefono }}">
+            } @else {
+                <div class="profile-header">
+                    <i class="bi bi-person-circle"></i>
                 </div>
                 
-                <div class="form-group">
-                    <label>{{ getText('Rol:', 'Role:') }}</label>
-                    <input class=""type="text" value="{{ rol }}">
+                <hr>
+                <div class="form-group name-group">
+                    <label>{{ getText('Nombre:', 'Name:') }}</label>
+                    <div class="name-inputs">
+                        <input type="text" [value]="nombre" readonly placeholder="{{ getText('Nombre', 'First name') }}">
+                        <input class="apellido-large" type="text" [value]="apellidos" readonly placeholder="{{ getText('Apellidos', 'Last name') }}">
+                    </div>
                 </div>
-            </div>
-
+                <hr class="name-separator">
+                <!-- Apellido separado solo visible en móvil -->
+                <div class="form-group apellido-small">
+                    <label>{{ getText('Apellidos:', 'Last name:') }}</label>
+                    <input type="text" [value]="apellidos" readonly placeholder="{{ getText('Apellidos', 'Last name') }}">
+                </div>
+                
+                <hr>
+                <div class="form-group">
+                    <label>{{ getText('Email:', 'Email:') }}</label>
+                    <input type="email" [value]="email" readonly>
+                </div>
+                <hr>
+                
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label>{{ getText('Teléfono:', 'Phone:') }}</label>
+                        <input type="text" [value]="telefono" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ getText('Rol:', 'Role:') }}</label>
+                        <input type="text" [value]="rol" readonly>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label>{{ getText('ID de la Reserva:', 'Reservation ID:') }}</label>
+                    <input type="text" [value]="id" readonly>
+                </div>
+            }
         </div>
     </div>
 </div>
+}

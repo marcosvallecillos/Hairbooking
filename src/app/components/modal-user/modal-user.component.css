@@ -8,7 +8,7 @@ body {
     height: 100vh;
 }
 
-.close {
+ .close {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -73,6 +73,7 @@ body {
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
+    margin-top: 10px;
 }
 .responsive-name {
     display: flex;
@@ -124,7 +125,6 @@ body {
     display: block;
     flex: 1 1 50%;
 }
-
 /* MEDIA QUERY: cambiar comportamiento en móvil */
 @media (max-width: 600px) {
     .apellido-large {
@@ -194,4 +194,27 @@ body {
     .form-group .name-inputs input {
         flex: 1 1 45%;
     }
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

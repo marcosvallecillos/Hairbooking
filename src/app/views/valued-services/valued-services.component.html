@@ -23,7 +23,7 @@
             <div class="card h-100">
               <div class="card-header">
                 <h5 class="card-title">
-                  <i class="bi bi-person"></i> <strong>{{ getText('Valoración Creada por ID', 'Rating Created by ID') }}:</strong> {{ valoracion.usuario_id }} <i class="bi" [ngClass]=" 'bi-eye'" (click)="openUserModal(userId)"></i></h5>
+                  <i class="bi bi-person"></i> <strong>{{ getText('Valoración Creada por ID', 'Rating Created by ID') }}:</strong> {{ valoracion.usuario_id }} <i class="bi" [ngClass]=" 'bi-eye'" (click)="openUserModal(valoracion.usuario_id)"></i></h5>
                 <p class="card-text"><i class="bi bi-calendar"></i> <strong>{{ getText(' Fecha de Valoración', 'Rating Date') }}:</strong> {{ valoracion.fecha }}</p>
               </div>
                   <div class="card-content">
@@ -51,3 +51,8 @@
   }
 </div>
 <app-footer></app-footer>
+<app-modal-user
+[show]="showLoginModal"
+[id]="selectedUserId"
+(close)="showLoginModal = false">
+</app-modal-user>

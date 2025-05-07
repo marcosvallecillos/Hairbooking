@@ -4,18 +4,22 @@ import { LanguageService } from '../../services/language.service';
 import { ApiService } from '../../services/api-service.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { NgClass } from '@angular/common';
+import { ModalUserComponent } from '../../components/modal-user/modal-user.component';
 
 @Component({
   selector: 'app-valued-services',
-  imports: [FooterComponent,NgClass],
+  imports: [FooterComponent,NgClass,ModalUserComponent],
   templateUrl: './valued-services.component.html',
   styleUrl: './valued-services.component.css'
 })
 export class ValuedServicesComponent implements OnInit {
-
+  showLoginModal: boolean = false;
   valoraciones:Valoracion[] = [];
   isLoading: boolean = false;
   isSpanish: boolean = true;
+  selectedReservaId: number | null = null;
+  selectedUserId: number | null = null;
+
   userId: number = 0;
     constructor(private languageService: LanguageService, private apiService: ApiService,private cdr: ChangeDetectorRef) {
     this.languageService.isSpanish$.subscribe(
@@ -52,8 +56,14 @@ export class ValuedServicesComponent implements OnInit {
     const emptyStar = '☆';
     return fullStar.repeat(rating) + emptyStar.repeat(5 - rating);
   }
-  openUserModal(userId: number) {
-    // Aquí puedes implementar la lógica para abrir el modal del usuario
-    console.log('Abrir modal para el usuario con ID:', userId);
+  openUserModal(usuarioId: number) {
+    this.selectedUserId = usuarioId;
+    this.showLoginModal = true;
+  }
+
+  closeUserModal() {
+    this.showLoginModal = false;
+    this.cdr.detectChanges(); // Detectar cambios manualmente
+    console.log('Modal cerrado');
     }
 }

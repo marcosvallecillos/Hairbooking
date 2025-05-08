@@ -39,20 +39,19 @@ export class ModalUserComponent implements OnChanges {
     if (changes['show'] && changes['show'].currentValue && this.id) {
       this.loadUserData();
     }
+  
   }
 
   loadUserData() {
+    if (!this.id) return;
     this.isLoading = true;
-    this.apiService.getValoraciones().subscribe({
-      next: (response) => {
-        const valoracion = response.valoraciones.find((valoracion: Valoracion) => valoracion.usuario_id === this.id);
-        if (valoracion && valoracion.usuario) {
-          this.nombre = valoracion.usuario.nombre;
-          this.apellidos = valoracion.usuario.apellidos;
-          this.email = valoracion.usuario.email;
-          this.telefono = valoracion.usuario.telefono?.toString() || '';
-          this.rol = valoracion.usuario.rol || '';
-        }
+    this.apiService.showProfile(this.id).subscribe({
+      next: (usuario) => {
+        this.nombre = usuario.nombre || '';
+        this.apellidos = usuario.apellidos || '';
+        this.email = usuario.email || '';
+        this.telefono = usuario.telefono?.toString() || '';
+        this.rol = usuario.rol || '';
         this.isLoading = false;
         console.log('Datos del usuario:', this.nombre, this.apellidos, this.email, this.telefono, this.rol);
       },

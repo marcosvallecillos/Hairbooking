@@ -63,6 +63,8 @@ export class ReservationsComponent {
   openUserModal(usuarioId: number) {
     this.selectedUserId = usuarioId;
     this.showLoginModal = true;
+
+    console.log(this.selectedUserId)
   }
 deleteReserve(reserveId: number) {
   this.apiService.deleteReserve(reserveId).subscribe({

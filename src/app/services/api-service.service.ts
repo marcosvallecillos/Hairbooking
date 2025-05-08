@@ -85,6 +85,10 @@ newValoracion(valoracion: Valoracion): Observable<Valoracion> {
 getValoraciones(): Observable<ValoracionesResponse> {
   return this.http.get<ValoracionesResponse>(`${this.apiUrlValoracion}/list`);
 }
+deleteValoracion(id: number): Observable<Valoracion> {
+  return this.http.delete<Valoracion>(`${this.apiUrlValoracion}/delete/${id}`);
+
+}
 
 removeReserve(reserveId: number) {
   this.reserves = this.reserves.filter((r) => r.id !== reserveId);

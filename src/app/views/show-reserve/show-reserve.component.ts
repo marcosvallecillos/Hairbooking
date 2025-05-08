@@ -85,7 +85,23 @@ export class ShowReserveComponent implements OnInit {
     this.showModal = true;
     console.log('Reserva seleccionada para eliminar:', reserve);
   }
+  delete(reserve:Reserva){
+    this.selectedReserve = reserve;
+    const reserveId = this.selectedReserve.id;
+
+    this.apiService.deleteValoracion(reserveId).subscribe({
+      next: () => {
+        this.reserves = this.reserves.filter(r => r.id !== reserveId);
+        this.selectedReserve = null;
+        this.showModal = false;
+      },
+      error: (error: Error) => {
+        console.error('Error al eliminar la reserva', error);
+      }
+    });
   
+    console.log('le estas dandao')
+  }
   onConfirmDelete() {
     if (this.selectedReserve) {
       const reserveId = this.selectedReserve.id;

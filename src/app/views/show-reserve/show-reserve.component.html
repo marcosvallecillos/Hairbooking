@@ -48,19 +48,23 @@
           <p><i class="bi bi-calendar"></i> <strong> {{getText('Dia','Day')}}:</strong> {{ reserve.dia }}</p>
           <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ reserve.hora }}</p>
           <div class="botones">
-            <button class="eliminar " [title]="getText('Eliminar reserva', 'Delete appointment')"
-            (click)="deleteReserve(reserve)" aria-label="Eliminar reserva">
-                <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
-            </button>
         
             @if (isReservePast(reserve)) {
                 @if(reserve.valoracion == null){
                     <button class="rate-button"  [title]="getText('Valorar Reserva', 'Rate Reservation')"[routerLink]="['/rate-service', reserve.id]">
                         <img src="../../../../images/valoracion.png" class="fav-icon" alt="Favorito vacío">
                     </button>
+                    <button class="eliminar " [title]="getText('Eliminar reserva', 'Delete appointment')"
+                    (click)="deleteReserve(reserve)" aria-label="Eliminar reserva">
+                        <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
+                    </button>
                 } @else {
                     <button class="rate-button" [title]="getText('Reserva Valorada', 'Valued Reserve')">
                         <img src="../../../../images/reserva_valorada.png" class="fav-icon" alt="Favorito vacío">
+                    </button>
+                    <button class="eliminar " [title]="getText('Eliminar reserva', 'Delete appointment')"
+                    (click)="delete(reserve)" aria-label="Eliminar reserva">
+                        <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
                     </button>
                     <p class="comentario"> {{getText('Comentario', 'Comment')}}: {{reserve.valoracion_comentario}} </p>
                     <p class="valoracion"> {{getText('Valoración Servicio', 'Service Rating')}}: <span class="stars">{{getStars(reserve.valoracion_servicio)}}</span> </p>

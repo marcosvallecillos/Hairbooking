@@ -250,4 +250,28 @@
   color: #666;
   font-size: 1.1rem;
   margin-bottom: 20px;
+}.card-footer {
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.card-footer .btn-danger {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+  transform: scale(1.1);
 }

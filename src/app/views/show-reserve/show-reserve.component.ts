@@ -86,7 +86,7 @@ export class ShowReserveComponent implements OnInit {
     console.log('Reserva seleccionada para eliminar:', reserve);
   }
   
-  onConfirmReserve() {
+  onConfirmDelete() {
     if (this.selectedReserve) {
       const reserveId = this.selectedReserve.id;
       this.apiService.deleteReserve(reserveId).subscribe({

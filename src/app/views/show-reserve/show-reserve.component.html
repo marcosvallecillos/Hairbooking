@@ -91,7 +91,7 @@
 </body>
 
 <app-modal-delete [show]="showModal" [servicio]="selectedReserve?.servicio ?? ''" [fecha]="selectedReserve?.dia ?? ''"
-  [hora]="selectedReserve?.hora ?? ''" [peluquero]="selectedReserve?.peluquero ?? ''" (confirm)="onConfirmReserve()"
+  [hora]="selectedReserve?.hora ?? ''" [peluquero]="selectedReserve?.peluquero ?? ''" (confirm)="onConfirmDelete()"
   (cancel)="onCancelReserve()">
 </app-modal-delete>
 

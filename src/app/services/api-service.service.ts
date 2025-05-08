@@ -59,15 +59,14 @@ getReserves(): Observable<Reserva[]> {
   return this.http.get<Reserva[]>(`${this.apiUrlReservas}`);
 }
 
-addReserve(reserve: Reserva) {
-  this.reserves.push({ ...reserve, id: this.reserves.length + 1 }); 
-}
-
 getReserveByUsuario(usuario_Id: number): Observable<Reserva[]> {
   return this.http.get<Reserva[]>(`${this.apiUrlReservas}/usuario/${usuario_Id}`);
 }
 newReserve(reservas: Reserva): Observable<Reserva> {
   return this.http.post<Reserva>(`${this.apiUrlReservas}/new`, reservas);
+}
+newReserveByAdmin(reservas: any): Observable<any> {
+  return this.http.post<any>(`${this.apiUrlReservas}/admin/new`, reservas);
 }
 
 editReserve(id: number, reservaData: Reserva): Observable<Reserva> {

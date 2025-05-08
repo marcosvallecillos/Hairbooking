@@ -1,15 +1,14 @@
 
 .header {
-    height: 130px;
     position: absolute;
-    top: 2%;
-    left: 0;
     width: 100%;
     z-index: 1000;
     margin-top: 10px;
 }
 
-
+.home {
+    margin-left: 50px;
+}
 .logo{
     width: 100px;
     height: 100px;
@@ -37,6 +36,12 @@
 
 /* Ajustes responsivos */
 @media (max-width: 991px) {
+    .header-user{
+        position: absolute;
+        width: 100%;
+        z-index: 1000;
+        margin-top: 40px;
+    }
     .navbar-collapse {
         position: fixed;
         border: none;
@@ -106,7 +111,6 @@
     color: #ffbf00 !important;
     font-weight: bold !important;
 }
-
 .navbar-nav .login-btn {
     cursor: pointer;
     background-color: transparent;
@@ -189,7 +193,45 @@
     color: black;
 }
 
-hr {
+/* Menú desplegable del usuario */
+.user-dropdown {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+    min-width: 200px;
+    padding: 0.5rem 0;
+}
+
+.user-dropdown .dropdown-item {
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.user-dropdown .dropdown-item:hover {
+    background-color: #ffc107;
+    color:  black;
+    font-weight: bold;
+}
+
+.user-icon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.user-icon:hover {
+    color: #ffc107;
+}hr {
     color: #ffc107;
 }
 
@@ -205,5 +247,5 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size:0.7rem;
   }

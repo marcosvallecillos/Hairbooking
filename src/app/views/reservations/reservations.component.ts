@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Reserva } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { NgClass } from '@angular/common';
@@ -9,7 +9,7 @@ import { ModalUserComponent } from '../../components/modal-user/modal-user.compo
 
 @Component({
   selector: 'app-reservations',
-  imports: [FooterComponent,NgClass,ModalUserComponent],
+  imports: [FooterComponent,NgClass,ModalUserComponent,RouterLink],
   templateUrl: './reservations.component.html',
   styleUrl: './reservations.component.css'
 })
@@ -64,5 +64,15 @@ export class ReservationsComponent {
     this.selectedUserId = usuarioId;
     this.showLoginModal = true;
   }
-
+deleteReserve(reserveId: number) {
+  this.apiService.deleteReserve(reserveId).subscribe({
+    next: () => {
+      console.log('Reserva eliminada con éxito');
+      this.getAllReserves(); // Recargar las reservas después de eliminar
+    },
+    error: (error) => {
+      console.error('Error al eliminar la reserva:', error);
+    }
+  });
+  }
 }

@@ -1,0 +1,49 @@
+@if (show) {
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <h2>{{ getText('Confirmar Reserva', 'Confirm Reservation') }}</h2>
+        @if (show) {
+          <div class="user-selection">
+            <label for="userSelect">{{ getText('Seleccionar Usuario', 'Select User') }}:</label>
+            <select id="userSelect" [(ngModel)]="selectedUserId" class="form-control">
+              <option [ngValue]="null">{{ getText('Seleccione un usuario', 'Select a user') }}</option>
+              @for (usuario of usuarios; track usuario.id) {
+                <option [ngValue]="usuario.id">
+                {{ usuario.id}}
+                </option>
+              }
+            </select>
+          </div>
+          <div class="reserve-details">
+            <p><strong>{{ getText('Servicio', 'Service') }}:</strong> {{ servicio }}</p>
+            <p><strong>{{ getText('Peluquero', 'Barber') }}:</strong> {{ peluquero }}</p>
+            <p><strong>{{ getText('Fecha', 'Date') }}:</strong> {{ fecha }}</p>
+            <p><strong>{{ getText('Hora', 'Time') }}:</strong> {{ hora }}</p>
+            <p><strong>{{ getText('Precio', 'Price') }}:</strong> {{ precio }}€</p>
+          </div>
+          <div class="modal-buttons">
+            <button (click)="onConfirm()" [disabled]="!selectedUserId" class="confirm-button">
+              {{ getText('Confirmar', 'Confirm') }}
+            </button>
+            <button (click)="onCancel()" class="cancel-button">
+              {{ getText('Cancelar', 'Cancel') }}
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+  
+  @if (showAlert) {
+    <div class="alert-overlay">
+      <div class="alert-box">
+        <p>{{ getText('¡Cita enviada con éxito!', 'Appointment successfully sent!') }}</p>
+      </div>
+    </div>
+  } @else if (showAlertCancel) {
+    <div class="alert-overlay">
+      <div class="alert-box-cancel">
+        <p>{{ getText('¡Cita cancelada!', 'Canceled Appointment!') }}</p>
+      </div>
+    </div>
+  }

@@ -134,15 +134,7 @@ getProductos(): Product[] {
   return this.productos;
 }
 
-addProduct(product: Product) {
-  const existingProduct = this.productos.find((p) => p.id === product.id);
-  if (!existingProduct) { 
-    product.cantidad = 1;
-    product.cart = true;
-    this.productos.push(product);
-    this.updateCartItemsCount();
-  }
-}
+
 
 updateProductFavorite(productId: number, isFavorite: boolean): Observable<any> {
   const userId = this.authService.getUserId();
@@ -164,31 +156,7 @@ updateProductCart(productId: number, insidecart: boolean): Observable<any> {
   return this.http.post(`${this.apiUrlProductos}/carrito/${productId}`, { 
     usuario_id: userId,
     insidecart: insidecart 
-  }).pipe(
-    tap((response: any) => {
-      if (response.status === 'success') {
-        // Actualizar el estado del carrito
-        this.getCartByUsuarioId(userId).subscribe({
-          next: (cartResponse: any) => {
-            if (cartResponse.status === 'success' && cartResponse.carrito) {
-              this.productos = cartResponse.carrito.map((producto: any) => ({
-                id: producto.id,
-                name: producto.name,
-                price: producto.price,
-                image: producto.image,
-                cantidad: producto.cantidad || 1,
-                isFavorite: producto.favorite,
-                insidecart: producto.cart,
-                categorias: producto.categoria,
-                subcategorias: producto.subcategoria
-              }));
-              this.updateCartItemsCount();
-            }
-          }
-        });
-      }
-    })
-  );
+  });
 }
 
 getCartByUsuarioId(usuario_Id: number): Observable<any> {
@@ -219,18 +187,6 @@ getCartByUsuarioId(usuario_Id: number): Observable<any> {
   return observable;
 }
 
-removeProduct(productId: number) {
-  this.productos = this.productos.filter((p) => p.id !== productId);
-  this.updateCartItemsCount();
-}
-
-updateQuantity(productId: number, quantity: number) {
-  const product = this.productos.find((p) => p.id === productId);
-  if (product) {
-    product.cantidad = quantity;
-    this.updateCartItemsCount();
-  }
-}
 
  updateCartItemsCount() {
   const totalItems = this.productos.reduce(
@@ -248,8 +204,8 @@ addFavorite(product: Product) {
   }
 }
 
-removeFavorite(productId: number) {
-  this.favorites = this.favorites.filter(p => p.id !== productId);
+deleteProductFav(id: number): Observable<Product> {
+  return this.http.delete<Product>(`${this.apiUrlProductos}/delete/${id}`);
 }
 
 addCart(product: Product) {
@@ -264,36 +220,10 @@ removeCart(productId: number) {
   this.cart = this.cart.filter(p => p.id !== productId);
 }
 
-getCart(): Product[] {
-  return this.cart;
+deleteProductCart(id: number): Observable<Product> {
+  return this.http.delete<Product>(`${this.apiUrlProductos}/delete/${id}`);
 }
 
-private comprasRealizadas: Compra[] = [];
-
-
-
-
-addToPurchases(products: Product[]): void {
-  const nuevaCompra: Compra = {
-    id: this.comprasRealizadas.length + 1,
-    nombre: `Compra ${this.comprasRealizadas.length + 1}`,
-    image: 'default.jpg',
-    fecha: new Date(),
-    total: products.reduce((sum, p) => sum + p.price * p.cantidad, 0),
-    cantidadTotal: products.reduce((sum, p) => sum + p.cantidad, 0),
-    precio: products.reduce((sum, p) => sum + p.price * p.cantidad, 0),
-    descuento: 0,
-    detalles: products.map(p => ({
-      productoId: p.id,
-      nombre: p.name,
-      cantidad: p.cantidad,
-      precioUnitario: p.price,
-      total: p.price * p.cantidad
-    }))
-  };
-  this.comprasRealizadas.push(nuevaCompra);
-  console.log('Compra realizada:', nuevaCompra);
-}
 
   clearCart(): void {
     this.productos = [];
@@ -306,24 +236,11 @@ eliminarDelCarrito(productId: number): Observable<any> {
     return throwError(() => new Error('Usuario no encontrado'));
   }
 
-  return this.http.post(`${this.apiUrlProductos}/carrito/eliminar/${productId}?usuario_id=${userId}`, {}).pipe(
-    tap((response: any) => {
-      if (response.status === 'success') {
-        this.productos = this.productos.filter(p => p.id !== productId);
-        this.updateCartItemsCount();
-      }
-    })
-  );
+  return this.http.post(`${this.apiUrlProductos}/carrito/eliminar/${productId}?usuario_id=${userId}`, {})
 }
 
 getHistorialCompras(usuarioId: number): Observable<any> {
-  return this.http.get<any>(`${this.apiUrlCompras}/usuarios/${usuarioId}/historial`).pipe(
-    tap(response => {
-      if (response.status === 'success') {
-        this.comprasRealizadas = response.compras;
-      }
-    })
-  );
+  return this.http.get<any>(`${this.apiUrlCompras}/usuarios/${usuarioId}/historial`);
 }
 
 sendContactForm(contactData: {
@@ -341,10 +258,6 @@ sendContactForm(contactData: {
     })
   };
   
-  return this.http.post<any>(this.apiUrlContact, contactData, httpOptions).pipe(
-    tap(response => {
-      console.log('Contact form response:', response);
-    })
-  );
+  return this.http.post<any>(this.apiUrlContact, contactData, httpOptions);
 }
 } 

@@ -42,11 +42,9 @@ export class FavoritosComponent implements OnInit {
     if (userId) {
       this.isUser = true;
       this.loadFavorites(userId);
-      this.loadCart(userId); // Cargar el carrito inicialmente
-      // Suscribirse a cambios en la cantidad de ítems del carrito
+      this.loadCart(userId); 
       this.apiservice.cartItemsCount$.subscribe(count => {
-        console.log('Cantidad de ítems en el carrito actualizada:', count);
-         this.apiservice.getCart(); 
+         this.apiservice.getCartByUsuarioId(userId); 
       });
     } else {
       this.isUser = false;
@@ -123,9 +121,6 @@ export class FavoritosComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-   
-   
-
     if (!this.isUser) {
       this.messageNoUserDisplay = this.getText(
         'Debes iniciar sesión para añadir al carrito',
@@ -188,7 +183,6 @@ export class FavoritosComponent implements OnInit {
       }
     });
   }
-
   eliminarproduct(product: Product) {
     if (!this.isUser) {
       this.messageNoUserDisplay = this.getText(

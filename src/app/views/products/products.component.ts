@@ -211,7 +211,7 @@ export class ProductsComponent implements OnInit {
         if (product.favorite) {
           this.apiService.addFavorite({ ...product });
         } else {
-          this.apiService.removeFavorite(product.id);
+          this.apiService.deleteProductFav(product.id);
         }
       },
       error: (error: any) => {
@@ -259,7 +259,7 @@ export class ProductsComponent implements OnInit {
             this.apiService.addCart({ ...product });
             this.message = `${product.name} ` + this.getText('ha sido añadido al carrito.', 'has been added to cart.');
           } else {
-            this.apiService.removeCart(product.id);
+            this.apiService.deleteProductCart(product.id);
             this.message = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');
           }
         } else {

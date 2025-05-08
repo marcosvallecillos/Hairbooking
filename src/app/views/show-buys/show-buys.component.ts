@@ -52,7 +52,6 @@ export class ShowBuysComponent implements OnInit {
     this.apiService.getHistorialCompras(this.userId!).subscribe({
       next: (response) => {
         if (response.status === 'success' && response.compras) {
-          // Filtrar solo la compra que tiene detalles
           this.compras = response.compras.filter((compra: any) => 
             compra.detalles && compra.detalles.length > 0
           );

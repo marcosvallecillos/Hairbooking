@@ -215,10 +215,11 @@ export class ReserveAdminComponent implements OnInit {
     this.currentDate.setMonth(this.currentDate.getMonth() - 1);
     this.currentDate = new Date(this.currentDate);
   }
-   formatearFecha(year: number, month: number, day: number): string {
-    const mm = (month < 10 ? '0' : '') + month;
-    const dd = (day < 10 ? '0' : '') + day;
-    return `${year}-${mm}-${dd}`;
+  formatearFecha(year: number, month: number, day: number): string {
+    // Ensure month and day are padded with zeros if needed
+    const paddedMonth = month.toString().padStart(2, '0');
+    const paddedDay = day.toString().padStart(2, '0');
+    return `${year}-${paddedMonth}-${paddedDay}`;
   }
   
   onConfirmReserve() {

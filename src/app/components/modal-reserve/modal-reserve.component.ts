@@ -62,7 +62,12 @@ export class ModalReserveComponent implements OnInit {
       }
     });
   }
-
+  formatearFecha(year: number, month: number, day: number): string {
+    // Ensure month and day are padded with zeros if needed
+    const paddedMonth = month.toString().padStart(2, '0');
+    const paddedDay = day.toString().padStart(2, '0');
+    return `${year}-${paddedMonth}-${paddedDay}`;
+  }
   onConfirm() {
     if (!this.selectedUserId || this.isSubmitting) return;
     
@@ -72,7 +77,11 @@ export class ModalReserveComponent implements OnInit {
     let formattedDate = '';
     if (this.fecha) {
       const dateObj = new Date(this.fecha);
-      formattedDate = dateObj.toISOString().split('T')[0]; // Esto da 'YYYY-MM-DD'
+      formattedDate = this.formatearFecha(
+        dateObj.getFullYear(),
+        dateObj.getMonth() + 1,
+        dateObj.getDate()
+      );
     }
   
     const reservaData = {

@@ -1,22 +1,26 @@
 <div class="overlay"></div>
 <div class="container mt-5 mb-5">
+  <div class="d-flex justify-content-end" >
+    <button class="btn btn-primary d-flex align-items-center gap-2" routerLink="/reserve-admin">
+        <i class="bi bi-calendar-plus"></i>
+        <span>{{ getText('Crear Reserva a Usuario', 'Create Reserve for User') }}</span>
+    </button>
+</div>
 @if (isLoading) {
     <div class="loading">
       <div class="spinner"></div>
     </div>
-    } @else if(reserves.length == 0) {
-    <div class="reserva-vacio  mb-5">
+    } 
+    @else if(reserves.length == 0) {
+     
+    <div class="reserva-vacio mt-5 mb-5 ">
       <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
       <h3> {{getText('Ningun Usuario creo reservas.','No user created reservations')}} </h3>
     </div>
+    
 }    @else if(reserves.length > 0){
     <h2 class=" reservas">{{getText('Reservas Realizadas por Usuarios','Reservations Made by Users')}} </h2>
-    <div class="d-flex justify-content-end mb-3" >
-      <button class="btn btn-primary d-flex align-items-center gap-2" routerLink="/reserve-admin">
-          <i class="bi bi-calendar-plus"></i>
-          <span>{{ getText('Crear Reserva a Usuario', 'Create Reserve for User') }}</span>
-      </button>
-  </div>
+   
     <div class="reserves-container">
       <!--[class.disabled]="isReservePast(reserve)"-->
       <div class="reserves-list">

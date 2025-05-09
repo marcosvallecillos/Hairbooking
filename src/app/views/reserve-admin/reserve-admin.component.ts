@@ -32,6 +32,7 @@ export class ReserveAdminComponent implements OnInit {
   selectedDate: Date | null = null;
   selectedService: string = '';
   selectedBarber: string = '';
+
   selectedTime: string = '';
   showModal: boolean = false;
   showLoginModal: boolean = false;
@@ -53,7 +54,7 @@ export class ReserveAdminComponent implements OnInit {
 
   availableHours = [
     '08:20', '09:30', '10:00', '10:15', '11:00', '11:30',
-    '11:55', '12:20', '13:00', '13:30', '16:00', '16:37',
+    '11:55', '12:20', '13:00', '13:35', '16:00', '16:37',
     '17:00', '17:30', '18:00', '18:30', '19:00', '19:30',
   ];
 

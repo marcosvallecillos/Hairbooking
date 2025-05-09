@@ -36,6 +36,7 @@ export class ModalReserveComponent implements OnInit {
   usuarios: Usuario[] = [];
   selectedUserId: number | null = null;
   isSubmitting: boolean = false;
+  message: string = '';
 
   constructor(
     private languageService: LanguageService,
@@ -70,9 +71,9 @@ export class ModalReserveComponent implements OnInit {
   }
   onConfirm() {
     if (!this.selectedUserId || this.isSubmitting) return;
-    
+    this.message = 'Se te ha enviado un correo con los detalles';
+
     this.isSubmitting = true;
-  
     // Convertir la fecha al formato YYYY-MM-DD
     let formattedDate = '';
     if (this.fecha) {
@@ -101,6 +102,7 @@ export class ModalReserveComponent implements OnInit {
           this.showAlert = false;
           this.confirm.emit();
           this.isSubmitting = false;
+
         }, 1000);
         setTimeout(() => {
           window.scrollTo(0, 0);

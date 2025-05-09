@@ -65,7 +65,7 @@ export class CancelledReserveComponent {
   }
   
   deleteReserveAnulada(reserveId: number) { // se borra cuando ha pasado el tiempo
-    this.apiService.deleteReserves(reserveId).subscribe({
+    this.apiService.deleteReservaAnulada(reserveId).subscribe({
       next: () => {
         console.log('Reserva eliminada con éxito');
         this.getAllCancelled(); 

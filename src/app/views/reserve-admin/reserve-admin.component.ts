@@ -155,7 +155,7 @@ export class ReserveAdminComponent implements OnInit {
 
   isWeekend(date: Date): boolean {
     const day = date.getDay();
-    return day === 0 || day === 6;
+    return day === 0 || day === 7;
   }
 
   isTimeReserved(time: string): boolean {

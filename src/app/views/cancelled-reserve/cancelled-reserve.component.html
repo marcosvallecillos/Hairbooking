@@ -1,0 +1,64 @@
+<div class="overlay"></div>
+
+@if (isLoading) {
+    <div class="loading">
+      <div class="spinner"></div>
+    </div>
+    } @else if(reservesCancelled.length == 0) {
+    <div class="reserva-vacio  mb-5">
+      <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
+      <h3> {{getText('No se ha encontrado ninguna reserva.','No reservations found.')}} </h3>
+      <p> {{getText('Echa un vistazo a la selección que tenemos para ti.','Check out the selection we have for you.')}}
+      </p>
+  
+      <button class="btn-volver mt-5" routerLink="/reserve">
+  
+        {{getText('Reservar Ahora','Book Now')}}
+  
+      </button>
+    </div>
+    }
+    @else if(reservesCancelled.length > 0){
+    <h2 class=" reservas mt-5">{{getText('Reservas Canceladas ','Cancelled Reserves')}} </h2>
+    <div class="reserves-container">
+      <div class="header">
+      
+      </div>
+      <div class="reserves-list">
+        @for (reserve of reservesCancelled; track reserve.id) {
+        <div class="card">      
+            <div class="card-content">
+                <h5 class="reserva-anulada">
+                    Reserva Anulada por el ID:
+                    <span class="reserva-info">
+                      {{ reserve.usuario_id }}
+                      <i class="bi" [ngClass]="'bi-eye'" (click)="openUserModal(reserve.usuario_id)" style="cursor: pointer;"></i>
+                    </span>
+                    </h5>
+                <hr>
+            <p class=""><i class="bi bi-scissors"></i> <strong> {{getText('Servicio','Service')}}:</strong> {{
+              reserve.servicio }}</p>
+            <p><i class="bi bi-person"></i> <strong> {{getText('Peluquero','Barber')}}:</strong> {{ reserve.peluquero }}
+            </p>
+            <p><i class="bi bi-cash"></i> <strong> {{getText('Precio','Price')}}:</strong> {{ reserve.precio }}€ </p>
+            <p><i class="bi bi-calendar"></i> <strong> {{getText('Dia','Day')}}:</strong> {{ reserve.dia }}</p>
+            <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ reserve.hora }}</p>
+            
+
+        </div>
+        </div>
+            }
+
+        </div>
+
+    </div>
+        }
+
+    
+
+        <app-modal-user
+        [show]="showLoginModal"
+        [id]="selectedUserId"
+        (close)="showLoginModal = false">
+        </app-modal-user>
+        

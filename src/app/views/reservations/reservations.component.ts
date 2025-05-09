@@ -50,6 +50,14 @@ export class ReservationsComponent {
           }
           return 0;
         });
+
+        // Check and delete past reservations
+        this.reserves.forEach(reserve => {
+          if (this.isReservePast(reserve)) {
+            this.deleteReserve(reserve.id);
+          }
+        });
+
         this.isLoading = false;
         console.log('Reservas ordenadas:', this.reserves);
       },
@@ -77,4 +85,15 @@ deleteReserve(reserveId: number) {
     }
   });
   }
+
+  isReservePast(reserve: Reserva): boolean {
+    const [year, month, day] = reserve.dia.split('-').map(Number);
+    const [hours, minutes] = reserve.hora.split(':').map(Number);
+    
+    const reserveDate = new Date(year, month - 1, day, hours, minutes);
+    const now = new Date();
+    
+    return reserveDate < now;
+  }
+
 }

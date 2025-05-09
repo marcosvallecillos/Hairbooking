@@ -1,7 +1,7 @@
 import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError, tap } from 'rxjs';
-import { Compra, Product, Reserva, Usuario, Valoracion, ValoracionesResponse } from '../models/user.interface';
+import { Compra, Product, Reserva, ReservaAnulada, Usuario, Valoracion, ValoracionesResponse } from '../models/user.interface';
 import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ private apiUrlProductos = 'http://localhost:8000/api/productos'
 private apiUrlCompras = 'http://localhost:8000/api/compras'
 private apiUrlValoracion = 'http://localhost:8000/api/valoracion'
 private apiUrlContact = 'http://localhost:8000/contact'
+private apiUrlAnuladas = 'http://localhost:8000/api/anuladas'
 
 public productos: Product[] = [];
 private favorites: Product[] = [];
@@ -87,7 +88,10 @@ getValoraciones(): Observable<ValoracionesResponse> {
 }
 deleteValoracion(id: number): Observable<Valoracion> {
   return this.http.delete<Valoracion>(`${this.apiUrlValoracion}/delete/${id}`);
+}
 
+getReservasAnuladas():Observable<ReservaAnulada[]>{
+  return this.http.get<ReservaAnulada[]>(`${this.apiUrlAnuladas}/list`);
 }
 
 removeReserve(reserveId: number) {

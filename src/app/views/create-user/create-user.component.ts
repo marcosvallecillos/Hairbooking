@@ -17,6 +17,7 @@ export class CreateUserComponent {
   showConfirmPassword: boolean = false;
   isSpanish: boolean = true;
   showAlert: boolean = false;
+  isProcessing: boolean = false;
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -90,9 +91,11 @@ export class CreateUserComponent {
       citas_reservadas: [],
       rol: this.createPupil.getRawValue().rol
     };
-    this.showAlert = true;
+    this.isProcessing = true;
+
     setTimeout(() => {
-      this.showAlert = false;
+      this.isProcessing = false;
+
       this.confirm.emit();
     }, 3000);
     console.log("Enviando datos:", pupil);

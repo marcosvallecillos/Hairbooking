@@ -72,3 +72,13 @@ export interface ValoracionesResponse {
     valoracion_servicio?: number | null;
     valoracion_peluquero?: number | null;
   }
+  export interface ReservaAnulada {
+    id:            number;
+    servicio:      string;
+    peluquero:     string;
+    precio:        number;
+    dia:           Date;
+    hora:          string;
+    usuario_id:    number;
+    fecha_anulada: Date;
+}

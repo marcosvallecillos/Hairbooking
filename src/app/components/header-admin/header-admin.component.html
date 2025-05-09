@@ -2,7 +2,7 @@
 <div class="header-admin">
     <nav class="navbar navbar-expand-lg" [class.menu-open]="isMenuOpen">
         <div class="container-fluid">
-            <button routerLink="/home-barber" style="background-color:transparent;border: none;">
+            <button routerLink="/index" style="background-color:transparent;border: none;">
                 <img src="../../../../images/logo_hb.PNG" class="logo" alt="Logo" style="font-size:36px;color:white;margin-top:-10px;cursor:pointer">
             </button>
                
@@ -45,7 +45,14 @@
                         </a>
                     </li>
                     <hr>
+                    <li class="nav-item">
+                        <a class="nav-link ms-3" routerLink="/cancelled-reserve" routerLinkActive="active">
+                            {{ getText('Reservas Anuladas', 'Cancelled  Reserve') }}
+                        </a>
+                    </li>
+                    <hr>
                 </ul>
+              
 
                 <div class="dropdown language-selector">
                     <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown">

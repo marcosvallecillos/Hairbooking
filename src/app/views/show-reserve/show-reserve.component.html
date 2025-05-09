@@ -74,6 +74,10 @@
                 <button class="edit-button" (click)="editReserve(reserve)">
                     <img src="../../../../images/editar.png" class="editar" alt="Editar reserva">
                 </button>
+                <button class="eliminar " [title]="getText('Eliminar reserva', 'Delete appointment')"
+                (click)="deleteReserve(reserve)" aria-label="Eliminar reserva">
+                    <img src="../../../../images/borrar.png" alt="Eliminar Reserva">
+                </button> 
             }
         </div>
         

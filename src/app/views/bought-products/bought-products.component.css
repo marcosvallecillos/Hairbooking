@@ -282,7 +282,10 @@
     width: auto; 
     padding: 0.5rem 1rem; 
 }
-
+.btn-danger:hover {
+  background-color: #dc2626;
+  transform: scale(1.1);
+}
 .comprado_por {
     font-size: 1.25rem; 
     color: #000000;
@@ -293,13 +296,7 @@
     margin-bottom: 0;
 }
 
-  .btn-danger i{
-    position: abs;
-  }
-  .btn-danger:hover {
-    background-color: #dc2626;
-    transform: scale(1.1);
-  }
+  
   /* Loading Spinner */
   .loading {
     display: flex;

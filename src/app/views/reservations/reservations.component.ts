@@ -51,10 +51,10 @@ export class ReservationsComponent {
           return 0;
         });
 
-        // Check and delete past reservations
+        // Si hay pasado la hora se elimina la reserva 
         this.reserves.forEach(reserve => {
           if (this.isReservePast(reserve)) {
-            this.deleteReserve(reserve.id);
+            this.deleteReserves(reserve.id);
           }
         });
 
@@ -74,17 +74,29 @@ export class ReservationsComponent {
 
     console.log(this.selectedUserId)
   }
-deleteReserve(reserveId: number) {
+deleteReserve(reserveId: number) { // Anula la reserva 
   this.apiService.deleteReserve(reserveId).subscribe({
     next: () => {
       console.log('Reserva eliminada con éxito');
-      this.getAllReserves(); // Recargar las reservas después de eliminar
+      this.getAllReserves(); 
     },
     error: (error) => {
       console.error('Error al eliminar la reserva:', error);
     }
   });
   }
+
+  deleteReserves(reserveId: number) { // se borra cuando ha pasado el tiempo
+    this.apiService.deleteReserves(reserveId).subscribe({
+      next: () => {
+        console.log('Reserva eliminada con éxito');
+        this.getAllReserves(); 
+      },
+      error: (error) => {
+        console.error('Error al eliminar la reserva:', error);
+      }
+    });
+    }
 
   isReservePast(reserve: Reserva): boolean {
     const [year, month, day] = reserve.dia.split('-').map(Number);

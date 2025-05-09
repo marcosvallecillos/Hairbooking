@@ -48,6 +48,12 @@ export class CancelledReserveComponent {
           }
           return 0;
         });*/
+         // Si hay pasado la hora se elimina la reserva 
+         this.reservesCancelled.forEach(reserve => {
+          if (this.isReservePast(reserve)) {
+            this.deleteReserveAnulada(reserve.id);
+          }
+        });
         this.isLoading = false;
         console.log('Reservas ordenadas:', this.reservesCancelled);
       },
@@ -57,10 +63,34 @@ export class CancelledReserveComponent {
       }
     });
   }
+  
+  deleteReserveAnulada(reserveId: number) { // se borra cuando ha pasado el tiempo
+    this.apiService.deleteReserves(reserveId).subscribe({
+      next: () => {
+        console.log('Reserva eliminada con éxito');
+        this.getAllCancelled(); 
+      },
+      error: (error) => {
+        console.error('Error al eliminar la reserva:', error);
+      }
+    });
+    }
+  
   openUserModal(usuarioId: number) {
     this.selectedUserId = usuarioId;
     this.showLoginModal = true;
 
     console.log(this.selectedUserId)
   }
+
+   isReservePast(reserve: ReservaAnulada): boolean {
+      const [year, month, day] = reserve.dia.split('-').map(Number);
+      const [hours, minutes] = reserve.hora.split(':').map(Number);
+      
+      const reserveDate = new Date(year, month - 1, day, hours, minutes);
+      const now = new Date();
+      
+      return reserveDate < now;
+    }
+
 }

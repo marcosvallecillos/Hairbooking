@@ -77,7 +77,7 @@ export interface ValoracionesResponse {
     servicio:      string;
     peluquero:     string;
     precio:        number;
-    dia:           Date;
+    dia:           string;
     hora:          string;
     usuario_id:    number;
     fecha_anulada: Date;

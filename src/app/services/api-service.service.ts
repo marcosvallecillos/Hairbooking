@@ -73,14 +73,21 @@ newReserveByAdmin(reservas: any): Observable<any> {
 editReserve(id: number, reservaData: Reserva): Observable<Reserva> {
   return this.http.put<Reserva>(`${this.apiUrlReservas}/${id}/edit`, reservaData);
 }
-deleteReserve(id: number): Observable<Reserva> {
+deleteReserve(id: number): Observable<Reserva> { //lleva los eliminados a reserva_anuladas
   return this.http.delete<Reserva>(`${this.apiUrlReservas}/delete/${id}`);
 }
 
+deleteReserves(id:number):Observable<Reserva>{ // se eliminan cuando pasa el tiempo de la reserva
+  return this.http.delete<Reserva>(`${this.apiUrlReservas}/eliminar/${id}`);
+}
 newValoracion(valoracion: Valoracion): Observable<Valoracion> {
   return this.http.post<Valoracion>(`${this.apiUrlValoracion}/valoraciones`,valoracion,
     { headers: { 'Content-Type': 'application/json' } }
   );
+}
+
+deleteReservaAnulada(id:number):Observable <ReservaAnulada>{
+  return this.http.delete<ReservaAnulada>(`${this.apiUrlAnuladas}/delete/${id}`);
 }
 
 getValoraciones(): Observable<ValoracionesResponse> {

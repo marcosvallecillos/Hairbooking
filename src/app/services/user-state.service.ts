@@ -42,6 +42,11 @@ export class UserStateService {
     return userType === 'usuario';
   }
 
+  getIsAdmin(): boolean {
+    const userType = localStorage.getItem('userType');
+    return userType === 'admin';
+  }
+
   updateUser(userData: Usuario) {
     this.userSubject.next(userData);
     localStorage.setItem('userData', JSON.stringify(userData));

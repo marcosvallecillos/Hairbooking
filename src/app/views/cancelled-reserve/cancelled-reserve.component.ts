@@ -5,10 +5,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
 import { NgClass } from '@angular/common';
 import { ModalUserComponent } from '../../components/modal-user/modal-user.component';
+import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-cancelled-reserve',
-  imports: [NgClass,ModalUserComponent],
+  imports: [NgClass,ModalUserComponent,FooterComponent],
   templateUrl: './cancelled-reserve.component.html',
   styleUrl: './cancelled-reserve.component.css'
 })

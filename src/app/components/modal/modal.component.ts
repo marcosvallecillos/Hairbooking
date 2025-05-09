@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LanguageService } from '../../services/language.service';
+import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-modal',
@@ -17,11 +18,18 @@ export class ModalComponent {
   @Input() servicio: string = '';
   @Input() peluquero: string = '';
   @Input() precio?: string = '';
+  isAdmin:boolean = false;
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
   showAlert: boolean = false; 
   showAlertCancel: boolean = false;
+  constructor(private languageService: LanguageService,
+  ) {
+    this.languageService.isSpanish$.subscribe(
+      isSpanish => this.isSpanish = isSpanish
+    );
+  }
   onConfirm() {
     this.show = false;
     this.showAlert = true;
@@ -49,11 +57,7 @@ export class ModalComponent {
 
    isSpanish: boolean = true;
   
-    constructor(private languageService: LanguageService) {
-      this.languageService.isSpanish$.subscribe(
-        isSpanish => this.isSpanish = isSpanish
-      );
-    }
+    
   
     getText(es: string, en: string): string {
       return this.isSpanish ? es : en;

@@ -64,34 +64,32 @@
   font-weight: 700;
   color: #1a252f;
   letter-spacing: 0.02em; /* Subtle letter spacing for elegance */
-}
+} 
 
 /* Valoraciones vacio with cleaner design and responsiveness */
 .valoraciones-vacio {
-  background: #f9fafb; /* Lighter, modern background */
-  padding: 2rem;
-  border-radius: 12px;
+  background: #f9f9f9;
+  padding: 30px;
+  height: 40vh;
+  border-radius: 10px;
   text-align: center;
-  max-width: 450px; /* Slightly smaller for better focus */
-  margin: 4rem auto; /* Adjusted margin */
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); /* Lighter shadow */
+  max-width: 500px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin: 100px auto 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
 }
 
 .valoraciones-vacio:hover {
   transform: scale(1.02); /* Subtle scale on hover */
 }
 
-.valoraciones-vacio img.fav-icon {
-  width: 64px; /* Smaller for balance */
-  height: 64px;
-  margin-bottom: 1.5rem;
-  opacity: 0.85; /* Slightly more visible */
-  transition: opacity 0.3s ease;
+.fav-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
 }
 
 .valoraciones-vacio img.fav-icon:hover {
@@ -99,18 +97,12 @@
 }
 
 .valoraciones-vacio h3 {
-  margin: 0 0 0.75rem;
-  color: #1a252f;
-  font-size: 1.5rem; /* Smaller for better proportion */
-  font-weight: 600;
+  margin: 0 0 10px;
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
-.valoraciones-vacio p {
-  color: #4b5563; /* Softer gray for text */
-  font-size: 1rem;
-  margin-bottom: 1.25rem;
-  line-height: 1.5; /* Better readability */
-}
 
 /* Card with enhanced hover effects and modern styling */
 .card {

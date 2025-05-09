@@ -49,6 +49,7 @@
   .reserva-vacio {
     background: #f9f9f9;
     padding: 30px;
+    height: 55vh;
     border-radius: 10px;
     text-align: center;
     max-width: 500px;
@@ -136,7 +137,8 @@
   }
   .card {
     background: #ffffff;
-    width: 400px;
+    width: auto;
+    max-width: 400px;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);

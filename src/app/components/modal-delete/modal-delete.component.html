@@ -9,6 +9,10 @@
                     <p><strong>{{ getText('Servicio:', 'Service:') }}</strong> {{ servicio }}</p>
                     <p><strong>{{ getText('Fecha:', 'Date:') }}</strong> {{ fecha }}</p>
                     <p><strong>{{ getText('Hora:', 'Hour:') }}</strong> {{ hora }}</p>
+                    @if(isAdmin){
+                        <p><strong>{{ getText('Usuario ID:', 'ID User:') }}</strong> {{ usuario }}</p>
+
+                    }
                 </div>
             </div>
             <div class="modal-actions">

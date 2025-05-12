@@ -31,7 +31,7 @@ export class ModalDeleteComponent {
   }
 
   ngOnInit() {
-    this.isAdmin = this.userStateService.getIsUser();
+    this.isAdmin = this.userStateService.getIsAdmin();
     }
   onCancel() {
     this.cancel.emit(); 

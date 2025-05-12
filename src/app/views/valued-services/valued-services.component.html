@@ -1,6 +1,8 @@
 <div class="overlay"></div>
 
 <div class="container mt-5 mb-5">
+        <h2 class="title mb-4">{{ getText('Valoraciones Creadas por Usuarios', 'Ratings By Users') }}</h2>
+
   <!-- Mostrar estado de carga -->
   @if (isLoading) {
   <div class="loading">
@@ -15,7 +17,6 @@
     </div>
   } @else {
     <!-- Si hay valoraciones -->
-      <h2 class="title mb-4">{{ getText('Valoraciones Creadas por Usuarios', 'Ratings By Users') }}</h2>
     <div class="valoraciones-container">
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @for (valoracion of valoraciones; track valoracion.id) {

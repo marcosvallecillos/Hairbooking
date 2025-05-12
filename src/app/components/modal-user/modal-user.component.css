@@ -15,10 +15,12 @@ body {
     font-size: 32px;
     background-color: transparent;
     border: none;
-    color: #ff0000;
+    color: #000000;
     cursor: pointer;
 }
-
+.close:hover{
+    transform: scale(1.1);
+}
 .container-fluid {
     position: fixed;
     top: 0;

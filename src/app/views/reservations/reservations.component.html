@@ -6,6 +6,8 @@
         <span>{{ getText('Crear Reserva a Usuario', 'Create Reserve for User') }}</span>
     </button>
 </div>
+    <h2 class=" reservas">{{getText('Reservas Realizadas por Usuarios','Reservations Made by Users')}} </h2>
+
 @if (isLoading) {
     <div class="loading">
       <div class="spinner"></div>
@@ -19,7 +21,6 @@
     </div>
     
 }    @else if(reserves.length > 0){
-    <h2 class=" reservas">{{getText('Reservas Realizadas por Usuarios','Reservations Made by Users')}} </h2>
    
     <div class="reserves-container">
       <!--[class.disabled]="isReservePast(reserve)"-->

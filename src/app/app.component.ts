@@ -22,7 +22,7 @@ export class AppComponent {
   isLoggedIn: boolean = false;
   mostrarHeader: boolean = false;
   usuario: Usuario | null = null;
-
+  isAdmin:boolean = false;
     constructor(private router: Router, private apiService: ApiService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -57,6 +57,7 @@ export class AppComponent {
     
     this.isUserRegistered = userType || null;
     this.isUser = userType === 'usuario';
+    this.isAdmin = userType === 'admin';
     this.isLoggedIn = !!userData;
 
     if (userData) {

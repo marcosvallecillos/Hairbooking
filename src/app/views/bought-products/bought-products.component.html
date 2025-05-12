@@ -3,7 +3,8 @@
 
 <div class="container mt-5 mb-5">
     <!-- Mostrar estado de carga -->
-    
+                    <h2 class="title mb-4">{{ getText('Productos Comprados Por Usuarios', 'Bought Products By Users') }}</h2>
+
     @if (isLoading) {
         <div class="loading">
             <div class="spinner"></div>
@@ -15,9 +16,7 @@
         </div>
       }
       @else if (compras.length > 0) {
-           
-                <h2 class="title mb-4">{{ getText('Productos Comprados Por Usuarios', 'Bought Products By Users') }}</h2>
-         
+                    
         
             <div class="productos-container">
 

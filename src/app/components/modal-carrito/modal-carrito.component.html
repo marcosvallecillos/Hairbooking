@@ -22,11 +22,11 @@
 
                     </h2>
                 </div>
+               
                 @if (isLoading) {
-                        <div class="loadingtrete">
-                            <div class="spinnerrete"></div>
-                        </div>
-                } @else if (productos.length == 0) {
+                        
+                }
+                @else if (productos.length == 0) {
                 <div class="cart-empty">
                     <img src="../../../../images/disappointed.png" class="empty-icon" alt="Carrito vacío">
                     <h3>{{ getText('Tu carrito está vacío.', 'Your cart is empty') }}</h3>

@@ -269,29 +269,54 @@ export class ModalCarritoComponent implements OnInit {
   }
 
   actualizarCantidad(product: Product, input: EventTarget | null): void {
-    const inputElement = input as HTMLInputElement;
-    const nuevaCantidad = parseInt(inputElement.value);
-
-    if (!isNaN(nuevaCantidad) && nuevaCantidad >= 1) {
-      const cantidad = Math.min(nuevaCantidad, 5);
-      product.cantidad = cantidad;
-      inputElement.value = cantidad.toString();
-      this.calcularTotalYDescuento();
-    } else {
+    if (!input || !(input instanceof HTMLInputElement)) return;
+    
+    const nuevaCantidad = parseInt(input.value);
+    if (isNaN(nuevaCantidad) || nuevaCantidad < 1) {
+      input.value = '1';
       product.cantidad = 1;
-      inputElement.value = '1';
-      this.calcularTotalYDescuento();
+    } else {
+      product.cantidad = nuevaCantidad;
+    }
+
+    // Actualizar la cantidad en el backend
+    const userId = this.authService.getUserId();
+    if (userId) {
+      console.log('Enviando actualización de cantidad:', {
+        productoId: product.id,
+        usuario_id: userId,
+        cantidad: product.cantidad
+      });
+
+      this.apiService.actualizarCantidad(product.id, {
+        usuario_id: userId,
+        cantidad: product.cantidad
+      }).subscribe({
+        next: (response) => {
+          console.log('Cantidad actualizada:', response);
+          this.calcularTotalYDescuento();
+        },
+        error: (error) => {
+          console.error('Error al actualizar cantidad:', error);
+          // Revertir la cantidad en caso de error
+          input.value = product.cantidad.toString();
+          this.message = this.getText(
+            'Error al actualizar la cantidad',
+            'Error updating quantity'
+          );
+        }
+      });
     }
   }
 
   validarCantidad(product: Product, input: EventTarget | null): void {
-    const inputElement = input as HTMLInputElement;
-    const nuevaCantidad = parseInt(inputElement.value);
-
-    if (isNaN(nuevaCantidad) || nuevaCantidad < 1) {
+    if (!input || !(input instanceof HTMLInputElement)) return;
+    
+    const cantidad = parseInt(input.value);
+    if (isNaN(cantidad) || cantidad < 1) {
+      input.value = '1';
       product.cantidad = 1;
-      inputElement.value = '1';
-      this.calcularTotalYDescuento();
+      this.actualizarCantidad(product, input);
     }
   }
 
@@ -312,6 +337,9 @@ export class ModalCarritoComponent implements OnInit {
       return;
     }
 
+    // LOG: Mostrar el estado del carrito antes de comprar
+    console.log('Carrito antes de comprar:', JSON.stringify(this.productos, null, 2));
+
     const purchase = {
       productos: this.productos.map(product => ({
         productoId: product.id,
@@ -320,7 +348,8 @@ export class ModalCarritoComponent implements OnInit {
       descuento: this.descuento
     };
 
-    console.log('Enviando compra:', purchase); // Para debug
+    // LOG: Mostrar el objeto de compra que se enviará
+    console.log('Objeto de compra enviado al backend:', JSON.stringify(purchase, null, 2));
 
     this.apiService.makePurchase(purchase, userId).subscribe({
       next: (response) => {

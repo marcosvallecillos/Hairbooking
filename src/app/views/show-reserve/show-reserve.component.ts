@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { ModalLoginComponent } from '../../components/modal-login/modal-login.component';
 import { ReserveComponent } from '../reserve/reserve.component';
-import { Product, Reserva } from '../../models/user.interface';
+import { Product, Reserva, Valoracion } from '../../models/user.interface';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { ApiService } from '../../services/api-service.service';
@@ -25,7 +25,7 @@ export class ShowReserveComponent implements OnInit {
   showLoginModal: boolean = false;
   showModal: boolean = false;
   selectedReserve: Reserva | null = null;
-  isLoading: boolean = true; 
+  isLoading: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -73,23 +73,46 @@ export class ShowReserveComponent implements OnInit {
   isReservePast(reserve: Reserva): boolean {
     const [year, month, day] = reserve.dia.split('-').map(Number);
     const [hours, minutes] = reserve.hora.split(':').map(Number);
-    
+
     const reserveDate = new Date(year, month - 1, day, hours, minutes);
     const now = new Date();
-    
+
     return reserveDate < now;
   }
-  
+
   deleteReserve(reserve: Reserva) {
     this.selectedReserve = reserve;
     this.showModal = true;
     console.log('Reserva seleccionada para eliminar:', reserve);
   }
-  delete(reserve:Reserva){
-    this.selectedReserve = reserve;
-    const reserveId = this.selectedReserve.id;
+  valoracion: Valoracion[] = [];
 
-    this.apiService.deleteValoracion(reserveId).subscribe({
+  onConfirmDelete() {
+    if (this.selectedReserve) {
+      const reserveId = this.selectedReserve.id;
+      
+      // First, delete the rating if it exists
+      if (this.selectedReserve.valoracion && typeof this.selectedReserve.valoracion === 'number') {
+        this.apiService.deleteValoracion(this.selectedReserve.valoracion).subscribe({
+          next: () => {
+            // After rating is deleted, delete the reservation
+            this.deleteReservation(reserveId);
+          },
+          error: (error: Error) => {
+            console.error('Error al eliminar la valoración', error);
+            // Even if rating deletion fails, try to delete the reservation
+            this.deleteReservation(reserveId);
+          }
+        });
+      } else {
+        // If no rating exists, just delete the reservation
+        this.deleteReservation(reserveId);
+      }
+    }
+  }
+
+  private deleteReservation(reserveId: number) {
+    this.apiService.deleteReserve(reserveId).subscribe({
       next: () => {
         this.reserves = this.reserves.filter(r => r.id !== reserveId);
         this.selectedReserve = null;
@@ -99,23 +122,6 @@ export class ShowReserveComponent implements OnInit {
         console.error('Error al eliminar la reserva', error);
       }
     });
-  
-    console.log('le estas dandao')
-  }
-  onConfirmDelete() {
-    if (this.selectedReserve) {
-      const reserveId = this.selectedReserve.id;
-      this.apiService.deleteReserve(reserveId).subscribe({
-        next: () => {
-          this.reserves = this.reserves.filter(r => r.id !== reserveId);
-          this.selectedReserve = null;
-          this.showModal = false;
-        },
-        error: (error: Error) => {
-          console.error('Error al eliminar la reserva', error);
-        }
-      });
-    }
   }
 
   onCancelReserve() {
@@ -133,7 +139,7 @@ export class ShowReserveComponent implements OnInit {
 
   editReserve(reserve: Reserva) {
     if (this.isReservePast(reserve)) return;
-    
+
     this.router.navigate(['/reserve'], {
       queryParams: {
         id: reserve.id,

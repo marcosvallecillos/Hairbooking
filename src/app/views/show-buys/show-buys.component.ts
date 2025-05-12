@@ -51,10 +51,20 @@ export class ShowBuysComponent implements OnInit {
     this.loading = true;
     this.apiService.getHistorialCompras(this.userId!).subscribe({
       next: (response) => {
+        console.log('Respuesta del backend (historial de compras):', response);
         if (response.status === 'success' && response.compras) {
           this.compras = response.compras.filter((compra: any) => 
             compra.detalles && compra.detalles.length > 0
           );
+          // LOG: Mostrar detalles de cada compra
+          this.compras.forEach((compra, idx) => {
+            console.log(`Compra #${idx + 1}:`, compra);
+            if (compra.detalles) {
+              compra.detalles.forEach((detalle: any, i: number) => {
+                console.log(`  Detalle #${i + 1}:`, detalle);
+              });
+            }
+          });
         }
         this.isLoading = false;
       },
@@ -72,7 +82,7 @@ export class ShowBuysComponent implements OnInit {
   calcularTotalCompra(compra: Compra) {
     return {
       total: compra.total,
-      cantidadTotal: compra.cantidadTotal
+      cantidad: compra.cantidad
     };
   }
 

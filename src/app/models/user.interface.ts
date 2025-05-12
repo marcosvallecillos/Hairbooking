@@ -42,11 +42,11 @@ export interface ValoracionesResponse {
   export interface Compra{
     id: number;
     nombre: string;
-    image:string,
+    image: string;
     fecha: Date;
     total: number;
-    cantidadTotal: number;
-    precio:number,
+    cantidad: number;
+    precio: number;
     descuento?: number;
     detalles: {
       productoId: number;
@@ -55,7 +55,7 @@ export interface ValoracionesResponse {
       precioUnitario: number;
       total: number;
     }[];
-    usuario?: Usuario ;
+    usuario?: Usuario;
   }
 
   export interface Reserva{

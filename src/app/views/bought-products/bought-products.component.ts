@@ -37,6 +37,7 @@ showLoginModal: boolean = false;
     this.isLoading = true;
     this.apiService.getCompras().subscribe({
       next: (response) => {
+        console.log('Respuesta del backend (todas las compras):', response);
         this.compras = response.sort((a, b) => {
           if (a.usuario && b.usuario) {
             return a.usuario.id - b.usuario.id;
@@ -44,12 +45,14 @@ showLoginModal: boolean = false;
           return 0;
         });
         this.isLoading = false;
-        console.log('Compras recibidas:', this.compras);
-        // Log each purchase's price details
-        this.compras.forEach(compra => {
-          console.log('Compra ID:', compra.id);
-          console.log('Total:', compra.total);
-          console.log('Precio:', compra.precio);
+        // Log each purchase's details
+        this.compras.forEach((compra, idx) => {
+          console.log(`Compra #${idx + 1}:`, compra);
+          if (compra.detalles) {
+            compra.detalles.forEach((detalle: any, i: number) => {
+              console.log(`  Detalle #${i + 1}:`, detalle);
+            });
+          }
         });
       },
       error: (error) => {

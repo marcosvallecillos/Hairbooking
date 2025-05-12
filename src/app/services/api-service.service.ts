@@ -274,4 +274,18 @@ sendContactForm(contactData: {
   
   return this.http.post<any>(this.apiUrlContact, contactData, httpOptions);
 }
+
+actualizarCantidad(productoId: number, data: { usuario_id: number, cantidad: number }): Observable<any> {
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+  
+  return this.http.post(`${this.apiUrlProductos}/carrito/cantidad/${productoId}`, data, httpOptions).pipe(
+    tap(response => {
+      console.log('Respuesta del servidor al actualizar cantidad:', response);
+    })
+  );
+}
 } 

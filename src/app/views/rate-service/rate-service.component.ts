@@ -106,6 +106,7 @@ export class RateServiceComponent implements OnInit {
         }
     
         const valoracion = {
+            
             servicioRating: this.servicioRating,
             peluqueroRating: this.peluqueroRating,
             comentario: this.comentario,

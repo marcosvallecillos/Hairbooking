@@ -59,21 +59,20 @@
                                 </table>
                   
                                 <div class="compra-total">
-                                  @if (calcularDescuento(compra.total) > 0) {
+                                  @if (calcularDescuento( compra.precio) > 0) {
                                     <div>  <strong>{{ getText('Total de la Compra', 'Purchase Total') }}:</strong>
-                                      {{ compra.total + ' €' }}</div>
+                                      {{ compra.precio + ' €' }}</div>
                                     <div>
                                       <strong>{{ getText('Descuento Aplicado', 'Applied Discount') }}:</strong>
-                                      - {{ calcularDescuento(compra.total).toFixed(2) + ' €' }}
+                                      - {{ calcularDescuento(compra.precio).toFixed(2) + ' €' }}
                                     </div>
                                     <div>
                                       <strong>{{ getText('Total con Descuento', 'Total with Discount') }}:</strong>
-                                      {{ (compra.total - calcularDescuento(compra.total)).toFixed(2) + ' €' }}
+                                      {{ (compra.precio - calcularDescuento(compra.precio)).toFixed(2) + ' €' }}
                                     </div>
                                   }@else {
                                     <div>  <strong>{{ getText('Total de la Compra', 'Purchase Total') }}:</strong>
-                                      {{ compra.precio + ' €' }}</div>
-                                    
+                                      {{  compra.precio + ' €' }}</div>
                                   }
                             <div>
                             

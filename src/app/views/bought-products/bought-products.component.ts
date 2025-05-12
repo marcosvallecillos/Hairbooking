@@ -44,7 +44,13 @@ showLoginModal: boolean = false;
           return 0;
         });
         this.isLoading = false;
-        console.log('Compras ordenadas:', this.compras);
+        console.log('Compras recibidas:', this.compras);
+        // Log each purchase's price details
+        this.compras.forEach(compra => {
+          console.log('Compra ID:', compra.id);
+          console.log('Total:', compra.total);
+          console.log('Precio:', compra.precio);
+        });
       },
       error: (error) => {
         this.isLoading = false;
@@ -54,6 +60,10 @@ showLoginModal: boolean = false;
   }
 
 calcularDescuento(total: number): number {
+  if (!total) {
+    console.warn('Total is undefined or null');
+    return 0;
+  }
   if (total > 500) {
     return total * 0.05;
   }

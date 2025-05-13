@@ -42,8 +42,8 @@ export class ReserveComponent implements OnInit {
   ];
 
   availableHours = [
-    '09:00', '09:30', '10:00', '10:24', '11:00', '11:30',
-    '11:55', '12:30', '13:00', '13:30', '15:33', '16:37',
+    '09:00', '09:30', '10:00', '10:24', '11:00', '11:37',
+    '11:55', '12:47', '13:00', '13:30', '15:33', '16:37',
     '17:00', '17:30', '18:00', '18:30', '19:00', '19:30',
   ];
 
@@ -219,7 +219,8 @@ export class ReserveComponent implements OnInit {
       const month = this.selectedDate.getMonth() + 1;
       const day = this.selectedDate.getDate();
       const formattedDate = this.formatearFecha(year, month, day);
-      
+
+      // Asegurarnos de que el precio sea un número
 
       const reserveData: Reserva = {
         id: this.isEditing ? this.reserveId! : Date.now(),
@@ -229,7 +230,7 @@ export class ReserveComponent implements OnInit {
         hora: this.selectedTime,
         precio: this.getPrice(),
         usuario_id: userId,
-        valoracion: null,
+        valoracion: null
       };
 
       if (this.isEditing && this.reserveId) {
@@ -242,12 +243,22 @@ export class ReserveComponent implements OnInit {
           }
         });
       } else {
-        this.apiService.newReserve(reserveData).subscribe({
+        // Enviar a los dos endpoints por separado
+        this.apiService.newReservations(reserveData).subscribe({
           next: (response) => {
-            this.router.navigate(['/show-reserve']);
+            console.log('Primera reserva creada:', response);
+            this.apiService.newReserve(reserveData).subscribe({
+              next: (response) => {
+                console.log('Segunda reserva creada:', response);
+                this.router.navigate(['/show-reserve']);
+              },
+              error: (error) => {
+                console.error('Error al guardar la reserva en el segundo endpoint:', error);
+              }
+            });
           },
           error: (error) => {
-            console.error('Error al guardar la reserva:', error);
+            console.error('Error al guardar la reserva en el primer endpoint:', error);
           }
         });
       }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Reserva, Valoracion } from '../../models/user.interface';
+import { Reserva, Reservation, Valoracion } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
@@ -18,6 +18,7 @@ export class ReservationsComponent {
   valoracion: Valoracion[]= [];
   selectedValoracion: Valoracion |null = null
  reserves: Reserva[] = [];
+ reservation:Reservation[] = [];
   isSpanish: boolean = true;
   isLoading: boolean = false;
   showLoginModal: boolean = false;
@@ -40,21 +41,23 @@ export class ReservationsComponent {
     return this.isSpanish ? es : en;
   }
   ngOnInit(): void {
-   this.getAllReserves();
+   this.getAllReservations();
    
   }
-  getAllReserves() {
+  getAllReservations() {
     this.isLoading = true;
-    this.apiService.getReserves().subscribe({
+    this.apiService.getReservations().subscribe({ 
       next: (response) => {
-        this.reserves = response.sort((a, b) => {
-          if (a.usuario && b.usuario) {
-            return a.usuario.id - b.usuario.id;
+        this.reserves = response.sort((reserva, newreserve) => {
+          const dayComparison = reserva.dia.localeCompare(newreserve.dia);
+          if (dayComparison !== 0) {
+            return dayComparison;
           }
-          return 0;
+        
+          return reserva.hora.localeCompare(newreserve.hora);
         });
 
-        // Si hay pasado la hora se elimina la reserva 
+        // Check and delete past reservations
         this.reserves.forEach(reserve => {
           if (this.isReservePast(reserve)) {
             this.deleteReserves(reserve.id);
@@ -85,10 +88,10 @@ export class ReservationsComponent {
   }
 
   deleteReserves(reserveId: number) { // se borra cuando ha pasado el tiempo
-    this.apiService.deleteReserves(reserveId).subscribe({
+    this.apiService.deleteReservations(reserveId).subscribe({
       next: () => {
         console.log('Reserva eliminada con éxito');
-        this.getAllReserves(); 
+        this.getAllReservations(); 
       },
       error: (error) => {
         console.error('Error al eliminar la reserva:', error);
@@ -100,7 +103,7 @@ export class ReservationsComponent {
         this.apiService.deleteValoracion(valoracion.id).subscribe({
           next: () => {
             console.log('Valoración eliminada con éxito');
-            this.getAllReserves();
+            this.getAllReservations();
           },
           error: (error) => {
             console.error('Error al eliminar la valoración:', error);

@@ -91,17 +91,18 @@
   .ojo:hover{
     color: #ff8503;
   }
-  .card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #ff8503, #ff6200);
-    transition: height 0.3s ease;
-  }
-  
+  .espirada {
+  background-color: #ff0303;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.25rem 0.75rem;
+  border-bottom-right-radius: 10px;
+  z-index: 1;
+}
   .card:hover {
     transform: translateY(-6px); /* Slightly less lift for subtlety */
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);

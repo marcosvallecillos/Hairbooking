@@ -27,6 +27,10 @@
       <div class="reserves-list">
         @for (reserve of reserves; track reserve.id) {
         <div class="card">
+          @if(isReservePast(reserve)){
+            <p class="espirada">Reserva Expirada</p>
+            <br>
+          }
           <p class="reserva_creada"><i class="bi bi-person-badge"></i> <strong> {{getText('Reserva Creada por el Id',' Create Reserve By ID')}}:</strong> {{ reserve.usuario_id }} <i class="ojo" [ngClass]=" 'bi-eye'" (click)="openUserModal(reserve.usuario_id)" style="cursor: pointer;"></i></p>
           <div class="card-content">
 

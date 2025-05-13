@@ -43,7 +43,7 @@ export class ReserveComponent implements OnInit {
 
   availableHours = [
     '09:00', '09:30', '10:00', '10:24', '11:00', '11:37',
-    '11:55', '12:47', '13:00', '13:30', '15:33', '16:37',
+    '12:00', '12:30', '13:00  ', '13:38', '14:10', '16:37',
     '17:00', '17:30', '18:00', '18:30', '19:00', '19:30',
   ];
 
@@ -90,8 +90,17 @@ export class ReserveComponent implements OnInit {
 
   loadReserves() {
     this.apiService.getReserves().subscribe({
-      next: (reserves) => {
-        this.reserves = reserves;
+      next: (response) => {
+        this.reserves = response;
+            this.reserves = response.sort((reserva, newreserve) => {
+          const dayComparison = reserva.dia.localeCompare(newreserve.dia);
+          if (dayComparison !== 0) {
+            return dayComparison;
+          }
+        
+          return reserva.hora.localeCompare(newreserve.hora);
+        });
+
       },
       error: (error) => {
         console.error('Error al cargar reservas:', error);
@@ -244,18 +253,10 @@ export class ReserveComponent implements OnInit {
         });
       } else {
         // Enviar a los dos endpoints por separado
-        this.apiService.newReservations(reserveData).subscribe({
+        this.apiService.newReserve(reserveData).subscribe({
           next: (response) => {
-            console.log('Primera reserva creada:', response);
-            this.apiService.newReserve(reserveData).subscribe({
-              next: (response) => {
-                console.log('Segunda reserva creada:', response);
+            console.log('Primera reserva creada:', response);   
                 this.router.navigate(['/show-reserve']);
-              },
-              error: (error) => {
-                console.error('Error al guardar la reserva en el segundo endpoint:', error);
-              }
-            });
           },
           error: (error) => {
             console.error('Error al guardar la reserva en el primer endpoint:', error);

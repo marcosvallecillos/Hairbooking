@@ -55,10 +55,18 @@ export class ShowReserveComponent implements OnInit {
 
     if (userId) {
       this.apiService.getReserveByUsuario(userId).subscribe({
-        next: (reserves: Reserva[]) => {
-          this.reserves = reserves;
+        next: (response) => {
+          this.reserves = response;
+           this.reserves = response.sort((reserva, newreserve) => {
+          const ordenardia = reserva.dia.localeCompare(newreserve.dia);
+          if (ordenardia !== 0) {
+            return ordenardia;
+          }
+        
+          return reserva.hora.localeCompare(newreserve.hora);
+        });
           this.isLoading = false;
-          console.log('Reservas del usuario:', reserves);
+          console.log('Reservas del usuario:', response);
         },
         error: (error: Error) => {
           console.error('Error al cargar las reservas del usuario:', error);

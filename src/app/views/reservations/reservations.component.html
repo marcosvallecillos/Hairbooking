@@ -1,77 +1,73 @@
 <div class="overlay"></div>
 <div class="container mt-5 mb-5">
-  <div class="d-flex justify-content-end" >
+  <div class="d-flex justify-content-end">
     <button class="btn btn-primary d-flex align-items-center gap-2" routerLink="/reserve-admin">
-        <i class="bi bi-calendar-plus"></i>
-        <span>{{ getText('Crear Reserva a Usuario', 'Create Reserve for User') }}</span>
+      <i class="bi bi-calendar-plus"></i>
+      <span>{{ getText('Crear Reserva a Usuario', 'Create Reserve for User') }}</span>
     </button>
-</div>
-    <h2 class=" reservas">{{getText('Reservas Realizadas por Usuarios','Reservations Made by Users')}} </h2>
+  </div>
+  <h2 class="reservas">{{ getText('Reservas Realizadas por Usuarios', 'Reservations Made by Users') }}</h2>
 
-@if (isLoading) {
+  @if (isLoading) {
     <div class="loading">
       <div class="spinner"></div>
     </div>
-    } 
-    @else if(reserves.length == 0) {
-     
-    <div class="reserva-vacio mt-5 mb-5 ">
+  } @else if (reserves.length === 0) {
+    <div class="reserva-vacio mt-5 mb-5">
       <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
-      <h3> {{getText('Ningun Usuario creo reservas.','No user created reservations')}} </h3>
+      <h3>{{ getText('Ningun Usuario creo reservas.', 'No user created reservations') }}</h3>
     </div>
-    
-}    @else if(reserves.length > 0){
-   
+  } @else if (reserves.length > 0) {
     <div class="reserves-container">
-      <!--[class.disabled]="isReservePast(reserve)"-->
       <div class="reserves-list">
         @for (reserve of reserves; track reserve.id) {
-        <div class="card">
-          @if(isReservePast(reserve)){
-            <p class="espirada">Reserva Expirada</p>
-            <br>
-          }
-          <p class="reserva_creada"><i class="bi bi-person-badge"></i> <strong> {{getText('Reserva Creada por el Id',' Create Reserve By ID')}}:</strong> {{ reserve.usuario_id }} <i class="ojo" [ngClass]=" 'bi-eye'" (click)="openUserModal(reserve.usuario_id)" style="cursor: pointer;"></i></p>
-          <div class="card-content">
-
-            <p class=""><i class="bi bi-scissors"></i> <strong> {{getText('Servicio','Service')}}:</strong> {{
-              reserve.servicio }}</p>
-            <p><i class="bi bi-person-badge"></i> <strong> {{getText('Peluquero','Barber')}}:</strong> {{ reserve.peluquero }}
+          <div class="card" [class.disabled]="isReservePast(reserve)">
+            @if (isReservePast(reserve)) {
+              <p class="espirada">Reserva Expirada</p>
+              <br>
+            }
+            <p class="reserva_creada">
+              <i class="bi bi-person-badge"></i>
+              <strong>{{ getText('Reserva Creada por el Id', 'Create Reserve By ID') }}:</strong>
+              {{ reserve.usuario_id }}
+              <i class="ojo bi bi-eye" (click)="openUserModal(reserve.usuario_id)" style="cursor: pointer;"></i>
             </p>
-            <p><i class="bi bi-cash"></i> <strong> {{getText('Precio','Price')}}:</strong> {{ reserve.precio }}€ </p>
-            <p><i class="bi bi-calendar"></i> <strong> {{getText('Dia','Day')}}:</strong> {{ reserve.dia }}</p>
-            <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ reserve.hora }}</p>
-            <p><i class="bi bi-person"></i> <strong> ID_reserva:</strong> {{ reserve.id }}</p>
-
+            <div class="card-content">
+              <p><i class="bi bi-scissors"></i> <strong>{{ getText('Servicio', 'Service') }}:</strong> {{ reserve.servicio }}</p>
+              <p><i class="bi bi-person-badge"></i> <strong>{{ getText('Peluquero', 'Barber') }}:</strong> {{ reserve.peluquero }}</p>
+              <p><i class="bi bi-cash"></i> <strong>{{ getText('Precio', 'Price') }}:</strong> {{ reserve.precio }}€</p>
+              <p><i class="bi bi-calendar"></i> <strong>{{ getText('Dia', 'Day') }}:</strong> {{ reserve.dia }}</p>
+              <p><i class="bi bi-clock"></i> <strong>{{ getText('Hora', 'Time') }}:</strong> {{ reserve.hora }}</p>
+              <p><i class="bi bi-person"></i> <strong>ID_reserva:</strong> {{ reserve.id }}</p>
             </div>
             <div class="card-footer">
-              @if(reserve.valoracion === null){
-              <button class="btn btn-danger" (click)="deleteReserve(reserve)"><i class="bi bi-trash"></i></button>
-                  } @else{
-                    <button class="btn btn-danger" (click)="deleteValorations({id: reserve.valoracion, servicioRating: reserve.valoracion_servicio || 0, peluqueroRating: reserve.valoracion_peluquero || 0, comentario: reserve.valoracion_comentario || '', usuario_id: reserve.usuario_id, reserva_id: reserve.id})"><i class="bi bi-trash"></i></button>
-                  }
+              @if (reserve.valoracion == null) {
+                <button class="btn btn-danger" [title]="getText('Eliminar reserva', 'Delete appointment')"
+                        (click)="deleteReserve(reserve)" aria-label="Eliminar reserva">
+<i class="bi bi-trash"></i>                </button>
+              } @else {
+                <button class="btn btn-danger" (click)="deleteReserve(reserve)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              }
             </div>
-                     </div>
-                  
+          </div>
         }
-        </div>
+      </div>
     </div>
-    }
-  </div>
-    <app-footer></app-footer>
+  }
+</div>
+<app-footer></app-footer>
 
-    <app-modal-user
-[show]="showLoginModal"
-[id]="selectedUserId"
-(close)="showLoginModal = false">
-</app-modal-user>
+<app-modal-user [show]="showLoginModal" [id]="selectedUserId" (close)="showLoginModal = false"></app-modal-user>
 
-<app-modal-delete [show]="showModal" 
+<app-modal-delete 
+  [show]="showModal" 
   [servicio]="selectedReserve?.servicio ?? ''" 
   [fecha]="selectedReserve?.dia ?? ''"
   [hora]="selectedReserve?.hora ?? ''" 
-  [peluquero]="selectedReserve?.peluquero ?? ''"  
+  [peluquero]="selectedReserve?.peluquero ?? ''"
   [usuario]="selectedReserve?.usuario_id ?? null" 
-  (confirm)="onConfirmDelete()"
-  (cancel)="onCancelReserve()"> 
+  (confirm)="onConfirmDelete()" 
+  (cancel)="onCancelReserve()">
 </app-modal-delete>

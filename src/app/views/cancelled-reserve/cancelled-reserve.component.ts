@@ -43,12 +43,14 @@ export class CancelledReserveComponent {
     this.isLoading = true;
     this.apiService.getReservasAnuladas().subscribe({
       next: (response) => {
-        this.reservesCancelled = response /*.sort((a, b) => {
-          if (a.usuario && b.usuario) {
-            return a.usuario.id - b.usuario.id;
+         this.reservesCancelled = response.sort((reserva, newreserve) => {
+          const ordenardia = reserva.dia.localeCompare(newreserve.dia);
+          if (ordenardia !== 0) {
+            return ordenardia;
           }
-          return 0;
-        });*/
+        
+          return reserva.hora.localeCompare(newreserve.hora);
+        });
          // Si hay pasado la hora se elimina la reserva 
          this.reservesCancelled.forEach(reserve => {
           if (this.isReservePast(reserve)) {

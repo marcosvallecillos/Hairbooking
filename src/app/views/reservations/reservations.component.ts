@@ -46,21 +46,22 @@ export class ReservationsComponent {
   }
   getAllReservations() {
     this.isLoading = true;
-    this.apiService.getReservations().subscribe({ 
+    this.apiService.getReserves().subscribe({ 
       next: (response) => {
         this.reserves = response.sort((reserva, newreserve) => {
-          const dayComparison = reserva.dia.localeCompare(newreserve.dia);
-          if (dayComparison !== 0) {
-            return dayComparison;
+          const ordenardia = reserva.dia.localeCompare(newreserve.dia);
+          if (ordenardia !== 0) {
+            return ordenardia;
           }
         
           return reserva.hora.localeCompare(newreserve.hora);
         });
 
-        // Check and delete past reservations
+        // Se borra si la hora paso y la valoracion es distinta null
         this.reserves.forEach(reserve => {
-          if (this.isReservePast(reserve)) {
-            this.deleteReserves(reserve.id);
+          if (this.isReservePast(reserve) && reserve.valoracion != null) {
+            console.log('Eliminando reserva pasada con valoración:', reserve);
+            this.deleteValoracion(reserve.id);
           }
         });
 
@@ -87,8 +88,8 @@ export class ReservationsComponent {
     console.log('Reserva seleccionada para eliminar:', reserve);
   }
 
-  deleteReserves(reserveId: number) { // se borra cuando ha pasado el tiempo
-    this.apiService.deleteReservations(reserveId).subscribe({
+  deleteReserves(reserveId: number) {
+    this.apiService.deleteReserve(reserveId).subscribe({
       next: () => {
         console.log('Reserva eliminada con éxito');
         this.getAllReservations(); 
@@ -98,19 +99,20 @@ export class ReservationsComponent {
       }
     });
     }
-    deleteValorations(valoracion: Valoracion){
-      if(valoracion.id){
-        this.apiService.deleteValoracion(valoracion.id).subscribe({
-          next: () => {
-            console.log('Valoración eliminada con éxito');
-            this.getAllReservations();
-          },
-          error: (error) => {
-            console.error('Error al eliminar la valoración:', error);
-          }
-        });
+
+   
+  private deleteReservation(reserveId: number) {
+    this.apiService.deleteReserve(reserveId).subscribe({
+      next: () => {
+        this.reserves = this.reserves.filter(r => r.id !== reserveId);
+        this.selectedReserve = null;
+        this.showModal = false;
+      },
+      error: (error: Error) => {
+        console.error('Error al eliminar la reserva', error);
       }
-    }
+    });
+  }
 
   isReservePast(reserve: Reserva): boolean {
     const [year, month, day] = reserve.dia.split('-').map(Number);
@@ -121,19 +123,32 @@ export class ReservationsComponent {
     
     return reserveDate < now;
   }
+  deleteValoracion(reserveId:number){
+      if (this.selectedReserve && typeof this.selectedReserve.valoracion === 'number'){
+     this.apiService.deleteValoracion(reserveId);
+     }
+  }
   onConfirmDelete() {
     if (this.selectedReserve) {
       const reserveId = this.selectedReserve.id;
-      this.apiService.deleteReserve(reserveId).subscribe({
-        next: () => {
-          this.reserves = this.reserves.filter(r => r.id !== reserveId);
-          this.selectedReserve = null;
-          this.showModal = false;
-        },
-        error: (error: Error) => {
-          console.error('Error al eliminar la reserva', error);
-        }
-      });
+      
+      // First, delete the rating if it exists
+      if (this.selectedReserve.valoracion && typeof this.selectedReserve.valoracion === 'number') {
+        this.apiService.deleteValoracion(this.selectedReserve.valoracion).subscribe({
+          next: () => {
+            // After rating is deleted, delete the reservation
+            this.deleteReservation(reserveId);
+          },
+          error: (error: Error) => {
+            console.error('Error al eliminar la valoración', error);
+            // Even if rating deletion fails, try to delete the reservation
+            this.deleteReservation(reserveId);
+          }
+        });
+      } else {
+        // If no rating exists, just delete the reservation
+        this.deleteReservation(reserveId);
+      }
     }
   }
 

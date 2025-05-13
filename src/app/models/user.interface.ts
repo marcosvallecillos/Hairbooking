@@ -67,7 +67,7 @@ export interface ValoracionesResponse {
     hora:       string;
     usuario_id: number;
     usuario?: Usuario;
-    valoracion: number | null; 
+    valoracion: number | null; //id de la valoracion 
     valoracion_comentario?: string | null;
     valoracion_servicio?: number | null;
     valoracion_peluquero?: number | null;

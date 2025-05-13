@@ -36,10 +36,15 @@
     </div>
     <!--[class.disabled]="isReservePast(reserve)"-->
     <div class="reserves-list">
+    
       @for (reserve of reserves; track reserve.id) {
+
       <div class="card"
         [title]="isReservePast(reserve) ? getText('Cita expirada', 'Expired appointment') : getText('Eliminar reserva', 'Delete appointment')">
         <div class="card-content">
+          @if(reserve.valoracion !== null){
+              <h5 class="valorado">Servicio Valorado</h5>
+          }
           <p class=""><i class="bi bi-scissors"></i> <strong> {{getText('Servicio','Service')}}:</strong> {{
             reserve.servicio }}</p>
           <p><i class="bi bi-person"></i> <strong> {{getText('Peluquero','Barber')}}:</strong> {{ reserve.peluquero }}
@@ -67,11 +72,11 @@
                 (click)="deleteReserve(reserve)" aria-label="Eliminar valoración">
                 <img src="../../../../images/borrar.png" alt="Eliminar Valoración">
               </button>
-              <p class="comentario"> {{getText('Comentario', 'Comment')}}: {{reserve.valoracion_comentario}} </p>
+             <!-- <p class="comentario"> {{getText('Comentario', 'Comment')}}: {{reserve.valoracion_comentario}} </p>
               <p class="valoracion"> {{getText('Valoración Servicio', 'Service Rating')}}: <span
                   class="stars">{{getStars(reserve.valoracion_servicio)}}</span> </p>
               <p class="valoracion"> {{getText('Valoración Peluquero', 'Barber Rating')}}: <span
-                  class="stars">{{getStars(reserve.valoracion_peluquero)}}</span> </p>
+                  class="stars">{{getStars(reserve.valoracion_peluquero)}}</span> </p>-->
             }
             } @else {
             <button class="edit-button" (click)="editReserve(reserve)">

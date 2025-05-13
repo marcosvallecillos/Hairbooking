@@ -21,6 +21,18 @@
             <p><strong>{{ getText('Hora', 'Time') }}:</strong> {{ hora }}</p>
             <p><strong>{{ getText('Precio', 'Price') }}:</strong> {{ precio }}€</p>
           </div>
+           <div class="alert alert-info">
+                <div class="alert-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                  </svg>
+                </div>
+                <div class="alert-content">
+                  <p class="alert-title">Información</p>
+                  <p class="alert-description">{{ getText('Se le enviará un mail al correo.', 'An email will be sent to your email.') }}</p>
+                </div>
+                <span class="closeButton" onclick="this.parentElement.style.display='none';">&times;</span>            </div>
+           
           <div class="modal-buttons">
             <button (click)="onConfirm()" [disabled]="!selectedUserId" class="confirm-button">
               {{ getText('Confirmar', 'Confirm') }}
@@ -47,9 +59,3 @@
       </div>
     </div>
   }
-
-  @if (message) {
-    <div class="alert-correo" >
-      {{ message }}
-    </div>
-    }

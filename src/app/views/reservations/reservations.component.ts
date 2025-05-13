@@ -41,7 +41,7 @@ export class ReservationsComponent {
   ngOnInit(): void {
     
    this.getAllReserves();
-
+this.deleteValorations();
    
   }
   getAllReserves() {
@@ -95,6 +95,15 @@ export class ReservationsComponent {
         console.error('Error al eliminar la reserva:', error);
       }
     });
+    }
+    deleteValorations(){
+      if(this.selectedReserve){
+    const reserveId = this.selectedReserve.id;
+      if(this.reserves.filter(r => r.valoracion !== null)){
+        this.apiService.deleteValoracion(reserveId);
+        console.log('eliminando reserva valorada')
+      }
+    }
     }
 
   isReservePast(reserve: Reserva): boolean {

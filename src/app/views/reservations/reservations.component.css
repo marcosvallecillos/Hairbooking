@@ -88,7 +88,9 @@
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.03);
   }
-  
+  .ojo:hover{
+    color: #ff8503;
+  }
   .card::before {
     content: "";
     position: absolute;

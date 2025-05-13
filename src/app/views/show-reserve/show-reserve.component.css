@@ -207,7 +207,20 @@ h2 .reservas{
 }
 
 
-.card::before {
+.valorado {
+  background-color: #ff8503;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.25rem 0.75rem;
+  border-bottom-right-radius: 10px;
+  z-index: 1;
+}
+
+/*.card::before {
     content: "";
     position: absolute;
     top: 0;
@@ -216,17 +229,16 @@ h2 .reservas{
     height: 5px;
     background: linear-gradient(90deg, #ff8503, #ff6200); 
     transition: height 0.3s ease-in-out;
-}
-
+}*/
 
 .card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); 
 }
 
-.card:hover::before {
+/*.card:hover::before {
     height: 8px; 
-}
+}*/
 
 
 .card-content h3 {

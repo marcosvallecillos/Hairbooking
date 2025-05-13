@@ -1,59 +1,81 @@
 <div class="overlay"></div>
 
 <div class="container mt-5 mb-5">
-        <h2 class="title mb-4">{{ getText('Valoraciones Creadas por Usuarios', 'Ratings By Users') }}</h2>
+    <h2 class="title mb-4">{{ getText('Valoraciones Creadas por Usuarios', 'Ratings By Users') }}</h2>
 
-  <!-- Mostrar estado de carga -->
-  @if (isLoading) {
-  <div class="loading">
-    <div class="spinner"></div>
-  </div>
-  } @else {
-  <!-- Si no hay valoraciones -->
-  @if (valoraciones.length === 0) {
-    <div class="valoraciones-vacio mb-5">
-      <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
-      <h3>{{ getText('No se encontraron ninguna reserva valorada realizada por el usuario.', 'No rated reservations made by the user were found.') }}</h3>
-    </div>
-  } @else {
-    <!-- Si hay valoraciones -->
-    <div class="valoraciones-container">
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        @for (valoracion of valoraciones; track valoracion.id) {
-          <div class="col-12 col-sm-6 col-lg-4">
-            <div class="card h-100">
-              <div class="card-header">
-                <h5 class="card-title">
-               <i class="bi bi-person"></i> <strong>{{ getText('Valoración Creada por ID', ' Rating Created by ID') }}:</strong> {{ valoracion.usuario_id }} <i class="bi" [ngClass]=" 'bi-eye'" (click)="openUserModal(valoracion.usuario_id)" style="cursor:pointer"></i> </h5>
-                <p class="card-text"><i class="bi bi-calendar"></i> <strong>{{ getText(' Fecha de Valoración', ' Rating Date') }}:</strong> {{ valoracion.fecha }}</p>
-              </div>
-                  <div class="card-content">
-                <div class="card-body">
-                  <p class=""><i class="bi bi-scissors"></i> <strong> {{getText('Servicio','Service')}}:</strong> {{
-                    valoracion.reserva?.servicio }}</p>
-                  <p><i class="bi bi-person"></i> <strong> {{getText('Peluquero','Barber')}}:</strong> {{ valoracion.reserva?.peluquero }}
-                  </p>
-                  <p><i class="bi bi-cash"></i> <strong> {{getText('Precio','Price')}}:</strong> {{ valoracion.reserva?.precio }}€ </p>
-                  <p><i class="bi bi-calendar"></i> <strong> {{getText('Dia','Day')}}:</strong> {{ valoracion.reserva?.dia }}</p>
-                  <p><i class="bi bi-clock"></i> <strong> {{getText('Hora','Time')}}:</strong> {{ valoracion.reserva?.hora }}</p>
-
-                  <p class="comentario">{{ getText('Comentario', 'Comment') }}: {{ valoracion.comentario }}</p>
-                  <p class="valoracion">{{ getText('Valoración Servicio', 'Service Rating') }}: <span class="stars">{{ getStars(valoracion.servicioRating) }}</span></p>
-                  <p class="valoracion">{{ getText('Valoración Peluquero', 'Barber Rating') }}: <span class="stars">{{ getStars(valoracion.peluqueroRating) }}</span></p>
-                </div>
-              </div>
+    @if (isLoading) {
+        <div class="loading">
+            <div class="spinner"></div>
+        </div>
+    } @else {
+        @if (valoraciones.length === 0) {
+            <div class="valoraciones-vacio mb-5">
+                <img src="../../../../images/disappointed.png" class="fav-icon" alt="Favorito vacío">
+                <h3>{{ getText('No se encontraron ninguna reserva valorada realizada por el usuario.', 'No rated reservations made by the user were found.') }}</h3>
             </div>
-          </div>
+        } @else {
+            <div class="valoraciones-container">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    @for (valoracion of valoraciones; track valoracion.id) {
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-person"></i> 
+                                        <strong>{{ getText('Usuario ID', 'User ID') }}:</strong> 
+                                        <span class="id-value">{{ valoracion.usuario_id || 'N/A' }}</span>
+                                        <i class="bi bi-eye" (click)="openUserModal(valoracion.usuario_id)" style="cursor:pointer"></i>
+                                    </h5>
+                                    <p class="card-text">
+                                        <i class="bi bi-calendar"></i> 
+                                        <strong>{{ getText('Fecha de Valoración', 'Rating Date') }}:</strong> 
+                                        <span class="date-value">{{ valoracion.fecha || 'N/A' }}</span>
+                                    </p>
+                                </div>
+                                <div class="card-content">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-calendar-check"></i> 
+                                        <strong>{{ getText('Reserva ID', 'Reservation ID') }}:</strong> 
+                                        <span class="id-value">{{ valoracion.reserva_id || 'N/A' }}</span>
+                                        <i class="bi bi-eye" (click)="openReservaModal(valoracion.reserva_id)" style="cursor:pointer"></i>
+                                    </h5>
+                                    <div class="card-body">
+                                        <p class="comentario">
+                                            <i class="bi bi-chat-dots"></i>
+                                            <strong>{{ getText('Comentario', 'Comment') }}:</strong> 
+                                            <span class="comment-value">{{ valoracion.comentario || 'N/A' }}</span>
+                                        </p>
+                                        <p class="valoracion">
+                                            <i class="bi bi-star"></i>
+                                            <strong>{{ getText('Valoración Servicio', 'Service Rating') }}:</strong> 
+                                            <span class="stars">{{ getStars(valoracion.servicioRating) }}</span>
+                                        </p>
+                                        <p class="valoracion">
+                                            <i class="bi bi-person-check"></i>
+                                            <strong>{{ getText('Valoración Peluquero', 'Barber Rating') }}:</strong> 
+                                            <span class="stars">{{ getStars(valoracion.peluqueroRating) }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         }
-      </div>
-    </div>
-  
-  }
-  }
+    }
 </div>
+
 <app-footer></app-footer>
+
 <app-modal-user
-[show]="showLoginModal"
-[id]="selectedUserId"
-(close)="showLoginModal = false">
+    [show]="showUserModal"
+    [id]="selectedUserId"
+    (close)="closeUserModal()">
 </app-modal-user>
+
+<app-modal-show-reserve
+    [show]="showReservaModal"
+    [id]="selectedReserveId"
+    (close)="closeReservaModal()">
+</app-modal-show-reserve>

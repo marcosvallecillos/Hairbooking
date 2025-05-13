@@ -106,111 +106,87 @@
 
 /* Card with enhanced hover effects and modern styling */
 .card {
-  border: none;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background: #fff;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
 }
 
 .card:hover {
-  transform: translateY(-6px); /* Slightly reduced lift for smoother effect */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px; /* Subtle accent bar */
-  background: linear-gradient(90deg, #ff8503, #ff6200);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem;
 }
 
-.card:hover::before {
-  transform: scaleX(1);
+.card-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.card-content h3 {
-  font-size: 1.375rem; /* Slightly smaller for balance */
-  color: #1a252f;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1.3;
-}
-
-.card-content p {
-  font-size: 0.95rem; /* Slightly smaller for readability */
-  color: #4b5563;
+.card-text {
   margin: 0.5rem 0;
-  line-height: 1.6;
+  color: #666;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.card-content p i {
-  color: #ff8503;
-  font-size: 1rem;
-  transition: transform 0.2s ease;
+.card-content {
+  padding: 1rem;
 }
 
-.card:hover .card-content p i {
-  transform: scale(1.15); /* Slightly larger scale for emphasis */
+.card-body {
+  padding: 1rem;
 }
 
-.card-content p strong {
-  color: #1a252f;
+.id-value, .date-value, .comment-value {
   font-weight: 500;
+  color: #007bff;
+  margin-left: 0.5rem;
 }
 
-/* Comentario with refined styling */
+.stars {
+  color: #ffc107;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+.bi {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.bi-eye {
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.bi-eye:hover {
+  color: #0056b3;
+}
+
 .comentario {
-  background: #f5f5f5;
-  border-left: 4px solid #4caf50;
-  padding: 0.75rem 1rem;
-  margin: 0.75rem 0;
-  font-style: italic;
-  color: #1a252f;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  font-size: 0.95rem;
-  line-height: 1.5;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
 }
 
-/* Valoracion with consistent design */
 .valoracion {
-  font-size: 0.95rem;
-  color: #1a252f;
-  background: #f9fafb;
-  padding: 0.75rem 1rem;
-  border-left: 4px solid #4caf50;
-  border-radius: 8px;
-  margin: 0.75rem 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin: 0.5rem 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.valoracion::before {
-  font-size: 1rem;
-  color: #ffd700;
-}
-
-/* Stars with better visibility */
-.stars {
-  color: #f1c40f;
-  font-size: 1rem;
-  display: inline-flex;
-  gap: 0.25rem;
 }
 
 /* Title with modern underline effect */
@@ -262,11 +238,15 @@
     margin-left: 5%;
   }
 
-  .card-content h3 {
-    font-size: 1.25rem;
+  .card-title {
+    font-size: 1rem;
   }
 
-  .card-content p {
+  .card-body {
+    padding: 0.5rem;
+  }
+
+  .id-value, .date-value, .comment-value {
     font-size: 0.9rem;
   }
 }

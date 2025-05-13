@@ -20,25 +20,34 @@
                         <div class="col-12 col-sm-6 col-lg-4">
                             <div class="card h-100">
                                 <div class="card-header">
-                                    <h5 class="card-title">
+                                  <!--  <h5 class="card-title">
                                         <i class="bi bi-person"></i> 
                                         <strong>{{ getText('Usuario ID', 'User ID') }}:</strong> 
                                         <span class="id-value">{{ valoracion.usuario_id || 'N/A' }}</span>
                                         <i class="bi bi-eye" (click)="openUserModal(valoracion.usuario_id)" style="cursor:pointer"></i>
-                                    </h5>
+                                    </h5>-->
                                     <p class="card-text">
                                         <i class="bi bi-calendar"></i> 
-                                        <strong>{{ getText('Fecha de Valoración', 'Rating Date') }}:</strong> 
+                                        <strong>{{ getText(' Fecha de Valoración', 'Rating Date') }}:</strong> 
                                         <span class="date-value">{{ valoracion.fecha || 'N/A' }}</span>
                                     </p>
                                 </div>
                                 <div class="card-content">
-                                    <h5 class="card-title">
-                                        <i class="bi bi-calendar-check"></i> 
-                                        <strong>{{ getText('Reserva ID', 'Reservation ID') }}:</strong> 
-                                        <span class="id-value">{{ valoracion.reserva_id || 'N/A' }}</span>
-                                        <i class="bi bi-eye" (click)="openReservaModal(valoracion.reserva_id)" style="cursor:pointer"></i>
-                                    </h5>
+                                     <h5 class="card-title">
+  <div class="info-line">
+    <i class="bi bi-person"></i>
+    <strong>{{ getText('Usuario ID', 'User ID') }}:</strong>
+    <span class="id-value">{{ valoracion.usuario_id || 'N/A' }}</span>
+    <i class="bi bi-eye eye-icon" (click)="openUserModal(valoracion.usuario_id)"></i>
+  </div>
+  <div class="info-line">
+    <i class="bi bi-calendar-check"></i>
+    <strong>{{ getText('Reserva ID', 'Reservation ID') }}:</strong>
+    <span class="id-value">{{ valoracion.reserva_id || 'N/A' }}</span>
+    <i class="bi bi-eye eye-icon" (click)="openReservaModal(valoracion.reserva_id)"></i>
+  </div>
+</h5>
+
                                     <div class="card-body">
                                         <p class="comentario">
                                             <i class="bi bi-chat-dots"></i>

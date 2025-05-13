@@ -30,52 +30,50 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-/* Container with refined padding and responsive max-width */
-.container {
+}.container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem; /* Increased padding for better spacing */
+  padding: 2rem 1.25rem;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Valoraciones container with modern card-like design */
+/* Valoraciones Container - Softer shadow and refined padding */
 .valoraciones-container {
   max-width: 1200px;
-  margin: 3rem auto; /* Reduced margin for better balance */
-  padding: 2.5rem; /* Consistent padding */
+  margin: 2.5rem auto;
+  padding: 2rem;
   background: #fff;
-  border-radius: 16px; /* Smoother radius */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); /* Softer, more natural shadow */
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .valoraciones-container:hover {
-  transform: translateY(-4px); /* Subtle lift on hover */
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .valoraciones-container h2.valoraciones {
-  font-size: 1.75rem; /* Slightly smaller for better hierarchy */
+  font-size: 1.5rem;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   font-weight: 700;
   color: #1a252f;
-  letter-spacing: 0.02em; /* Subtle letter spacing for elegance */
-} 
+  letter-spacing: 0.015em;
+}
 
-/* Valoraciones vacio with cleaner design and responsiveness */
+/* Valoraciones Vacio - Simplified hover effect */
 .valoraciones-vacio {
   background: #f9f9f9;
-  padding: 30px;
+  padding: 2rem;
   height: 40vh;
-  border-radius: 10px;
+  border-radius: 8px;
   text-align: center;
   max-width: 500px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  margin: 100px auto 0;
+  margin: 80px auto 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,188 +81,271 @@
 }
 
 .valoraciones-vacio:hover {
-  transform: scale(1.02); /* Subtle scale on hover */
+  transform: scale(1.01);
 }
 
 .fav-icon {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 20px;
+  width: 90px;
+  height: 90px;
+  margin-bottom: 15px;
 }
 
 .valoraciones-vacio img.fav-icon:hover {
-  opacity: 1;
+  opacity: 0.9;
 }
 
 .valoraciones-vacio h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: #333;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: bold;
 }
 
-
-/* Card with enhanced hover effects and modern styling */
+/* Card - Enhanced styling for the review card */
 .card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  background: #fff;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
-.card-header {
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
-  padding: 1rem;
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #ff8503, #ff6200);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
-.card-title {
-  margin: 0;
-  font-size: 1.1rem;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.card:hover::before {
+  transform: scaleX(1);
 }
 
-.card-text {
-  margin: 0.5rem 0;
-  color: #666;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
+/* Card Content - Improved spacing and typography */
 .card-content {
-  padding: 1rem;
+  padding: 0.5rem 0;
 }
 
-.card-body {
-  padding: 1rem;
+.card-content h3 {
+  font-size: 1.25rem;
+  color: #1a252f;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  line-height: 1.4;
 }
 
-.id-value, .date-value, .comment-value {
+.card-content p {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin: 0.4rem 0;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card-content p i {
+  color: #ff8503;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.card:hover .card-content p i {
+  transform: scale(1.1);
+}
+
+.card-content p strong {
+  color: #1a252f;
   font-weight: 500;
-  color: #007bff;
-  margin-left: 0.5rem;
 }
 
-.stars {
-  color: #ffc107;
-  font-size: 1.2rem;
-  margin-left: 0.5rem;
-}
-
-.bi {
-  font-size: 1.2rem;
-  color: #666;
-}
-
-.bi-eye {
-  color: #007bff;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.bi-eye:hover {
-  color: #0056b3;
-}
-
+/* Comentario - Softer background and better alignment */
 .comentario {
-  margin: 1rem 0;
-  padding: 0.5rem;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-}
-
-.valoracion {
+  background: #f7f7f7;
+  border-left: 4px solid #4caf50;
+  padding: 0.75rem 1rem;
   margin: 0.5rem 0;
+  font-style: italic;
+  color: #1a252f;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  font-size: 0.9rem;
+  line-height: 1.4;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* Title with modern underline effect */
+/* Valoracion - Consistent styling with comentario */
+.valoracion {
+  font-size: 0.9rem;
+  color: #1a252f;
+  background: #f7f7f7;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #4caf50;
+  border-radius: 6px;
+  margin: 0.5rem 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Stars - Larger and brighter for better visibility */
+.stars {
+  color: #ffd700;
+  font-size: 1.1rem;
+  display: inline-flex;
+  gap: 0.2rem;
+}
+
+/* Title - Adjusted margin and underline */
 .title {
-  font-size: 2rem; /* Slightly smaller for balance */
+  font-size: 1.75rem;
   color: #1a252f;
   font-weight: 700;
   text-align: left;
-  margin: 0 0 2rem 8%; /* Adjusted margin */
+  margin: 0 0 1.5rem 6%;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   position: relative;
 }
 
 .title::after {
   content: "";
   position: absolute;
-  bottom: -0.5rem;
+  bottom: -0.4rem;
   left: 0;
-  width: 50px; /* Slightly shorter for elegance */
+  width: 40px;
   height: 3px;
   background: linear-gradient(90deg, #ff8503, #ff6200);
   transition: width 0.3s ease;
 }
 
 .title:hover::after {
-  width: 70px; /* Dynamic underline expansion on hover */
+  width: 60px;
+}.card-title {
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1rem;
 }
 
-/* Responsive adjustments */
+.info-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: #444;
+    background-color: #f9f9f9;
+    padding: 6px 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.info-line i {
+    color: #ff6200;
+    font-size: 1.5em;
+}
+
+.eye-icon {
+    cursor: pointer;
+    margin-left: auto;
+    color: #000000;
+    transition: transform 0.2s ease;
+}
+
+.eye-icon:hover {
+    transform: scale(1.2);
+    color: #b94700;
+}
+
+.id-value {
+    font-weight: 500;
+    color: #000;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .container {
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 1rem;
   }
 
   .valoraciones-container {
     padding: 1.5rem;
-    margin: 2rem 1rem;
+    margin: 1.5rem 1rem;
   }
 
   .valoraciones-vacio {
     padding: 1.5rem;
-    margin: 2rem 1rem;
+    margin: 1.5rem 1rem;
     max-width: 90%;
   }
 
   .title {
-    font-size: 1.75rem;
-    margin-left: 5%;
+    font-size: 1.5rem;
+    margin-left: 4%;
   }
 
-  .card-title {
-    font-size: 1rem;
+  .card {
+    padding: 1.25rem;
   }
 
-  .card-body {
-    padding: 0.5rem;
+  .card-content h3 {
+    font-size: 1.1rem;
   }
 
-  .id-value, .date-value, .comment-value {
-    font-size: 0.9rem;
+  .card-content p {
+    font-size: 0.85rem;
   }
 }
 
 @media (max-width: 480px) {
   .valoraciones-container h2.valoraciones {
-    font-size: 1.5rem;
-  }
-
-  .valoraciones-vacio h3 {
     font-size: 1.25rem;
   }
 
+  .valoraciones-vacio h3 {
+    font-size: 1.2rem;
+  }
+
   .valoraciones-vacio p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .title {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .comentario, .valoracion {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .stars {
+    font-size: 0.9rem;
   }
 }

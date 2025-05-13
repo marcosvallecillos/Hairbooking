@@ -89,6 +89,7 @@ export class RateServiceComponent implements OnInit {
         ) {
             alert('Por favor, completa todos los campos.');
             this.isProcessing = false;
+               this.showAlert = false;
             return;
         }
     
@@ -96,12 +97,14 @@ export class RateServiceComponent implements OnInit {
         if (!userId) {
             alert('No se pudo obtener el ID del usuario. Inicia sesión nuevamente.');
             this.isProcessing = false;
+               this.showAlert = false;
             return;
         }
     
         if (!this.reserve) {
             alert('No se pudo obtener la reserva seleccionada. Por favor, inténtalo de nuevo.');
             this.isProcessing = false;
+               this.showAlert = false;
             return;
         }
     
@@ -144,6 +147,7 @@ export class RateServiceComponent implements OnInit {
                 console.error('Error al enviar la valoración:', error);
                 alert('Error al enviar la valoración. Por favor, inténtalo de nuevo más tarde.');
                 this.isProcessing = false;
+                   this.showAlert = false;
             }
         });
     }

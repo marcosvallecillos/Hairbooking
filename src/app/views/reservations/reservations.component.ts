@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Reserva } from '../../models/user.interface';
+import { Reserva, Valoracion } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
@@ -15,7 +15,8 @@ import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete
   styleUrl: './reservations.component.css'
 })
 export class ReservationsComponent {
-  
+  valoracion: Valoracion[]= [];
+  selectedValoracion: Valoracion |null = null
  reserves: Reserva[] = [];
   isSpanish: boolean = true;
   isLoading: boolean = false;
@@ -39,9 +40,7 @@ export class ReservationsComponent {
     return this.isSpanish ? es : en;
   }
   ngOnInit(): void {
-    
    this.getAllReserves();
-this.deleteValorations();
    
   }
   getAllReserves() {
@@ -96,14 +95,18 @@ this.deleteValorations();
       }
     });
     }
-    deleteValorations(){
-      if(this.selectedReserve){
-    const reserveId = this.selectedReserve.id;
-      if(this.reserves.filter(r => r.valoracion !== null)){
-        this.apiService.deleteValoracion(reserveId);
-        console.log('eliminando reserva valorada')
+    deleteValorations(valoracion: Valoracion){
+      if(valoracion.id){
+        this.apiService.deleteValoracion(valoracion.id).subscribe({
+          next: () => {
+            console.log('Valoración eliminada con éxito');
+            this.getAllReserves();
+          },
+          error: (error) => {
+            console.error('Error al eliminar la valoración:', error);
+          }
+        });
       }
-    }
     }
 
   isReservePast(reserve: Reserva): boolean {

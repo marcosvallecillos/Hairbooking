@@ -10,7 +10,7 @@ import { UserStateService } from '../../services/user-state.service';
   styleUrl: './modal-delete.component.css'
 })
 export class ModalDeleteComponent {
-  @Input() show: boolean = false;
+   @Input() show: boolean = false;
   @Input() fecha: string | null = '';
   @Input() hora: string = '';
   @Input() servicio: string = '';
@@ -20,11 +20,8 @@ export class ModalDeleteComponent {
   isProcessing: boolean = false;
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
-   services: Reserva[] = []; // Array of services
-  @Input() selectedService: string = ''; // Selected service name
 
-  
-  constructor(private languageService: LanguageService, private userStateService: UserStateService ) {
+  constructor(private languageService: LanguageService, private userStateService: UserStateService) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
     );
@@ -32,24 +29,34 @@ export class ModalDeleteComponent {
 
   ngOnInit() {
     this.isAdmin = this.userStateService.getIsAdmin();
-    }
-  onCancel() {
-    this.cancel.emit(); 
-    this.isProcessing = false;
-
   }
+
+  onCancel() {
+    this.cancel.emit();
+    this.isProcessing = false;
+  }
+
   onConfirm() {
     this.isProcessing = true;
     setTimeout(() => {
-      this.isProcessing = false;  
-    }, 2000); 
- this.confirm.emit(); 
-    }
+      this.isProcessing = false;
+    }, 2000);
+    this.confirm.emit();
+  }
 
-   isSpanish: boolean = true;
-  
-  
-    getText(es: string, en: string): string {
-      return this.isSpanish ? es : en;
-    }
+  isSpanish: boolean = true;
+
+  getText(es: string, en: string): string {
+    return this.isSpanish ? es : en;
+  }
+
+  isReservePast(reserve: Reserva): boolean {
+    const [year, month, day] = reserve.dia.split('-').map(Number);
+    const [hours, minutes] = reserve.hora.split(':').map(Number);
+    
+    const reserveDate = new Date(year, month - 1, day, hours, minutes);
+    const now = new Date();
+    
+    return reserveDate < now;
+  }
 }

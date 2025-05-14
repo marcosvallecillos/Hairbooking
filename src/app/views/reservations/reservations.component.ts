@@ -86,6 +86,8 @@ export class ReservationsComponent {
     this.selectedReserve = reserve;
     this.showModal = true;
     console.log('Reserva seleccionada para eliminar:', reserve);
+    console.log('Abriendo modal :', reserve);
+    
   }
 
   deleteReserves(reserveId: number) {

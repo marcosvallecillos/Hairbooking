@@ -216,70 +216,53 @@ p {
     transform: translateY(-2px);
 }
 
-
-.valoraciones {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #22223b;
-  margin-bottom: 32px;
-  letter-spacing: -1px;
+/* Contenedor del carrusel */
+.carousel-inner {
+  width: 100%;
+  padding-bottom: 2rem;
 }
 
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  justify-content: flex-start;
+.carousel-item {
+  transition: transform 0.6s ease;
 }
 
+/* Tarjeta de valoración */
 .review-card {
   background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(34, 34, 59, 0.09);
-  width: 340px;
-  padding: 32px 28px 24px 28px;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1.5px 4px rgba(0,0,0,0.03);
+  padding: 1.5rem 1rem 1rem 1rem;
+  margin-bottom: 1rem;
+  min-height: 340px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   transition: box-shadow 0.2s;
-  position: relative;
 }
 
 .review-card:hover {
-  box-shadow: 0 8px 32px rgba(34, 34, 59, 0.15);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.14), 0 3px 10px rgba(0,0,0,0.07);
 }
 
-.img-profile {
-  position: absolute;
-  top: -34px; 
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  width: 68px;
-  height: 68px;
-  background: grey;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  border: 3px solid #fff;
-}
-
+/* Icono de perfil */
 .img-profile i {
-  font-size: 2.7rem;
-  color: #fffc66;
+  font-size: 3rem;
+  color: #b6b6b6;
 }
+
+/* Nombre del usuario */
 .reviewer-name {
-    display: flex;
-    gap: 0.5rem; /* Espacio entre nombre y apellidos */
-    font-weight: 600;
-    color: #000000;
-}
-.reviewer-name p {
-  font-size: 1.15rem;
-  color: #000000;
-  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #222;
   text-align: center;
+  margin-bottom: 0.3rem;
+}
+
+.reviewer-name p {
+  display: inline;
+  margin: 0;
 }
 .reviewer-name p {
     text-transform: lowercase;
@@ -288,85 +271,68 @@ p {
 .reviewer-name p:first-letter {
     text-transform: uppercase;
 }
+/* Servicio y peluquero */
+.reviewer-servicio {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.reviewer-servicio strong {
+  color: #000000;
+}
+
+/* Valoración con estrellas */
 .stars {
-    
-  margin-bottom: 8px;
-  width: 100%;
+  font-size: 1.5rem;
+  color: #ffc107;
+  letter-spacing: em;
 }
 
-.valoracion {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1.05rem;
-  margin: 2px 0;
+.media-number {
+  font-size: 1rem;
+  color: #888;
+  margin-left: 0.3em;
 }
 
-.valoracion i {
-  color: #fbbc04;
-  font-size: 1.15rem;
-}
-
-.stars .stars {
-  color: #fbbc04;
-  font-weight: 600;
-  font-size: 2rem;
-}
-
+/* Fecha de la valoración */
 .review-date {
-  color: #000000;
-  font-size: 0.93rem;
-  margin-bottom: 10px;
-  align-self: flex-end;
+  color: #aaa;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
 }
 
+/* Texto de la valoración */
 .review-text {
-  color: #000000;
-  font-size: 1.05rem;
-  margin-top: 6px;
-  text-align: left;
-  width: 100%;
-  min-height: 40px;
+  font-size: 1rem;
+  color: #333;
+  margin-top: 0.5rem;
+  text-align: center;
+  word-break: break-word;
 }
 
-/* Loading Spinner */
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 180px;
-}
-
-.spinner {
-  width: 54px;
-  height: 54px;
-  border: 6px solid #e0e0e0;
-  border-top: 6px solid #4ea8de;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-.reviewer-servicio p {
-    margin: 0;
-    font-size: 1rem;
-
-    color: #000000;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Responsive */
-@media (max-width: 800px) {
-  .container {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+/* Responsive: 3 columnas en desktop, 2 en tablet, 1 en móvil */
+@media (min-width: 992px) {
+  .col-md-4 {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
   }
-  .review-card {
-    width: 95vw;
-    min-width: 0;
-    padding: 20px 10px 16px 10px;
+}
+@media (max-width: 991.98px) and (min-width: 768px) {
+  .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
   }
-  
+}
+@media (max-width: 767.98px) {
+  .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* Opcional: mejora los controles del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: drop-shadow(0 0 2px #333);
 }

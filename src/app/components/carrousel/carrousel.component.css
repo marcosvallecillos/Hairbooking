@@ -1,7 +1,7 @@
 .carousel {
-    margin-top: -10px;
+    margin-top: -50px;
     width: 100%;
-    height: 105vh;
+    height: 115vh;
     overflow: hidden;
     filter: brightness(70%);
     transition: filter 0.3s ease;

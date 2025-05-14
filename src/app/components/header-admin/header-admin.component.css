@@ -1,11 +1,15 @@
-
 .header-admin {
-    position: absolute;
-    width: 100%;
-    z-index: 1000;
-    margin-top: 17px;
+  position: absolute;
+  top: 5px; 
+  width: 100%;
+  z-index: 1000;
 }
 
+@media (max-width: 991px) {
+    body {
+        padding-top: 40px;
+    }
+}
 .home {
     margin-left: 50px;
 }

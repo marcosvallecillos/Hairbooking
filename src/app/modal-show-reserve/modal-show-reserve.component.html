@@ -7,6 +7,12 @@
 
         <h2>{{ getText('Detalles de la Reserva', 'Reservation Details') }}</h2>
 
+        @if(isLoading) {
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>{{ getText('Cargando datos...', 'Loading data...') }}</p>
+        </div>
+        }@else{
         <div class="modal-body">
             <!-- Día y Hora (como Nombre y Apellido) -->
             <div class="form-group responsive-name">
@@ -16,25 +22,28 @@
                     <input type="text" [value]="hora" readonly>
                 </div>
             </div>
-
-            <!-- Servicio -->
-            <div class="form-group">
-                <label>{{ getText('Servicio:', 'Service:') }}</label>
-                <input type="text" [value]="servicio" readonly>
-            </div>
-
-            <!-- Peluquero -->
             <div class="form-group">
                 <label>{{ getText('Peluquero:', 'Barber:') }}</label>
                 <input type="text" [value]="peluquero" readonly>
             </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label>{{ getText('Servicio:', 'Service:') }}</label>
+                    <input type="text" [value]="servicio" readonly>
+                </div>
+                <div class="form-group">
+                    <label>{{ getText('Precio:', 'Price:') }}</label>
+                    <div style="position: relative; display: inline-block;">
+                        <input type="number" [value]="precio" readonly style="padding-left: 20px;">
+                        <span
+                            style="position: absolute; left: 40px; top: 50%; transform: translateY(-50%); color: #000000;">€</span>
 
-            <!-- Precio -->
-            <div class="form-group">
-                <label>{{ getText('Precio:', 'Price:') }}</label>
-                <input type="number" [value]="precio"  readonly> 
+                    </div>
+                </div>
             </div>
+
         </div>
+        }
     </div>
 </div>
 }

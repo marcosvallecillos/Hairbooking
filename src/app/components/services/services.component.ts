@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
+import { Valoracion } from '../../models/user.interface';
 
 @Component({
   selector: 'app-services',
@@ -9,6 +10,8 @@ import { LanguageService } from '../../services/language.service';
   styleUrl: './services.component.css'
 })
 export class ServicesComponent {
+  valoracion: Valoracion[] = [];
+  
  isSpanish: boolean = true;
 
   constructor(private languageService: LanguageService) {

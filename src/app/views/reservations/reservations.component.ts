@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Reserva, Reservation, Valoracion } from '../../models/user.interface';
+import { Reserva, Valoracion } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
@@ -18,7 +18,6 @@ export class ReservationsComponent {
   valoracion: Valoracion[]= [];
   selectedValoracion: Valoracion |null = null
  reserves: Reserva[] = [];
- reservation:Reservation[] = [];
   isSpanish: boolean = true;
   isLoading: boolean = false;
   showLoginModal: boolean = false;

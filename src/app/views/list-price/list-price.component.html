@@ -156,20 +156,8 @@
             </div>
         </div>
     </div>
-
-  
-    @if (isLoading) {
-    <div class="loading">
-        <div class="spinner"></div>
-
-    </div>
-    } @else {
-    @if (valoracion.length === 0) {
-    <div>No hay valoraciones.</div>
-    } @else {
-   <div class="container my-5">
-  <h1 class="valoraciones text-start mb-4">{{ getText('Valoraciones', 'Reviews') }}</h1>
-
+<div class="container">
+    <h1 style="text-align: left;">Valoraciones</h1>
   @if (isLoading) {
     <div class="text-center">
       <div class="spinner-border text-primary" role="status">
@@ -226,9 +214,5 @@
     }
   }
 </div>
-
-    }
-    }
-
 </div>
 <app-footer></app-footer>

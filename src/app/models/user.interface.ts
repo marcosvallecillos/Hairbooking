@@ -73,20 +73,6 @@ export interface ValoracionesResponse {
     valoracion_peluquero?: number | null;
   }
 
-  export interface Reservation{
-    id:         number;
-    servicio:   string;
-    peluquero:  string;
-    precio:     string;
-    dia:        string;
-    hora:       string;
-    usuario_id: number;
-    usuario?: Usuario;
-    valoracion: number | null; //id de la valoracion 
-    valoracion_comentario?: string | null;
-    valoracion_servicio?: number | null;
-    valoracion_peluquero?: number | null;
-  }
   export interface ReservaAnulada {
     id:            number;
     servicio:      string;

@@ -1,7 +1,7 @@
 import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError, tap } from 'rxjs';
-import { Compra, Product, Reserva, ReservaAnulada, Reservation, Usuario, Valoracion, ValoracionesResponse } from '../models/user.interface';
+import { Compra, Product, Reserva, ReservaAnulada, Usuario, Valoracion, ValoracionesResponse } from '../models/user.interface';
 import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
@@ -59,19 +59,12 @@ deleteUser(id: number): Observable<any> {
 getReserves(): Observable<Reserva[]> {
   return this.http.get<Reserva[]>(`${this.apiUrlReservas}`);
 }
-getReservations(): Observable<Reservation[]> {
-  return this.http.get<Reservation[]>(`${this.apiUrlReservations}`);
-}
 
 getReserveByUsuario(usuario_Id: number): Observable<Reserva[]> {
   return this.http.get<Reserva[]>(`${this.apiUrlReservas}/usuario/${usuario_Id}`);
 }
 newReserve(reservas: Reserva): Observable<Reserva> {
   return this.http.post<Reserva>(`${this.apiUrlReservas}/new`, reservas);
-}
-newReservations(reservas:Reservation):Observable<Reserva>{
-    return this.http.post<Reservation>(`${this.apiUrlReservations}/new`, reservas);
-
 }
 newReserveByAdmin(reservas: any): Observable<any> {
   return this.http.post<any>(`${this.apiUrlReservas}/admin/new`, reservas);
@@ -84,9 +77,6 @@ deleteReserve(id: number): Observable<Reserva> { //lleva los eliminados a reserv
   return this.http.delete<Reserva>(`${this.apiUrlReservas}/delete/${id}`);
 }
 
-deleteReservations(id:number):Observable<Reservation>{ // se eliminan cuando pasa el tiempo de la reserva
-  return this.http.delete<Reservation>(`${this.apiUrlReservations}/eliminar/${id}`);
-}
 newValoracion(valoracion: Valoracion): Observable<Valoracion> {
   return this.http.post<Valoracion>(`${this.apiUrlValoracion}/valoraciones`,valoracion,
     { headers: { 'Content-Type': 'application/json' } }

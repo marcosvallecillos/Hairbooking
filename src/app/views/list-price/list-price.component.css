@@ -286,7 +286,10 @@ p {
 .stars {
   font-size: 1.5rem;
   color: #ffc107;
-  letter-spacing: em;
+  letter-spacing: 0.1em;
+}
+.stars span{
+    font-size: 1.1rem;
 }
 
 .media-number {
@@ -297,15 +300,15 @@ p {
 
 /* Fecha de la valoración */
 .review-date {
-  color: #aaa;
-  font-size: 0.95rem;
+  color: #000000;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
 /* Texto de la valoración */
 .review-text {
   font-size: 1rem;
-  color: #333;
+  color: #000000;
   margin-top: 0.5rem;
   text-align: center;
   word-break: break-word;
@@ -335,4 +338,26 @@ p {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   filter: drop-shadow(0 0 2px #333);
+}
+
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

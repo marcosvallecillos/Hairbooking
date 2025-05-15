@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; // Asegúrate de importar OnInit
+import { Component, HostListener, OnInit } from '@angular/core'; // Asegúrate de importar OnInit
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
@@ -166,5 +166,74 @@ export class ShowReserveComponent implements OnInit {
     const fullStar = '★';
     const emptyStar = '☆';
     return fullStar.repeat(rating) + emptyStar.repeat(5 - rating);
+  }
+   showDropdown = false;
+
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  currentFilter: 'all' | 'activas' | 'expiradas' = 'all';
+  filterError: string | null = null;
+  
+  filtrar(tipo: 'all' | 'activas' | 'expiradas') {
+    this.isLoading = true;
+    this.filterError = null;
+    this.currentFilter = tipo;
+    const userId = this.authService.getUserId();
+
+    if (!userId) {
+      this.filterError = this.getText(
+        'Error: Usuario no autenticado',
+        'Error: User not authenticated'
+      );
+      this.isLoading = false;
+      return;
+    }
+
+    if (tipo === 'all') {
+      this.loadUserReserves();
+      return;
+    }
+
+    // Use the same filtering endpoints as reservations component
+    const filterMethod = tipo === 'activas' 
+      ? this.apiService.filterReserveActivas()
+      : this.apiService.filterReserveExpiradas();
+
+    filterMethod.subscribe({
+      next: (reservas) => {
+        // Filter to only show the current user's reservations
+        this.reserves = reservas
+          .filter(reserva => reserva.usuario_id === userId)
+          .sort((a, b) => {
+            const ordenardia = a.dia.localeCompare(b.dia);
+            if (ordenardia !== 0) {
+              return ordenardia;
+            }
+            return a.hora.localeCompare(b.hora);
+          });
+
+        this.isLoading = false;
+        this.showDropdown = false;
+      },
+      error: (error) => {
+        console.error('Error al filtrar reservas:', error);
+        this.filterError = this.getText(
+          'Error al filtrar las reservas. Por favor, intente de nuevo.',
+          'Error filtering reservations. Please try again.'
+        );
+        this.isLoading = false;
+        this.showDropdown = false;
+      }
+    });
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.dropdown')) {
+      this.showDropdown = false;
+    }
   }
 }

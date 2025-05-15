@@ -198,7 +198,6 @@ export class ReservationsComponent {
     });
   }
 
-  // Opcional: cerrar el menú si se hace clic fuera
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;

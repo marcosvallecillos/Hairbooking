@@ -26,14 +26,43 @@
   </div>
   }
   @else if(reserves.length > 0){
-  <h2 class=" reservas mt-5">{{getText('Reservas','Reserves')}} </h2>
+  <h2 class="reservas mt-5">{{getText('Reservas','Reserves')}} </h2>
   <div class="reserves-container">
     <div class="header">
+      <div class="dropdown" [class.show]="showDropdown">
+        <div class="filter-button" (click)="toggleDropdown()">
+          <i class="bi bi-funnel-fill fs-4"></i>
+          <span class="current-filter">
+            {{ currentFilter === 'all' ? getText('Todas las Reservas', 'All Reservations') :
+               currentFilter === 'activas' ? getText('Reservas Activas', 'Active Reservations') :
+               getText('Reservas Expiradas', 'Expired Reservations') }}
+          </span>
+        </div>
+        <div class="dropdown-menu">
+          <p [class.active]="currentFilter === 'all'" (click)="filtrar('all')">
+            {{ getText('Todas las Reservas', 'All Reservations') }}
+          </p>
+          <p [class.active]="currentFilter === 'activas'" (click)="filtrar('activas')">
+            {{ getText('Reservas Activas', 'Active Reservations') }}
+          </p>
+          <p [class.active]="currentFilter === 'expiradas'" (click)="filtrar('expiradas')">
+            {{ getText('Reservas Expiradas', 'Expired Reservations') }}
+          </p>
+        </div>
+      </div>
+
       <button class="reserve-btn" routerLink="/reserve">
         <img src="../../../../images/cita.png" width="30px" height="30px" alt="" style="margin-right:10px">
         {{getText('Reservar Cita','Reserve Quote')}}
       </button>
     </div>
+
+   @if (filterError) {
+    <div class="alert alert-danger mt-3" role="alert">
+      {{ filterError }}
+    </div>
+  }
+
     <!--[class.disabled]="isReservePast(reserve)"-->
     <div class="reserves-list">
     

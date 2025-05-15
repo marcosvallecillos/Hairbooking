@@ -25,6 +25,7 @@ import { CreateUserComponent } from './views/create-user/create-user.component';
 import { ModalUserComponent } from './components/modal-user/modal-user.component';
 import { ReserveAdminComponent } from './views/reserve-admin/reserve-admin.component';
 import { CancelledReserveComponent } from './views/cancelled-reserve/cancelled-reserve.component';
+import { RatingServiceComponent } from './components/rating-service/rating-service.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -52,7 +53,9 @@ export const routes: Routes = [
     { path: 'create-user', component: CreateUserComponent },
     {path: 'modal-user', component: ModalUserComponent},
     {path: 'reserve-admin', component: ReserveAdminComponent},
-    {path: 'cancelled-reserve', component: CancelledReserveComponent}
+    {path: 'cancelled-reserve', component: CancelledReserveComponent},
+    {path: 'rating-reserve', component: RatingServiceComponent}
+    
 ];
 
     @NgModule({

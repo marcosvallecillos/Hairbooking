@@ -1,0 +1,204 @@
+
+.valoraciones-section {
+    display: flex;
+    height: auto;
+    align-items: center;
+    background-size: cover;
+    mask-image: 
+  linear-gradient(to bottom, black 95, transparent 100%),
+  linear-gradient(to top, black 95%, transparent 100%);
+mask-composite: intersect;
+-webkit-mask-image: 
+  linear-gradient(to bottom, black 80%, transparent 100%),
+  linear-gradient(to top, black 80%, transparent 100%);
+-webkit-mask-composite: destination-in;
+   
+}
+
+.container-fluid {
+    background-color: #e0e0e0;
+  padding: 2.5rem 0 2rem 0;
+  min-height: 110vh;
+}
+.section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #000000;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-family: 'Oswald', sans-serif;
+}
+
+.decorative-line {
+    
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #524940, transparent);
+    margin: 10px auto;
+    
+
+}  
+
+
+
+/* Carrusel */
+.carousel-inner {
+  width: 80%;
+  padding-bottom: 2rem;
+  margin: 0 auto;
+}
+
+.carousel-item {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tarjeta de valoración */
+.review-card {
+  background-color: #f9fafb;
+  max-width: 350px;
+  border-radius: 2.5rem;
+  box-shadow: 0 2px 12px rgba(30, 58, 138, 0.08), 0 1.5px 4px rgba(0,0,0,0.03);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  margin: 1.5rem 0.75rem;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #dbeafe;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.review-card:hover {
+  box-shadow: 0 8px 28px rgba(30, 58, 138, 0.14), 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-4px) scale(1.015);
+}
+
+/* Icono de perfil */
+.img-profile i {
+  font-size: 3rem;
+  color: #b6b6b6;
+}
+
+/* Nombre del usuario */
+.reviewer-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #222;
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+
+.reviewer-name p {
+  display: inline;
+  margin: 0;
+  text-transform: lowercase;
+}
+
+.reviewer-name p:first-letter {
+  text-transform: uppercase;
+}
+
+/* Servicio y peluquero */
+.reviewer-servicio {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.reviewer-servicio strong {
+  color: #000;
+}
+
+/* Valoración con estrellas */
+.stars {
+  font-size: 1.5rem;
+  color: #ffd600;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.1em;
+}
+
+.stars i {
+  filter: drop-shadow(0 1px 1px #fffbe7);
+  transition: transform 0.18s;
+}
+
+.stars i:hover {
+  transform: scale(1.12) rotate(-8deg);
+}
+
+.media-number {
+  font-size: 1rem;
+  color: #888;
+  margin-left: 0.3em;
+}
+
+/* Fecha de la valoración */
+.review-date {
+  color: #6c757d;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Texto de la valoración */
+.review-text {
+  font-size: 1rem;
+  color: #222;
+  margin-top: 0.5rem;
+  text-align: center;
+  word-break: break-word;
+}
+
+/* Responsive: 3 columnas en desktop, 2 en tablet, 1 en móvil */
+@media (min-width: 992px) {
+  .col-md-4 {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+}
+@media (max-width: 991.98px) and (min-width: 768px) {
+  .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+@media (max-width: 767.98px) {
+  .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* Carrusel controles */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: drop-shadow(0 0 2px #333);
+}
+
+/* Loading spinner */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

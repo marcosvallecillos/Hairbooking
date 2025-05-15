@@ -6,6 +6,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { ServicesComponent } from '../../components/services/services.component';
 import { GalleryComponent } from '../../components/gallery/gallery.component';
 import { CosmeticosComponent } from '../../components/cosmeticos/cosmeticos.component';
+import { RatingServiceComponent } from '../../components/rating-service/rating-service.component';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ import { CosmeticosComponent } from '../../components/cosmeticos/cosmeticos.comp
     FooterComponent,
     ServicesComponent,
     CosmeticosComponent,
+    RatingServiceComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

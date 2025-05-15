@@ -323,3 +323,91 @@ li a.active{
 .no-products-message p {
   margin: 0;
 }
+
+.price-filter {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.price-filter h3 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.price-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-group label {
+    font-size: 10px;
+    color: #666;
+}
+
+.input-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.7rem;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #ff8503;
+    box-shadow: 0 0 0 2px rgba(255, 133, 3, 0.1);
+}
+
+.price-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-btn, .clear-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn {
+    background: linear-gradient(135deg, #ff8503, #f9af60);
+    color: white;
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(255, 133, 3, 0.2);
+}
+
+.clear-btn {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.clear-btn:hover {
+    background: #dee2e6;
+}
+
+.price-error {
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #fff3f3;
+    border: 1px solid #ffcdd2;
+    border-radius: 4px;
+    color: #d32f2f;
+    font-size: 0.9rem;
+}

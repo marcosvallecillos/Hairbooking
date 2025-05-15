@@ -5,10 +5,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { UserStateService } from '../../services/user-state.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
-  imports: [RouterLink,FooterComponent],
+  imports: [RouterLink, FooterComponent, FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
@@ -31,6 +32,9 @@ export class ProductsComponent implements OnInit {
 
   filteredProducts: Product[] = [];
   isLoading: boolean = true;
+  minPrice: number | null = null;
+  maxPrice: number | null = null;
+  priceFilterError: string | null = null;
 
   isSpanish: boolean = true;
   isUser = false;
@@ -349,6 +353,47 @@ export class ProductsComponent implements OnInit {
           ...this.products.accesorios
         ];;
     }
+  }
+
+  filterByPrice() {
+    if (this.minPrice === null && this.maxPrice === null) {
+      this.priceFilterError = this.getText(
+        'Debe proporcionar al menos un precio (mínimo o máximo)',
+        'You must provide at least one price (minimum or maximum)'
+      );
+      return;
+    }
+
+    this.isLoading = true;
+    this.apiService.filterByPrice(this.minPrice || undefined, this.maxPrice || undefined).subscribe({
+      next: (response: any) => {
+        if (response.status === 'success') {
+          this.filteredProducts = response.productos;
+          this.priceFilterError = null;
+        } else {
+          this.priceFilterError = this.getText(
+            'Error al filtrar por precio',
+            'Error filtering by price'
+          );
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error filtering by price:', error);
+        this.priceFilterError = this.getText(
+          'Error al filtrar por precio',
+          'Error filtering by price'
+        );
+        this.isLoading = false;
+      }
+    });
+  }
+
+  clearPriceFilter() {
+    this.minPrice = null;
+    this.maxPrice = null;
+    this.priceFilterError = null;
+    this.filterProducts('all'); // Reset to show all products
   }
 
 }

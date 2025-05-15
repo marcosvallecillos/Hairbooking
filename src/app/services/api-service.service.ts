@@ -87,6 +87,20 @@ filterReserveExpiradas(): Observable<Reserva[]> {
   return this.http.get<Reserva[]>(`${this.apiUrlReservas}/filter?tipo=expiradas`);
 }
 
+filterByPrice(minPrice?: number, maxPrice?: number): Observable<any> {
+  let url = `${this.apiUrlProductos}/filter/price`;
+  const params: { [key: string]: string } = {};
+  
+  if (minPrice !== undefined) {
+    params['min_price'] = minPrice.toString();
+  }
+  if (maxPrice !== undefined) {
+    params['max_price'] = maxPrice.toString();
+  }
+  
+  return this.http.get(url, { params });
+}
+
 newValoracion(valoracion: Valoracion): Observable<Valoracion> {
   return this.http.post<Valoracion>(`${this.apiUrlValoracion}/valoraciones`,valoracion,
     { headers: { 'Content-Type': 'application/json' } }

@@ -10,6 +10,39 @@
             <button class="filter-button">STOCK</button>
             <div class="filter-section">
                 <h3 class="filter-title">{{getText('Lista de Productos','Products List')}}</h3>
+                <div class="price-filter">
+                    <h3>{{getText('Precio','Price')}}</h3>
+                    <div class="price-inputs">
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12">  
+                        <div class="input-group">
+                            <label for="minPrice">{{getText('Desde','From')}}</label>
+                            <input type="number" id="minPrice" [(ngModel)]="minPrice" min="0" placeholder="€">
+                        </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12">  
+
+                        <div class="input-group">
+                            <label for="maxPrice">{{getText('Hasta','To')}}</label>
+                            <input type="number" id="maxPrice" [(ngModel)]="maxPrice" min="0" placeholder="€">
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="price-buttons">
+                        <button class="filter-btn" (click)="filterByPrice()">
+                            {{getText('Filtrar','Filter')}}
+                        </button>
+                        <button class="clear-btn" (click)="clearPriceFilter()">
+                            {{getText('Limpiar','Clear')}}
+                        </button>
+                    </div>
+                    @if (priceFilterError) {
+                        <div class="price-error">
+                            {{ priceFilterError }}
+                        </div>
+                    }
+                </div>
                <ul>
                 <li>
                     <a href="#all" (click)="filterProducts('all')">{{getText('Todos', 'All')}}</a>

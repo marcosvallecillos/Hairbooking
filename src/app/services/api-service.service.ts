@@ -1,7 +1,7 @@
 import { Injectable, ResourceRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError, tap } from 'rxjs';
-import { Compra, Product, Reserva, ReservaAnulada, Usuario, Valoracion, ValoracionesResponse } from '../models/user.interface';
+import { Compra, Product, Reserva, ReservaAnulada, Usuario, Valoracion, ValoracionesResponse, FilterDateResponse } from '../models/user.interface';
 import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
@@ -101,6 +101,21 @@ filterByPrice(minPrice?: number, maxPrice?: number): Observable<any> {
   return this.http.get(url, { params });
 }
 
+filterByDate(date: Date): Observable<FilterDateResponse> {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const fechaStr = `${year}-${month}-${day}`;
+    const url = `${this.apiUrlCompras}/filter/date?fecha=${fechaStr}`;
+    console.log('Filter URL:', url);
+    
+    return this.http.get<FilterDateResponse>(url).pipe(
+      tap({
+        next: (response) => console.log('API Response:', response),
+        error: (error) => console.error('API Error:', error)
+      })
+    );
+}
 newValoracion(valoracion: Valoracion): Observable<Valoracion> {
   return this.http.post<Valoracion>(`${this.apiUrlValoracion}/valoraciones`,valoracion,
     { headers: { 'Content-Type': 'application/json' } }

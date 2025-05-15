@@ -419,3 +419,29 @@
     height: 3px;
     background: linear-gradient(90deg, #ff8503, #ff6200);
   }
+
+.date-filter {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.date-filter .input-group {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.date-filter input[type="date"] {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  font-size: 1rem;
+}
+
+.date-filter .btn-outline-secondary {
+  border-color: #ddd;
+  color: #666;
+}
+
+.date-filter .btn-outline-secondary:hover {
+  background-color: #f8f9fa;
+  color: #333;
+}

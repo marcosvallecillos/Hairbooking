@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { LanguageService } from '../../services/language.service';
-import { Compra } from '../../models/user.interface';
+import { Compra, FilterDateResponse } from '../../models/user.interface';
 import { ApiService } from '../../services/api-service.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ModalUserComponent } from '../../components/modal-user/modal-user.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-bought-products',
-  imports: [CommonModule, FooterComponent,ModalUserComponent],
+  imports: [CommonModule, FooterComponent,ModalUserComponent, FormsModule],
   templateUrl: './bought-products.component.html',
   styleUrl: './bought-products.component.css'
 })
@@ -19,6 +20,8 @@ compras: Compra[] = [];
 selectedUserId: number | null = null;
 showLoginModal: boolean = false;
   isSpanish: boolean = true; // Cambia esto según el idioma actual
+  selectedDate: string | null = null;
+  today: string = new Date().toISOString().split('T')[0];
 
   constructor(private languageService: LanguageService, private apiService: ApiService) {
     this.languageService.isSpanish$.subscribe(
@@ -38,22 +41,16 @@ showLoginModal: boolean = false;
     this.apiService.getCompras().subscribe({
       next: (response) => {
         console.log('Respuesta del backend (todas las compras):', response);
-        this.compras = response.sort((a, b) => {
+        this.compras = response.map(compra => ({
+          ...compra,
+          total: compra.precio || compra.total
+        })).sort((a, b) => {
           if (a.usuario && b.usuario) {
             return a.usuario.id - b.usuario.id;
           }
           return 0;
         });
         this.isLoading = false;
-        // Log each purchase's details
-        this.compras.forEach((compra, idx) => {
-          console.log(`Compra #${idx + 1}:`, compra);
-          if (compra.detalles) {
-            compra.detalles.forEach((detalle: any, i: number) => {
-              console.log(`  Detalle #${i + 1}:`, detalle);
-            });
-          }
-        });
       },
       error: (error) => {
         this.isLoading = false;
@@ -67,8 +64,10 @@ calcularDescuento(total: number): number {
     console.warn('Total is undefined or null');
     return 0;
   }
-  if (total > 500) {
-    return total * 0.05;
+  // Use total if precio is undefined
+  const precioTotal = total;
+  if (precioTotal > 500) {
+    return precioTotal * 0.05;
   }
   return 0;
 }
@@ -97,6 +96,51 @@ deleteBuy(id: number) {
     
   });
   
+}
+
+filterByDate() {
+  if (!this.selectedDate) {
+    this.getAllCompras();
+    return;
+  }
+
+  this.isLoading = true;
+  const date = new Date(this.selectedDate);
+  console.log('Selected date:', this.selectedDate);
+  console.log('Date object:', date);
+  
+  this.apiService.filterByDate(date).subscribe({
+    next: (response: FilterDateResponse) => {
+      console.log('Filter response:', response);
+      if (response.status === 'success' && response.compras) {
+        this.compras = response.compras.map(compra => ({
+          ...compra,
+          total: compra.precio || compra.total
+        })).sort((a: Compra, b: Compra) => {
+          if (a.usuario && b.usuario) {
+            return a.usuario.id - b.usuario.id;
+          }
+          return 0;
+        });
+      } else {
+        this.compras = [];
+      }
+      this.isLoading = false;
+    },
+    error: (error) => {
+      console.error('Filter error details:', error);
+      this.isLoading = false;
+      this.error = this.getText(
+        'Error al filtrar por fecha. Por favor, intente de nuevo.',
+        'Error filtering by date. Please try again.'
+      );
+    }
+  });
+}
+
+clearDateFilter() {
+  this.selectedDate = null;
+  this.getAllCompras();
 }
 
 }

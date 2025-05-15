@@ -3,7 +3,23 @@
 
 <div class="container mt-5 mb-5">
     <!-- Mostrar estado de carga -->
-                    <h2 class="title mb-4">{{ getText('Productos Comprados Por Usuarios', 'Bought Products By Users') }}</h2>
+    <h2 class="title mb-4">{{ getText('Productos Comprados Por Usuarios', 'Bought Products By Users') }}</h2>
+
+    <!-- Date Filter -->
+    <div class="date-filter mb-4">
+        <div class="input-group">
+            <input type="date" 
+                   class="form-control" 
+                   [(ngModel)]="selectedDate" 
+                   (change)="filterByDate()"
+                   [max]="today">
+            <button class="btn btn-outline-secondary" 
+                    type="button" 
+                    (click)="clearDateFilter()">
+                {{ getText('Limpiar', 'Clear') }}
+            </button>
+        </div>
+    </div>
 
     @if (isLoading) {
         <div class="loading">
@@ -59,20 +75,20 @@
                                 </table>
                   
                                 <div class="compra-total">
-                                  @if (calcularDescuento( compra.precio) > 0) {
+                                  @if (calcularDescuento( compra.total) > 0) {
                                     <div>  <strong>{{ getText('Total de la Compra', 'Purchase Total') }}:</strong>
-                                      {{ compra.precio + ' €' }}</div>
+                                      {{ compra.total + ' €' }}</div>
                                     <div>
                                       <strong>{{ getText('Descuento Aplicado', 'Applied Discount') }}:</strong>
-                                      - {{ calcularDescuento(compra.precio).toFixed(2) + ' €' }}
+                                      - {{ calcularDescuento(compra.total).toFixed(2) + ' €' }}
                                     </div>
                                     <div>
                                       <strong>{{ getText('Total con Descuento', 'Total with Discount') }}:</strong>
-                                      {{ (compra.precio - calcularDescuento(compra.precio)).toFixed(2) + ' €' }}
+                                      {{ (compra.total - calcularDescuento(compra.total)).toFixed(2) + ' €' }}
                                     </div>
                                   }@else {
                                     <div>  <strong>{{ getText('Total de la Compra', 'Purchase Total') }}:</strong>
-                                      {{  compra.precio + ' €' }}</div>
+                                      {{  compra.total + ' €' }}</div>
                                   }
                             <div>
                             

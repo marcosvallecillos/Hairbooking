@@ -83,3 +83,9 @@ export interface ValoracionesResponse {
     usuario_id:    number;
     fecha_anulada: Date;
 }
+
+export interface FilterDateResponse {
+  status: string;
+  total: number;
+  compras: Compra[];
+}

@@ -76,6 +76,16 @@ editReserve(id: number, reservaData: Reserva): Observable<Reserva> {
 deleteReserve(id: number): Observable<Reserva> { //lleva los eliminados a reserva_anuladas
   return this.http.delete<Reserva>(`${this.apiUrlReservas}/delete/${id}`);
 }
+deleteReserves(id: number): Observable<Reserva> { //lleva los eliminados a reserva_anuladas
+  return this.http.delete<Reserva>(`${this.apiUrlReservas}/eliminar/${id}`);
+}
+filterReserveActivas(): Observable<Reserva[]> {
+  return this.http.get<Reserva[]>(`${this.apiUrlReservas}/filter?tipo=activas`);
+}
+
+filterReserveExpiradas(): Observable<Reserva[]> {
+  return this.http.get<Reserva[]>(`${this.apiUrlReservas}/filter?tipo=expiradas`);
+}
 
 newValoracion(valoracion: Valoracion): Observable<Valoracion> {
   return this.http.post<Valoracion>(`${this.apiUrlValoracion}/valoraciones`,valoracion,

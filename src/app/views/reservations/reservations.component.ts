@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Reserva, Valoracion } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -17,13 +17,15 @@ import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete
 export class ReservationsComponent {
   valoracion: Valoracion[]= [];
   selectedValoracion: Valoracion |null = null
- reserves: Reserva[] = [];
+  reserves: Reserva[] = [];
   isSpanish: boolean = true;
   isLoading: boolean = false;
   showLoginModal: boolean = false;
   selectedUserId: number | null = null;
   showModal: boolean = false;
   selectedReserve: Reserva | null = null;
+  currentFilter: 'all' | 'activas' | 'expiradas' = 'all';
+  filterError: string | null = null;
 
   constructor(
     private languageService: LanguageService,
@@ -61,7 +63,7 @@ export class ReservationsComponent {
           if (this.isReservePast(reserve) && reserve.valoracion != null) {
             console.log('Eliminando reserva pasada con valoración:', reserve);
             this.deleteValoracion(reserve.id);
-          }
+          } 
         });
 
         this.isLoading = false;
@@ -103,7 +105,7 @@ export class ReservationsComponent {
 
    
   private deleteReservation(reserveId: number) {
-    this.apiService.deleteReserve(reserveId).subscribe({
+    this.apiService.deleteReserves(reserveId).subscribe({
       next: () => {
         this.reserves = this.reserves.filter(r => r.id !== reserveId);
         this.selectedReserve = null;
@@ -134,7 +136,7 @@ export class ReservationsComponent {
       const reserveId = this.selectedReserve.id;
       
       // First, delete the rating if it exists
-      if (this.selectedReserve.valoracion && typeof this.selectedReserve.valoracion === 'number') {
+     if (this.selectedReserve.valoracion && typeof this.selectedReserve.valoracion === 'number') {
         this.apiService.deleteValoracion(this.selectedReserve.valoracion).subscribe({
           next: () => {
             // After rating is deleted, delete the reservation
@@ -156,5 +158,52 @@ export class ReservationsComponent {
   onCancelReserve() {
     this.showModal = false;
     this.selectedReserve = null;
+  }
+
+   showDropdown = false;
+
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  filtrar(tipo: 'all' | 'activas' | 'expiradas') {
+    this.isLoading = true;
+    this.filterError = null;
+    this.currentFilter = tipo;
+
+    if (tipo === 'all') {
+      this.getAllReservations();
+      return;
+    }
+
+    const filterMethod = tipo === 'activas' 
+      ? this.apiService.filterReserveActivas()
+      : this.apiService.filterReserveExpiradas();
+
+    filterMethod.subscribe({
+      next: (reservas) => {
+        this.reserves = reservas;
+        this.isLoading = false;
+        this.showDropdown = false;
+      },
+      error: (error) => {
+        console.error('Error al filtrar reservas:', error);
+        this.filterError = this.getText(
+          'Error al filtrar las reservas. Por favor, intente de nuevo.',
+          'Error filtering reservations. Please try again.'
+        );
+        this.isLoading = false;
+        this.showDropdown = false;
+      }
+    });
+  }
+
+  // Opcional: cerrar el menú si se hace clic fuera
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.dropdown')) {
+      this.showDropdown = false;
+    }
   }
 }

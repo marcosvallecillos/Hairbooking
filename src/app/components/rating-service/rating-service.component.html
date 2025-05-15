@@ -14,8 +14,11 @@
       </div>
     } @else {
       @if (valoracion.length === 0) {
-        <p>{{ getText('No hay valoraciones.', 'No reviews available.') }}</p>
-      } @else {
+  <div class="alert-info">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            <h2>{{ getText('No se encontraron comentarios.', 'Dont comments found.') }}</h2>
+          </div>
+              } @else {
         <div id="carouselValoraciones" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             @for (grupo of valoracionGrupos; track grupo; let i = $index) {

@@ -124,7 +124,7 @@
 
         <app-modal-compra [show]="showModal" [producto]="nombresProductos()" [precio]="precioProductos()"
             [descuento]="descuento.toFixed(2) + ' €'" [total]="totalConDescuento.toFixed(2) + ' €'" [cantidad]="cantidadProductos()"
-            (confirm)="onConfirmReserve()" (cancel)="onCancelReserve()">
+            (confirm)="onConfirmReserve()" (cancel)="onCancelReserve()"  (close)="showModal = false">
         </app-modal-compra>
     </div>
 </body>

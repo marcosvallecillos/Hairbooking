@@ -19,17 +19,15 @@ export class ModalCompraComponent implements OnInit {
   @Input() cantidad: string = '';
   @Input() total: string = '';
   isProcessing: boolean = false;
+  hasItemsInCart: boolean = false;
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
-  productos: Product[] = [];
-  isLoading:boolean  = false
-  
+  isLoading: boolean = false;
   showAlert: boolean = false;
   showAlertCancel: boolean = false;
   messageNoUserDisplay: string | null = null;
   isSpanish: boolean = true;
-  cartItems: Product[] = [];
   userId: number | null = null;
 
   constructor(
@@ -46,54 +44,31 @@ export class ModalCompraComponent implements OnInit {
   ngOnInit() {
     this.userId = this.authService.getUserId();
     if (this.userId) {
-      this.loadCart(this.userId);
+      this.checkCartStatus();
     }
-      console.log('Id del usuario:', this.userId);
   }
 
+  checkCartStatus() {
+    this.isLoading = true;
+    if (!this.userId) return;
 
-  ngOnChanges() {
-    this.precio = parseFloat(this.precio as string).toFixed(2);
-  }
-
-  loadCart(userId: number) {
-    this.apiService.getCartByUsuarioId(userId).subscribe({
+    this.apiService.getCartByUsuarioId(this.userId).subscribe({
       next: (response: any) => {
-        if (response.status === 'success' && response.carrito) {
-          this.cartItems = response.carrito.map((producto: any) => ({
-            id: producto.id,
-            name: producto.name,
-            price: producto.price,
-            image: producto.image,
-            cantidad: producto.cantidad ,
-            isFavorite: producto.favorite,
-            insidecart: producto.cart,
-            categorias: producto.categoria,
-            subcategorias: producto.subcategoria
-          }));
-        }
+        this.hasItemsInCart = response.status === 'success' && 
+                             response.carrito && 
+                             response.carrito.length > 0;
+        this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error al cargar el carrito:', error);
-        this.messageNoUserDisplay = this.getText(
-          'Error al cargar el carrito',
-          'Error loading cart'
-        );
+        console.error('Error al verificar el carrito:', error);
+        this.hasItemsInCart = false;
+        this.isLoading = false;
       }
     });
   }
 
   onConfirm() {
-    console.log('Iniciando proceso de compra...');
-    console.log('Cart items:', this.cartItems);
-    this.messageNoUserDisplay = this.getText(
-      'Comprando...',
-      'Purchasing...'
-    );
-    console.log(this.messageNoUserDisplay);
-    this.isProcessing = true;
     if (!this.userId) {
-      console.error('No hay userId');
       this.messageNoUserDisplay = this.getText(
         'Debes iniciar sesión para realizar la compra',
         'You must log in to make a purchase'
@@ -101,61 +76,70 @@ export class ModalCompraComponent implements OnInit {
       return;
     }
 
-    if (!this.cartItems || this.cartItems.length === 0) {
-      console.error('No hay items en el carrito');
+    if (!this.hasItemsInCart) {
       this.messageNoUserDisplay = this.getText(
         'El carrito está vacío',
         'Cart is empty'
-        
       );
-      this.isProcessing = false;
-
       return;
     }
 
-    const purchase = {
-      productos: this.cartItems.map(product => ({
-        productoId: product.id,
-        cantidad: product.cantidad || 1
-      }))
-    };
+    this.isProcessing = true;
+    this.messageNoUserDisplay = this.getText(
+      'Comprando...',
+      'Purchasing...'
+    );
 
-    console.log('Enviando compra:', purchase);
-
-    this.apiService.makePurchase(purchase, this.userId).subscribe({
+    this.apiService.getCartByUsuarioId(this.userId).subscribe({
       next: (response: any) => {
-        console.log('Respuesta del servidor:', response);
-        if (response.mensaje === 'Compra registrada') {
-          this.show = false;
-          this.showAlert = true;
-          this.apiService.clearCart();
-          this.cartItems = [];
-          
-          setTimeout(() => {
-            this.showAlert = false;
-            this.confirm.emit();
-            this.isProcessing = false;
+        if (response.status === 'success' && response.carrito) {
+          const purchase = {
+            productos: response.carrito.map((producto: any) => ({
+              productoId: producto.id,
+              cantidad: producto.cantidad || 1
+            }))
+          };
 
-          }, 1000);
-          this.router.navigate(['/show-buys']);
-        } else {
-          console.error('Error en la respuesta:', response);
-          this.messageNoUserDisplay = this.getText(
-            'Error al realizar la compra',
-            'Error making purchase'
-          );
-          this.isProcessing = false;
-
+          this.apiService.makePurchase(purchase, this.userId!).subscribe({
+            next: (purchaseResponse: any) => {
+              if (purchaseResponse.mensaje === 'Compra registrada') {
+                this.show = false;
+                this.showAlert = true;
+                this.apiService.clearCart();
+                this.hasItemsInCart = false;
+                
+                setTimeout(() => {
+                  this.showAlert = false;
+                  this.confirm.emit();
+                  this.isProcessing = false;
+                }, 1000);
+                this.router.navigate(['/show-buys']);
+              } else {
+                this.messageNoUserDisplay = this.getText(
+                  'Error al realizar la compra',
+                  'Error making purchase'
+                );
+                this.isProcessing = false;
+              }
+            },
+            error: (error) => {
+              console.error('Error en la compra:', error);
+              this.messageNoUserDisplay = this.getText(
+                'Error al realizar la compra: ' + (error.error?.message || error.message),
+                'Error making purchase: ' + (error.error?.message || error.message)
+              );
+              this.isProcessing = false;
+            }
+          });
         }
       },
       error: (error) => {
-        console.error('Error completo:', error);
+        console.error('Error al obtener el carrito:', error);
         this.messageNoUserDisplay = this.getText(
-          'Error al realizar la compra: ' + (error.error?.message || error.message),
-          'Error making purchase: ' + (error.error?.message || error.message)
+          'Error al verificar el carrito',
+          'Error checking cart'
         );
         this.isProcessing = false;
-
       }
     });
   }

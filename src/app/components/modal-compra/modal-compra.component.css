@@ -260,3 +260,14 @@
   font-weight: bold;
   color: #007bff; /* o el color que prefieras */
 }
+
+.btn-confirm:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn-confirm:disabled:hover {
+    background-color: #cccccc;
+    transform: none;
+}

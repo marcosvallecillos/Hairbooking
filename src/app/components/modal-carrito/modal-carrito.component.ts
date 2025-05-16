@@ -330,7 +330,8 @@ export class ModalCarritoComponent implements OnInit {
   showModal: boolean = false;
 
   onConfirmReserve() {
-     
+       this.showModal = false;
+  this.show = false;    
     if (this.totalConDescuento === 0) {
       this.showZeroTotalAlert();
       return;

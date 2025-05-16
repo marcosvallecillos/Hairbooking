@@ -22,6 +22,8 @@ export class ModalCompraComponent implements OnInit {
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
+  productos: Product[] = [];
+  isLoading:boolean  = false
   
   showAlert: boolean = false;
   showAlertCancel: boolean = false;

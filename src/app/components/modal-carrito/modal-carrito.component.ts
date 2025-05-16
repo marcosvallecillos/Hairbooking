@@ -56,15 +56,19 @@ export class ModalCarritoComponent implements OnInit {
   }
   private cartSubscription: Subscription | undefined; // Para manejar la suscripción a cartItemsCount$
 
-  ngOnInit() {
-    this.isUser = this.userStateService.getIsUser();
-    this.userStateService.isUser$.subscribe(isUser => {
-        this.isUser = isUser;
-        if (isUser) {
-            this.cargarCarrito();
-            this.cargarFavoritos();
-            this.cartSubscription = this.apiService.cartItemsCount$.subscribe(count => {
-                if (count > 0) {
+ ngOnInit() {
+  this.isUser = this.userStateService.getIsUser();
+
+  this.userStateService.isUser$.subscribe(isUser => {
+    this.isUser = isUser;
+
+    // Si el usuario está logueado
+    if (isUser) {
+      this.cargarCarrito();
+      this.cargarFavoritos();
+
+      this.cartSubscription = this.apiService.cartItemsCount$.subscribe(count => {
+                if (count >= 0) {
                     this.cargarCarrito();
                 } else {
                     this.productos = [];
@@ -72,17 +76,20 @@ export class ModalCarritoComponent implements OnInit {
                     this.cdr.detectChanges();
                 }
             });
-        } else {
-            this.productos = [];
-            this.productosFavoritos = [];
-            this.calcularTotalYDescuento();
-            if (this.cartSubscription) {
-                this.cartSubscription.unsubscribe();
-            }
-        }
-    });
 
+    } else {
+      this.productos = [];
+      this.productosFavoritos = [];
+      this.calcularTotalYDescuento();
+
+      if (this.cartSubscription) {
+        this.cartSubscription.unsubscribe();
+        this.cartSubscription = undefined;
+      }
+    }
+  });
 }
+
 
 
   cargarCarrito() {
@@ -323,6 +330,7 @@ export class ModalCarritoComponent implements OnInit {
   showModal: boolean = false;
 
   onConfirmReserve() {
+     
     if (this.totalConDescuento === 0) {
       this.showZeroTotalAlert();
       return;

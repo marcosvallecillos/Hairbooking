@@ -7,14 +7,14 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class ApiService {
-private apiUrlUsuarios = 'http://localhost:8000/api/usuarios'
-private apiUrlReservas = 'http://localhost:8000/api/reservas'
-private apiUrlProductos = 'http://localhost:8000/api/productos'
-private apiUrlCompras = 'http://localhost:8000/api/compras'
-private apiUrlValoracion = 'http://localhost:8000/api/valoracion'
-private apiUrlContact = 'http://localhost:8000/contact'
-private apiUrlAnuladas = 'http://localhost:8000/api/anuladas'
-private apiUrlReservations = 'http://localhost:8000/api/reservations' // es para q cuando pasen de la hora se eliminen en la base de datos de reservations
+private apiUrlUsuarios = 'https://hairbooking-back.onrender.com/api/usuarios'
+private apiUrlReservas = 'https://hairbooking-back.onrender.com/api/reservas'
+private apiUrlProductos = 'https://hairbooking-back.onrender.com/api/productos'
+private apiUrlCompras = 'https://hairbooking-back.onrender.com/api/compras'
+private apiUrlValoracion = 'https://hairbooking-back.onrender.com/api/valoracion'
+private apiUrlContact = 'https://hairbooking-back.onrender.com/contact'
+private apiUrlAnuladas = 'https://hairbooking-back.onrender.com/api/anuladas'
+private apiUrlReservations = 'https://hairbooking-back.onrender.com/api/reservations' // es para q cuando pasen de la hora se eliminen en la base de datos de reservations
 public productos: Product[] = [];
 private favorites: Product[] = [];
 private reserves: Reserva[] = [];

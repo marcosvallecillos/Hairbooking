@@ -98,22 +98,19 @@ export class ShowReserveComponent implements OnInit {
   onConfirmDelete() {
     if (this.selectedReserve) {
       const reserveId = this.selectedReserve.id;
-      
-      // First, delete the rating if it exists
+      // Si la reserva es valorada, primero eliminamos la valoración
       if (this.selectedReserve.valoracion && typeof this.selectedReserve.valoracion === 'number') {
         this.apiService.deleteValoracion(this.selectedReserve.valoracion).subscribe({
           next: () => {
-            // After rating is deleted, delete the reservation
             this.deleteReservation(reserveId);
           },
           error: (error: Error) => {
             console.error('Error al eliminar la valoración', error);
-            // Even if rating deletion fails, try to delete the reservation
             this.deleteReservation(reserveId);
           }
         });
       } else {
-        // If no rating exists, just delete the reservation
+        // Si no hay valoración, eliminamos la reserva directamente
         this.deleteReservation(reserveId);
       }
     }
@@ -121,13 +118,14 @@ export class ShowReserveComponent implements OnInit {
 
   private deleteReservation(reserveId: number) {
     this.apiService.deleteReserve(reserveId).subscribe({
-      next: () => {
+      next: (response) => {
         this.reserves = this.reserves.filter(r => r.id !== reserveId);
         this.selectedReserve = null;
         this.showModal = false;
+        console.log('Reserva eliminada y movida a reservas anuladas:', response);
       },
       error: (error: Error) => {
-        console.error('Error al eliminar la reserva', error);
+        console.error('Error al eliminar la reserva:', error);
       }
     });
   }
@@ -196,14 +194,12 @@ export class ShowReserveComponent implements OnInit {
       return;
     }
 
-    // Use the same filtering endpoints as reservations component
     const filterMethod = tipo === 'activas' 
       ? this.apiService.filterReserveActivas()
       : this.apiService.filterReserveExpiradas();
 
     filterMethod.subscribe({
       next: (reservas) => {
-        // Filter to only show the current user's reservations
         this.reserves = reservas
           .filter(reserva => reserva.usuario_id === userId)
           .sort((a, b) => {

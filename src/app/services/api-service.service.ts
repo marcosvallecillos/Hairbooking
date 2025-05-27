@@ -7,14 +7,14 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class ApiService {
-private apiUrlUsuarios = 'https://hairbooking-back.onrender.com/api/usuarios'
-private apiUrlReservas = 'https://hairbooking-back.onrender.com/api/reservas'
-private apiUrlProductos = 'https://hairbooking-back.onrender.com/api/productos'
-private apiUrlCompras = 'https://hairbooking-back.onrender.com/api/compras'
-private apiUrlValoracion = 'https://hairbooking-back.onrender.com/api/valoracion'
-private apiUrlContact = 'https://hairbooking-back.onrender.com/contact'
-private apiUrlAnuladas = 'https://hairbooking-back.onrender.com/api/anuladas'
-private apiUrlReservations = 'https://hairbooking-back.onrender.com/api/reservations' // es para q cuando pasen de la hora se eliminen en la base de datos de reservations
+private apiUrlUsuarios = 'https://hairbookingback-production.up.railway.app/api/usuarios'
+private apiUrlReservas = 'https://hairbookingback-production.up.railway.app/api/reservas'
+private apiUrlProductos = 'https://hairbookingback-production.up.railway.app/api/productos'
+private apiUrlCompras = 'https://hairbookingback-production.up.railway.app/api/compras'
+private apiUrlValoracion = 'https://hairbookingback-production.up.railway.app/api/valoracion'
+private apiUrlContact = 'https://hairbookingback-production.up.railway.app/contact'
+private apiUrlAnuladas = 'https://hairbookingback-production.up.railway.app/api/anuladas'
+private apiUrlReservations = 'https://hairbookingback-production.up.railway.app/api/reservations' // es para q cuando pasen de la hora se eliminen en la base de datos de reservations
 public productos: Product[] = [];
 private favorites: Product[] = [];
 private reserves: Reserva[] = [];

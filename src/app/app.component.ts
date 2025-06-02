@@ -8,11 +8,12 @@ import { ApiService } from './services/api-service.service';
 import { Usuario } from './models/user.interface';
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
 import { Form, FormGroup } from '@angular/forms';
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent,HeaderAdminComponent],
+  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent,HeaderAdminComponent, ChatbotComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

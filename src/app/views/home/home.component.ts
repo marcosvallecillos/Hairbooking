@@ -7,6 +7,7 @@ import { ServicesComponent } from '../../components/services/services.component'
 import { GalleryComponent } from '../../components/gallery/gallery.component';
 import { CosmeticosComponent } from '../../components/cosmeticos/cosmeticos.component';
 import { RatingServiceComponent } from '../../components/rating-service/rating-service.component';
+import { ChatbotComponent } from '../../components/chatbot/chatbot.component';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ import { RatingServiceComponent } from '../../components/rating-service/rating-s
     ServicesComponent,
     CosmeticosComponent,
     RatingServiceComponent,
+    ChatbotComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

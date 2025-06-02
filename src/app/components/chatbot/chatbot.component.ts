@@ -26,6 +26,7 @@ export class ChatbotComponent implements OnInit {
     'horario': 'Nuestro horario de atención es de lunes a sábado de 9:00 a 19:30.',
     'direccion': 'Estamos ubicados en Plaza Hort Satisfecho, 26, 46460 Silla, Valencia',
     'productos': 'Tenemos varios productos disponibles:\n- Clipper Space X Versace – 109.99 €\n- Trimmer Skeleton – 129.99 €\n- Aceite para Barba – 18.99 €\n- Champú para Barba – 2.99 €\n- Sillón de barbería negro – 250 €\n- Tijeras de corte 6" – 10.99 €\n- Capa negra – 9.99 €\n- Peine Rulo – 3.99 € . \n Accede a la sección de productos para ver los productos disponibles en la web.',
+    'compra': 'Al realizar la compra, no podrás pagar a través de la web. Deberás acercarte al local para completar el pago. Sin embargo, tus productos serán reservados especialmente para ti.',
     'cita': 'Para agendar una cita, puedes hacerlo a través de nuestra aplicación o llamarnos directamente al número que aparece en nuestra página web.',
     'default': 'Lo siento, no tengo información sobre eso. Te sugiero que contactes directamente con nuestro equipo para más detalles.'
   };
@@ -62,9 +63,13 @@ export class ChatbotComponent implements OnInit {
         respuesta = this.respuestas.horario;
       } else if (userMessage.includes('donde') || userMessage.includes('direccion') || userMessage.includes('ubicacion')) {
         respuesta = this.respuestas.direccion;
-      } else if (userMessage.includes('producto') || userMessage.includes('comprar') || userMessage.includes('tienda')) {
+      } else if (userMessage.includes('producto') || userMessage.includes('tienda')) {
         respuesta = this.respuestas.productos;
-      } else if (userMessage.includes('cita') || userMessage.includes('reservar') || userMessage.includes('agendar')) {
+      } 
+      else if (userMessage.includes('compra') || userMessage.includes('tarjeta') || userMessage.includes('tienda')) {
+        respuesta = this.respuestas.compra;
+      }
+      else if (userMessage.includes('cita') || userMessage.includes('reservar') || userMessage.includes('reservo')|| userMessage.includes('agendar')) {
         respuesta = this.respuestas.cita;
       }
 

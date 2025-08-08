@@ -20,7 +20,8 @@
   <div class="chat-messages" #chatMessages>
     @for (message of messages; track message) {
       <div [class]="'message ' + message.sender">
-        <span class="avatar" [ngClass]="message.sender">👤</span>
+        <span class="avatar" [ngClass]="message.sender"> <img src="../../../../images/asistente_IA.png" alt="" style="width: 20px; height: 20px; ">
+</span>
         <div class="message-content">
           {{ message.text }}
         </div>

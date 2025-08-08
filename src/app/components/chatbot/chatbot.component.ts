@@ -28,6 +28,7 @@ export class ChatbotComponent implements OnInit {
     'productos': 'Tenemos varios productos disponibles:\n- Clipper Space X Versace – 109.99 €\n- Trimmer Skeleton – 129.99 €\n- Aceite para Barba – 18.99 €\n- Champú para Barba – 2.99 €\n- Sillón de barbería negro – 250 €\n- Tijeras de corte 6" – 10.99 €\n- Capa negra – 9.99 €\n- Peine Rulo – 3.99 € . \n Accede a la sección de productos para ver los productos disponibles en la web.',
     'compra': 'Al realizar la compra, no podrás pagar a través de la web. Deberás acercarte al local para completar el pago. Sin embargo, tus productos serán reservados especialmente para ti.',
     'cita': 'Para agendar una cita, puedes hacerlo a través de nuestra aplicación o llamarnos directamente al número que aparece en nuestra página web.',
+    'peluquero': 'Contamos con tres tipos de barberos, cada uno especializado para adaptarse a las necesidades y preferencias de cada cliente. Accede a la sección de sobre nosotros para más información ' ,
     'default': 'Lo siento, no tengo información sobre eso. Te sugiero que contactes directamente con nuestro equipo para más detalles.'
   };
 
@@ -71,6 +72,9 @@ export class ChatbotComponent implements OnInit {
       }
       else if (userMessage.includes('cita') || userMessage.includes('reservar') || userMessage.includes('reservo')|| userMessage.includes('agendar')) {
         respuesta = this.respuestas.cita;
+      }
+       else if (userMessage.includes('peluquero') || userMessage.includes('peluqueros') || userMessage.includes('barber') || userMessage.includes('barberos')  || userMessage.includes('servicio')) {
+        respuesta = this.respuestas.peluquero;
       }
 
       this.messages.push({ sender: 'assistant', text: respuesta });

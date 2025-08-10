@@ -2,12 +2,12 @@
   <div class="cookie-banner" role="dialog" aria-live="polite">
     <div class="cookie-content">
       <div class="cookie-text">
-        Usamos cookies para mejorar tu experiencia. Puedes aceptar todas, personalizar tus preferencias o rechazar las no esenciales.
+       {{getText('Usamos cookies para mejorar tu experiencia. Puedes aceptar todas, personalizar tus preferencias o rechazar las no esenciales.','We use cookies to improve your experience. You can accept all of them, customize your preferences, or reject non-essential cookies.')}} 
       </div>
       <div class="cookie-actions">
-        <button class="btn secondary" (click)="rejectAll()">Rechazar</button>
-        <button class="btn outline" (click)="openCustomize()">Personalizar</button>
-        <button class="btn primary" (click)="acceptAll()">Aceptar todas</button>
+        <button class="btn secondary" (click)="rejectAll()">{{getText('Rechazar','Reject')}} </button>
+        <button class="btn outline" (click)="openCustomize()">{{getText('Personalizar','Customize')}} </button>
+        <button class="btn primary" (click)="acceptAll()">{{getText('Aceptar todas','Accept All')}}</button>
       </div>
     </div>
   </div>
@@ -17,17 +17,17 @@
   <div class="cookie-overlay" role="dialog" aria-modal="true">
     <div class="cookie-modal" role="document">
       <div class="modal-header">
-        <h3 class="modal-title">Preferencias de cookies</h3>
+        <h3 class="modal-title">{{getText('Preferencias de cookies','Cookies Preferences')}} </h3>
         <button class="icon-btn" (click)="goBack()" aria-label="Cerrar">×</button>
       </div>
       <div class="modal-body">
-        <p class="muted">Selecciona los tipos de cookies que deseas permitir. Puedes cambiar tu elección en cualquier momento.</p>
+        <p class="muted">{{getText('Selecciona los tipos de cookies que deseas permitir. Puedes cambiar tu elección en cualquier momento.',' Select the types of cookies you want to allow. You can change your choice at any time.')}} </p>
 
         <div class="section">
           <div class="row">
             <div class="col">
-              <div class="title">Necesarias</div>
-              <div class="desc">Requeridas para el funcionamiento básico del sitio y para recordar tus preferencias esenciales.</div>
+              <div class="title">{{getText('Necesarias','Necessary')}} </div>
+              <div class="desc">{{getText('Requeridas para el funcionamiento básico del sitio y para recordar tus preferencias esenciales.','Required for basic site functionality and to remember your essential preferences')} </div>
             </div>
             <div class="col-auto">
               <label class="switch disabled">
@@ -41,8 +41,8 @@
         <div class="section">
           <div class="row">
             <div class="col">
-              <div class="title">Analíticas</div>
-              <div class="desc">Nos ayudan a entender cómo se utiliza el sitio para mejorar su rendimiento y experiencia.</div>
+              <div class="title">{{getText('Analíticas','Analytics')}} </div>
+              <div class="desc">{{getText('Nos ayudan a entender cómo se utiliza el sitio para mejorar su rendimiento y experiencia','They help us understand how the site is used to improve your performance and experience.')}} </div>
             </div>
             <div class="col-auto">
               <label class="switch">
@@ -57,7 +57,7 @@
           <div class="row">
             <div class="col">
               <div class="title">Marketing</div>
-              <div class="desc">Se utilizan para ofrecer contenidos y anuncios personalizados en función de tus intereses.</div>
+              <div class="desc">{{getText('Se utilizan para ofrecer contenidos y anuncios personalizados en función de tus intereses','They are used to offer personalized content and ads based on your interests.')}} </div>
             </div>
             <div class="col-auto">
               <label class="switch">
@@ -69,14 +69,14 @@
         </div>
 
         <div class="policies">
-          <a routerLink="/policy-cookies" rel="noopener">Política de cookies</a>
+          <a routerLink="/policy-cookies" rel="noopener">{{getText('Política de cookies','Cookies Policy')}} </a>
           <span>·</span>
-          <a routerLink="/privacy-policy" rel="noopener">Política de privacidad</a>
+          <a routerLink="/privacy-policy" rel="noopener">{{getText('Política de privacidad','Privacy Policy')}} </a>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn outline" (click)="goBack()">Cancelar</button>
-        <button class="btn primary" (click)="saveCustom()">Guardar preferencias</button>
+        <button class="btn outline" (click)="goBack()">{{getText('Cancelar','Cancel')}} </button>
+        <button class="btn primary" (click)="saveCustom()">{{getText('Guardar preferencias','Save preferences')}} </button>
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { LanguageService } from '../../services/language.service';
 
 type CookiePreferences = {
   necessary: boolean;
@@ -17,8 +18,8 @@ type CookiePreferences = {
   styleUrl: './cookie-consent.component.css'
 })
 export class CookieConsentComponent implements OnInit {
-  isVisible = false;
-  isCustomizing = false;
+  isVisible:boolean = false;
+  isCustomizing:boolean = false;
 
   preferences: Omit<CookiePreferences, 'timestamp'> = {
     necessary: true,
@@ -32,6 +33,18 @@ export class CookieConsentComponent implements OnInit {
       this.isVisible = true;
     }
   }
+
+  isSpanish: boolean = true;
+  
+    constructor(private languageService: LanguageService) {
+      this.languageService.isSpanish$.subscribe(
+        isSpanish => this.isSpanish = isSpanish
+      );
+    }
+  
+    getText(es: string, en: string): string {
+      return this.isSpanish ? es : en;
+    }
 
   acceptAll(): void {
     const all: CookiePreferences = {

@@ -9,11 +9,12 @@ import { Usuario } from './models/user.interface';
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
 import { Form, FormGroup } from '@angular/forms';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
+import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent,HeaderAdminComponent, ChatbotComponent],
+  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent,HeaderAdminComponent, ChatbotComponent, CookieConsentComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -30,7 +31,10 @@ export class AppComponent {
         if (this.router.url !== '/home-barber#jumbotron') {
           window.scrollTo(0, 0);
         }
-        this.mostrarHeader = this.router.url !== '/index'; 
+        this.mostrarHeader = this.router.url !== '/index' ; 
+        
+
+
       }
     });
   }
@@ -48,7 +52,7 @@ export class AppComponent {
     }, 0);
     
     this.router.events.subscribe(() => {
-      this.mostrarHeader = this.router.url !== '/index'; 
+      this.mostrarHeader = this.router.url !== '/index' && this.router.url !== '/policy-cookies' && this.router.url !== '/privacy-policy'; 
     });
   }
   

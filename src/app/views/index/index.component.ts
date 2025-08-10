@@ -5,7 +5,7 @@ import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-index',
-  imports: [RouterLink,FooterComponent],
+  imports: [RouterLink],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css'
 })

@@ -1,0 +1,91 @@
+@if (isVisible && !isCustomizing) {
+  <div class="cookie-banner" role="dialog" aria-live="polite">
+    <div class="cookie-content">
+      <div class="cookie-text">
+        Usamos cookies para mejorar tu experiencia. Puedes aceptar todas, personalizar tus preferencias o rechazar las no esenciales.
+      </div>
+      <div class="cookie-actions">
+        <button class="btn secondary" (click)="rejectAll()">Rechazar</button>
+        <button class="btn outline" (click)="openCustomize()">Personalizar</button>
+        <button class="btn primary" (click)="acceptAll()">Aceptar todas</button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (isCustomizing) {
+  <div class="cookie-overlay" role="dialog" aria-modal="true">
+    <div class="cookie-modal" role="document">
+      <div class="modal-header">
+        <h3 class="modal-title">Preferencias de cookies</h3>
+        <button class="icon-btn" (click)="goBack()" aria-label="Cerrar">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="muted">Selecciona los tipos de cookies que deseas permitir. Puedes cambiar tu elección en cualquier momento.</p>
+
+        <div class="section">
+          <div class="row">
+            <div class="col">
+              <div class="title">Necesarias</div>
+              <div class="desc">Requeridas para el funcionamiento básico del sitio y para recordar tus preferencias esenciales.</div>
+            </div>
+            <div class="col-auto">
+              <label class="switch disabled">
+                <input type="checkbox" checked disabled />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="row">
+            <div class="col">
+              <div class="title">Analíticas</div>
+              <div class="desc">Nos ayudan a entender cómo se utiliza el sitio para mejorar su rendimiento y experiencia.</div>
+            </div>
+            <div class="col-auto">
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="preferences.analytics" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="row">
+            <div class="col">
+              <div class="title">Marketing</div>
+              <div class="desc">Se utilizan para ofrecer contenidos y anuncios personalizados en función de tus intereses.</div>
+            </div>
+            <div class="col-auto">
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="preferences.marketing" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="policies">
+          <a routerLink="/policy-cookies" rel="noopener">Política de cookies</a>
+          <span>·</span>
+          <a routerLink="/privacy-policy" rel="noopener">Política de privacidad</a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn outline" (click)="goBack()">Cancelar</button>
+        <button class="btn primary" (click)="saveCustom()">Guardar preferencias</button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (!isVisible) {
+  <button class="cookie-fab" (click)="openFromFab()" aria-label="Abrir preferencias de cookies">
+    <i class="bi bi-cookie"></i>
+  </button>
+}
+
+

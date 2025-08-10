@@ -26,6 +26,8 @@ import { ModalUserComponent } from './components/modal-user/modal-user.component
 import { ReserveAdminComponent } from './views/reserve-admin/reserve-admin.component';
 import { CancelledReserveComponent } from './views/cancelled-reserve/cancelled-reserve.component';
 import { RatingServiceComponent } from './components/rating-service/rating-service.component';
+import { PolicyCookiesComponent } from './views/policy-cookies/policy-cookies.component';
+import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -54,7 +56,9 @@ export const routes: Routes = [
     {path: 'modal-user', component: ModalUserComponent},
     {path: 'reserve-admin', component: ReserveAdminComponent},
     {path: 'cancelled-reserve', component: CancelledReserveComponent},
-    {path: 'rating-reserve', component: RatingServiceComponent}
+    {path: 'rating-reserve', component: RatingServiceComponent},
+    {path: 'policy-cookies', component: PolicyCookiesComponent},
+    {path: 'privacy-policy', component: PrivacyPolicyComponent}
     
 ];
 

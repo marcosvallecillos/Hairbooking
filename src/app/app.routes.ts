@@ -1,4 +1,4 @@
-import { Routes,RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
 import { AboutUsComponent } from './views/about-us/about-us.component';
 import { ListPriceComponent } from './views/list-price/list-price.component';
@@ -62,13 +62,4 @@ export const routes: Routes = [
     
 ];
 
-    @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      scrollPositionRestoration: 'top', 
-    }),
-  ],
-  exports: [RouterModule],
-})
 
-export class AppModule {}

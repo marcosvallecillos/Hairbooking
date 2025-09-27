@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -7,7 +8,19 @@ import { RouterLink } from '@angular/router';
   styleUrl: './privacy-policy.component.css',
   imports: [RouterLink],
 })
-export class PrivacyPolicyComponent {}
+export class PrivacyPolicyComponent {
+  isSpanish: boolean = true;
+        
+          constructor(private languageService: LanguageService) {
+            this.languageService.isSpanish$.subscribe(
+              isSpanish => this.isSpanish = isSpanish
+            );
+          }
+        
+          getText(es: string, en: string): string {
+            return this.isSpanish ? es : en;
+          }
+}
 
 
 

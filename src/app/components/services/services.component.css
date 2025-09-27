@@ -2,6 +2,7 @@
 .services-section {
     padding: 5rem 0;
     background-image: url(../../../../public/images/servicios.jpg);
+    background-color: none;
     display: flex;
     height: auto;
     align-items: center;

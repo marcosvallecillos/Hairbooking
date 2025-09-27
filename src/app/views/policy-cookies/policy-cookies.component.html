@@ -1,165 +1,177 @@
 <div class="back-home-container">
-  <button routerLink="/home-barber" style="background-color:transparent;border: none;">   <img src="../../../../images/logo_hb.PNG"  class="logo"alt="" > </button>
-
+  <button routerLink="/home-barber" style="background-color:transparent;border: none;">
+    <img src="../../../../images/logo_hb.PNG" class="logo" alt="">
+  </button>
+  
 </div>
 
 <div class="cookies-policy-container">
-  <!-- Botón de volver al home -->
- 
-
   <div class="policy-header">
     <div class="header-icon">
       <i class="fas fa-cookie-bite"></i>
     </div>
-    <h1>Política de Cookies</h1>
-    <p class="last-updated">Última actualización: Diciembre 2024</p>
+    <h1>{{ getText('Política de Cookies', 'Cookies Policy') }}</h1>
+    <p class="last-updated">{{ getText('Última actualización: Diciembre 2024', 'Last updated: December 2024') }}</p>
   </div>
 
   <div class="policy-content">
+
+    <!-- Información General -->
     <div class="policy-section">
       <div class="section-header">
         <div class="section-icon">
           <i class="fas fa-info-circle"></i>
         </div>
-        <h2>Información General</h2>
+        <h2>{{ getText('Información General', 'General Information') }}</h2>
       </div>
       <div class="section-content">
-        <p>
-          En <strong>HairBooking</strong>, utilizamos cookies para mejorar tu experiencia de navegación y proporcionarte un servicio personalizado. Esta Política de Cookies explica qué son las cookies, qué tipos utilizamos y cómo puedes gestionarlas.
-        </p>
+        <!-- usamos innerHTML porque el texto lleva <strong> -->
+        <p [innerHTML]="getText(
+          'En <strong>HairBooking</strong>, utilizamos cookies para mejorar tu experiencia de navegación y proporcionarte un servicio personalizado. Esta Política de Cookies explica qué son las cookies, qué tipos utilizamos y cómo puedes gestionarlas.',
+          'At <strong>HairBooking</strong>, we use cookies to improve your browsing experience and provide you with a personalized service. This Cookies Policy explains what cookies are, the types we use, and how you can manage them.'
+        )"></p>
+
         <div class="info-box">
-          <i class="fas fa-lightbulb"></i>
-          <p>Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas nuestro sitio web.</p>
+          <i class="fas fa-lightbulb"> </i>
+          
+          <p> {{ getText(' Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas nuestro sitio web.', 'Cookies are small text files that are stored on your device when you visit our website.') }}</p>
         </div>
       </div>
     </div>
 
+    <!-- Qué son las Cookies -->
     <div class="policy-section">
       <div class="section-header">
         <div class="section-icon">
           <i class="fas fa-question-circle"></i>
         </div>
-        <h2>¿Qué son las Cookies?</h2>
+        <h2>{{ getText('¿Qué son las Cookies?', 'What are Cookies?') }}</h2>
       </div>
       <div class="section-content">
         <div class="cookie-explanation">
+
           <div class="explanation-item">
             <div class="explanation-icon">
               <i class="fas fa-file-alt"></i>
             </div>
             <div class="explanation-content">
-              <h3>Archivos de Texto</h3>
-              <p>Las cookies son pequeños archivos de texto que se descargan y almacenan en tu dispositivo (ordenador, teléfono inteligente, tableta) cuando accedes a nuestro sitio web.</p>
+              <h3>{{ getText('Archivos de Texto', 'Text Files') }}</h3>
+              <p>{{ getText('Las cookies son pequeños archivos de texto que se descargan y almacenan en tu dispositivo (ordenador, teléfono inteligente, tableta) cuando accedes a nuestro sitio web.', 'Cookies are small text files that are downloaded and stored on your device (computer, smartphone, tablet) when you access our website.') }}</p>
             </div>
           </div>
-          
+
           <div class="explanation-item">
             <div class="explanation-icon">
               <i class="fas fa-memory"></i>
             </div>
             <div class="explanation-content">
-              <h3>Almacenamiento de Información</h3>
-              <p>Permiten almacenar y recuperar información sobre tus hábitos de navegación, preferencias y el equipo que utilizas.</p>
+              <h3>{{ getText('Almacenamiento de Información', 'Information Storage') }}</h3>
+              <p>{{ getText('Permiten almacenar y recuperar información sobre tus hábitos de navegación, preferencias y el equipo que utilizas.', 'They allow storing and retrieving information about your browsing habits, preferences, and the device you use.') }}</p>
             </div>
           </div>
-          
+
           <div class="explanation-item">
             <div class="explanation-icon">
               <i class="fas fa-user-check"></i>
             </div>
             <div class="explanation-content">
-              <h3>Reconocimiento de Usuario</h3>
-              <p>Pueden utilizarse para reconocerte como usuario recurrente y personalizar tu experiencia.</p>
+              <h3>{{ getText('Reconocimiento de Usuario', 'User Recognition') }}</h3>
+              <p>{{ getText('Pueden utilizarse para reconocerte como usuario recurrente y personalizar tu experiencia.', 'They can be used to recognize you as a returning user and personalize your experience.') }}</p>
             </div>
           </div>
+
         </div>
       </div>
     </div>
 
+    <!-- Tipos de Cookies -->
     <div class="policy-section">
       <div class="section-header">
         <div class="section-icon">
           <i class="fas fa-list"></i>
         </div>
-        <h2>Tipos de Cookies que Utilizamos</h2>
+        <h2>{{ getText('Tipos de Cookies que Utilizamos', 'Types of Cookies We Use') }}</h2>
       </div>
       <div class="section-content">
         <div class="cookie-types">
+
           <div class="cookie-type">
             <div class="type-header">
               <div class="type-icon">
                 <i class="fas fa-shield-alt"></i>
               </div>
-              <h3>Cookies Necesarias</h3>
-              <span class="type-badge necessary">Necesarias</span>
+              <h3>{{ getText('Cookies Necesarias', 'Necessary Cookies') }}</h3>
+              <span class="type-badge necessary">{{ getText('Necesarias', 'Necessary') }}</span>
             </div>
             <div class="type-content">
-              <p>Son esenciales para el funcionamiento básico del sitio web y garantizar su seguridad. Sin ellas, algunas funcionalidades podrían no estar disponibles.</p>
+              <p>{{ getText('Son esenciales para el funcionamiento básico del sitio web y garantizar su seguridad. Sin ellas, algunas funcionalidades podrían no estar disponibles.', 'They are essential for the basic functioning of the website and ensuring its security. Without them, some features may not be available.') }}</p>
               <div class="type-examples">
-                <h4>Ejemplos:</h4>
+                <h4>{{ getText('Ejemplos:', 'Examples:') }}</h4>
                 <ul>
-                  <li>Autenticación de usuarios</li>
-                  <li>Carrito de compras</li>
-                  <li>Preferencias de idioma</li>
-                  <li>Seguridad del sitio</li>
+                  <li>{{ getText('Autenticación de usuarios', 'User authentication') }}</li>
+                  <li>{{ getText('Carrito de compras', 'Shopping cart') }}</li>
+                  <li>{{ getText('Preferencias de idioma', 'Language preferences') }}</li>
+                  <li>{{ getText('Seguridad del sitio', 'Site security') }}</li>
                 </ul>
               </div>
             </div>
           </div>
-          
+
           <div class="cookie-type">
             <div class="type-header">
               <div class="type-icon">
                 <i class="fas fa-chart-bar"></i>
               </div>
-              <h3>Cookies Analíticas</h3>
-              <span class="type-badge analytics">Analíticas</span>
+              <h3>{{ getText('Cookies Analíticas', 'Analytical Cookies') }}</h3>
+              <span class="type-badge analytics">{{ getText('Analíticas', 'Analytics') }}</span>
             </div>
             <div class="type-content">
-              <p>Recogen información anónima sobre el uso que los visitantes hacen del sitio web, con el fin de medir y mejorar su funcionamiento.</p>
+              <p>{{ getText('Recogen información anónima sobre el uso que los visitantes hacen del sitio web, con el fin de medir y mejorar su funcionamiento.', 'They collect anonymous information about how visitors use the website in order to measure and improve its performance.') }}</p>
               <div class="type-examples">
-                <h4>Ejemplos:</h4>
+                <h4>{{ getText('Ejemplos:', 'Examples:') }}</h4>
                 <ul>
-                  <li>Páginas más visitadas</li>
-                  <li>Tiempo de navegación</li>
-                  <li>Fuentes de tráfico</li>
-                  <li>Comportamiento del usuario</li>
+                  <li>{{ getText('Páginas más visitadas', 'Most visited pages') }}</li>
+                  <li>{{ getText('Tiempo de navegación', 'Navegation time') }}</li>
+                  <li>{{ getText('Fuentes de tráfico', 'Traffic sources') }}</li>
+                  <li>{{ getText('Comportamiento del usuario', 'User behavior') }}</li>
                 </ul>
               </div>
             </div>
           </div>
-          
+
           <div class="cookie-type">
             <div class="type-header">
               <div class="type-icon">
                 <i class="fas fa-bullseye"></i>
               </div>
-              <h3>Cookies de Marketing</h3>
-              <span class="type-badge marketing">Marketing</span>
+              <h3>{{ getText('Cookies de Marketing', 'Marketing Cookies') }}</h3>
+              <span class="type-badge marketing">{{ getText('Marketing', 'Marketing') }}</span>
             </div>
             <div class="type-content">
-              <p>Permiten recordar tus preferencias y mostrarte contenidos y anuncios adaptados a tus intereses.</p>
+              <p>{{ getText('Permiten recordar tus preferencias y mostrarte contenidos y anuncios adaptados a tus intereses.', 'They allow remembering your preferences and showing you content and ads tailored to your interests.') }}</p>
               <div class="type-examples">
-                <h4>Ejemplos:</h4>
+                <h4>{{ getText('Ejemplos:', 'Examples:') }}</h4>
                 <ul>
-                  <li>Publicidad personalizada</li>
-                  <li>Recomendaciones de productos</li>
-                  <li>Contenido relevante</li>
-                  <li>Análisis de campañas</li>
+                  <li>{{ getText('Publicidad personalizada', 'Personalized advertising') }}</li>
+                  <li>{{ getText('Recomendaciones de productos', 'Product recommendations') }}</li>
+                  <li>{{ getText('Contenido relevante', 'Relevant content') }}</li>
+                  <li>{{ getText('Análisis de campañas', 'Campaign analysis') }}</li>
                 </ul>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
 
+    <!-- Gestión y Configuración -->
     <div class="policy-section">
       <div class="section-header">
         <div class="section-icon">
           <i class="fas fa-cog"></i>
         </div>
-        <h2>Gestión y Configuración</h2>
+        <h2>{{ getText('Gestión y Configuración', 'Management and Settings') }}</h2>
       </div>
       <div class="section-content">
         <div class="management-options">
@@ -168,56 +180,60 @@
               <i class="fas fa-toggle-on"></i>
             </div>
             <div class="management-content">
-              <h3>Panel de Preferencias</h3>
-              <p>Puedes aceptar, rechazar o configurar tus preferencias de cookies en cualquier momento mediante el botón flotante <strong>"Preferencias de cookies"</strong> disponible en nuestro sitio web.</p>
+              <!-- innerHTML porque incluye <strong> -->
+             <p [innerHTML]="getText(
+  'Puedes aceptar, rechazar o configurar las cookies a través del botón <strong>Preferencias de cookies</strong> disponible en nuestro sitio web.',
+  'You can accept, reject, or configure cookies through the <strong>Cookie preferences</strong> button available on our website.'
+)"></p>
             </div>
           </div>
-          
+
           <div class="management-item">
             <div class="management-icon">
               <i class="fas fa-browser"></i>
             </div>
             <div class="management-content">
-              <h3>Configuración del Navegador</h3>
-              <p>También puedes deshabilitar o eliminar las cookies a través de la configuración de tu navegador. Ten en cuenta que, al deshabilitar determinadas cookies, la funcionalidad del sitio podría verse afectada.</p>
+              <h3>{{ getText('Configuración del Navegador', 'Browser Settings') }}</h3>
+              <p>{{ getText('También puedes deshabilitar o eliminar las cookies a través de la configuración de tu navegador. Ten en cuenta que, al deshabilitar determinadas cookies, la funcionalidad del sitio podría verse afectada.', 'You can also disable or delete cookies through your browser settings. Note that disabling certain cookies may affect site functionality.') }}</p>
             </div>
           </div>
         </div>
-        
+
         <div class="browser-instructions">
-          <h3>Instrucciones por Navegador</h3>
+          <h3>{{ getText('Instrucciones por Navegador', 'Browser Instructions') }}</h3>
           <div class="browser-grid">
             <div class="browser-item">
               <i class="fab fa-chrome"></i>
-              <h4>Chrome</h4>
-              <p>Configuración → Privacidad y seguridad → Cookies y otros datos del sitio</p>
+              <h4>{{ getText('Chrome', 'Chrome') }}</h4>
+              <p>{{ getText('Configuración → Privacidad y seguridad → Cookies y otros datos del sitio', 'Settings → Privacy and security → Cookies and other site data') }}</p>
             </div>
             <div class="browser-item">
               <i class="fab fa-firefox"></i>
-              <h4>Firefox</h4>
-              <p>Opciones → Privacidad y seguridad → Cookies y datos del sitio</p>
+              <h4>{{ getText('Firefox', 'Firefox') }}</h4>
+              <p>{{ getText('Opciones → Privacidad y seguridad → Cookies y datos del sitio', 'Options → Privacy & Security → Cookies and Site Data') }}</p>
             </div>
             <div class="browser-item">
               <i class="fab fa-safari"></i>
-              <h4>Safari</h4>
-              <p>Preferencias → Privacidad → Cookies y datos del sitio web</p>
+              <h4>{{ getText('Safari', 'Safari') }}</h4>
+              <p>{{ getText('Preferencias → Privacidad → Cookies y datos del sitio web', 'Preferences → Privacy → Cookies and website data') }}</p>
             </div>
             <div class="browser-item">
               <i class="fab fa-edge"></i>
-              <h4>Edge</h4>
-              <p>Configuración → Cookies y permisos del sitio → Cookies</p>
+              <h4>{{ getText('Edge', 'Edge') }}</h4>
+              <p>{{ getText('Configuración → Cookies y permisos del sitio → Cookies', 'Settings → Cookies and site permissions → Cookies') }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Duración -->
     <div class="policy-section">
       <div class="section-header">
         <div class="section-icon">
           <i class="fas fa-clock"></i>
         </div>
-        <h2>Duración de las Cookies</h2>
+        <h2>{{ getText('Duración de las Cookies', 'Cookies Duration') }}</h2>
       </div>
       <div class="section-content">
         <div class="duration-timeline">
@@ -226,65 +242,66 @@
               <i class="fas fa-hourglass-start"></i>
             </div>
             <div class="duration-content">
-              <h3>Cookies de Sesión</h3>
-              <p>Se eliminan automáticamente cuando cierras el navegador</p>
-              <span class="duration-time">Duración: Sesión</span>
+              <h3>{{ getText('Cookies de Sesión', 'Session Cookies') }}</h3>
+              <p>{{ getText('Se eliminan automáticamente cuando cierras el navegador', 'They are deleted automatically when you close your browser') }}</p>
+              <span class="duration-time">{{ getText('Duración: Sesión', 'Duration: Session') }}</span>
             </div>
           </div>
-          
+
           <div class="duration-item">
             <div class="duration-icon">
               <i class="fas fa-calendar-day"></i>
             </div>
             <div class="duration-content">
-              <h3>Cookies Temporales</h3>
-              <p>Permanecen en tu dispositivo durante un período específico</p>
-              <span class="duration-time">Duración: 30 días</span>
+              <h3>{{ getText('Cookies Temporales', 'Temporary Cookies') }}</h3>
+              <p>{{ getText('Permanecen en tu dispositivo durante un período específico', 'They remain on your device for a specific period') }}</p>
+              <span class="duration-time">{{ getText('Duración: 30 días', 'Duration: 30 days') }}</span>
             </div>
           </div>
-          
+
           <div class="duration-item">
             <div class="duration-icon">
               <i class="fas fa-calendar-alt"></i>
             </div>
             <div class="duration-content">
-              <h3>Cookies Persistentes</h3>
-              <p>Se mantienen hasta que las elimines manualmente o expiren</p>
-              <span class="duration-time">Duración: 1 año</span>
+              <h3>{{ getText('Cookies Persistentes', 'Persistent Cookies') }}</h3>
+              <p>{{ getText('Se mantienen hasta que las elimines manualmente o expiren', 'They remain until you delete them manually or they expire') }}</p>
+              <span class="duration-time">{{ getText('Duración: 1 año', 'Duration: 1 year') }}</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Cookies de Terceros -->
     <div class="policy-section">
       <div class="section-header">
         <div class="section-icon">
           <i class="fas fa-exclamation-triangle"></i>
         </div>
-        <h2>Cookies de Terceros</h2>
+        <h2>{{ getText('Cookies de Terceros', 'Third-Party Cookies') }}</h2>
       </div>
       <div class="section-content">
         <div class="third-party-info">
-          <p>Nuestro sitio web puede utilizar cookies de terceros para servicios como análisis web, publicidad y redes sociales. Estos terceros tienen sus propias políticas de privacidad.</p>
-          
+          <p>{{ getText('Nuestro sitio web puede utilizar cookies de terceros para servicios como análisis web, publicidad y redes sociales. Estos terceros tienen sus propias políticas de privacidad.', 'Our website may use third-party cookies for services such as web analytics, advertising and social networks. These third parties have their own privacy policies.') }}</p>
+
           <div class="third-party-services">
-            <h3>Servicios de Terceros que Utilizamos</h3>
+            <h3>{{ getText('Servicios de Terceros que Utilizamos', 'Third-Party Services We Use') }}</h3>
             <div class="services-grid">
               <div class="service-item">
                 <i class="fab fa-google"></i>
-                <h4>Google Analytics</h4>
-                <p>Análisis de tráfico web y comportamiento de usuarios</p>
+                <h4>{{ getText('Google Analytics', 'Google Analytics') }}</h4>
+                <p>{{ getText('Análisis de tráfico web y comportamiento de usuarios', 'Web traffic analysis and user behavior') }}</p>
               </div>
               <div class="service-item">
                 <i class="fab fa-facebook"></i>
-                <h4>Facebook Pixel</h4>
-                <p>Publicidad dirigida y análisis de conversiones</p>
+                <h4>{{ getText('Facebook Pixel', 'Facebook Pixel') }}</h4>
+                <p>{{ getText('Publicidad dirigida y análisis de conversiones', 'Targeted advertising and conversion analysis') }}</p>
               </div>
               <div class="service-item">
                 <i class="fas fa-ad"></i>
-                <h4>Google Ads</h4>
-                <p>Publicidad personalizada y remarketing</p>
+                <h4>{{ getText('Google Ads', 'Google Ads') }}</h4>
+                <p>{{ getText('Publicidad personalizada y remarketing', 'Personalized advertising and remarketing') }}</p>
               </div>
             </div>
           </div>
@@ -292,64 +309,68 @@
       </div>
     </div>
 
+    <!-- Actualizaciones -->
     <div class="policy-section">
       <div class="section-header">
         <div class="section-icon">
           <i class="fas fa-sync-alt"></i>
         </div>
-        <h2>Actualizaciones de la Política</h2>
+        <h2>{{ getText('Actualizaciones de la Política', 'Policy Updates') }}</h2>
       </div>
       <div class="section-content">
         <div class="updates-info">
-          <p>Nos reservamos el derecho de actualizar esta Política de Cookies para reflejar cambios legales, técnicos o en nuestros servicios. Te recomendamos revisar esta política de forma periódica.</p>
-          
+          <p>{{ getText('Nos reservamos el derecho de actualizar esta Política de Cookies para reflejar cambios legales, técnicos o en nuestros servicios. Te recomendamos revisar esta política de forma periódica.', 'We reserve the right to update this Cookies Policy to reflect legal, technical or service changes. We recommend checking this policy periodically.') }}</p>
+
           <div class="update-notification">
             <i class="fas fa-bell"></i>
             <div>
-              <h4>Notificaciones de Cambios</h4>
-              <p>Te notificaremos sobre cambios significativos en esta política a través de nuestro sitio web o por correo electrónico.</p>
+              <h4>{{ getText('Notificaciones de Cambios', 'Change Notifications') }}</h4>
+              <p>{{ getText('Te notificaremos sobre cambios significativos en esta política a través de nuestro sitio web o por correo electrónico.', 'We will notify you of significant changes to this policy via our website or email.') }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Contacto -->
     <div class="policy-section">
       <div class="section-header">
         <div class="section-icon">
           <i class="fas fa-question-circle"></i>
         </div>
-        <h2>Contacto</h2>
+        <h2>{{ getText('Contacto', 'Contact') }}</h2>
       </div>
       <div class="section-content">
-        <p>Si tienes alguna pregunta sobre nuestra Política de Cookies o sobre cómo utilizamos las cookies, no dudes en contactarnos:</p>
-        
+        <p>{{ getText('Si tienes alguna pregunta sobre nuestra Política de Cookies o sobre cómo utilizamos las cookies, no dudes en contactarnos:', 'If you have any questions about our Cookies Policy or how we use cookies, do not hesitate to contact us:') }}</p>
+
         <div class="contact-card">
           <div class="contact-details">
             <div class="contact-detail">
               <i class="fas fa-envelope"></i>
               <div>
-                <h4>Email</h4>
-                <p>   Hairbooking&#64;gmail.com</p>
+                <h4>{{ getText('Email', 'Email') }}</h4>
+                <p>{{ getText('Hairbooking&#64;gmail.com', 'Hairbooking&#64;gmail.com') }}</p>
               </div>
             </div>
             <div class="contact-detail">
               <i class="fas fa-phone"></i>
               <div>
-                <h4>Teléfono</h4>
-                <p>+34 900 123 456</p>
+                <h4>{{ getText('Teléfono', 'Phone') }}</h4>
+                <p>{{ getText('+34 900 123 456', '+34 900 123 456') }}</p>
               </div>
             </div>
             <div class="contact-detail">
               <i class="fas fa-clock"></i>
               <div>
-                <h4>Horario de Atención</h4>
-                <p>Lunes a Viernes: 9:00 - 18:00</p>
+                <h4>{{ getText('Horario de Atención', 'Opening Hours') }}</h4>
+                <p>{{ getText('Lunes a Viernes: 9:00 - 18:00', 'Monday to Friday: 9:00 - 18:00') }}</p>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
+
   </div>
 </div>

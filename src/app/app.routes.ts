@@ -45,7 +45,7 @@ export const routes: Routes = [
     { path: 'products', component: ProductsComponent },
     { path: 'cosmetics', component: CosmeticosComponent },
     { path: 'confirm-compra', component: ModalCompraComponent },
-    { path: 'show-reserve', component: ShowReserveComponent, canActivate: [AuthUserGuard] },
+    { path: 'show-reserve', component: ShowReserveComponent},
     { path: 'show-buys', component: ShowBuysComponent, canActivate: [AuthUserGuard] },
     { path: 'favorites', component: FavoritosComponent, canActivate: [AuthUserGuard] },
     { path: 'rate-service/:id', component: RateServiceComponent, canActivate: [AuthUserGuard] },

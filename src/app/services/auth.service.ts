@@ -17,7 +17,17 @@ export class AuthService {
     const isLoggedIn = !!userData;
     this.isLoggedInSubject.next(isLoggedIn);
     if (isLoggedIn) {
-      localStorage.setItem('userType', 'usuario');
+      try {
+        const user = JSON.parse(userData);
+        const userRole = user.rol || user.role;
+        if (userRole === 'admin') {
+          localStorage.setItem('userType', 'admin');
+        } else {
+          localStorage.setItem('userType', 'usuario');
+        }
+      } catch (e) {
+        localStorage.setItem('userType', 'usuario');
+      }
     } else {
       localStorage.setItem('userType', 'invitado');
     }
@@ -25,7 +35,13 @@ export class AuthService {
 
   login(userData: any) {
     localStorage.setItem('userData', JSON.stringify(userData));
-    localStorage.setItem('userType', 'usuario');
+    // Establecer userType según el rol del usuario
+    const userRole = userData.rol || userData.role;
+    if (userRole === 'admin') {
+      localStorage.setItem('userType', 'admin');
+    } else {
+      localStorage.setItem('userType', 'usuario');
+    }
     this.isLoggedInSubject.next(true);
   }
 

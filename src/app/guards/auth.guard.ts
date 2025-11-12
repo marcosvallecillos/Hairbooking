@@ -11,7 +11,8 @@ export class AdminGuard implements CanActivate {
 
   canActivate(): boolean {
     const user = this.authService.getUserData(); // método que devuelve el usuario logueado
-    if (user && user.role === 'admin') {
+    // Verificar tanto 'role' como 'rol' para compatibilidad
+    if (user && (user.rol === 'admin' || user.role === 'admin')) {
       return true;
     }
 

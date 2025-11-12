@@ -36,7 +36,13 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.isLoggedInSubject.value;
+    // Verificar tanto el BehaviorSubject como el localStorage para mayor seguridad
+    const userData = localStorage.getItem('userData');
+    const isLoggedIn = !!userData;
+    if (isLoggedIn !== this.isLoggedInSubject.value) {
+      this.isLoggedInSubject.next(isLoggedIn);
+    }
+    return isLoggedIn;
   }
 
   getUserData(): any {

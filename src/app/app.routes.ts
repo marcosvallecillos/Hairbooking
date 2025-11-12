@@ -14,7 +14,6 @@ import { CosmeticosComponent } from './components/cosmeticos/cosmeticos.componen
 import { ModalCompraComponent } from './components/modal-compra/modal-compra.component';
 import { ShowReserveComponent } from './views/show-reserve/show-reserve.component';
 import { ShowBuysComponent } from './views/show-buys/show-buys.component';
-import { NgModule } from '@angular/core';
 import { FavoritosComponent } from './views/favoritos/favoritos.component';
 import { RateServiceComponent } from './views/rate-service/rate-service.component';
 import { ShowClientsComponent } from './views/show-clients/show-clients.component';
@@ -28,6 +27,8 @@ import { CancelledReserveComponent } from './views/cancelled-reserve/cancelled-r
 import { RatingServiceComponent } from './components/rating-service/rating-service.component';
 import { PolicyCookiesComponent } from './views/policy-cookies/policy-cookies.component';
 import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
+import { AdminGuard } from './guards/auth.guard';
+import { AuthUserGuard } from './guards/auth-user.guard';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -39,26 +40,27 @@ export const routes: Routes = [
     { path: 'login', component: ModalLoginComponent },
     { path: 'header-user', component: HeaderUserComponent },
     { path: 'contacto', component: ContactoComponent },
-    { path: 'showProfile', component: ShowProfileComponent },
-    { path: 'editProfile', component: EditProfileComponent },
+    { path: 'showProfile', component: ShowProfileComponent, canActivate: [AuthUserGuard] },
+    { path: 'editProfile', component: EditProfileComponent, canActivate: [AuthUserGuard] },
     { path: 'products', component: ProductsComponent },
     { path: 'cosmetics', component: CosmeticosComponent },
     { path: 'confirm-compra', component: ModalCompraComponent },
-    { path: 'show-reserve', component: ShowReserveComponent },
-    { path: 'show-buys', component: ShowBuysComponent },
-    { path: 'favorites', component: FavoritosComponent },
-    { path: 'rate-service/:id', component: RateServiceComponent },
-    { path: 'show-clients', component: ShowClientsComponent },
-    { path: 'reservations', component: ReservationsComponent },
-    { path: 'bought_products', component: BoughtProductsComponent},
-    { path: 'valued_services', component: ValuedServicesComponent },
-    { path: 'create-user', component: CreateUserComponent },
-    {path: 'modal-user', component: ModalUserComponent},
-    {path: 'reserve-admin', component: ReserveAdminComponent},
-    {path: 'cancelled-reserve', component: CancelledReserveComponent},
+    { path: 'show-reserve', component: ShowReserveComponent, canActivate: [AuthUserGuard] },
+    { path: 'show-buys', component: ShowBuysComponent, canActivate: [AuthUserGuard] },
+    { path: 'favorites', component: FavoritosComponent, canActivate: [AuthUserGuard] },
+    { path: 'rate-service/:id', component: RateServiceComponent, canActivate: [AuthUserGuard] },
+    { path: 'show-clients', component: ShowClientsComponent, canActivate: [AdminGuard] },
+    { path: 'reservations', component: ReservationsComponent, canActivate: [AdminGuard] },
+    { path: 'bought_products', component: BoughtProductsComponent, canActivate: [AdminGuard]},
+    { path: 'valued_services', component: ValuedServicesComponent, canActivate: [AdminGuard] },
+    { path: 'create-user', component: CreateUserComponent, canActivate: [AdminGuard] },
+    {path: 'modal-user', component: ModalUserComponent, canActivate: [AdminGuard]},
+    {path: 'reserve-admin', component: ReserveAdminComponent, canActivate: [AdminGuard]},
+    {path: 'cancelled-reserve', component: CancelledReserveComponent, canActivate: [AdminGuard]},
     {path: 'rating-reserve', component: RatingServiceComponent},
     {path: 'policy-cookies', component: PolicyCookiesComponent},
-    {path: 'privacy-policy', component: PrivacyPolicyComponent}
+    {path: 'privacy-policy', component: PrivacyPolicyComponent},
+    
     
 ];
 

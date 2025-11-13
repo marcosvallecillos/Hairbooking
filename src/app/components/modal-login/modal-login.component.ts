@@ -52,8 +52,10 @@ export class ModalLoginComponent {
       telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       password: ['', [Validators.required, Validators.minLength(5)]],
       confirmPassword: ['', [Validators.required]],
-      rol: ['alumno', [Validators.required]]
+      rol: ['usuario', [Validators.required]]
     }, { validators: this.passwordsMatchValidator });
+
+    this.setDefaultRole();
 
     this.languageService.isSpanish$.subscribe(isSpanish => {
       this.isSpanish = isSpanish;
@@ -72,6 +74,7 @@ export class ModalLoginComponent {
     this.errorMessage = '';
     this.loginForm.reset();
     this.registerForm.reset();
+    this.setDefaultRole();
   }
 
   togglePasswordVisibility(field: 'password' | 'confirmPassword') {
@@ -171,7 +174,7 @@ export class ModalLoginComponent {
           telefono: Number(this.registerForm.get('telefono')?.value),
           password: this.registerForm.get('password')?.value,
           confirm_password: this.registerForm.get('confirmPassword')?.value,
-          rol: this.registerForm.get('rol')?.value,
+          rol: 'usuario',
           citas_reservadas: []
         };
       
@@ -188,6 +191,7 @@ export class ModalLoginComponent {
               this.showAlert = false;
               this.isRegister = false;
               this.registerForm.reset();
+              this.setDefaultRole();
             }, 3000);
           },
           error: (error) => {
@@ -214,6 +218,11 @@ export class ModalLoginComponent {
     this.errorMessage = '';
     this.loginForm.reset();
     this.registerForm.reset();
+    this.setDefaultRole();
+  }
+
+  private setDefaultRole() {
+    this.registerForm.patchValue({ rol: 'usuario' });
   }
 
   getText(es: string, en: string): string {

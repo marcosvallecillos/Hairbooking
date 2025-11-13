@@ -83,9 +83,16 @@
             }
           </div>
 
-          <!-- Rol -->
-          <div class="form-group">
-            <input type="rol" formControlName="rol" placeholder="Rol" class="form-input" />
+          <!-- Rol (solo lectura) -->
+          <div class="form-group role-field" (click)="$event.preventDefault()">
+            <input
+              type="text"
+              formControlName="rol"
+              placeholder="Rol"
+              class="form-input role-input"
+              readonly
+              tabindex="-1"
+            />
             @if(getControl('rol')?.invalid && getControl('rol')?.touched) {
               <small class="text-danger">
                 {{ getText('El rol es obligatorio', 'Role is required') }}

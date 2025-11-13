@@ -203,6 +203,19 @@ h2.active{
     box-shadow: 0 6px 15px #b58801;
 }
 
+.role-field {
+    cursor: not-allowed;
+}
+
+.role-input {
+    cursor: not-allowed;
+    user-select: none;
+}
+
+.role-input:focus {
+    outline: none;
+}
+
 .register-link {
     background: none;
     border: none;

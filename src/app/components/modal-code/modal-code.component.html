@@ -1,0 +1,27 @@
+@if (show) {
+  <div class="modal-overlay" (click)="onClose()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-button" (click)="onClose()">×</button>
+      <h2>{{ getText('Codigo', 'Code') }}</h2>
+      <div class="codigo-container">
+        <p class="codigo-texto">{{ codigo }}</p>
+        <button type="button" class="copy-button" (click)="copiarTexto($event)" [title]="getText('Copiar código', 'Copy code')">
+          <i class="fa-solid fa-copy"></i>
+          <span>{{ getText('Copiar', 'Copy') }}</span>
+        </button>
+      </div>
+      <div class="alert-info">
+        <div class="alert-icon">ℹ️</div>
+        <div class="alert-content">
+          <p class="alert-description">
+            {{ getText('Este código es personal y de uso exclusivo. No lo compartas con nadie.', 'Payment must be made on the premises.') }}
+          </p>
+        </div>
+      </div>
+      
+      @if(mostrarMensaje){
+        <p class="mensaje-copiado">{{ getText('¡Copiado!', 'Copied!') }}</p>
+      }
+    </div>
+  </div>
+}

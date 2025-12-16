@@ -1,9 +1,15 @@
 @if (show) {
   <div class="modal-overlay">
     <div class="modal-content">
-      <h2>{{ isReservePast({ id: 0, servicio: servicio, peluquero: peluquero, precio: '0', dia: fecha ?? '', hora: hora, usuario_id: usuario ?? 0, valoracion: null }) ? getText('Borrar Reserva', 'Delete Reserve') : getText('Anular Reserva', 'Cancel Reserve') }}</h2>
+      <h2>
+        {{
+          isReservePast(fecha ?? '', hora)
+            ? getText('Borrar Reserva', 'Delete Reserve')
+            : getText('Anular Reserva', 'Cancel Reserve')
+        }}
+      </h2>
       <div class="modal-body">
-        @if (!isReservePast({ id: 0, servicio: servicio, peluquero: peluquero, precio: '0', dia: fecha ?? '', hora: hora, usuario_id: usuario ?? 0, valoracion: null })) {
+        @if (!isReservePast(fecha ?? '', hora)) {
           <h5>{{ getText('¿Estás seguro que deseas anular esta reserva?', 'Are you sure you want to cancel this reservation?') }}</h5>
         }
         <div class="reservation-details">
@@ -16,7 +22,13 @@
       <div class="modal-actions">
         <button class="btn-confirm" (click)="onCancel()">{{ getText('Cancelar', 'Cancel') }}</button>
         <button class="btn-cancel" (click)="onConfirm()">
-          {{ isProcessing ? getText('Procesando...', 'Processing...') : (isReservePast({ id: 0, servicio: servicio, peluquero: peluquero, precio: '0', dia: fecha ?? '', hora: hora, usuario_id: usuario ?? 0, valoracion: null }) ? getText('Borrar', 'Delete') : getText('Anular', 'Cancel')) }}
+          {{
+            isProcessing
+              ? getText('Procesando...', 'Processing...')
+              : (isReservePast(fecha ?? '', hora)
+                  ? getText('Borrar', 'Delete')
+                  : getText('Anular', 'Cancel'))
+          }}
         </button>
       </div>
     </div>

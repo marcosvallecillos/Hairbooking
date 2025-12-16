@@ -17,7 +17,7 @@ export class ModalComponent {
   @Input() hora: string = '';
   @Input() servicio: string = '';
   @Input() peluquero: string = '';
-  @Input() precio?: string = '';
+  @Input() precio?: string | number = '';
   isAdmin:boolean = false;
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();

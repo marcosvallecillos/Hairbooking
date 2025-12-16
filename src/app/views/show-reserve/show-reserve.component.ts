@@ -9,11 +9,12 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { ApiService } from '../../services/api-service.service';
 import { UserStateService } from '../../services/user-state.service';
+import { ModalCodeComponent } from '../../components/modal-code/modal-code.component';
 
 @Component({
   selector: 'app-show-reserve',
   standalone: true,
-  imports: [ModalLoginComponent, RouterLink, FooterComponent, ModalDeleteComponent],
+  imports: [ModalLoginComponent, RouterLink, FooterComponent, ModalDeleteComponent,ModalCodeComponent],
   templateUrl: './show-reserve.component.html',
   styleUrl: './show-reserve.component.css'
 })
@@ -23,9 +24,11 @@ export class ShowReserveComponent implements OnInit {
   isAuthenticated = true;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
+  showModalCode: boolean = false;
   showModal: boolean = false;
   selectedReserve: Reserva | null = null;
   isLoading: boolean = true;
+  codigoReserva: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -46,25 +49,36 @@ export class ShowReserveComponent implements OnInit {
       this.isUser = isUser;
     });
     this.loadUserReserves();
+    this.getNumeroReservasByUsuarioId();
   }
 
   loadUserReserves() {
     this.isLoading = true;
     const userId = this.authService.getUserId();
+
     console.log('Id del Usuario', userId);
 
     if (userId) {
       this.apiService.getReserveByUsuario(userId).subscribe({
         next: (response) => {
-          this.reserves = response;
-           this.reserves = response.sort((reserva, newreserve) => {
-          const ordenardia = reserva.dia.localeCompare(newreserve.dia);
-          if (ordenardia !== 0) {
-            return ordenardia;
-          }
-        
-          return reserva.hora.localeCompare(newreserve.hora);
-        });
+          // Adaptar la respuesta del backend al modelo Reserva del front
+          const mapped = response.map((r: any) => ({
+            ...r,
+            usuarioId: r.usuarioId ?? r.usuario_id,
+            valoracionId: r.valoracion ?? null,
+            valoracionComentario: r.valoracion_comentario ?? null,
+            valoracionServicio: r.valoracion_servicio ?? null,
+            valoracionPeluquero: r.valoracion_peluquero ?? null,
+          }) as Reserva);
+
+          this.reserves = mapped.sort((reserva, newreserve) => {
+            const ordenardia = reserva.dia.localeCompare(newreserve.dia);
+            if (ordenardia !== 0) {
+              return ordenardia;
+            }
+          
+            return reserva.hora.localeCompare(newreserve.hora);
+          });
           this.isLoading = false;
           console.log('Reservas del usuario:', response);
         },
@@ -98,21 +112,8 @@ export class ShowReserveComponent implements OnInit {
   onConfirmDelete() {
     if (this.selectedReserve) {
       const reserveId = this.selectedReserve.id;
-      // Si la reserva es valorada, primero eliminamos la valoración
-      if (this.selectedReserve.valoracion && typeof this.selectedReserve.valoracion === 'number') {
-        this.apiService.deleteValoracion(this.selectedReserve.valoracion).subscribe({
-          next: () => {
-            this.deleteReservation(reserveId);
-          },
-          error: (error: Error) => {
-            console.error('Error al eliminar la valoración', error);
-            this.deleteReservation(reserveId);
-          }
-        });
-      } else {
-        // Si no hay valoración, eliminamos la reserva directamente
-        this.deleteReservation(reserveId);
-      }
+      // Eliminamos solo la reserva, sin tocar la valoración
+      this.deleteReservation(reserveId);
     }
   }
 
@@ -128,6 +129,37 @@ export class ShowReserveComponent implements OnInit {
         console.error('Error al eliminar la reserva:', error);
       }
     });
+  }
+  reservasparaCorteGratis: number = 0;
+  totalReservasUsuario: number = 0;
+
+  getNumeroReservasByUsuarioId() {
+    const userId = this.authService.getUserId();
+    if (userId) {
+      this.apiService.getNumeroReservasByUsuarioId(userId).subscribe({
+        next: (response) => {
+          this.totalReservasUsuario = response.totalReservas;
+          this.reservasparaCorteGratis = response.paraCorteGratis;
+          console.log('Numero de reservas:', response);
+        },
+        error: (error: Error) => {
+          console.error('Error al obtener el numero de reservas:', error);
+        }
+      });
+   
+    }
+  }
+  openModalCode() {
+    console.log("abriendo modal");
+    // Generar un código aleatorio de 6 dígitos
+    this.codigoReserva = Math.floor(100000 + Math.random() * 900000);
+    this.showModalCode = true;
+  }
+  
+  closeModalCode() {
+    console.log("Cerrando modal");
+    this.showModalCode = false;
+    this.codigoReserva = 0;
   }
 
   onCancelReserve() {
@@ -156,6 +188,7 @@ export class ShowReserveComponent implements OnInit {
       }
     });
   }
+
 
   getStars(rating: number | null | undefined): string {
     if (rating === null || rating === undefined) {
@@ -201,7 +234,7 @@ export class ShowReserveComponent implements OnInit {
     filterMethod.subscribe({
       next: (reservas) => {
         this.reserves = reservas
-          .filter(reserva => reserva.usuario_id === userId)
+          .filter(reserva => reserva.usuarioId === userId)
           .sort((a, b) => {
             const ordenardia = a.dia.localeCompare(b.dia);
             if (ordenardia !== 0) {

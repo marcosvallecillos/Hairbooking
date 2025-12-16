@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
-import { Reserva } from '../../models/user.interface';
 import { UserStateService } from '../../services/user-state.service';
 
 @Component({
@@ -50,13 +49,20 @@ export class ModalDeleteComponent {
     return this.isSpanish ? es : en;
   }
 
-  isReservePast(reserve: Reserva): boolean {
-    const [year, month, day] = reserve.dia.split('-').map(Number);
-    const [hours, minutes] = reserve.hora.split(':').map(Number);
-    
+  // Comprueba si una reserva está en el pasado a partir de fecha y hora (strings)
+  isReservePast(dia: string | null, hora: string): boolean {
+    if (!dia || !hora) return false;
+
+    const [year, month, day] = dia.split('-').map(Number);
+    const [hours, minutes] = hora.split(':').map(Number);
+
+    if (!year || !month || !day || isNaN(hours) || isNaN(minutes)) {
+      return false;
+    }
+
     const reserveDate = new Date(year, month - 1, day, hours, minutes);
     const now = new Date();
-    
+
     return reserveDate < now;
   }
 }

@@ -207,13 +207,12 @@ export class ModalCarritoComponent implements OnInit {
       );
       
       return;
-
-
     }
-
+    console.log('Añadiendo a favoritos:', product.id);
     this.apiService.updateProductFavorite(product.id, true).subscribe({
       next: () => {
         this.message = `${product.name} ` + this.getText('ha sido añadido a favoritos.', 'has been added to favorites.');
+        this.productos = this.productos.filter(p => p.id !== product.id);
       },
       error: (error) => {
         console.error('Error al añadir a favoritos:', error);
@@ -248,6 +247,7 @@ export class ModalCarritoComponent implements OnInit {
       next: (response: any) => {
         if (response.status === 'success') {
           this.productos = this.productos.filter(p => p.id !== product.id);
+          this.apiService.addFavorite(product);
           this.calcularTotalYDescuento();
           this.apiService.updateCartItemsCount();
           this.message = `${product.name} ` + this.getText('ha sido eliminado del carrito.', 'has been removed from cart.');

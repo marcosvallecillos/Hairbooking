@@ -8,23 +8,25 @@ export interface Usuario {
     telefono: number;
     citas_reservadas: Reserva[];
     rol?: string;
+
   }
 
   export interface Valoracion {
     id?: number;
-    servicioRating: number;
-    peluqueroRating: number;
+    servicioRating: number;   // 1–5 por ejemplo
+    peluqueroRating: number;  // 1–5
     comentario: string;
-    fecha?: string;
+    fecha?: string;           // ISO string 'YYYY-MM-DD' o 'YYYY-MM-DDTHH:mm:ss'
     usuario_id: number;
     reserva_id: number;
     usuario?: Usuario;
     reserva?: Reserva;
-    
-}
-export interface ValoracionesResponse {
-  valoraciones: Valoracion[];
-}
+  }
+  
+  export interface ValoracionesResponse {
+    valoraciones: Valoracion[];
+  }
+
   export interface Product {
     id:            number;
     name:          string;
@@ -58,20 +60,22 @@ export interface ValoracionesResponse {
     usuario?: Usuario;
   }
 
-  export interface Reserva{
+  export interface Reserva {
     id:         number;
     servicio:   string;
     peluquero:  string;
-    precio:     string;
-    dia:        string;
-    hora:       string;
-    usuario_id: number;
-    usuario?: Usuario;
-    valoracion: number | null; //id de la valoracion 
-    valoracion_comentario?: string | null;
-    valoracion_servicio?: number | null;
-    valoracion_peluquero?: number | null;
+    precio:     number;
+    dia:        string;                 // 'YYYY-MM-DD'
+    hora:       string;                 // 'HH:mm'
+    usuarioId:  number;
+    usuario?:   Usuario;
+    // Datos de la valoración asociada (si existe)
+    valoracionId:           number | null;
+    valoracionComentario?:  string | null;
+    valoracionServicio?:    number | null;
+    valoracionPeluquero?:   number | null;
   }
+  
 
   export interface ReservaAnulada {
     id:            number;

@@ -29,6 +29,7 @@ import { PolicyCookiesComponent } from './views/policy-cookies/policy-cookies.co
 import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
 import { AdminGuard } from './guards/auth.guard';
 import { AuthUserGuard } from './guards/auth-user.guard';
+import { ModalCodeComponent } from './components/modal-code/modal-code.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -55,11 +56,14 @@ export const routes: Routes = [
     { path: 'valued_services', component: ValuedServicesComponent, canActivate: [AdminGuard] },
     { path: 'create-user', component: CreateUserComponent, canActivate: [AdminGuard] },
     {path: 'modal-user', component: ModalUserComponent, canActivate: [AdminGuard]},
+    {path: 'modal-code', component: ModalCodeComponent, canActivate: [AdminGuard]},
+
     {path: 'reserve-admin', component: ReserveAdminComponent, canActivate: [AdminGuard]},
     {path: 'cancelled-reserve', component: CancelledReserveComponent, canActivate: [AdminGuard]},
     {path: 'rating-reserve', component: RatingServiceComponent},
     {path: 'policy-cookies', component: PolicyCookiesComponent},
     {path: 'privacy-policy', component: PrivacyPolicyComponent},
+
     
     
 ];

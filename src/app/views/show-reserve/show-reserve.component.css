@@ -444,6 +444,70 @@ cursor: not-allowed
   filter: grayscale(100%);
 }
 
+
+.free-cut {
+    margin: 2rem auto;
+    padding: 1rem 1.4rem;
+    max-width: 900px;
+  
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.4;
+  
+    color: #222;
+    background: linear-gradient(135deg, #f8f8f8, #ffffff);
+    border-radius: 14px;
+  
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    letter-spacing: 0.2px;
+  
+    strong {
+      margin: 0 0.25rem;
+      color: #c1121f;
+      font-size: 1.4em;
+    }
+  }/* Móviles pequeños */
+@media (max-width: 480px) {
+    .free-cut {
+      font-size: 0.95rem;
+      padding: 0.9rem 1rem;
+    }
+  }
+  
+  /* Móviles estándar */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .free-cut {
+      font-size: 1.05rem;
+    }
+  }
+  
+  /* Tablets */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .free-cut {
+      font-size: 1.2rem;
+      
+      
+    }
+  }
+  
+  /* Desktop */
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    .free-cut {
+      font-size: 1.35rem;
+    }
+  }
+  
+  /* Pantallas grandes */
+  @media (min-width: 1441px) {
+    .free-cut {
+      font-size: 1.6rem;
+    }
+
+  }
+  
+  
+
+
 /* Dropdown styles */
 .dropdown {
   position: relative;

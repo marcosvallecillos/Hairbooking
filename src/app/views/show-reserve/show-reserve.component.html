@@ -50,7 +50,12 @@
           </p>
         </div>
       </div>
-
+      @if(reservasparaCorteGratis !== 3){
+      <h5 class="free-cut"> {{ getText(' Te faltan ', 'You are ' )}} <strong>{{ reservasparaCorteGratis }}</strong> {{getText(' días para el corte gratis ','days away from the free haircut')}}</h5>
+      }@else{
+        
+          <button class="btn-code" (click)="openModalCode()">{{ getText('Mostrar Codigo', 'Show Code')}}</button>
+        }
       <button class="reserve-btn" routerLink="/reserve">
         <img src="../../../../images/cita.png" width="30px" height="30px" alt="" style="margin-right:10px">
         {{getText('Reservar Cita','Reserve Quote')}}
@@ -71,9 +76,9 @@
       <div class="card"
         [title]="isReservePast(reserve) ? getText('Cita expirada', 'Expired appointment') : getText('Eliminar reserva', 'Delete appointment')">
         <div class="card-content">
-          @if(reserve.valoracion !== null){
+          @if(reserve.valoracionId !== null){
               <h5 class="valorado">Servicio Valorado</h5>
-          }
+          } 
           <p class=""><i class="bi bi-scissors"></i> <strong> {{getText('Servicio','Service')}}:</strong> {{
             reserve.servicio }}</p>
           <p><i class="bi bi-person"></i> <strong> {{getText('Peluquero','Barber')}}:</strong> {{ reserve.peluquero }}
@@ -84,7 +89,7 @@
           <div class="botones">
 
             @if (isReservePast(reserve)) {
-            @if(reserve.valoracion == null){
+            @if(reserve.valoracionId == null){
             <button class="rate-button" [title]="getText('Valorar Reserva', 'Rate Reservation')"
               [routerLink]="['/rate-service', reserve.id]">
               <img src="../../../../images/valoracion.png" class="fav-icon" alt="Favorito vacío">
@@ -142,3 +147,6 @@
 
 <app-modal-login [show]="showLoginModal" (close)="showLoginModal = false"></app-modal-login>
 <app-footer></app-footer>
+
+
+<app-modal-code [show]="showModalCode" [codigo]="codigoReserva" (close)="closeModalCode()"></app-modal-code>

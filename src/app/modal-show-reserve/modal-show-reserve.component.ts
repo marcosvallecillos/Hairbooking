@@ -18,7 +18,7 @@ export class ModalShowReserveComponent {
   @Input() peluquero: string | null = '';
   @Input() dia: string | null = '';
   @Input() hora: string | null = '';
-  @Input() precio: string | null = '';
+  @Input() precio: number | null = null;
   @Output() close = new EventEmitter<void>();
   
   isSpanish: boolean = true;
@@ -50,7 +50,7 @@ export class ModalShowReserveComponent {
           this.peluquero = reserve.peluquero || '';
           this.dia = reserve.dia || '';
           this.hora = reserve.hora || '';
-          this.precio = reserve.precio || '';
+          this.precio = reserve.precio ?? null;
         }
         this.isLoading = false;
       },

@@ -46,6 +46,7 @@ export class ModalCompraComponent implements OnInit {
     if (this.userId) {
       this.checkCartStatus();
     }
+
   }
 
   checkCartStatus() {

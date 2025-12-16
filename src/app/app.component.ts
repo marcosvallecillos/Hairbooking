@@ -10,11 +10,13 @@ import { HeaderAdminComponent } from './components/header-admin/header-admin.com
 import { Form, FormGroup } from '@angular/forms';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent,HeaderAdminComponent, ChatbotComponent, CookieConsentComponent],
+  imports: [RouterOutlet, HeaderComponent, HeaderUserComponent,HeaderAdminComponent, ChatbotComponent, CookieConsentComponent, ClipboardModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

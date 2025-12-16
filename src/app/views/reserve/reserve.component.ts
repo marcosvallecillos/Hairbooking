@@ -112,9 +112,12 @@ export class ReserveComponent implements OnInit {
     return this.isSpanish ? es : en;
   }
 
-  getPrice(): string {
+  // Devuelve el precio como número (sin el símbolo €)
+  getPrice(): number {
     const selected = this.services.find(service => service.nombre === this.selectedService);
-    return selected ? selected.precio.replace(' €', '') : '';
+    if (!selected) return 0;
+    const numeric = parseFloat(selected.precio.replace('€', '').replace(' ', ''));
+    return isNaN(numeric) ? 0 : numeric;
   }
 
   getDaysInMonth(month: number, year: number): (Date | null)[] {
@@ -153,7 +156,7 @@ export class ReserveComponent implements OnInit {
 
   isWeekend(date: Date): boolean {
     const day = date.getDay();
-    return day === 0 || day === 6;
+    return day === 0 || day === 7;
   }
 
   isTimeReserved(time: string): boolean {
@@ -237,9 +240,13 @@ export class ReserveComponent implements OnInit {
         peluquero: this.selectedBarber,
         dia: formattedDate,
         hora: this.selectedTime,
-        precio: this.getPrice(),
-        usuario_id: userId,
-        valoracion: null
+        precio: this.getPrice(),          // number
+        usuarioId: userId,
+        usuario: undefined,
+        valoracionId: null,
+        valoracionComentario: null,
+        valoracionServicio: null,
+        valoracionPeluquero: null
       };
 
       if (this.isEditing && this.reserveId) {
@@ -252,8 +259,17 @@ export class ReserveComponent implements OnInit {
           }
         });
       } else {
-        // Enviar a los dos endpoints por separado
-        this.apiService.newReserve(reserveData).subscribe({
+        // Mapear al formato que espera el backend (usuario_id, precio numérico)
+        const reserva = {
+          servicio: reserveData.servicio,
+          peluquero: reserveData.peluquero,
+          dia: reserveData.dia,
+          hora: reserveData.hora,
+          usuario_id: reserveData.usuarioId,
+          precio: reserveData.precio
+        };
+
+        this.apiService.newReserve(reserva as unknown as any).subscribe({
           next: (response) => {
             console.log('Primera reserva creada:', response);   
                 this.router.navigate(['/show-reserve']);

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
-import { Usuario } from '../../models/user.interface';
+import { Reserva, Usuario } from '../../models/user.interface';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-show-clients',
@@ -18,13 +19,17 @@ export class ShowClientsComponent implements OnInit {
   usuario: Usuario[] = [];
   isSpanish: boolean = true;
   isLoading: boolean = false;
+  reserves: Reserva[] = [];
   error: string | null = null;
+  reservasPorUsuario: { [usuarioId: number]: number } = {};
+
 
   constructor(
     private languageService: LanguageService,
     private router: Router,
     private route: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private authService: AuthService
   ) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
@@ -37,6 +42,7 @@ export class ShowClientsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllClients();
+    this.getAllReserves();
   }
 
   getAllClients() {
@@ -47,6 +53,7 @@ export class ShowClientsComponent implements OnInit {
       next: (response) => {
         this.usuario = response; 
         this.isLoading = false;
+
         console.log('Clientes:', response);
       },
       error: (error) => {
@@ -56,6 +63,9 @@ export class ShowClientsComponent implements OnInit {
       }
     });
   }
+
+  // Cargar todas las reservas para poder contar cuántas tiene cada usuario
+
   deleteClient(id: number) {
     this.isLoading = true;
     this.error = null;
@@ -70,5 +80,27 @@ export class ShowClientsComponent implements OnInit {
         console.error('Error al eliminar el cliente:', error);
       }
     });
+  }
+  private getAllReserves() {
+    this.apiService.getReserves().subscribe({
+      next: (response) => {
+        this.reserves = response;
+        this.calcularReservasPorUsuario();
+      },
+      error: (error) => {
+        console.error('Error al obtener las reservas para el conteo por usuario:', error);
+      }
+    });
+  }
+  private calcularReservasPorUsuario() {
+    const conteo: { [usuarioId: number]: number } = {};
+
+    this.reserves.forEach((reserve) => {
+      if (reserve.usuarioId != null) {
+        conteo[reserve.usuarioId] = (conteo[reserve.usuarioId] || 0) + 1;
+      }
+    });
+
+    this.reservasPorUsuario = conteo;
   }
 }

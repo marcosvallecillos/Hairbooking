@@ -7,6 +7,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { NgClass } from '@angular/common';
 import { ModalUserComponent } from '../../components/modal-user/modal-user.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-reservations',
@@ -26,12 +27,15 @@ export class ReservationsComponent {
   selectedReserve: Reserva | null = null;
   currentFilter: 'all' | 'activas' | 'expiradas' = 'all';
   filterError: string | null = null;
+  // Mapa para almacenar el total de reservas por usuario_id
+  reservasPorUsuario: { [usuarioId: number]: number } = {};
 
   constructor(
     private languageService: LanguageService,
     private router: Router,
     private route: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private authService: AuthService
   ) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
@@ -42,14 +46,23 @@ export class ReservationsComponent {
     return this.isSpanish ? es : en;
   }
   ngOnInit(): void {
-   this.getAllReservations();
-   
+    this.getAllReservations();
   }
   getAllReservations() {
     this.isLoading = true;
     this.apiService.getReserves().subscribe({ 
       next: (response) => {
-        this.reserves = response.sort((reserva, newreserve) => {
+        // Adaptar la respuesta del backend al modelo Reserva del front
+        const mapped = response.map((r: any) => ({
+          ...r,
+          usuarioId: r.usuarioId ?? r.usuario_id,
+          valoracionId: r.valoracion ?? null,
+          valoracionComentario: r.valoracion_comentario ?? null,
+          valoracionServicio: r.valoracion_servicio ?? null,
+          valoracionPeluquero: r.valoracion_peluquero ?? null,
+        }) as Reserva);
+
+        this.reserves = mapped.sort((reserva, newreserve) => {
           const ordenardia = reserva.dia.localeCompare(newreserve.dia);
           if (ordenardia !== 0) {
             return ordenardia;
@@ -58,9 +71,12 @@ export class ReservationsComponent {
           return reserva.hora.localeCompare(newreserve.hora);
         });
 
-        // Se borra si la hora paso y la valoracion es distinta null
+        // Calcular el número total de reservas por usuario_id
+        this.calcularReservasPorUsuario();
+
+        // Se borra si la hora paso y la reserva tiene valoración asociada
         this.reserves.forEach(reserve => {
-          if (this.isReservePast(reserve) && reserve.valoracion != null) {
+          if (this.isReservePast(reserve) && reserve.valoracionId != null) {
             console.log('Eliminando reserva pasada con valoración:', reserve);
             this.deleteValoracion(reserve.id);
           } 
@@ -105,16 +121,35 @@ export class ReservationsComponent {
 
    
   private deleteReservation(reserveId: number) {
-    this.apiService.deleteReserves(reserveId).subscribe({
-      next: () => {
+    this.apiService.deleteReserve(reserveId).subscribe({
+      next: (response) => {
         this.reserves = this.reserves.filter(r => r.id !== reserveId);
         this.selectedReserve = null;
         this.showModal = false;
+        console.log('Reserva eliminada y movida a reservas anuladas:', response);
+        this.getAllReservations(); // Recargar las reservas para actualizar la vista
       },
       error: (error: Error) => {
         console.error('Error al eliminar la reserva', error);
       }
     });
+  }
+  // Si estas variables las usas en otro sitio, puedes mantenerlas;
+  // aquí ya no las necesitamos para el total por usuario.
+  reservasparaCorteGratis: number = 0;
+  totalReservasUsuario: number = 0;
+
+  // Calcula cuántas reservas tiene cada usuario (por usuario_id)
+  private calcularReservasPorUsuario() {
+    const conteo: { [usuarioId: number]: number } = {};
+
+    this.reserves.forEach((reserve) => {
+      if (reserve.usuarioId != null) {
+        conteo[reserve.usuarioId] = (conteo[reserve.usuarioId] || 0) + 1;
+      }
+    });
+
+    this.reservasPorUsuario = conteo;
   }
 
   isReservePast(reserve: Reserva): boolean {
@@ -127,17 +162,18 @@ export class ReservationsComponent {
     return reserveDate < now;
   }
   deleteValoracion(reserveId:number){
-      if (this.selectedReserve && typeof this.selectedReserve.valoracion === 'number'){
-     this.apiService.deleteValoracion(reserveId);
-     }
+    // En el nuevo modelo, la valoración se maneja por id separado (valoracionId)
+    if (this.selectedReserve && typeof this.selectedReserve.valoracionId === 'number'){
+      this.apiService.deleteValoracion(this.selectedReserve.valoracionId).subscribe();
+    }
   }
   onConfirmDelete() {
     if (this.selectedReserve) {
       const reserveId = this.selectedReserve.id;
       
       // First, delete the rating if it exists
-     if (this.selectedReserve.valoracion && typeof this.selectedReserve.valoracion === 'number') {
-        this.apiService.deleteValoracion(this.selectedReserve.valoracion).subscribe({
+     if (this.selectedReserve.valoracionId && typeof this.selectedReserve.valoracionId === 'number') {
+        this.apiService.deleteValoracion(this.selectedReserve.valoracionId).subscribe({
           next: () => {
             // After rating is deleted, delete the reservation
             this.deleteReservation(reserveId);

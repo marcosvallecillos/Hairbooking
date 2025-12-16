@@ -53,18 +53,18 @@
       <div class="reserves-list">
         @for (reserve of reserves; track reserve.id) {
           <div class="card" [class.disabled]="isReservePast(reserve)">
-            @if (isReservePast(reserve) && reserve.valoracion !== null) {
+            @if (isReservePast(reserve) && reserve.valoracionId !== null) {
               <p class="espirada">Reserva Expirada</p>
               <br>
-            }@else if(isReservePast(reserve) && reserve.valoracion == null){
+            }@else if(isReservePast(reserve) && reserve.valoracionId == null){
               <p class="espirada">Reserva Sin Valorar</p>
            <br>
             }
             <p class="reserva_creada">
               <i class="bi bi-person-badge"></i>
               <strong>{{ getText('Reserva Creada por el Id', 'Create Reserve By ID') }}:</strong>
-              {{ reserve.usuario_id }}
-              <i class="ojo bi bi-eye" (click)="openUserModal(reserve.usuario_id)" style="cursor: pointer;"></i>
+              {{ reserve.usuarioId }}
+              <i class="ojo bi bi-eye" (click)="openUserModal(reserve.usuarioId)" style="cursor: pointer;"></i>
             </p>
             <div class="card-content">
               <p><i class="bi bi-scissors"></i> <strong>{{ getText('Servicio', 'Service') }}:</strong> {{ reserve.servicio }}</p>
@@ -73,9 +73,13 @@
               <p><i class="bi bi-calendar"></i> <strong>{{ getText('Dia', 'Day') }}:</strong> {{ reserve.dia }}</p>
               <p><i class="bi bi-clock"></i> <strong>{{ getText('Hora', 'Time') }}:</strong> {{ reserve.hora }}</p>
               <p><i class="bi bi-person"></i> <strong>ID_reserva:</strong> {{ reserve.id }}</p>
+              <p><i class="bi bi-123"></i>
+                <strong>{{ getText('Total de reservas de este usuario', 'Total reservations for this user') }}:</strong>
+                {{ reservasPorUsuario[reserve.usuarioId] || 0 }}
+              </p>
             </div>
             <div class="card-footer">
-              @if (reserve.valoracion == null) {
+              @if (reserve.valoracionId == null) {
                 <button class="btn btn-danger" [title]="getText('Eliminar reserva', 'Delete appointment')"
                         (click)="deleteReserve(reserve)" aria-label="Eliminar reserva">
 <i class="bi bi-trash"></i>                </button>
@@ -101,7 +105,7 @@
   [fecha]="selectedReserve?.dia ?? ''"
   [hora]="selectedReserve?.hora ?? ''" 
   [peluquero]="selectedReserve?.peluquero ?? ''"
-  [usuario]="selectedReserve?.usuario_id ?? null" 
+  [usuario]="selectedReserve?.usuarioId ?? null" 
   (confirm)="onConfirmDelete()" 
   (cancel)="onCancelReserve()">
 </app-modal-delete>

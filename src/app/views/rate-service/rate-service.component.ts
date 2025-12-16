@@ -48,7 +48,8 @@ export class RateServiceComponent implements OnInit {
                 this.apiService.getReserveById(reserveId).subscribe({
                     next: (reserve) => {
                         this.reserve = reserve;
-                        this.yaValorada = !!reserve.valoracion;
+                        // En el modelo actual, se usa valoracionId para saber si tiene valoración
+                        this.yaValorada = !!reserve.valoracionId;
                     },
                     error: (error) => {
                         console.error('Error al obtener la reserva:', error);

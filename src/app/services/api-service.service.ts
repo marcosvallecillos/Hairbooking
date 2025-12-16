@@ -7,14 +7,16 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class ApiService {
-private apiUrlUsuarios = 'https://hairbookingback-production.up.railway.app/api/usuarios'
-private apiUrlReservas = 'https://hairbookingback-production.up.railway.app/api/reservas'
-private apiUrlProductos = 'https://hairbookingback-production.up.railway.app/api/productos'
-private apiUrlCompras = 'https://hairbookingback-production.up.railway.app/api/compras'
-private apiUrlValoracion = 'https://hairbookingback-production.up.railway.app/api/valoracion'
-private apiUrlContact = 'https://hairbookingback-production.up.railway.app/contact'
-private apiUrlAnuladas = 'https://hairbookingback-production.up.railway.app/api/anuladas'
-private apiUrlReservations = 'https://hairbookingback-production.up.railway.app/api/reservations' // es para q cuando pasen de la hora se eliminen en la base de datos de reservations
+private apiUrlUsuarios = 'http://localhost:8000/api/usuarios'
+private apiUrlReservas = 'http://localhost:8000/api/reservas'
+private apiUrlProductos = 'http://localhost:8000/api/productos'
+private apiUrlCompras = 'http://localhost:8000/api/compras'
+private apiUrlValoracion = 'http://localhost:8000/api/valoracion'
+private apiUrlContact = 'http://localhost:8000/contact'
+private apiUrlAnuladas = 'http://localhost:8000/api/anuladas'
+// private apiUrlUsuarios = 'https://hairbookingback-production.up.railway.app/api/usuarios'
+
+private apiUrlReservations = 'http://localhost:8000/api/reservations' // es para q cuando pasen de la hora se eliminen en la base de datos de reservations
 public productos: Product[] = [];
 private favorites: Product[] = [];
 private reserves: Reserva[] = [];
@@ -63,9 +65,10 @@ getReserves(): Observable<Reserva[]> {
 getReserveByUsuario(usuario_Id: number): Observable<Reserva[]> {
   return this.http.get<Reserva[]>(`${this.apiUrlReservas}/usuario/${usuario_Id}`);
 }
-newReserve(reservas: Reserva): Observable<Reserva> {
-  return this.http.post<Reserva>(`${this.apiUrlReservas}/new`, reservas);
-}
+  // Crear reserva (payload flexible para adaptarse al backend)
+  newReserve(reserva: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrlReservas}/new`, reserva);
+  }
 newReserveByAdmin(reservas: any): Observable<any> {
   return this.http.post<any>(`${this.apiUrlReservas}/admin/new`, reservas);
 }
@@ -73,10 +76,11 @@ newReserveByAdmin(reservas: any): Observable<any> {
 editReserve(id: number, reservaData: Reserva): Observable<Reserva> {
   return this.http.put<Reserva>(`${this.apiUrlReservas}/${id}/edit`, reservaData);
 }
-deleteReserve(id: number): Observable<Reserva> { //lleva los eliminados a reserva_anuladas
+deleteReserve(id: number): Observable<Reserva> { //elimina directamente sin mover a reserva_anuladas
   return this.http.delete<Reserva>(`${this.apiUrlReservas}/delete/${id}`);
 }
-deleteReserves(id: number): Observable<Reserva> { //lleva los eliminados a reserva_anuladas
+
+deleteReserves(id: number): Observable<Reserva> { //elimina directamente sin mover a reserva_anuladas
   return this.http.delete<Reserva>(`${this.apiUrlReservas}/eliminar/${id}`);
 }
 filterReserveActivas(): Observable<Reserva[]> {
@@ -136,6 +140,12 @@ deleteValoracion(id: number): Observable<Valoracion> {
 getReservasAnuladas():Observable<ReservaAnulada[]>{
   return this.http.get<ReservaAnulada[]>(`${this.apiUrlAnuladas}/list`);
 }
+
+getNumeroReservasByUsuarioId(usuario_Id: number){
+  return this.http.get<{
+    totalReservas: number;
+    paraCorteGratis: number;
+  }>(`${this.apiUrlReservas}/usuario/${usuario_Id}/count`);}
 
 removeReserve(reserveId: number) {
   this.reserves = this.reserves.filter((r) => r.id !== reserveId);

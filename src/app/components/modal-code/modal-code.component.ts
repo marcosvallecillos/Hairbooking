@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
 import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
 import { LanguageService } from '../../services/language.service';
 import { Subject, takeUntil } from 'rxjs';
-import { Usuario } from '../../models/user.interface';
 
 @Component({
   selector: 'app-modal-code',
@@ -23,10 +22,9 @@ import { Usuario } from '../../models/user.interface';
 })
 export class ModalCodeComponent implements OnChanges, OnDestroy {
 
-  @Input() codigo: string =  '';
+  @Input() codigo: string = '';
   @Input() show = false;
   @Output() close = new EventEmitter<void>();
-  usuario: Usuario | null = null;
 
   isSpanish = true;
   mostrarMensaje = false;
@@ -50,29 +48,10 @@ export class ModalCodeComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['show']?.currentValue) {
-      console.log('Modal abierto, código actual:', this.codigo);
       this.autoCerrar();
-      // Si el modal se abre y hay código, forzar detección de cambios
-      if (this.codigo) {
-        this.cdr.detectChanges();
-      }
     }
     if (changes['codigo']) {
-      console.log('Código recibido en modal:', this.codigo);
-      console.log('Cambio en codigo - anterior:', changes['codigo'].previousValue, 'actual:', changes['codigo'].currentValue);
-      // Forzar detección de cambios para asegurar que se muestre el código
       this.cdr.detectChanges();
-    }
-    // Si el modal se abre y no hay código, intentar obtenerlo
-    if (changes['show']?.currentValue && !this.codigo) {
-      this.generarCodigoSiEsNecesario();
-    }
-  }
-
-  private generarCodigoSiEsNecesario(): void {
-    if (!this.codigo) {
-      this.codigo = this.usuario?.codigoCorteGratis || '';
-      console.log('Codigo generado:', this.codigo);
     }
   }
 
@@ -85,10 +64,8 @@ export class ModalCodeComponent implements OnChanges, OnDestroy {
 
   copiarTexto(event?: Event): void {
     event?.stopPropagation();
-
-    const codigoACopiar = this.codigoDisplay || this.codigo || '';
-    const copiado = this.clipboard.copy(codigoACopiar);
-    if (copiado) {
+    
+    if (this.clipboard.copy(this.codigoDisplay)) {
       this.mostrarMensaje = true;
       setTimeout(() => this.show = false, 2000);
     }

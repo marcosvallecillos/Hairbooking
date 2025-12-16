@@ -54,44 +54,44 @@ export class ShowReserveComponent implements OnInit {
     this.loadUserData();
   }
 
+  private sortReserves(reservas: Reserva[]): Reserva[] {
+    return reservas.sort((a, b) => {
+      const ordenDia = a.dia.localeCompare(b.dia);
+      return ordenDia !== 0 ? ordenDia : a.hora.localeCompare(b.hora);
+    });
+  }
+
+  private mapReservaResponse(response: any[]): Reserva[] {
+    return response.map((r: any) => ({
+      ...r,
+      usuarioId: r.usuarioId ?? r.usuario_id,
+      valoracionId: r.valoracion ?? null,
+      valoracionComentario: r.valoracion_comentario ?? null,
+      valoracionServicio: r.valoracion_servicio ?? null,
+      valoracionPeluquero: r.valoracion_peluquero ?? null,
+    }) as Reserva);
+  }
+
   loadUserReserves() {
     this.isLoading = true;
     const userId = this.authService.getUserId();
 
-    console.log('Id del Usuario', userId);
-
-    if (userId) {
-      this.apiService.getReserveByUsuario(userId).subscribe({
-        next: (response) => {
-          // Adaptar la respuesta del backend al modelo Reserva del front
-          const mapped = response.map((r: any) => ({
-            ...r,
-            usuarioId: r.usuarioId ?? r.usuario_id,
-            valoracionId: r.valoracion ?? null,
-            valoracionComentario: r.valoracion_comentario ?? null,
-            valoracionServicio: r.valoracion_servicio ?? null,
-            valoracionPeluquero: r.valoracion_peluquero ?? null,
-          }) as Reserva);
-
-          this.reserves = mapped.sort((reserva, newreserve) => {
-            const ordenardia = reserva.dia.localeCompare(newreserve.dia);
-            if (ordenardia !== 0) {
-              return ordenardia;
-            }
-          
-            return reserva.hora.localeCompare(newreserve.hora);
-          });
-          this.isLoading = false;
-          console.log('Reservas del usuario:', response);
-        },
-        error: (error: Error) => {
-          console.error('Error al cargar las reservas del usuario:', error);
-          this.isLoading = false;
-        }
-      });
-    } else {
+    if (!userId) {
       this.isLoading = false;
+      return;
     }
+
+    this.apiService.getReserveByUsuario(userId).subscribe({
+      next: (response) => {
+        const mapped = this.mapReservaResponse(response);
+        this.reserves = this.sortReserves(mapped);
+        this.isLoading = false;
+      },
+      error: (error: Error) => {
+        console.error('Error al cargar las reservas del usuario:', error);
+        this.isLoading = false;
+      }
+    });
   }
 
   isReservePast(reserve: Reserva): boolean {
@@ -152,83 +152,49 @@ export class ShowReserveComponent implements OnInit {
     }
   }
 
-  
-  loadUserData() {
+  private loadUserDataInternal(callback?: (codigo: string) => void) {
     const userId = this.authService.getUserId();
-    if (userId) {
-      this.apiService.getAllUsers().subscribe({
-        next: (usuarios) => {
-          const usuario = usuarios.find(u => u.id === userId);
-          if (usuario) {
-            this.usuario = usuario;
-            console.log('Usuario cargado:', usuario);
-            console.log('Código de corte gratis:', usuario.codigoCorteGratis);
-            // Si el modal está esperando para abrirse, actualizar el código y abrirlo
-            if (this.showModalCode) {
-              this.codigoReserva = usuario.codigoCorteGratis || '';
-            }
-          }
-        },
-        error: (error) => {
-          console.error('Error al cargar datos del usuario:', error);
+    if (!userId) return;
+
+    this.apiService.getAllUsers().subscribe({
+      next: (usuarios) => {
+        const usuario = usuarios.find(u => u.id === userId);
+        if (usuario) {
+          this.usuario = usuario;
+          const codigo = usuario.codigoCorteGratis || '';
+          if (callback) callback(codigo);
         }
-      });
-    }
+      },
+      error: (error) => {
+        console.error('Error al cargar datos del usuario:', error);
+      }
+    });
+  }
+
+  loadUserData() {
+    this.loadUserDataInternal((codigo) => {
+      if (this.showModalCode) {
+        this.codigoReserva = codigo;
+      }
+    });
   }
 
   openModalCode() {
-    console.log("abriendo modal");
-    console.log("Usuario actual:", this.usuario);
-    console.log("Código actual en codigoReserva:", this.codigoReserva);
-    
-    // Si el usuario no está cargado o no tiene código, cargarlo primero
-    if (!this.usuario || !this.usuario.codigoCorteGratis) {
-      const userId = this.authService.getUserId();
-      console.log("Cargando datos del usuario, userId:", userId);
-      if (userId) {
-        this.apiService.getAllUsers().subscribe({
-          next: (usuarios) => {
-            const usuario = usuarios.find(u => u.id === userId);
-            if (usuario) {
-              this.usuario = usuario;
-              const codigo = usuario.codigoCorteGratis || '';
-              this.codigoReserva = codigo;
-              console.log('Usuario cargado:', usuario);
-              console.log('Código de corte gratis cargado:', codigo);
-              console.log('codigoReserva establecido a:', this.codigoReserva);
-              // Establecer el código ANTES de abrir el modal
-              if (codigo) {
-                this.showModalCode = true;
-              } else {
-                console.warn('El código de corte gratis está vacío');
-              }
-            } else {
-              console.error('Usuario no encontrado en la lista de usuarios');
-            }
-          },
-          error: (error) => {
-            console.error('Error al cargar datos del usuario:', error);
-          }
-        });
-      } else {
-        console.error('No hay userId disponible');
-      }
-    } else {
-      const codigo = this.usuario.codigoCorteGratis || '';
+    const getCodigoAndOpen = (codigo: string) => {
       this.codigoReserva = codigo;
-      console.log("Código obtenido del usuario:", codigo);
-      console.log("codigoReserva establecido a:", this.codigoReserva);
-      // Establecer el código ANTES de abrir el modal
       if (codigo) {
         this.showModalCode = true;
-      } else {
-        console.warn('El código de corte gratis está vacío');
       }
+    };
+
+    if (this.usuario?.codigoCorteGratis) {
+      getCodigoAndOpen(this.usuario.codigoCorteGratis);
+    } else {
+      this.loadUserDataInternal(getCodigoAndOpen);
     }
   }
   
   closeModalCode() {
-    console.log("Cerrando modal");
     this.showModalCode = false;
     this.codigoReserva = '';
   }
@@ -304,16 +270,8 @@ export class ShowReserveComponent implements OnInit {
 
     filterMethod.subscribe({
       next: (reservas) => {
-        this.reserves = reservas
-          .filter(reserva => reserva.usuarioId === userId)
-          .sort((a, b) => {
-            const ordenardia = a.dia.localeCompare(b.dia);
-            if (ordenardia !== 0) {
-              return ordenardia;
-            }
-            return a.hora.localeCompare(b.hora);
-          });
-
+        const filtered = reservas.filter(reserva => reserva.usuarioId === userId);
+        this.reserves = this.sortReserves(filtered);
         this.isLoading = false;
         this.showDropdown = false;
       },

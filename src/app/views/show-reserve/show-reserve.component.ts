@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { ModalLoginComponent } from '../../components/modal-login/modal-login.component';
 import { ReserveComponent } from '../reserve/reserve.component';
-import { Product, Reserva, Valoracion } from '../../models/user.interface';
+import { Product, Reserva, Usuario, Valoracion } from '../../models/user.interface';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { ApiService } from '../../services/api-service.service';
@@ -21,6 +21,7 @@ import { ModalCodeComponent } from '../../components/modal-code/modal-code.compo
 export class ShowReserveComponent implements OnInit {
   reserves: Reserva[] = [];
   isUser = false;
+  usuario: Usuario | null = null;
   isAuthenticated = true;
   isSpanish: boolean = true;
   showLoginModal: boolean = false;
@@ -28,7 +29,7 @@ export class ShowReserveComponent implements OnInit {
   showModal: boolean = false;
   selectedReserve: Reserva | null = null;
   isLoading: boolean = true;
-  codigoReserva: number = 0;
+  codigoReserva: string = '';
 
   constructor(
     private authService: AuthService,
@@ -50,6 +51,7 @@ export class ShowReserveComponent implements OnInit {
     });
     this.loadUserReserves();
     this.getNumeroReservasByUsuarioId();
+    this.loadUserData();
   }
 
   loadUserReserves() {
@@ -149,17 +151,86 @@ export class ShowReserveComponent implements OnInit {
    
     }
   }
+
+  
+  loadUserData() {
+    const userId = this.authService.getUserId();
+    if (userId) {
+      this.apiService.getAllUsers().subscribe({
+        next: (usuarios) => {
+          const usuario = usuarios.find(u => u.id === userId);
+          if (usuario) {
+            this.usuario = usuario;
+            console.log('Usuario cargado:', usuario);
+            console.log('Código de corte gratis:', usuario.codigoCorteGratis);
+            // Si el modal está esperando para abrirse, actualizar el código y abrirlo
+            if (this.showModalCode) {
+              this.codigoReserva = usuario.codigoCorteGratis || '';
+            }
+          }
+        },
+        error: (error) => {
+          console.error('Error al cargar datos del usuario:', error);
+        }
+      });
+    }
+  }
+
   openModalCode() {
     console.log("abriendo modal");
-    // Generar un código aleatorio de 6 dígitos
-    this.codigoReserva = Math.floor(100000 + Math.random() * 900000);
-    this.showModalCode = true;
+    console.log("Usuario actual:", this.usuario);
+    console.log("Código actual en codigoReserva:", this.codigoReserva);
+    
+    // Si el usuario no está cargado o no tiene código, cargarlo primero
+    if (!this.usuario || !this.usuario.codigoCorteGratis) {
+      const userId = this.authService.getUserId();
+      console.log("Cargando datos del usuario, userId:", userId);
+      if (userId) {
+        this.apiService.getAllUsers().subscribe({
+          next: (usuarios) => {
+            const usuario = usuarios.find(u => u.id === userId);
+            if (usuario) {
+              this.usuario = usuario;
+              const codigo = usuario.codigoCorteGratis || '';
+              this.codigoReserva = codigo;
+              console.log('Usuario cargado:', usuario);
+              console.log('Código de corte gratis cargado:', codigo);
+              console.log('codigoReserva establecido a:', this.codigoReserva);
+              // Establecer el código ANTES de abrir el modal
+              if (codigo) {
+                this.showModalCode = true;
+              } else {
+                console.warn('El código de corte gratis está vacío');
+              }
+            } else {
+              console.error('Usuario no encontrado en la lista de usuarios');
+            }
+          },
+          error: (error) => {
+            console.error('Error al cargar datos del usuario:', error);
+          }
+        });
+      } else {
+        console.error('No hay userId disponible');
+      }
+    } else {
+      const codigo = this.usuario.codigoCorteGratis || '';
+      this.codigoReserva = codigo;
+      console.log("Código obtenido del usuario:", codigo);
+      console.log("codigoReserva establecido a:", this.codigoReserva);
+      // Establecer el código ANTES de abrir el modal
+      if (codigo) {
+        this.showModalCode = true;
+      } else {
+        console.warn('El código de corte gratis está vacío');
+      }
+    }
   }
   
   closeModalCode() {
     console.log("Cerrando modal");
     this.showModalCode = false;
-    this.codigoReserva = 0;
+    this.codigoReserva = '';
   }
 
   onCancelReserve() {

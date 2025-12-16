@@ -89,7 +89,8 @@ export class CreateUserComponent {
       password: this.createPupil.getRawValue().password,
       confirm_password: this.createPupil.getRawValue().confirmPassword,
       citas_reservadas: [],
-      rol: this.createPupil.getRawValue().rol
+      rol: this.createPupil.getRawValue().rol,
+      codigoCorteGratis: ''
     };
     this.isProcessing = true;
 

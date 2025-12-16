@@ -111,7 +111,8 @@ export class ModalLoginComponent {
             password: '',
             confirm_password: '',
             rol: response.rol,
-            citas_reservadas: []
+            citas_reservadas: [],
+            codigoCorteGratis: response.codigoCorteGratis
           };
           
           this.authService.login(userData);
@@ -175,7 +176,8 @@ export class ModalLoginComponent {
           password: this.registerForm.get('password')?.value,
           confirm_password: this.registerForm.get('confirmPassword')?.value,
           rol: 'usuario',
-          citas_reservadas: []
+          citas_reservadas: [],
+          codigoCorteGratis: ''
         };
       
         this.apiService.registerUser(usuario).subscribe({

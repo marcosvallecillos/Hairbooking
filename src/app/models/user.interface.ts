@@ -8,6 +8,7 @@ export interface Usuario {
     telefono: number;
     citas_reservadas: Reserva[];
     rol?: string;
+    codigoCorteGratis: string;
 
   }
 

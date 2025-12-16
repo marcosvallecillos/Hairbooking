@@ -50,7 +50,7 @@
           </p>
         </div>
       </div>
-      @if(reservasparaCorteGratis !== 3){
+      @if(reservasparaCorteGratis !== 10 && reservasparaCorteGratis !== 0){
       <h5 class="free-cut"> {{ getText(' Te faltan ', 'You are ' )}} <strong>{{ reservasparaCorteGratis }}</strong> {{getText(' días para el corte gratis ','days away from the free haircut')}}</h5>
       }@else{
         

@@ -8,8 +8,16 @@
                 <p><strong>{{ getText('Peluquero:', 'Barber:') }}</strong> {{ peluquero }}</p>
 
                 <p><strong>{{ getText('Servicio:', 'Service:') }}</strong> {{ servicio }}</p>
-<p><strong>{{ getText('Precio:', 'Price:') }}</strong> {{ precio }}€</p>
-                <p><strong>{{ getText('Fecha:', 'Date:') }}</strong> {{ fecha }}</p>
+                <p class="price-container">
+                    <strong>{{ getText('Precio:', 'Price:') }}</strong>
+                    @if (tieneDescuento && precioOriginal) {
+                        <span class="original-price">{{ precioOriginal }}€</span>
+                        <span class="discount-price">{{ precio }}€</span>
+                        <span class="discount-badge">{{ getText('Corte Gratis', 'Free Cut') }}</span>
+                    } @else {
+                        <span>{{ precio }}€</span>
+                    }
+                </p>                <p><strong>{{ getText('Fecha:', 'Date:') }}</strong> {{ fecha }}</p>
                 <p><strong>{{ getText('Hora:', 'Hour:') }}</strong> {{ hora }}</p>
             </div>
         </div>

@@ -334,4 +334,13 @@ actualizarCantidad(productoId: number, data: { usuario_id: number, cantidad: num
     })
   );
 }
+
+//verficar si se ha usado el codigo 
+
+usarCodigoCorteGratis(usuarioId: number, codigo: string) {
+  return this.http.post(`${this.apiUrlReservas}/usar-codigo`, {
+    usuario_id: usuarioId,           // 👈 EXACTO como el backend
+    codigoCorteGratis: codigo         // 👈 EXACTO como el backend
+  });
+}
 } 

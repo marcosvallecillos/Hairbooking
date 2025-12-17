@@ -27,10 +27,11 @@
                                 <h5 class="card-title">{{ user.nombre }}</h5>
                                 <p class="card-text">Email: {{ user.email }}</p>
                                 <p class="card-text">Teléfono: {{ user.telefono }}</p>
-                                <p><i class="bi bi-person"></i>
-                                    <strong>{{ getText('Total de reservas ', 'Total reservations ') }}:</strong>
+                                <p>
+                                    <strong>{{ getText('Total de reservas', 'Total reservations') }}:</strong>
                                     {{ reservasPorUsuario[user.id] || 0 }}
-                                  </p>
+                                </p>
+                                  
                             </div>
                             <div class="card-footer">
                         <button class="btn btn-danger" (click)="deleteClient(user.id)">Eliminar</button>

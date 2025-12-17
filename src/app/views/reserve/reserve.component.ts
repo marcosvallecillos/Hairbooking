@@ -2,24 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
+import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { AuthService } from '../../services/auth.service';
 import { ModalLoginComponent } from '../../components/modal-login/modal-login.component';
 import { LanguageService } from '../../services/language.service';
 import { ApiService } from '../../services/api-service.service';
-import { Reserva } from '../../models/user.interface';
+import { Reserva, Usuario } from '../../models/user.interface';
 
 @Component({
   selector: 'app-reserve',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalLoginComponent, FooterComponent, ModalComponent, RouterLink],
+  imports: [CommonModule, FormsModule, ModalLoginComponent, FooterComponent, ModalComponent, RouterLink, ClipboardModule],
   templateUrl: './reserve.component.html',
   styleUrls: ['./reserve.component.css'],
 })
 export class ReserveComponent implements OnInit {
   currentDate = new Date();
   reserves: Reserva[] = [];
+  usuario: Usuario | null = null;
   selectedDate: Date | null = null;
   selectedService: string = '';
   selectedBarber: string = '';
@@ -59,7 +61,8 @@ export class ReserveComponent implements OnInit {
     private router: Router,
     private languageService: LanguageService,
     private apiService: ApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private clipboard: Clipboard
   ) {
     this.languageService.isSpanish$.subscribe((isSpanish) => (this.isSpanish = isSpanish));
   }
@@ -69,6 +72,7 @@ export class ReserveComponent implements OnInit {
   ngOnInit() {
     this.isAuthenticated = this.authService.isLoggedIn();
     this.loadReserves();
+    this.loadUserCode();
 
     // Verificar si hay parámetros de consulta para edición
     this.route.queryParams.subscribe(params => {
@@ -112,12 +116,28 @@ export class ReserveComponent implements OnInit {
     return this.isSpanish ? es : en;
   }
 
-  // Devuelve el precio como número (sin el símbolo €)
-  getPrice(): number {
+  // Devuelve el precio original sin descuento
+  getOriginalPrice(): number {
     const selected = this.services.find(service => service.nombre === this.selectedService);
     if (!selected) return 0;
     const numeric = parseFloat(selected.precio.replace('€', '').replace(' ', ''));
     return isNaN(numeric) ? 0 : numeric;
+  }
+
+  // Devuelve el precio final (con descuento si hay código de corte gratis)
+  getPrice(): number {
+    const originalPrice = this.getOriginalPrice();
+    // Si hay código de corte gratis, el precio es 0
+    if (this.codigoDisplay && this.codigoDisplay.trim() !== '') {
+      return 0;
+    }
+    // Asegurar que siempre devolvamos un número válido
+    return originalPrice || 0;
+  }
+
+  // Verifica si hay descuento aplicado
+  hasDiscount(): boolean {
+    return !!(this.codigoDisplay && this.codigoDisplay.trim() !== '');
   }
 
   getDaysInMonth(month: number, year: number): (Date | null)[] {
@@ -252,6 +272,7 @@ export class ReserveComponent implements OnInit {
       if (this.isEditing && this.reserveId) {
         this.apiService.editReserve(this.reserveId, reserveData).subscribe({
           next: (response) => {
+           
             this.router.navigate(['/show-reserve']);
           },
           error: (error) => {
@@ -259,23 +280,61 @@ export class ReserveComponent implements OnInit {
           }
         });
       } else {
+        // Obtener el precio original y el precio final
+        const precioOriginal = this.getOriginalPrice();
+        const precioFinal = this.hasDiscount() ? 0 : precioOriginal;
+        
+        // Validar que el precio sea un número válido
+        const precioAEnviar = Number(precioFinal);
+        if (isNaN(precioAEnviar) || precioAEnviar < 0) {
+          console.error('Error: El precio no es un número válido', precioAEnviar);
+          return;
+        }
+        
         // Mapear al formato que espera el backend (usuario_id, precio numérico)
-        const reserva = {
+        const reserva: any = {
           servicio: reserveData.servicio,
           peluquero: reserveData.peluquero,
           dia: reserveData.dia,
           hora: reserveData.hora,
           usuario_id: reserveData.usuarioId,
-          precio: reserveData.precio
+          precio: precioAEnviar
         };
 
-        this.apiService.newReserve(reserva as unknown as any).subscribe({
+        // Si hay código de corte gratis, también enviar el código para que el backend lo valide
+        if (this.hasDiscount() && this.codigoDisplay) {
+          reserva.codigo_corte_gratis = this.codigoDisplay;
+        }
+
+        console.log('Enviando reserva:', reserva);
+        console.log('Precio original:', precioOriginal, 'Precio final:', precioAEnviar);
+        console.log('Tiene código de corte gratis:', this.hasDiscount());
+
+        this.apiService.newReserve(reserva).subscribe({
           next: (response) => {
-            console.log('Primera reserva creada:', response);   
-                this.router.navigate(['/show-reserve']);
+            if (this.hasDiscount() && this.codigoDisplay) {
+              this.apiService.usarCodigoCorteGratis(userId, this.codigoDisplay).subscribe({
+                next: () => {
+                  console.log('Código de corte gratis consumido correctamente');
+                  this.codigoDisplay = '';
+                  if(this.usuario?.codigoCorteGratis == null){
+                    console.log('Se ha eliminado el codigo')
+                  }
+                },
+                error: (err) => {
+                  console.error('Error al consumir el código:', err);
+                }
+              });
+            }
+            console.log('Reserva creada exitosamente:', response);   
+            this.router.navigate(['/show-reserve']);
           },
           error: (error) => {
-            console.error('Error al guardar la reserva en el primer endpoint:', error);
+            console.error('Error al guardar la reserva:', error);
+            console.error('Datos enviados:', reserva);
+            if (error.error) {
+              console.error('Error del servidor:', error.error);
+            }
           }
         });
       }
@@ -317,4 +376,54 @@ export class ReserveComponent implements OnInit {
   openLoginModal() {
     this.showLoginModal = true;
   }
+
+  codigoDisplay: string = '';
+  copiado = false;
+
+  loadUserCode() {
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    this.apiService.getAllUsers().subscribe({
+      next: (usuarios) => {
+        const usuario = usuarios.find(u => u.id === userId);
+        if (usuario?.codigoCorteGratis) {
+          this.codigoDisplay = usuario.codigoCorteGratis;
+        }
+      },
+      error: (error) => {
+        console.error('Error al cargar el código de corte gratis:', error);
+      }
+    });
+  }
+
+  copiarCodigo() {
+    if (!this.codigoDisplay) return;
+
+    if (this.clipboard.copy(this.codigoDisplay)) {
+      this.copiado = true;
+      setTimeout(() => this.copiado = false, 2000);
+    }
+  }
+  /*
+  verificarCodigo(){
+    const userId = this.authService.getUserId();
+    const codigo = this.usuario?.codigoCorteGratis || this.codigoReserva || '';
+
+    if (userId && codigo) {
+      this.apiService.usarCodigoCorteGratis(userId, codigo).subscribe({
+        next: (response: any) => {
+          console.log('Respuesta usarCodigoCorteGratis:', response);
+          // Aquí ajusta según lo que devuelva tu backend
+          this.totalReservasUsuario = response.totalReservas ?? this.totalReservasUsuario;
+          this.reservasparaCorteGratis = response.paraCorteGratis ?? this.reservasparaCorteGratis;
+        },
+        error: (error: Error) => {
+          console.error('Error al usar el código de corte gratis:', error);
+        }
+      });
+    } else {
+      console.warn('No hay userId o código de corte gratis disponible para verificar.');
+    }
+  }*/
 }

@@ -83,6 +83,8 @@
             </div>
         </div>
 
+       
+
         <!-- Horas Disponibles -->
         @if (selectedDate && selectedService && selectedBarber) {
           <div class="time-slots-section">
@@ -241,6 +243,26 @@
             }
 
         }
+        @if (codigoDisplay) {
+          <div class="code-container">
+            <div class="code-header">
+              <h3>{{ getText('Código de Corte Gratis', 'Free Cut Code') }}</h3>
+            </div>
+            <div class="code-content">
+              <div class="code-field">
+                <span class="code-text">{{ codigoDisplay }}</span>
+              </div>
+            </div>
+            @if (copiado) {
+              <small class="copy-success">
+                {{ getText('¡Código copiado!', 'Code copied!') }} ✔
+              </small>
+            }
+            <div class="code-info">
+              <p>{{ getText('Este código es personal y de uso exclusivo. No lo compartas con nadie.', 'This code is personal and for exclusive use. Do not share it with anyone.') }}</p>
+            </div>
+          </div>
+        }
 
         <!-- Botón de Reserva -->
         <button class="reserve-button"
@@ -249,16 +271,19 @@
             {{ getText('Reservar Cita', 'Reserve Quote') }}
         </button>
 
-        <app-modal
+     <app-modal
             [show]="showModal"
             [servicio]="selectedService"
             [fecha]="selectedDate ? (selectedDate | date:'d MMMM yyyy') : ''"
             [hora]="selectedTime" 
             [precio]="getPrice()"
+            [precioOriginal]="getOriginalPrice()"
+            [tieneDescuento]="hasDiscount()"
             [peluquero]="selectedBarber"
             (confirm)="onConfirmReserve()"
             (cancel)="onCancelReserve()">
         </app-modal>
+      
     </div>
 } @else {
     <!-- Mensaje para usuarios no registrados -->

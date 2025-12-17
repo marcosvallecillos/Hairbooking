@@ -15,6 +15,8 @@
     padding: 2.5rem;
     font-family: 'Oswald', sans-serif;
     color: #333;
+    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+    min-height: 100vh;
 }
 
 /* Sección de Servicios Mejorada */
@@ -22,10 +24,19 @@
 .services-section,
 .barber-section {
     background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     width: 100%;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.services-section:hover,
+.barber-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
 
@@ -43,40 +54,79 @@
 }
 
 .service-card {
-    background: #fdfdfd;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     text-align: center;
-    transition: transform 0.2s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     width: 70%;
     height: 120px;
-    border: 1px solid gray;
-    text-align: center;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
 }
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+}
+
+.service-card:hover::before {
+    left: 100%;
+}
+
 .barber-card {
-    background: #fdfdfd;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     text-align: center;
-    transition: transform 0.2s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    border: 2px solid transparent;
 }
+
 .service-card:hover,
 .barber-card:hover {
-   
-    transform: translateY(-7px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    border-color: rgba(0, 0, 0, 0.1);
 }
 .services-section h2,
 .barber-section h2 {
     text-align: center;
-    color: #000000;
-    font-size: 24px;
-    margin-bottom: 20px;
-    font-weight: bold;
+    color: #1a1a1a;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.services-section h2::after,
+.barber-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #c5a47e, #8b6f47);
+    border-radius: 2px;
 }
 .row {
     display: flex; 
@@ -110,10 +160,12 @@
         margin-left: 40%;
     }
 }
-.service-card.selected ,
+.service-card.selected,
 .barber-card.selected {
     border-color: #000000;
-    background-color:rgb(196, 196, 196);
+    background: linear-gradient(135deg, #e0e0e0 0%, #c8c8c8 100%);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
 }
 
 .service-card h3,
@@ -125,9 +177,10 @@
 
 .service-card .price {
     color: #c5a47e;
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: 700;
+    font-size: 1.2rem;
     margin-top: 0.6rem;
+    letter-spacing: 0.5px;
 }
 .barber-card img {
     width: 100px;
@@ -344,25 +397,56 @@
 /* Botón de Reserva Mejorado */
 .reserve-button {
     width: 100%;
-    padding: 1rem;
+    padding: 1.2rem 2rem;
     margin-top: 2rem;
-    background-color: #c5a47e;
+    background: linear-gradient(135deg, #c5a47e 0%, #8b6f47 100%);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1.2rem;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(197, 164, 126, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.reserve-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.reserve-button:hover:not(:disabled)::before {
+    width: 300px;
+    height: 300px;
 }
 
 .reserve-button:hover:not(:disabled) {
-    background-color: #b08d68;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #b08d68 0%, #7a5f3a 100%);
+    box-shadow: 0 8px 25px rgba(197, 164, 126, 0.4);
+    transform: translateY(-2px);
+}
+
+.reserve-button:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .reserve-button:disabled {
-    background-color: #ccc;
+    background: linear-gradient(135deg, #cccccc 0%, #999999 100%);
     cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.6;
 }
 
 /* Responsive Mejorado */
@@ -599,4 +683,208 @@
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
+  
+
+.code-container {
+    background: linear-gradient(135deg, #808080 0%, #a2ac1e 100%);
+    padding: 30px;
+    border-radius: 20px;
+    margin: 30px 0;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4), 
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+
+  .code-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    animation: shimmer 4s ease-in-out infinite;
+  }
+
+  .code-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.1) 0%, 
+      transparent 50%, 
+      rgba(255, 255, 255, 0.05) 100%);
+    pointer-events: none;
+  }
+
+  @keyframes shimmer {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 0.5;
+    }
+    50% {
+      transform: translate(-30%, -30%) rotate(180deg);
+      opacity: 1;
+    }
+  }
+
+  .code-header h3 {
+    margin: 0 0 20px 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 2;
+  }
+
+  .code-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .code-field {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 18px 24px;
+    border-radius: 12px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) inset,
+                0 2px 8px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .code-field:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) inset,
+                0 2px 12px rgba(255, 255, 255, 0.15);
+  }
+  
+  .code-text {
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 20px;
+    color: white;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .copy-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    padding: 14px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(15px);
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2),
+                0 2px 8px rgba(255, 255, 255, 0.1) inset;
+    overflow: hidden;
+  }
+
+  .copy-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .copy-btn:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3),
+                0 4px 12px rgba(255, 255, 255, 0.15) inset;
+  }
+
+  .copy-btn:active {
+    transform: translateY(-2px) scale(1);
+  }
+
+  .copy-btn i {
+    font-size: 16px;
+  }
+  
+  .copy-success {
+    color: #4ade80;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .code-info {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
+  }
+
+  .code-info p {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .code-content {
+      flex-direction: column;
+    }
+
+    .copy-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
   

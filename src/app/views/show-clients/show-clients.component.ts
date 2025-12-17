@@ -43,6 +43,7 @@ export class ShowClientsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllClients();
     this.getAllReserves();
+
   }
 
   getAllClients() {
@@ -83,24 +84,25 @@ export class ShowClientsComponent implements OnInit {
   }
   private getAllReserves() {
     this.apiService.getReserves().subscribe({
-      next: (response) => {
-        this.reserves = response;
-        this.calcularReservasPorUsuario();
+      next: (reserves) => {
+        for (const reserva of reserves) {
+        
+  
+          const userId =
+            (reserva as any).usuarioId ??
+            (reserva as any).usuario_id ??
+            (reserva as any).usuario?.id;
+  
+          if (!userId) continue;
+          this.reservasPorUsuario[userId] =
+            (this.reservasPorUsuario[userId] || 0) + 1;
+        }
       },
       error: (error) => {
-        console.error('Error al obtener las reservas para el conteo por usuario:', error);
+        console.error('❌ Error al obtener reservas:', error);
       }
     });
   }
-  private calcularReservasPorUsuario() {
-    const conteo: { [usuarioId: number]: number } = {};
-
-    this.reserves.forEach((reserve) => {
-      if (reserve.usuarioId != null) {
-        conteo[reserve.usuarioId] = (conteo[reserve.usuarioId] || 0) + 1;
-      }
-    });
-
-    this.reservasPorUsuario = conteo;
-  }
+  
+  
 }

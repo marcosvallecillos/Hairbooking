@@ -54,6 +54,29 @@ export class ShowReserveComponent implements OnInit {
     this.loadUserData();
   }
 
+  loadUserReserves() {
+    this.isLoading = true;
+    const userId = this.authService.getUserId();
+
+    if (!userId) {
+      this.isLoading = false;
+      return;
+    }
+
+    this.apiService.getReserveByUsuario(userId).subscribe({
+      next: (response) => {
+        // Adaptar la respuesta del backend al modelo Reserva del front
+        const mapped = this.mapReservaResponse(response);
+        this.reserves = this.sortReserves(mapped);
+        this.isLoading = false;
+      },
+      error: (error: Error) => {
+        console.error('Error al cargar las reservas del usuario:', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
   private sortReserves(reservas: Reserva[]): Reserva[] {
     return reservas.sort((a, b) => {
       const ordenDia = a.dia.localeCompare(b.dia);
@@ -70,28 +93,6 @@ export class ShowReserveComponent implements OnInit {
       valoracionServicio: r.valoracion_servicio ?? null,
       valoracionPeluquero: r.valoracion_peluquero ?? null,
     }) as Reserva);
-  }
-
-  loadUserReserves() {
-    this.isLoading = true;
-    const userId = this.authService.getUserId();
-
-    if (!userId) {
-      this.isLoading = false;
-      return;
-    }
-
-    this.apiService.getReserveByUsuario(userId).subscribe({
-      next: (response) => {
-        const mapped = this.mapReservaResponse(response);
-        this.reserves = this.sortReserves(mapped);
-        this.isLoading = false;
-      },
-      error: (error: Error) => {
-        console.error('Error al cargar las reservas del usuario:', error);
-        this.isLoading = false;
-      }
-    });
   }
 
   isReservePast(reserve: Reserva): boolean {
@@ -148,10 +149,10 @@ export class ShowReserveComponent implements OnInit {
           console.error('Error al obtener el numero de reservas:', error);
         }
       });
-   
+  
     }
   }
-
+ 
   private loadUserDataInternal(callback?: (codigo: string) => void) {
     const userId = this.authService.getUserId();
     if (!userId) return;
@@ -294,4 +295,6 @@ export class ShowReserveComponent implements OnInit {
       this.showDropdown = false;
     }
   }
+
+ 
 }

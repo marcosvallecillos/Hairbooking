@@ -8,7 +8,7 @@ import { UserStateService } from '../../services/user-state.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css'
+  styleUrl: './modal.component.css' // <- corregido
 })
 export class ModalComponent {
  
@@ -17,7 +17,10 @@ export class ModalComponent {
   @Input() hora: string = '';
   @Input() servicio: string = '';
   @Input() peluquero: string = '';
-  @Input() precio?: string | number = '';
+  @Input() precio?: number = 0;
+  @Input() precioOriginal?: number = 0;
+  @Input() tieneDescuento?: boolean = false;
+  
   isAdmin:boolean = false;
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();

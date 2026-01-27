@@ -1,0 +1,24 @@
+@if(show){
+    <div class="modal-overlay">
+    <div class="modal-content">
+        <h2>
+            {{getText('Borrar Todas las Reservas','Delete All Reservations')}}
+          </h2>
+        <div class="modal-body">
+            <h5>{{ getText('¿Estás seguro que deseas eliminar todas las reservas expiradas?', 'Are you sure you want to delete all
+                expired reservations ?') }}</h5>
+
+        </div>
+        <div class="modal-actions">
+            <button class="btn-confirm" (click)="onCancel()">{{ getText('Cancelar', 'Cancel') }}</button>
+            <button class="btn-delete" (click)="onConfirm()">
+                {{
+                isProcessing
+                ? getText('Procesando...', 'Processing...')
+                : getText('Eliminar', 'Delete')
+                }}
+            </button>
+        </div>
+    </div>
+</div>
+}

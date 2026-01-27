@@ -31,8 +31,16 @@
       </div>
     </div>
     <h2 class="reservas">{{ getText('Reservas Realizadas por Usuarios', 'Reservations Made by Users') }}</h2>
+   
   </div>
 
+    @if (allReservesPast()) {
+    <div class="delete-all" >
+      <button class="delete-all-button" (click)="deleteReserveAll()" >
+       <p>{{ getText('Eliminar todas las reservas', 'Delete all reservations') }}</p>
+      </button>
+    </div>
+    }
   @if (filterError) {
     <div class="alert alert-danger mt-3" role="alert">
       {{ filterError }}
@@ -71,10 +79,11 @@
               <p><i class="bi bi-person-badge"></i> <strong>{{ getText('Peluquero', 'Barber') }}:</strong> {{ reserve.peluquero }}</p>
               <p><i class="bi bi-cash"></i> <strong>{{ getText('Precio', 'Price') }}:</strong> {{ reserve.precio }}€</p>
               <p><i class="bi bi-calendar"></i> <strong>{{ getText('Dia', 'Day') }}:</strong> {{ reserve.dia }}</p>
-              <p><i class="bi bi-clock"></i> <strong>{{ getText('Hora', 'Time') }}:</strong> {{ reserve.hora }}</p>
               <p><i class="bi bi-person"></i> <strong>ID_reserva:</strong> {{ reserve.id }}</p>
+
               <p><i class="bi bi-123"></i>
-                <strong>{{ getText('Total de reservas de este usuario', 'Total reservations for this user') }}:</strong>
+                
+                <strong>{{ getText('Total de reservas de', 'Total reservations for') }} {{reserve.usuario?.nombre ?? ''}} {{reserve.usuario?.apellidos ?? ''}}:</strong>
                 {{ reservasPorUsuario[reserve.usuarioId] || 0 }}
               </p>
             </div>
@@ -105,7 +114,15 @@
   [fecha]="selectedReserve?.dia ?? ''"
   [hora]="selectedReserve?.hora ?? ''" 
   [peluquero]="selectedReserve?.peluquero ?? ''"
+  [nombreUsuario]="selectedReserve?.usuario?.nombre ?? null" 
   [usuario]="selectedReserve?.usuarioId ?? null" 
+  [apellidoUsuario]="selectedReserve?.usuario?.apellidos ?? null" 
   (confirm)="onConfirmDelete()" 
   (cancel)="onCancelReserve()">
 </app-modal-delete>
+
+<app-modal-deleteall
+[show]="showModalDeleteAll"
+(confirm)="onConfirmDeleteAll()" 
+(cancel)="onCancelDeleteAll()">
+</app-modal-deleteall>

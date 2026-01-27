@@ -136,6 +136,9 @@ getValoraciones(): Observable<ValoracionesResponse> {
 deleteValoracion(id: number): Observable<Valoracion> {
   return this.http.delete<Valoracion>(`${this.apiUrlValoracion}/delete/${id}`);
 }
+deleteAllReserves(): Observable<any> {
+  return this.http.delete<any>(`${this.apiUrlReservas}/delete-all`);
+}
 
 getReservasAnuladas():Observable<ReservaAnulada[]>{
   return this.http.get<ReservaAnulada[]>(`${this.apiUrlAnuladas}/list`);
@@ -154,29 +157,27 @@ removeReserve(reserveId: number) {
 getReserveById(id: number): Observable<Reserva> {
   return this.http.get<Reserva>(`${this.apiUrlReservas}/${id}`);
 }
-makePurchase(purchase: { productos: { productoId: number; cantidad: number; }[]; descuento?: number }, usuarioId: number): Observable<any> {
+makePurchase(
+  purchase: { 
+    productos: { productoId: number; cantidad: number; }[]; 
+    descuento?: number;
+    payment_method_id: string;  // ← REQUERIDO: obtenido de Stripe Elements
+  }, 
+  usuarioId: number
+): Observable<any> {
   const httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
   
-  return this.http.post<any>(`${this.apiUrlCompras}/usuarios/${usuarioId}/compras`, purchase, httpOptions).pipe(
-    tap(response => {
-      console.log('Respuesta del servidor en makePurchase:', response);
-      if (response.mensaje === 'Compra registrada') {
-        // Eliminar cada producto del carrito
-        purchase.productos.forEach(producto => {
-          this.eliminarDelCarrito(producto.productoId).subscribe();
-        });
-        
-        // Vaciar el carrito localmente
-        this.productos = [];
-        this.updateCartItemsCount();
-      }
-    })
-  );
+  return this.http.post<any>(
+    `${this.apiUrlCompras}/usuarios/${usuarioId}/compras`, 
+    purchase, 
+    httpOptions
+  )
 }
+
 getPurchasesByUsuarioId(usuario_Id: number): Observable<Compra[]> {
   return this.http.get<Compra[]>(`${this.apiUrlCompras}/usuario/${usuario_Id}`);
 }

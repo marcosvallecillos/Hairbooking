@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { Reserva, Valoracion } from '../../models/user.interface';
+import { Reserva, Usuario, Valoracion } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
@@ -8,10 +8,11 @@ import { NgClass } from '@angular/common';
 import { ModalUserComponent } from '../../components/modal-user/modal-user.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { AuthService } from '../../services/auth.service';
+import { ModalDeleteallComponent } from '../../components/modal-deleteall/modal-deleteall.component';
 
 @Component({
   selector: 'app-reservations',
-  imports: [FooterComponent,NgClass,ModalUserComponent,RouterLink,ModalDeleteComponent],
+  imports: [FooterComponent,NgClass,ModalUserComponent,RouterLink,ModalDeleteComponent,ModalDeleteallComponent],
   templateUrl: './reservations.component.html',
   styleUrl: './reservations.component.css'
 })
@@ -24,11 +25,14 @@ export class ReservationsComponent {
   showLoginModal: boolean = false;
   selectedUserId: number | null = null;
   showModal: boolean = false;
+  showModalDeleteAll:boolean = false;
   selectedReserve: Reserva | null = null;
   currentFilter: 'all' | 'activas' | 'expiradas' = 'all';
   filterError: string | null = null;
-  // Mapa para almacenar el total de reservas por usuario_id
+  // user para almacenar el total de reservas por usuario_id
   reservasPorUsuario: { [usuarioId: number]: number } = {};
+  // user para acceder rápidamente a los datos del usuario por id
+  usuariosPorId: { [usuarioId: number]: Usuario } = {};
 
   constructor(
     private languageService: LanguageService,
@@ -47,12 +51,12 @@ export class ReservationsComponent {
   }
   ngOnInit(): void {
     this.getAllReservations();
+    this.cargarUsuarios();
   }
   getAllReservations() {
     this.isLoading = true;
     this.apiService.getReserves().subscribe({ 
       next: (response) => {
-        // Adaptar la respuesta del backend al modelo Reserva del front
         const mapped = response.map((r: any) => ({
           ...r,
           usuarioId: r.usuarioId ?? r.usuario_id,
@@ -64,26 +68,19 @@ export class ReservationsComponent {
 
         this.reserves = mapped.sort((reserva, newreserve) => {
           const ordenardia = reserva.dia.localeCompare(newreserve.dia);
-          if (ordenardia !== 0) {
-            return ordenardia;
-          }
-        
-          return reserva.hora.localeCompare(newreserve.hora);
+          return ordenardia !== 0 ? ordenardia : reserva.hora.localeCompare(newreserve.hora);
         });
 
-        // Calcular el número total de reservas por usuario_id
         this.calcularReservasPorUsuario();
+        this.enlazarUsuariosAReservas();
 
-        // Se borra si la hora paso y la reserva tiene valoración asociada
         this.reserves.forEach(reserve => {
           if (this.isReservePast(reserve) && reserve.valoracionId != null) {
-            console.log('Eliminando reserva pasada con valoración:', reserve);
             this.deleteReserve(reserve);
           } 
         });
 
         this.isLoading = false;
-        console.log('Reservas ordenadas:', this.reserves);
       },
       error: (error) => {
         this.isLoading = false;
@@ -92,73 +89,138 @@ export class ReservationsComponent {
     });
   }
 
+  private cargarUsuarios() {
+    this.apiService.getAllUsers().subscribe({
+      next: (usuarios) => {
+        const user: { [usuarioId: number]: Usuario } = {};
+        usuarios.forEach((u) => {
+          if (u.id != null) {
+            user[u.id] = u;
+          }
+        });
+        this.usuariosPorId = user;
+        this.enlazarUsuariosAReservas();
+      },
+      error: (error) => {
+        console.error('Error al cargar usuarios para las reservas:', error);
+      }
+    });
+  }
+
+  private enlazarUsuariosAReservas() {
+    if (!this.reserves?.length || !this.usuariosPorId) {
+      return;
+    }
+    this.reserves = this.reserves.map((reserve) => ({
+      ...reserve,
+      usuario: reserve.usuarioId != null ? this.usuariosPorId[reserve.usuarioId] : reserve.usuario,
+    }));
+  }
+
   openUserModal(usuarioId: number) {
     this.selectedUserId = usuarioId;
     this.showLoginModal = true;
-
-    console.log(this.selectedUserId)
   }
 
   deleteReserve(reserve: Reserva) {
     this.selectedReserve = reserve;
     this.showModal = true;
-    console.log('Reserva seleccionada para eliminar:', reserve);
   }
-
+  deleteReserveAll(){
+    console.log("Abriendo modal")
+    this.showModalDeleteAll = true
+    
+  }
 
 
    
   private deleteReservation(reserveId: number) {
     this.apiService.deleteReserve(reserveId).subscribe({
-      next: (response) => {
+      next: () => {
         this.reserves = this.reserves.filter(r => r.id !== reserveId);
+        this.calcularReservasPorUsuario();
         this.selectedReserve = null;
         this.showModal = false;
-        console.log('Reserva eliminada y movida a reservas anuladas:', response);
       },
       error: (error: Error) => {
         console.error('Error al eliminar la reserva:', error);
       }
     });
   }
-  // Si estas variables las usas en otro sitio, puedes mantenerlas;
-  // aquí ya no las necesitamos para el total por usuario.
-  reservasparaCorteGratis: number = 0;
-  totalReservasUsuario: number = 0;
+  private deleteAllReserves() {
+    this.apiService.deleteAllReserves().subscribe({
+      next: () => {
+        this.getAllReservations();
+      },
+      error: (error) => {
+        console.error('Error al eliminar todas las reservas:', error);
+      }
+    });
+  }
 
   // Calcula cuántas reservas tiene cada usuario (por usuario_id)
+  // Incluye tanto reservas activas como borradas usando el endpoint del backend
   private calcularReservasPorUsuario() {
-    const conteo: { [usuarioId: number]: number } = {};
-
+    const usuarioIdsUnicos = new Set<number>();
     this.reserves.forEach((reserve) => {
       if (reserve.usuarioId != null) {
-        conteo[reserve.usuarioId] = (conteo[reserve.usuarioId] || 0) + 1;
+        usuarioIdsUnicos.add(reserve.usuarioId);
       }
     });
 
-    this.reservasPorUsuario = conteo;
+    if (usuarioIdsUnicos.size === 0) {
+      this.reservasPorUsuario = {};
+      return;
+    }
+
+    const conteo: { [usuarioId: number]: number } = {};
+    const usuarioIdsArray = Array.from(usuarioIdsUnicos);
+    let llamadasCompletadas = 0;
+    const totalLlamadas = usuarioIdsArray.length;
+
+    usuarioIdsArray.forEach((usuarioId) => {
+      this.apiService.getNumeroReservasByUsuarioId(usuarioId).subscribe({
+        next: (respuesta) => {
+          conteo[usuarioId] = respuesta.totalReservas || 0;
+          llamadasCompletadas++;
+          
+          if (llamadasCompletadas === totalLlamadas) {
+            this.reservasPorUsuario = conteo;
+          }
+        },
+        error: (error) => {
+          console.error(`Error al obtener reservas para usuario ${usuarioId}:`, error);
+          conteo[usuarioId] = 0;
+          llamadasCompletadas++;
+          
+          if (llamadasCompletadas === totalLlamadas) {
+            this.reservasPorUsuario = conteo;
+          }
+        }
+      });
+    });
   }
 
   isReservePast(reserve: Reserva): boolean {
     const [year, month, day] = reserve.dia.split('-').map(Number);
     const [hours, minutes] = reserve.hora.split(':').map(Number);
-    
     const reserveDate = new Date(year, month - 1, day, hours, minutes);
-    const now = new Date();
-    
-    return reserveDate < now;
+    return reserveDate < new Date();
   }
-  deleteValoracion(reserveId:number){
-    // En el nuevo modelo, la valoración se maneja por id separado (valoracionId)
-    if (this.selectedReserve && typeof this.selectedReserve.valoracionId === 'number'){
-      this.apiService.deleteValoracion(this.selectedReserve.valoracionId).subscribe();
+
+  allReservesPast(): boolean {
+    return this.reserves.length > 0 && this.reserves.every(reserve => this.isReservePast(reserve));
+  }
+  deleteValoracion(reserveId: number) {
+    if (this.selectedReserve && typeof this.selectedReserve.valoracionId === 'number') {
+      this.apiService.deleteValoracion(this.selectedReserve.valoracionId).subscribe({
+        error: (error) => console.error('Error al eliminar valoración:', error)
+      });
     }
   }
   onConfirmDelete() {
     if (this.selectedReserve) {
-      const reserveId = this.selectedReserve.id;
-      // Eliminamos solo la reserva, sin tocar la valoración
-      this.deleteReservation(reserveId);
+      this.deleteReservation(this.selectedReserve.id);
     }
   }
 
@@ -167,7 +229,16 @@ export class ReservationsComponent {
     this.selectedReserve = null;
   }
 
-   showDropdown = false;
+  onConfirmDeleteAll() {
+    console.log("Abriendo modal")
+    this.deleteAllReserves();
+  }
+
+  onCancelDeleteAll() {
+    this.showModalDeleteAll = false;
+  }
+
+  showDropdown = false;
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
@@ -189,7 +260,22 @@ export class ReservationsComponent {
 
     filterMethod.subscribe({
       next: (reservas) => {
-        this.reserves = reservas;
+        const mapped = reservas.map((r: any) => ({
+          ...r,
+          usuarioId: r.usuarioId ?? r.usuario_id,
+          valoracionId: r.valoracion ?? null,
+          valoracionComentario: r.valoracion_comentario ?? null,
+          valoracionServicio: r.valoracion_servicio ?? null,
+          valoracionPeluquero: r.valoracion_peluquero ?? null,
+        }) as Reserva);
+
+        this.reserves = mapped.sort((reserva, newreserve) => {
+          const ordenardia = reserva.dia.localeCompare(newreserve.dia);
+          return ordenardia !== 0 ? ordenardia : reserva.hora.localeCompare(newreserve.hora);
+        });
+
+        this.calcularReservasPorUsuario();
+        this.enlazarUsuariosAReservas();
         this.isLoading = false;
         this.showDropdown = false;
       },

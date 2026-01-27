@@ -11,7 +11,6 @@ import { ShowProfileComponent } from './components/show-profile/show-profile.com
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { ProductsComponent } from './views/products/products.component';
 import { CosmeticosComponent } from './components/cosmeticos/cosmeticos.component';
-import { ModalCompraComponent } from './components/modal-compra/modal-compra.component';
 import { ShowReserveComponent } from './views/show-reserve/show-reserve.component';
 import { ShowBuysComponent } from './views/show-buys/show-buys.component';
 import { FavoritosComponent } from './views/favoritos/favoritos.component';
@@ -45,7 +44,6 @@ export const routes: Routes = [
     { path: 'editProfile', component: EditProfileComponent, canActivate: [AuthUserGuard] },
     { path: 'products', component: ProductsComponent },
     { path: 'cosmetics', component: CosmeticosComponent },
-    { path: 'confirm-compra', component: ModalCompraComponent },
     { path: 'show-reserve', component: ShowReserveComponent},
     { path: 'show-buys', component: ShowBuysComponent, canActivate: [AuthUserGuard] },
     { path: 'favorites', component: FavoritosComponent, canActivate: [AuthUserGuard] },

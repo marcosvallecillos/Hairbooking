@@ -1,0 +1,198 @@
+@if (show) {
+<div class="modal-overlay">
+    <div class="modal-content">
+        <h2>{{ getText('Completa los datos de pago', 'Complete payment details') }}</h2>
+
+        <div class="checkout-layout">
+            <!-- Columna izquierda: Método de pago -->
+            <div class="payment-column">
+                <h3>{{ getText('Método de pago', 'Payment method') }}</h3>
+
+                <!-- Formulario de pago -->
+                <form id="payment-form" (ngSubmit)="pagar($event)">
+                    <div class="form-group">
+                        <label>
+                            {{ getText('Email', 'Email') }}
+                            <input type="email" id="email" [(ngModel)]="email" name="email" (input)="onEmailInput()"
+                                (blur)="onEmailBlur()" required />
+                        </label>
+                        <div id="email-errors" class="error-message">{{ emailErrors }}</div>
+                    </div>
+
+                    <h4>{{ getText('Billing Address', 'Billing Address') }}</h4>
+                    <div class="billing-address-form">
+                        <div class="form-group">
+                            <label>{{ getText('Nombre completo', 'Full name') }}</label>
+                            <input type="text" [(ngModel)]="nombreCompleto" name="nombreCompleto"
+                                placeholder="{{ getText('Nombre completo', 'Full name') }}" required />
+                        </div>
+                        <div class="form-group">
+                            <label>{{ getText('Dirección', 'Address') }}</label>
+                            <input type="text" [(ngModel)]="direccion" name="direccion"
+                                placeholder="{{ getText('Domicilio', 'Home address') }}" required />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>{{ getText('Ciudad', 'City') }}</label>
+                                <input type="text" [(ngModel)]="ciudad" name="ciudad"
+                                    placeholder="{{ getText('Ciudad', 'City') }}" />
+                            </div>
+                            <div class="form-group">
+                                <label>{{ getText('Código Postal', 'Postal Code') }}</label>
+                                <input type="text" [(ngModel)]="codigoPostal" name="codigoPostal"
+                                    placeholder="{{ getText('Código Postal', 'Postal Code') }}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ getText('País', 'Country') }}</label>
+                            <select [(ngModel)]="pais" name="pais" required>
+                                @for (paisItem of paises; track paisItem) {
+                                <option [value]="paisItem">{{ paisItem }}</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <h4>{{ getText('Payment', 'Payment') }}</h4>
+                    <div class="card-details">
+                        <div class="form-group">
+                            <label>{{ getText('Número de tarjeta', 'Card number') }}</label>
+                            <div class="card-input-wrapper">
+                                <div #cardNumberElement class="stripe-card-input"></div>
+                                <div class="card-icons">
+                                    <span class="card-icon visa">Visa</span>
+                                    <span class="card-icon mastercard">MC</span>
+                                    <span class="card-icon discover">Disc</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>{{ getText('Fecha de caducidad', 'Expiry date') }}</label>
+                                <div #cardExpiryElement class="stripe-card-input"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ getText('Código de seguridad', 'Security code') }}</label>
+                                <div class="cvv-wrapper">
+                                    <div #cardCvcElement class="stripe-card-input"></div>
+                                    <div class="cvv-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" stroke-width="2" />
+                                            <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-width="2" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (messageNoUserDisplay) {
+                    <div id="payment-message" class="process-message">
+                        {{ messageNoUserDisplay }}
+                    </div>
+                    }
+
+                    <button id="submit" type="submit"
+                        [disabled]="isLoading || isProcessing || isLoading || !hasItemsInCart">
+                        <div class="spinner" [class.hidden]="!isLoading"></div>
+                        <span id="button-text">
+                            @if (isLoading) {
+                            {{ getText('Cargando...', 'Loading...') }}
+                            } @else if (!hasItemsInCart) {
+                            {{ getText('Carrito vacío', 'Empty cart') }}
+                            } @else if (isLoading || isProcessing) {
+                            {{ getText('Procesando...', 'Processing...') }}
+                            } @else {
+                            {{ getText('Pay now', 'Pay now') }}
+                            }
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Botones de acción -->
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" (click)="onCancel()" [disabled]="isProcessing">
+                        {{ getText('CANCELAR', 'CANCEL') }}
+                    </button>
+                </div>
+            </div>
+
+            @if(isLoadingProducts){
+            <div class="loading-message">
+                <p>{{ getText('Cargando productos...', 'Loading products...') }}</p>
+            </div>
+            }@else if(getCartItems().length > 0){
+            <!-- Columna derecha: Resumen del pedido -->
+            <div class="summary-column">
+                <h3>{{ getText('Resumen del pedido', 'Order summary') }}</h3>
+                <div class="order-summary">
+                    <!-- Lista de productos -->
+                    <div class="product-list">
+                        @if (getCartItems() && getCartItems().length > 0) {
+                        @for (item of getCartItems(); track item.id) {
+                        <div class="product-item">
+                            @if (item.image) {
+                            <img [src]="item.image" [alt]="item.name" class="product-image" />
+                            } @else {
+                            <div class="product-image-placeholder"></div>
+                            }
+                            <div class="product-info">
+                                <p class="product-name">{{ item.name }}</p>
+                                <p class="product-price">{{ item.price }}€ x {{ item.cantidad || 1 }}</p>
+                            </div>
+                        </div>
+                        }
+                        } @else { <div class="loading-message">
+                            <p>{{ getText('Cargando productos...', 'Loading products...') }}</p>
+                        </div>
+                        }
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <!-- Resumen de cargos -->
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span>{{ getText('Subtotal', 'Subtotal') }}</span>
+                            <span>{{ precio }}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>{{ getText('Descuento', 'Discount') }}</span>
+                            <span>- {{ descuentoFormateado }}</span>
+                        </div>
+                        <div class="summary-row shipping">
+                            <span>{{ getText('Envío', 'Shipping') }}</span>
+                            <span>{{ getText('Gratuito', 'Free') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <!-- Total -->
+                    <div class="total-row">
+                        <span class="total-label">{{ getText('Total adeudado', 'Total due') }}</span>
+                        <span class="total-amount">{{ total }}</span>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+}
+
+@if (showAlert) {
+<div class="alert-overlay">
+    <div class="alert-box">
+        <p>{{ getText('¡Compra con éxito!', 'Successful purchase!') }}</p>
+    </div>
+</div>
+} @else if (showAlertCancel) {
+<div class="alert-overlay">
+    <div class="alert-box-cancel">
+        <p>{{ getText('Compra cancelada!', 'Canceled Purchase!') }}</p>
+    </div>
+</div>
+}

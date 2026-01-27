@@ -122,9 +122,9 @@
 
         <app-modal-login [show]="showLoginModal" (close)="showLoginModal = false"></app-modal-login>
 
-        <app-modal-compra [show]="showModal" [producto]="nombresProductos()" [precio]="precioProductos()"
-            [descuento]="descuento.toFixed(2) + ' €'" [total]="totalConDescuento.toFixed(2) + ' €'" [cantidad]="cantidadProductos()"
-            (confirm)="onConfirmReserve()" (cancel)="onCancelReserve()"  (close)="showModal = false">
-        </app-modal-compra>
+        <app-checkout [show]="showModal" [cartItems]="productos" [usuarioId]="getUserId()" 
+            [descuento]="descuento"
+            (confirm)="onConfirmReserve()" (cancel)="onCancelReserve()" (close)="showModal = false">
+        </app-checkout>
     </div>
 </body>

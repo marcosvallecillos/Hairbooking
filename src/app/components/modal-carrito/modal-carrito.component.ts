@@ -5,17 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../../services/language.service';
 import { Product } from '../../models/user.interface';
 import { ApiService } from '../../services/api-service.service';
-import { ModalCompraComponent } from '../modal-compra/modal-compra.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { UserStateService } from '../../services/user-state.service';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { CheckoutComponent } from '../checkout/checkout.component';
 
 @Component({
   selector: 'app-modal-carrito',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, ModalCompraComponent, FooterComponent, ModalLoginComponent],
+  imports: [CommonModule, RouterLink, FormsModule, FooterComponent, ModalLoginComponent,CheckoutComponent],
   templateUrl: './modal-carrito.component.html',
   styleUrls: ['./modal-carrito.component.css']
 })
@@ -34,6 +34,7 @@ export class ModalCarritoComponent implements OnInit {
 
   totalConDescuento: number = 0;
   descuento: number = 0;
+  payment_method_id: string = '';
   faltaParaDescuento: number = 0;
 
   message: string | null = null;
@@ -329,7 +330,7 @@ export class ModalCarritoComponent implements OnInit {
 
   showModal: boolean = false;
 
-  onConfirmReserve() {
+ onConfirmReserve() {
        this.showModal = false;
   this.show = false;    
     if (this.totalConDescuento === 0) {
@@ -354,7 +355,8 @@ export class ModalCarritoComponent implements OnInit {
         productoId: product.id,
         cantidad: product.cantidad
       })),
-      descuento: this.descuento
+      descuento: this.descuento,
+      payment_method_id: this.payment_method_id
     };
 
     // LOG: Mostrar el objeto de compra que se enviará
@@ -411,6 +413,10 @@ export class ModalCarritoComponent implements OnInit {
 
   onClose() {
     this.close.emit();
+  }
+
+  getUserId(): number | null {
+    return this.authService.getUserId();
   }
 
  

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
-import { Reserva, Usuario } from '../../models/user.interface';
+import { Usuario } from '../../models/user.interface';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -19,7 +19,6 @@ export class ShowClientsComponent implements OnInit {
   usuario: Usuario[] = [];
   isSpanish: boolean = true;
   isLoading: boolean = false;
-  reserves: Reserva[] = [];
   error: string | null = null;
   reservasPorUsuario: { [usuarioId: number]: number } = {};
 
@@ -42,19 +41,17 @@ export class ShowClientsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllClients();
-    this.getAllReserves();
 
   }
 
   getAllClients() {
     this.isLoading = true;
     this.error = null;
-
     this.apiService.getAllUsers().subscribe({
       next: (response) => {
         this.usuario = response; 
         this.isLoading = false;
-
+        this.calcularReservasPorUsuario(); 
         console.log('Clientes:', response);
       },
       error: (error) => {
@@ -65,15 +62,12 @@ export class ShowClientsComponent implements OnInit {
     });
   }
 
-  // Cargar todas las reservas para poder contar cuántas tiene cada usuario
-
   deleteClient(id: number) {
     this.isLoading = true;
     this.error = null;
-
     this.apiService.deleteUser(id).subscribe({
       next: () => {
-        this.getAllClients(); 
+        this.getAllClients();
       },
       error: (error) => {
         this.error = 'Error al eliminar el cliente. Por favor, intenta de nuevo.';
@@ -82,27 +76,45 @@ export class ShowClientsComponent implements OnInit {
       }
     });
   }
-  private getAllReserves() {
-    this.apiService.getReserves().subscribe({
-      next: (reserves) => {
-        for (const reserva of reserves) {
-        
-  
-          const userId =
-            (reserva as any).usuarioId ??
-            (reserva as any).usuario_id ??
-            (reserva as any).usuario?.id;
-  
-          if (!userId) continue;
-          this.reservasPorUsuario[userId] =
-            (this.reservasPorUsuario[userId] || 0) + 1;
+
+  private calcularReservasPorUsuario() {
+    if (this.usuario.length === 0) {
+      this.reservasPorUsuario = {};
+      return;
+    }
+
+    const conteo: { [usuarioId: number]: number } = {};
+    let llamadasCompletadas = 0;
+    const totalLlamadas = this.usuario.length;
+
+    this.usuario.forEach((user) => {
+      if (user.id != null) {
+        this.apiService.getNumeroReservasByUsuarioId(user.id).subscribe({
+          next: (respuesta) => {
+            conteo[user.id] = respuesta.totalReservas || 0;
+            llamadasCompletadas++;
+            
+            if (llamadasCompletadas === totalLlamadas) {
+              this.reservasPorUsuario = conteo;
+            }
+          },
+          error: (error) => {
+            console.error(`Error al obtener reservas para usuario ${user.id}:`, error);
+            conteo[user.id] = 0;
+            llamadasCompletadas++;
+            
+            if (llamadasCompletadas === totalLlamadas) {
+              this.reservasPorUsuario = conteo;
+            }
+          }
+        });
+      } else {
+        llamadasCompletadas++;
+        if (llamadasCompletadas === totalLlamadas) {
+          this.reservasPorUsuario = conteo;
         }
-      },
-      error: (error) => {
-        console.error('❌ Error al obtener reservas:', error);
       }
     });
   }
-  
   
 }

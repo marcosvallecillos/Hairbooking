@@ -58,6 +58,12 @@ editProfile(id: number, userData: Usuario): Observable<Usuario> {
 deleteUser(id: number): Observable<any> {
   return this.http.delete<any>(`${this.apiUrlUsuarios}/delete/${id}`);
 }
+searchUser(name: string, apellidos: string): Observable<Usuario[]> {
+  // El backend requiere ambos parámetros, así que los enviamos siempre
+  const nombreParam = encodeURIComponent(name || '');
+  const apellidosParam = encodeURIComponent(apellidos || '');
+  return this.http.get<Usuario[]>(`${this.apiUrlUsuarios}/search?nombre=${nombreParam}&apellidos=${apellidosParam}`);
+}
 getReserves(): Observable<Reserva[]> {
   return this.http.get<Reserva[]>(`${this.apiUrlReservas}`);
 }

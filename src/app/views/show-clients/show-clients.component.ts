@@ -7,20 +7,23 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Search } from '../../components/search/search';
 
 @Component({
   selector: 'app-show-clients',
   standalone: true,
-  imports: [FooterComponent, CommonModule, RouterModule,RouterLink],
+  imports: [FooterComponent, CommonModule, RouterModule,RouterLink,Search],
   templateUrl: './show-clients.component.html',
   styleUrls: ['./show-clients.component.css']
 })
 export class ShowClientsComponent implements OnInit {
   usuario: Usuario[] = [];
+  filteredUsuarios: Usuario[] = [];
   isSpanish: boolean = true;
   isLoading: boolean = false;
   error: string | null = null;
   reservasPorUsuario: { [usuarioId: number]: number } = {};
+  searchText: string = '';
 
 
   constructor(
@@ -49,7 +52,8 @@ export class ShowClientsComponent implements OnInit {
     this.error = null;
     this.apiService.getAllUsers().subscribe({
       next: (response) => {
-        this.usuario = response; 
+        this.usuario = response;
+        this.filteredUsuarios = [...response]; // Inicializar con todos los clientes
         this.isLoading = false;
         this.calcularReservasPorUsuario(); 
         console.log('Clientes:', response);
@@ -67,7 +71,11 @@ export class ShowClientsComponent implements OnInit {
     this.error = null;
     this.apiService.deleteUser(id).subscribe({
       next: () => {
-        this.getAllClients();
+        // Eliminar de ambos arrays
+        this.usuario = this.usuario.filter(u => u.id !== id);
+        this.filteredUsuarios = this.filteredUsuarios.filter(u => u.id !== id);
+        delete this.reservasPorUsuario[id];
+        this.isLoading = false;
       },
       error: (error) => {
         this.error = 'Error al eliminar el cliente. Por favor, intenta de nuevo.';
@@ -116,5 +124,52 @@ export class ShowClientsComponent implements OnInit {
       }
     });
   }
-  
+
+  onSearchTextChange(text: string): void {
+    this.searchText = text;
+    
+    if (!text || !text.trim()) {
+      // Si no hay texto, mostrar todos los clientes
+      this.filteredUsuarios = [...this.usuario];
+      return;
+    }
+
+    // Búsqueda local con autocompletado (coincidencias parciales)
+    const searchTerm = text.trim().toLowerCase();
+    
+    this.filteredUsuarios = this.usuario.filter(user => {
+      const nombre = (user.nombre || '').toLowerCase();
+      const apellidos = (user.apellidos || '').toLowerCase();
+      const nombreCompleto = `${nombre} ${apellidos}`.trim();
+      
+      return nombreCompleto.includes(searchTerm) ||
+            nombre.startsWith(searchTerm) ||
+            apellidos.startsWith(searchTerm) ||
+            nombre.includes(searchTerm) ||
+            apellidos.includes(searchTerm);
+    });
+    
+    // Calcular reservas para los usuarios filtrados si no las tienen
+    this.calcularReservasPorUsuarioFiltered();
+  }
+
+  private calcularReservasPorUsuarioFiltered(): void {
+    if (this.filteredUsuarios.length === 0) {
+      return;
+    }
+
+    this.filteredUsuarios.forEach((user) => {
+      if (user.id != null && !this.reservasPorUsuario[user.id]) {
+        this.apiService.getNumeroReservasByUsuarioId(user.id).subscribe({
+          next: (respuesta) => {
+            this.reservasPorUsuario[user.id] = respuesta.totalReservas || 0;
+          },
+          error: (error) => {
+            console.error(`Error al obtener reservas para usuario ${user.id}:`, error);
+            this.reservasPorUsuario[user.id] = 0;
+          }
+        });
+      }
+    });
+  }
 }

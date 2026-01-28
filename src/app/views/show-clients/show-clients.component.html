@@ -1,6 +1,12 @@
-    <div class="overlay"></div>
-    <div class="container mt-5 mb-5">
+
+ 
+  <div class="overlay"></div>
+   
+  <app-search (searchText)="onSearchTextChange($event)"></app-search>
+
+    <div class="container mb-5">
         <div class="d-flex justify-content-end mb-3" >
+            
             <button class="btn btn-primary d-flex align-items-center gap-2" routerLink="/create-user">
                 <i class="bi bi-calendar-plus"></i>
                 <span>{{ getText('Crear Cliente', 'Make Client') }}</span>
@@ -17,14 +23,14 @@
               </div>
         }
 
-        @else if (usuario.length > 0) {
+        @else if (filteredUsuarios.length > 0) {
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                @for (user of usuario; track user.id) {
+                @for (user of filteredUsuarios; track user.id) {
                     <div class="col-12 col-sm-6 col-lg-4">
                         <div class="card h-100">
                             <img src=" ../../../../images/usuario.png" class="card-img-top" alt="Foto de {{ user.nombre }}">
                             <div class="card-body">
-                                <h5 class="card-title">{{ user.nombre }}</h5>
+                                <h5 class="card-title">{{ user.nombre }} {{user.apellidos}} </h5>
                                 <p class="card-text">Email: {{ user.email }}</p>
                                 <p class="card-text">Teléfono: {{ user.telefono }}</p>
                                 <p>
@@ -43,7 +49,13 @@
         } @else {
             <div class="alert alert-warning text-center p-4 shadow-sm">
                 <i class="bi bi-exclamation-circle-fill fs-4"></i>
-                <p class="mt-2 mb-0">No hay alumnos disponibles en este momento.</p>
+                <p class="mt-2 mb-0">
+                    @if (searchText && searchText.trim()) {
+                        {{ getText('No se encontraron clientes con ese nombre.', 'No clients found with that name.') }}
+                    } @else {
+                        {{ getText('No hay clientes disponibles en este momento.', 'No clients available at this time.') }}
+                    }
+                </p>
             </div>
         }
     </div>

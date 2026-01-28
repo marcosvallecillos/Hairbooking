@@ -1,0 +1,18 @@
+<div class="search-container">
+  <div class="search-wrapper">
+    <i class="bi bi-search search-icon"></i>
+    <input 
+      type="text" 
+      class="search-input" 
+      [placeholder]="getText('Buscar cliente...', 'Search client...')"
+      [(ngModel)]="searchInput"
+      (input)="onSearchInput($event)"
+      autofocus
+    />
+    @if (searchInput) {
+      <button class="clear-button" (click)="clearSearch()" type="button">
+        <i class="bi bi-x"></i>
+      </button>
+    }
+  </div>
+</div>

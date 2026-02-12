@@ -37,15 +37,24 @@ export class CheckoutComponent implements AfterViewInit, OnInit, OnChanges {
   email: string = '';
   emailErrors: string = '';
   nombreCompleto: string = '';
-  pais: string = 'España';
+  pais: string = '';
   direccion: string = '';
   ciudad: string = '';
   codigoPostal: string = '';
 
-  paises: string[] = [
-   'España', 'Estados Unidos', 'México', 'Argentina', 'Chile', 
-    'Colombia', 'Perú', 'Venezuela', 'Ecuador', 'Uruguay'
+  paises: { name: string; code: string }[] = [
+    { name: 'España', code: 'ES' },
+    { name: 'Estados Unidos', code: 'US' },
+    { name: 'México', code: 'MX' },
+    { name: 'Argentina', code: 'AR' },
+    { name: 'Chile', code: 'CL' },
+    { name: 'Colombia', code: 'CO' },
+    { name: 'Perú', code: 'PE' },
+    { name: 'Venezuela', code: 'VE' },
+    { name: 'Ecuador', code: 'EC' },
+    { name: 'Uruguay', code: 'UY' }
   ];
+  
 
   isProcessing = false;
   isLoading = true;
@@ -295,7 +304,14 @@ export class CheckoutComponent implements AfterViewInit, OnInit, OnChanges {
         placeholder: 'MM/AA'
       });
       this.cardExpiry.mount(this.cardExpiryElement.nativeElement);
-
+      
+      this.cardNumber.on('change', (event: any) => {
+        if (event.empty) {
+          this.cardBrand = null; // nada escrito
+        } else {
+          this.cardBrand = event.brand; // visa, mastercard, unknown
+        }
+      });
       this.cardCvc = this.elements.create('cardCvc', {
         placeholder: 'CVV'
       });
@@ -585,5 +601,11 @@ export class CheckoutComponent implements AfterViewInit, OnInit, OnChanges {
 
   getCartItems(): any[] {
     return this.data?.cartItems || this.cartItems || [];
+  }
+
+  cardBrand: 'visa' | 'mastercard' | 'discover'  | 'unknown' | null = null;
+
+  onCardChange(event: any) {
+    this.cardBrand = event.brand;
   }
 }

@@ -47,7 +47,7 @@
                             <label>{{ getText('País', 'Country') }}</label>
                             <select [(ngModel)]="pais" name="pais" required>
                                 @for (paisItem of paises; track paisItem) {
-                                <option [value]="paisItem">{{ paisItem }}</option>
+                                <option [value]="paisItem.code">{{ paisItem.name }}</option>
                                 }
                             </select>
                         </div>
@@ -60,10 +60,20 @@
                             <div class="card-input-wrapper">
                                 <div #cardNumberElement class="stripe-card-input"></div>
                                 <div class="card-icons">
-                                    <span class="card-icon visa">Visa</span>
-                                    <span class="card-icon mastercard">MC</span>
-                                    <span class="card-icon discover">Disc</span>
-                                </div>
+                                    @if (cardBrand === null || cardBrand === 'unknown') {
+                                        <img src="../../../../images/visa.jpg" width="20">
+                                      <img src="../../../../images/mastercard.jpg" width="20">
+                                      <img src="../../../../images/discover.png" width="20">
+                                    } @else if (cardBrand === 'visa') {
+                                      <img src="../../../../images/visa.jpg" width="20">
+                                    } @else if (cardBrand === 'mastercard') {
+                                      <img src="../../../../images/mastercard.jpg" width="20">
+                                    } @else if (cardBrand === 'discover') {
+                                      <img src="../../../../images/discover.png" width="20">
+                                    }
+                                  </div>
+                                  
+                                  
                             </div>
                         </div>
 

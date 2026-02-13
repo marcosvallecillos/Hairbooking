@@ -1,94 +1,104 @@
-import { Component, HostListener } from '@angular/core';
-import { LanguageService } from '../../services/language.service';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ApiService } from '../../services/api-service.service';
-import { ModalCarritoComponent } from '../modal-carrito/modal-carrito.component';
-import { Product } from '../../models/user.interface';
+  import { Component, HostListener } from '@angular/core';
+  import { LanguageService } from '../../services/language.service';
+  import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
+  import { CommonModule } from '@angular/common';
+  import { ApiService } from '../../services/api-service.service';
+  import { ModalCarritoComponent } from '../modal-carrito/modal-carrito.component';
+  import { Product } from '../../models/user.interface';
 
-@Component({
-  selector: 'app-header-user',
-  standalone: true,
-  imports: [CommonModule, RouterLink, ModalCarritoComponent ,RouterLinkActive],
-  templateUrl: './header-user.component.html',
-  styleUrls: ['./header-user.component.css']
-})
-export class HeaderUserComponent {
-  isSpanish: boolean = true;
-  productos: Product[] = [];
-  isMenuOpen: boolean = false;
-  mostrarHeader: boolean = false;
-  showCarritoModal: boolean = false;
-  isAuthenticated: boolean = true;
-  cartItemsCount: number = 0;
+  @Component({
+    selector: 'app-header-user',
+    standalone: true,
+    imports: [CommonModule, RouterLink, ModalCarritoComponent ,RouterLinkActive],
+    templateUrl: './header-user.component.html',
+    styleUrls: ['./header-user.component.css']
+  })
+  export class HeaderUserComponent {
+    isSpanish: boolean = true;
+    productos: Product[] = [];
+    isMenuOpen: boolean = false;
+    mostrarHeader: boolean = false;
+    showCarritoModal: boolean = false;
+    isAuthenticated: boolean = true;
+    cartItemsCount: number = 0;
 
-  constructor(
-    private languageService: LanguageService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private apiService: ApiService
-  ) {
-    this.languageService.isSpanish$.subscribe(
-      (isSpanish) => (this.isSpanish = isSpanish)
-    );
+    constructor(
+      private languageService: LanguageService,
+      private route: ActivatedRoute,
+      private router: Router,
+      private apiService: ApiService
+    ) {
+      this.languageService.isSpanish$.subscribe(
+        (isSpanish) => (this.isSpanish = isSpanish)
+      );
 
-    const userData = localStorage.getItem('userData');
-    this.isAuthenticated = !!userData;
-  }
+      const userData = localStorage.getItem('userData');
+      this.isAuthenticated = !!userData;
+    }
+    isFalling = false;
 
-  ngOnInit() {
-    this.router.events.subscribe(() => {
-      this.mostrarHeader = this.router.url !== '/index';
-    });
+    onLogoutClick(): void {
+      this.isFalling = true;
+    
+      setTimeout(() => {
+        this.isFalling = false;
+        this.signout(); // tu método real
+      }, 700); // dura lo mismo que la animación
+    }
+    
+    ngOnInit() {
+      this.router.events.subscribe(() => {
+        this.mostrarHeader = this.router.url !== '/index';
+      });
 
-    // Suscribirse al observable de cartItemsCount
-    this.apiService.cartItemsCount$.subscribe((count) => {
-      this.cartItemsCount = count !== null && count !== undefined ? count : 0;
-    });
+      // Suscribirse al observable de cartItemsCount
+      this.apiService.cartItemsCount$.subscribe((count) => {
+        this.cartItemsCount = count !== null && count !== undefined ? count : 0;
+      });
 
-    // Opcional: inicializar con el valor actual
-    this.cartItemsCount = this.apiService.cartItemsCount.value || 0;
-  }
+      // Opcional: inicializar con el valor actual
+      this.cartItemsCount = this.apiService.cartItemsCount.value || 0;
+    }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-    document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
-  }
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+      document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
+    }
 
-  toggleLanguage(language: 'es' | 'en') {
-    this.languageService.setLanguage(language);
-    localStorage.setItem('language', language);
-  }
+    toggleLanguage(language: 'es' | 'en') {
+      this.languageService.setLanguage(language);
+      localStorage.setItem('language', language);
+    }
 
-  getText(es: string, en: string): string {
-    return this.isSpanish ? es : en;
-  }
+    getText(es: string, en: string): string {
+      return this.isSpanish ? es : en;
+    }
 
-  isUser: boolean = true;
+    isUser: boolean = true;
 
-  signout() {
-    localStorage.removeItem('userType');
-    localStorage.removeItem('userData');
-    this.isUser = false;
-    console.log('cerrando sesion')
-    this.isAuthenticated = false;
-    this.router.navigate(['/home-barber']);
-    window.location.reload()
-  }
+    signout() {
+      localStorage.removeItem('userType');
+      localStorage.removeItem('userData');
+      this.isUser = false;
+      this.isAuthenticated = false;
+      this.router.navigate(['/home-barber']);
+      window.location.reload()
+      console.log('cerrando sesion')
+    }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapePress(event: KeyboardEvent) {
-    if (this.isMenuOpen) {
-      this.isMenuOpen = false;
-      document.body.style.overflow = '';
+    @HostListener('document:keydown.escape', ['$event'])
+    onEscapePress(event: KeyboardEvent) {
+      if (this.isMenuOpen) {
+        this.isMenuOpen = false;
+        document.body.style.overflow = '';
+      }
+    }
+
+    closeCarritoModal() {
+      this.showCarritoModal = false;
+    }
+
+    openCarritoModal() {
+      this.showCarritoModal = true;
     }
   }
-
-  closeCarritoModal() {
-    this.showCarritoModal = false;
-  }
-
-  openCarritoModal() {
-    this.showCarritoModal = true;
-  }
-}

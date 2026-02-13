@@ -33,6 +33,47 @@
     background-color: transparent;
     transition: all 0.3s ease;
 }
+.logout-btn {
+    display: flex;
+    align-items: left;
+    margin-left: -5px;
+    width: 100%;
+    background: transparent;
+    color: #f9fafb;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .logout-text{
+    margin-right: 10px;
+  }
+  .logout-img,
+  .logout-door {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(1);
+    
+}
+  
+  .logout-img.fall {
+    animation: fall-down 0.7s ease-out forwards;
+  }
+  
+  @keyframes fall-down {
+    0% {
+      transform-origin: center bottom;
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    40% {
+      transform: translateY(4px) rotate(10deg);
+    }
+    100% {
+      transform: translateY(20px) rotate(90deg);
+      opacity: 0;
+    }
+  }
+  
 
 /* Ajustes responsivos */
 @media (max-width: 991px) {
@@ -104,7 +145,7 @@
         font-weight: 500;   
     }
  }
-.nav-link:hover {
+.nav-link:hover{
     color: #ffc107;
 }
 .navbar-nav .nav-link.active {

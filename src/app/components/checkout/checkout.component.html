@@ -14,7 +14,7 @@
                         <label>
                             {{ getText('Email', 'Email') }}
                             <input type="email" id="email" [(ngModel)]="email" name="email" (input)="onEmailInput()"
-                                (blur)="onEmailBlur()" required />
+                                (blur)="onEmailBlur()" required  placeholder="{{getText('Ingrese su email','Put your email')}}"/>
                         </label>
                         <div id="email-errors" class="error-message">{{ emailErrors }}</div>
                     </div>

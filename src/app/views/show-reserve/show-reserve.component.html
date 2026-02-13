@@ -50,12 +50,19 @@
           </p>
         </div>
       </div>
-      @if(reservasparaCorteGratis !== 10 && reservasparaCorteGratis !== 0){
-      <h5 class="free-cut"> {{ getText(' Te faltan ', 'You are ' )}} <strong>{{ reservasparaCorteGratis }}</strong> {{getText(' reserva más para el corte gratis ','reserve more to get the free haircut')}}</h5>
-      }@else{
-        
+      @if (isLoading) {
+        <div class="loading">
+          <div class="spinner">Cargando...</div>
+        </div>
+        } @else if(!isLoading && usuario?.codigoCorteGratis !== null){
+          <div class="free-cut-container">
+          <h5 class="free-cut"> {{ getText(' Puedes usar el código ', 'You can use the code ' )}}  {{getText(' para el corte gratis ','for the free haircut')}}</h5>
           <button class="btn-code" (click)="openModalCode()">{{ getText('Mostrar Codigo', 'Show Code')}}</button>
-        }
+          </div>
+        } 
+        @else if(!isLoading && usuario?.codigoCorteGratis == null && reservasparaCorteGratis !== 10 && reservasparaCorteGratis !== 0){
+      <h5 class="free-cut"> {{ getText(' Te faltan ', 'You are ' )}} <strong>{{ reservasparaCorteGratis }}</strong> {{getText(' reserva más para el corte gratis ','reserve more to get the free haircut')}}</h5>
+      }
       <button class="reserve-btn" routerLink="/reserve">
         <img src="../../../../images/cita.png" width="30px" height="30px" alt="" style="margin-right:10px">
         {{getText('Reservar Cita','Reserve Quote')}}

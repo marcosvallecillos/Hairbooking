@@ -66,8 +66,8 @@ export class CheckoutComponent implements AfterViewInit, OnInit, OnChanges {
   messageNoUserDisplay: string | null = null;
   isSpanish: boolean = true;
   userId: number | null = null;
+  cardBrand: 'visa' | 'mastercard' | 'discover'  | 'unknown' | null = null;
 
-  // Variables para el resumen
   cantidad: number = 0;
   precio: string = '';
   descuentoFormateado: string = '';
@@ -307,9 +307,9 @@ export class CheckoutComponent implements AfterViewInit, OnInit, OnChanges {
       
       this.cardNumber.on('change', (event: any) => {
         if (event.empty) {
-          this.cardBrand = null; // nada escrito
+          this.cardBrand = null; 
         } else {
-          this.cardBrand = event.brand; // visa, mastercard, unknown
+          this.cardBrand = event.brand;
         }
       });
       this.cardCvc = this.elements.create('cardCvc', {
@@ -603,7 +603,6 @@ export class CheckoutComponent implements AfterViewInit, OnInit, OnChanges {
     return this.data?.cartItems || this.cartItems || [];
   }
 
-  cardBrand: 'visa' | 'mastercard' | 'discover'  | 'unknown' | null = null;
 
   onCardChange(event: any) {
     this.cardBrand = event.brand;

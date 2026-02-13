@@ -143,7 +143,7 @@ deleteValoracion(id: number): Observable<Valoracion> {
   return this.http.delete<Valoracion>(`${this.apiUrlValoracion}/delete/${id}`);
 }
 deleteAllReserves(): Observable<any> {
-  return this.http.delete<any>(`${this.apiUrlReservas}/delete-all`);
+  return this.http.delete<any>(`${this.apiUrlReservas}/delete`);
 }
 
 getReservasAnuladas():Observable<ReservaAnulada[]>{

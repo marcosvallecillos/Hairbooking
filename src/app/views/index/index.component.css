@@ -106,7 +106,14 @@ h1 {
     cursor: pointer;
     transition: color 0.3s;
 }
-
+.dropdown-menu input {
+    font-size: 16px;
+  }
+  
+  .dropdown-menu .btn {
+    white-space: nowrap;
+  }
+  
 .icon-btn:hover {
     color: #333;
 }/* Ajustes para pantallas pequeñas */

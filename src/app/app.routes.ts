@@ -29,6 +29,7 @@ import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.co
 import { AdminGuard } from './guards/auth.guard';
 import { AuthUserGuard } from './guards/auth-user.guard';
 import { ModalCodeComponent } from './components/modal-code/modal-code.component';
+import { ChatbotBarberComponent } from './components/chatbot-barber/chatbot-barber.component';
 
 export const routes: Routes = [ 
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -52,7 +53,9 @@ export const routes: Routes = [
     { path: 'reservations', component: ReservationsComponent, canActivate: [AdminGuard] },
     { path: 'bought_products', component: BoughtProductsComponent, canActivate: [AdminGuard]},
     { path: 'valued_services', component: ValuedServicesComponent, canActivate: [AdminGuard] },
-    { path: 'create-user', component: CreateUserComponent, canActivate: [AdminGuard] },
+    { path: 'create-user', component: CreateUserComponent, canActivate: [AdminGuard],  data: { rol: 'usuario' }},
+    { path: 'create-barber',component: CreateUserComponent,data: { rol: 'barbero' }
+      },
     {path: 'modal-user', component: ModalUserComponent, canActivate: [AdminGuard]},
     {path: 'modal-code', component: ModalCodeComponent, canActivate: [AdminGuard]},
 
@@ -61,6 +64,8 @@ export const routes: Routes = [
     {path: 'rating-reserve', component: RatingServiceComponent},
     {path: 'policy-cookies', component: PolicyCookiesComponent},
     {path: 'privacy-policy', component: PrivacyPolicyComponent},
+    {path: 'chatbot', component: ChatbotBarberComponent},
+
 
     
     

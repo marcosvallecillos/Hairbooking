@@ -8,6 +8,7 @@ import { GalleryComponent } from '../../components/gallery/gallery.component';
 import { CosmeticosComponent } from '../../components/cosmeticos/cosmeticos.component';
 import { RatingServiceComponent } from '../../components/rating-service/rating-service.component';
 import { ChatbotComponent } from '../../components/chatbot/chatbot.component';
+import { ChatbotBarberComponent } from '../../components/chatbot-barber/chatbot-barber.component';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,8 @@ import { ChatbotComponent } from '../../components/chatbot/chatbot.component';
     ServicesComponent,
     CosmeticosComponent,
     RatingServiceComponent,
-    ChatbotComponent
+    ChatbotComponent,
+    ChatbotBarberComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

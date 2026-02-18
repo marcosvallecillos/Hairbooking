@@ -86,38 +86,14 @@
                 <hr>
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle user-icon" href="#" id="profileDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle user-icon" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" routerLink="/showProfile">{{getText('Ver Perfil','Show
-                                    Profile')}}</a></li>
-                            <li><a class="dropdown-item" routerLink="/editProfile">{{getText('Editar Perfil', 'Edit
-                                    Profile')}}</a></li>
-                            <li><a class="dropdown-item" routerLink="/show-buys">{{getText('Compras Realizadas',
-                                    'Purchases Made')}}</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                        <div class="logout-wrapper mb-2  dropdown-item" (click)="onLogoutClick()">
-                                            <button class="logout-btn w-100">
-                                                <span class="logout-text">
-                                                    {{ getText('Cerrar sesión', 'Sign Out') }}
-                                                </span>
-
-                                                <img src="../../../../images/correr.png" class="logout-img"
-                                                    [class.fall]="isFalling" alt="logout" />
-                                                <img src="../../../../images/puerta.png" class="logout-door"
-                                                    alt="door" />
-                                            </button>
-                                        </div>
-
-                                    
-
-                            </li>
-
+                            <li><a class="dropdown-item" routerLink="/showProfile">{{getText('Ver Perfil','Show Profile')}}</a></li>
+                            <li><a class="dropdown-item" routerLink="/editProfile">{{getText('Editar Perfil', 'Edit Profile')}}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" (click)="signout()">{{getText('Cerrar sesión','Sign Out')}}</a></li>
                         </ul>
                     </li>
                 </ul>

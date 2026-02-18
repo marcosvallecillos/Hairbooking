@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api-service.service';
 import { Usuario } from '../../models/user.interface';
 import { LanguageService } from '../../services/language.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-user',
@@ -18,16 +19,26 @@ export class CreateUserComponent {
   isSpanish: boolean = true;
   showAlert: boolean = false;
   isProcessing: boolean = false;
+  @Input() tipo: 'usuario' | 'barbero' = 'usuario';
+
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private route: ActivatedRoute
+
   ) {
     this.languageService.isSpanish$.subscribe(
       isSpanish => this.isSpanish = isSpanish
     );
    }
-
+   ngOnInit() {
+    const rol = this.route.snapshot.data['rol'];
+  
+    this.createPupil.patchValue({
+      rol: rol
+    });
+  }
   getText(es: string, en: string): string {
     return this.isSpanish ? es : en;
   }
@@ -52,7 +63,7 @@ export class CreateUserComponent {
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(5)] }),
     confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    rol: new FormControl('alumno', { nonNullable: true })
+    rol: new FormControl('', { nonNullable: true })
   }, { validators: this.passwordsMatchValidator });
 
   @Output() confirm = new EventEmitter<void>();

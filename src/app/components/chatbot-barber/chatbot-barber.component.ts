@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { LanguageService } from '../../services/language.service';
 import { FormsModule, NgModel } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { NgClass } from '@angular/common';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -18,7 +19,7 @@ interface Usuario {
 }
 @Component({
   selector: 'app-chatbot-barber',
-  imports: [FormsModule],
+  imports: [FormsModule,NgClass],
   templateUrl: './chatbot-barber.component.html',
   styleUrl: './chatbot-barber.component.css'
 })
